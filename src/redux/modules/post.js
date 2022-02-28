@@ -1,5 +1,6 @@
 import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
+import axios from "axios";
 import { apis } from "../../shared/api";
 
 const GET_POST = "GET_POST";
@@ -50,15 +51,28 @@ const onePostDB = () => {
 
 const addPostDB = ({ title, comment, img }) => {
   return function (dispatch, getState, { history }) {
-    apis
-      .addpost(title, comment, img)
+    const formData = new FormData();
+    formData.append("images", img);
+    axios
+      .post(`/images/upload`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
       .then((res) => {
         console.log(res);
-        dispatch(getPost({ title, comment, img }));
+        //  img는 받아온 url로  변경
+        apis
+          .addpost(title, comment, img)
+          .then((res) => {
+            console.log(res);
+            dispatch(getPost({ title, comment, img }));
+          })
+          .catch((err) => {
+            console.log(err);
+            console.log("post 올리기 실패");
+          });
       })
       .catch((err) => {
-        console.log(err);
-        console.log("post 올리기 실패");
+        console.log("이미지 전송 실패!");
       });
   };
 };
