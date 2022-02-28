@@ -12,7 +12,7 @@ const getPost = createAction(GET_POST, (post) => ({ post }));
 const onePost = createAction(ONE_POST, (post) => ({ post }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
 const editPost = createAction(EDIT_POST, (post) => ({ post }));
-const delPost = createAction(DEL_POST, (post) => ({ post }));
+const delPost = createAction(DEL_POST, (pid) => ({ pid }));
 
 const initialState = {
   list: [],
@@ -33,7 +33,7 @@ const getPostDB = (token) => {
   };
 };
 
-const onePostDB = (token) => {
+const onePostDB = () => {
   return function (dispatch, getState, { history }) {
     apis
       .onepost()
@@ -48,13 +48,13 @@ const onePostDB = (token) => {
   };
 };
 
-const addPostDB = (title, comment, img) => {
+const addPostDB = ({ title, comment, img }) => {
   return function (dispatch, getState, { history }) {
     apis
       .addpost(title, comment, img)
       .then((res) => {
         console.log(res);
-        // dispatch(getPost())
+        dispatch(getPost({ title, comment, img }));
       })
       .catch((err) => {
         console.log(err);
@@ -63,13 +63,13 @@ const addPostDB = (title, comment, img) => {
   };
 };
 
-const editPostDB = (pid, title, comment) => {
+const editPostDB = ({ pid, title, comment, img }) => {
   return function (dispatch, getState, { history }) {
     apis
-      .editpost(pid, title, comment)
+      .editpost(pid, title, comment, img)
       .then((res) => {
         console.log(res);
-        // dispatch(getPost())
+        dispatch(getPost({ pid, title, comment, img }));
       })
       .catch((err) => {
         console.log(err);
@@ -84,7 +84,7 @@ const delPostDB = (pid) => {
       .delpost(pid)
       .then((res) => {
         console.log(res);
-        // dispatch(getPost())
+        dispatch(getPost(pid));
       })
       .catch((err) => {
         console.log(err);
@@ -97,24 +97,23 @@ export default handleActions(
   {
     [GET_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.list;
+        draft.list = action.payload.post;
       }),
-
     [ONE_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.list;
+        draft.list = action.payload.post;
       }),
     [ADD_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.list;
+        draft.list.push(action.payload.post);
       }),
     [EDIT_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.list;
+        draft.list = action.payload.post;
       }),
     [DEL_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.list;
+        draft.list = draft.list.filter((v) => v.pid !== action.payload.pid);
       }),
   },
   initialState
