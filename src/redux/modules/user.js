@@ -74,7 +74,8 @@ export default handleActions (
             draft.isCheckNickname = action.payload.isCheckNickname;
             window.alert("사용 가능한 닉네임입니다.");
         })
-    }
+    },
+    initialState
 );
 
 const actionsCreators = {

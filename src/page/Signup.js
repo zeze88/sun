@@ -13,7 +13,7 @@ function Signup () {
     const [isCheckUsername, setIsCheckUsername] = React.useState(false);
     const [isCheckNickname, setIsCheckNickname] = React.useState(false);
 
-    const CheckUsername = () => {
+    const checkUsername = () => {
         if(username === "") {
             window.alert("아이디를 입력해주세요.")
             return;
@@ -54,7 +54,6 @@ function Signup () {
         setIsCheckUsername(false);
         setIsCheckNickname(false);
     }
-
     return (
         <>
             <div>
@@ -67,7 +66,7 @@ function Signup () {
                         setUsername(e.target.value);
                     }}
                     />
-                    <button onClick={CheckUsername} >중복체크</button>
+                    <button onClick={checkUsername} >중복체크</button>
                 </div>
                 <div>
                     <span>닉네임</span>
@@ -101,7 +100,7 @@ function Signup () {
                     />
                 </div>
             </div>
-        
         </>
-    )
+    );
 }
+export default Signup;
