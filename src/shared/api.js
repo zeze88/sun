@@ -14,23 +14,25 @@ const instance = axios.create({
 // interceptors의 역할 => then이나 catch로 처리되기 전
 // 요청(request)이나 응답(response)을 가로채 어떠한 작업을 수행할 수 있게 한다. 참고 (https://yamoo9.github.io/axios/guide/interceptors.html)
 instance.interceptors.request.use(function (config) {
-  const accessToken = localStorage.token;
+  const accessToken = sessionStorage.token;
   config.headers.common["Authorization"] = `Bearer ${accessToken}`; // header에 토큰값을 넣는다 => header에 토큰값이 있어 앞으로 request를 자유자재로 할 수 있다.
   return config;
 });
 
 // 데이터 요청 to 서버
 export const apis = {
-  signup: (userEmail, userNickname, password, passwordConfirm) =>
-    instance.post("/api/join", {
-      userEmail: userEmail,
-      userNickname: userNickname,
-      password: password,
-      passwordConfirm: passwordConfirm,
+  getpost: () => instance.get(`/post/get`),
+  onepost: () => instance.get(`/post/detailget`),
+  addpost: (title, comment, img) =>
+    instance.post(`/islogin/post/write/`, {
+      postTitle: title,
+      postComment: comment,
+      postImg: img,
     }),
-
-  getlist: (listId) => instance.get(`api/location/${listId}`),
-
-  deleteComment: (commentId) =>
-    instance.delete(`api/detail/comments/${commentId}`),
+  editpost: (pid, title, comment) =>
+    instance.put(`/islogin/post/revice/${pid}`, {
+      postTitle: title,
+      postComment: comment,
+    }),
+  delpost: (pid) => instance.delete(`/islogin/post/delete/${pid}`),
 };
