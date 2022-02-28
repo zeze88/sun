@@ -19,13 +19,16 @@ const initialState = {
   list: [],
 };
 
+// ===================================================================
+// ======================== 게시글 리스트 가지고오기========================
+
 const getPostDB = (token) => {
   return function (dispatch, getState, { history }) {
     apis
       .getpost()
       .then((res) => {
         console.log(res);
-        // dispatch(getPost())
+        dispatch(getPost());
       })
       .catch((err) => {
         console.log(err);
@@ -34,13 +37,15 @@ const getPostDB = (token) => {
   };
 };
 
+// ====================================================================
+// ======================== 선택한 게시글 가지고오기 ========================
 const onePostDB = () => {
   return function (dispatch, getState, { history }) {
     apis
       .onepost()
       .then((res) => {
         console.log(res);
-        // dispatch(getPost())
+        dispatch(onePost());
       })
       .catch((err) => {
         console.log(err);
@@ -49,6 +54,8 @@ const onePostDB = () => {
   };
 };
 
+// =====================================================================
+// ================================ 추가 ================================
 const addPostDB = ({ title, comment, img }) => {
   return function (dispatch, getState, { history }) {
     const formData = new FormData();
@@ -64,7 +71,7 @@ const addPostDB = ({ title, comment, img }) => {
           .addpost(title, comment, img)
           .then((res) => {
             console.log(res);
-            dispatch(getPost({ title, comment, img }));
+            dispatch(addPost({ title, comment, img }));
           })
           .catch((err) => {
             console.log(err);
@@ -77,28 +84,42 @@ const addPostDB = ({ title, comment, img }) => {
   };
 };
 
+// =====================================================================
+// ================================ 수정 ================================
 const editPostDB = ({ pid, title, comment, img }) => {
   return function (dispatch, getState, { history }) {
-    apis
-      .editpost(pid, title, comment, img)
+    const formData = new FormData();
+    formData.append("images", img);
+    axios
+      .post(`/images/upload`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
       .then((res) => {
         console.log(res);
-        dispatch(getPost({ pid, title, comment, img }));
-      })
-      .catch((err) => {
-        console.log(err);
-        console.log("포스트 수정 실패");
+        //  img는 받아온 url로  변경
+        apis
+          .editpost(pid, title, comment, img)
+          .then((res) => {
+            console.log(res);
+            dispatch(editPost({ pid, title, comment, img }));
+          })
+          .catch((err) => {
+            console.log(err);
+            console.log("포스트 수정 실패");
+          });
       });
   };
 };
 
+// =====================================================================
+// ================================ 삭제 ================================
 const delPostDB = (pid) => {
   return function (dispatch, getState, { history }) {
     apis
       .delpost(pid)
       .then((res) => {
         console.log(res);
-        dispatch(getPost(pid));
+        dispatch(delPost(pid));
       })
       .catch((err) => {
         console.log(err);
@@ -107,6 +128,8 @@ const delPostDB = (pid) => {
   };
 };
 
+// =====================================================================
+// ============================== reducer ==============================
 export default handleActions(
   {
     [GET_POST]: (state, action) =>
