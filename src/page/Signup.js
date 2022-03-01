@@ -51,7 +51,7 @@ function Signup (props) {
             window.alert("중복확인을 해주세요.")
             return;
         }
-        dispatch(userActions.signupDB(username, nickname, password));
+        dispatch(userActions.signupDB(username, nickname, password, checkPassword));
         setIsCheckUsername(false);
         setIsCheckNickname(false);
     }

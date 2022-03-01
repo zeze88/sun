@@ -8,7 +8,7 @@ import { setToken } from "../../shared/token";
 //initialState
 const initialState = {
     user: null,
-    is_login: false,
+    isLogin: false,
     isCheckUsername: false,
     isCheckNickname: false,
 };
@@ -27,9 +27,9 @@ const setLogin = createAction(LOGIN, user => ({ user }));
 const checkUsernameDB = (username, isCheckUsername) => {
     return async function (dispatch, getState, {history}) {
         console.log(username, isCheckUsername);
-        await axios.post("/user/signup/username", { "username" : username }
+        await axios.post("http://175.118.48.164:7050/user/signup/username", { "username" : username }
         ).then((res) => {
-            if (res.data === false) {
+            if (res.data === true) {
                 window.alert("이미 존재하는 ID입니다.");
                 return;
             }
@@ -40,9 +40,9 @@ const checkUsernameDB = (username, isCheckUsername) => {
 
 const checkNicknameDB = (userNickname, isCheckNickname) => {
     return async function (dispatch, getState, { history }) {
-        await axios.post("/user/signup/nickname", { "userNickname" : userNickname }
+        await axios.post("http://175.118.48.164:7050/user/signup/nickname", { "userNickname" : userNickname }
         ).then((res) => {
-            if (res.data === false) {
+            if (res.data === true) {
                 window.alert("이미 존재하는 닉네임 입니다.");
                 return;
             }
@@ -51,17 +51,23 @@ const checkNicknameDB = (userNickname, isCheckNickname) => {
     }
 }
 
-const signupDB = (username, userNickname, userPwd) => {
+const signupDB = (username, nickname, password, passwordCheck) => {
     return function (dispatch, getState, {history}) {
+        console.log(username,nickname,password,passwordCheck)
         axios
-        .post('/user/signup', {
+        .post('http://175.118.48.164:7050/user/signup', {
             "username" : username,
-            "userNickname" : userNickname,
-            "userPwd" : userPwd,
+            "nickname" : nickname,
+            "password" : password,
+            "passwordCheck" : passwordCheck
         })
         .then((res) => {
             window.alert("회원가입을 축하드립니다.");
             history.push("/");
+        })
+        .catch((err) => {
+            console.log("회원가입 실패", err)
+            window.alert("회원가입에 실패했어요");
         });
     };
 };
@@ -70,7 +76,7 @@ const loginDB = (username, password) => {
     return function (dispatch, getState, {history}) {
         console.log(username,password)
         axios
-            .post("http://localhost:3003/login", {
+            .post("http://175.118.48.164:7050/user/login", {
                 username: username,
                 password: password,
             }
@@ -81,13 +87,14 @@ const loginDB = (username, password) => {
                 setToken(token_res);
                 return token_res
             })
-            .then((res) => {
+            .then((token_res) => {
+                console.log(token_res)
                 axios({
                     method: "post",
-                    url:  "/islogin/user",
-                    // headers: {
-                    //     "Authorization": `${token_res}`,
-                    // },
+                    url:  "http://175.118.48.164:7050/islogin/user",
+                    headers: {
+                        "Authorization": `${token_res}`,
+                    },
                 })
                 .then ((res)=> {
                     console.log("로그인 유지")

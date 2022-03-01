@@ -14,7 +14,7 @@ function App() {
       <Route path="/" exact component={Main} />
       <Route path="/post" exact component={Post} />
       <Route path="/signup" exact component={Signup} />
-        <Route path="/login" exact component={Login} />
+      <Route path="/login" exact component={Login} />
     </div>
   );
 }
