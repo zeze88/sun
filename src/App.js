@@ -6,7 +6,7 @@ import { history } from "../src/redux/configureStore";
 import Main from "./page/Main";
 import Signup from "./page/Signup";
 import Post from "./page/Post";
-import Login from "./page/Login"
+import Login from "./page/Login";
 
 function App() {
   return (
