@@ -25,7 +25,7 @@ const Post = () => {
   const submit = () => {
     console.log(img_list);
     // console.log(addPost);
-    dispatch(postActions.addPostDB(addPost));
+    dispatch(postActions.imgUPUPDB(img_list?.img));
   };
 
   const revise = () => {

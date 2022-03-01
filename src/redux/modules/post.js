@@ -57,6 +57,29 @@ const onePostDB = () => {
   };
 };
 
+const imgUPUPDB = () => {
+  return function (dispatch, getState, { history }) {
+    const img_list = getState().post.preview;
+
+    const formData = new FormData();
+    formData.append("images", img_list);
+
+    axios
+      .post(
+        `http://175.118.48.164:7050/images/upload`,
+        {
+          headers: { "Content-type": "application/x-www-form-urlencoded" },
+        },
+        formData
+      )
+      .then((res) => {
+        console.log("img업로드 성공");
+        console.log(res);
+        //  img는 받아온 url로  변경
+        return;
+      });
+  };
+};
 // =====================================================================
 // ================================ 추가 ================================
 const addPostDB = ({ title, comment }) => {
@@ -67,13 +90,12 @@ const addPostDB = ({ title, comment }) => {
     formData.append("images", img_list);
 
     axios
-      .post(`http://175.118.48.164:7050/images/upload`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
+      .post(`http://175.118.48.164:7050/images/upload`, formData)
       .then((res) => {
         console.log("img업로드 성공");
         console.log(res);
         //  img는 받아온 url로  변경
+        return;
         apis
           .addpost(title, comment, img_list)
           .then((res) => {
@@ -175,6 +197,7 @@ const actionCreators = {
   editPostDB,
   delPostDB,
   imgPost,
+  imgUPUPDB,
 };
 
 export { actionCreators };
