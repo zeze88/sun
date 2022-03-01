@@ -21,21 +21,49 @@ instance.interceptors.request.use(function (config) {
 
 // 데이터 요청 to 서버
 export const apis = {
+  // ==================== post api ====================//
   getpost: () => instance.get(`/post/get`),
   onepost: () => instance.get(`/post/detailget`),
   addpost: (title, comment, img) =>
-    // instance.post(`/islogin/post/write/`, {
-    instance.post(`/write/`, {
+    instance.post(`/islogin/post/write/`, {
       postTitle: title,
       postComment: comment,
       postImg: img,
     }),
   editpost: (pid, title, comment, img) =>
-    // instance.put(`/islogin/post/revice/${pid}`, {
-    instance.put(`/revice/`, {
+    instance.put(`/islogin/post/revice/${pid}`, {
       postTitle: title,
       postComment: comment,
       postImg: img,
     }),
   delpost: (pid) => instance.delete(`/islogin/post/delete/${pid}`),
+
+  // ==================== answer api ====================//
+  getanswer: (answrId) => instance.get(`/answer/${answrId}`),
+  addanswer: (pid, uid, title, comment, img) =>
+    instance.post(`/islogin/answer/${pid}`, {
+      uid: uid,
+      pid: pid,
+      answerTitle: title,
+      answerComment: comment,
+      answerImg: img,
+    }),
+  editanswer: (pid, uid, title, comment, img) =>
+    instance.put(`/islogin/answer/revice/${pid}`, {
+      uid: uid,
+      pid: pid,
+      answerTitle: title,
+      answerComment: comment,
+      answerImg: img,
+    }),
+  delanswer: (uid, answsrId) =>
+    instance.delete(`/islogin/answer/delete/`, {
+      uid: uid,
+      answsrId: answsrId,
+    }),
+  likeanswer: (uid, pid) =>
+    instance.post(`/islogin/answer/like/`, {
+      uid: uid,
+      pid: pid,
+    }),
 };

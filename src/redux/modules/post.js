@@ -8,15 +8,18 @@ const ONE_POST = "ONE_POST";
 const ADD_POST = "ADD_POST";
 const EDIT_POST = "EDIT_POST";
 const DEL_POST = "DEL_POST";
+const IMG_POST = "IMG_POST";
 
 const getPost = createAction(GET_POST, (post) => ({ post }));
 const onePost = createAction(ONE_POST, (post) => ({ post }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
 const editPost = createAction(EDIT_POST, (post) => ({ post }));
 const delPost = createAction(DEL_POST, (pid) => ({ pid }));
+const imgPost = createAction(IMG_POST, (preview) => ({ preview }));
 
 const initialState = {
   list: [],
+  preview: "",
 };
 
 // ===================================================================
@@ -56,22 +59,26 @@ const onePostDB = () => {
 
 // =====================================================================
 // ================================ 추가 ================================
-const addPostDB = ({ title, comment, img }) => {
+const addPostDB = ({ title, comment }) => {
   return function (dispatch, getState, { history }) {
+    const img_list = getState().post.preview;
+
     const formData = new FormData();
-    formData.append("images", img);
+    formData.append("images", img_list);
     axios
       .post(`/images/upload`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((res) => {
+        console.log("img업로드 성공");
         console.log(res);
         //  img는 받아온 url로  변경
         apis
-          .addpost(title, comment, img)
+          .addpost(title, comment, img_list)
           .then((res) => {
+            console.log("post 업로드 성공");
             console.log(res);
-            dispatch(addPost({ title, comment, img }));
+            dispatch(addPost({ title, comment, img_list }));
           })
           .catch((err) => {
             console.log(err);
@@ -152,6 +159,10 @@ export default handleActions(
       produce(state, (draft) => {
         draft.list = draft.list.filter((v) => v.pid !== action.payload.pid);
       }),
+    [IMG_POST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.preview = action.payload.preview;
+      }),
   },
   initialState
 );
@@ -162,6 +173,7 @@ const actionCreators = {
   addPostDB,
   editPostDB,
   delPostDB,
+  imgPost,
 };
 
 export { actionCreators };
