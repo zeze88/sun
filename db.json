@@ -1,0 +1,191 @@
+{
+  "boards": [
+    {
+      "id": 1,
+      "category": "영어",
+      "name": "토익스터디",
+      "content": "스터디ㅇㅇㅇㅇㅇㅇㅇ해요",
+      "recruitState": "모집중",
+      "memberNum": 4,
+      "currentMemberNum": 2,
+      "createdAt": "2022-02-11 17:00"
+    },
+    {
+      "id": 2,
+      "category": "IT",
+      "name": "정처기스터디",
+      "content": "스터디해요",
+      "recruitState": "모집완료",
+      "memberNum": 6,
+      "currentMemberNum": 6,
+      "createdAt": "2022-02-11 18:00"
+    },
+    {
+      "id": 3,
+      "category": "요리",
+      "name": "요리스터디요리스터디요리스터디요리스터디요리스터디요리스터디",
+      "content": "스터디해요",
+      "recruitState": "모집중",
+      "memberNum": 10,
+      "currentMemberNum": 2,
+      "createdAt": "2022-02-10 17:00"
+    },
+    {
+      "id": 4,
+      "category": "서핑",
+      "name": "서핑스터디",
+      "content": "서핑해요",
+      "recruitState": "모집중",
+      "memberNum": 10,
+      "currentMemberNum": 2,
+      "createdAt": "2022-02-10 17:00"
+    },
+    {
+      "id": 5,
+      "category": "독서",
+      "name": "독서토론",
+      "content": "독서해요",
+      "recruitState": "모집중",
+      "memberNum": 10,
+      "currentMemberNum": 2,
+      "createdAt": "2022-02-10 17:00"
+    },
+    {
+      "id": 6,
+      "categoy": "CSS",
+      "name": "CSS스터디",
+      "content": "CSS해요",
+      "recruitState": "모집중",
+      "memberNum": 10,
+      "currentMemberNum": 2,
+      "createdAt": "2022-02-10 17:00"
+    },
+    {
+      "id": 7,
+      "category": "ABC",
+      "name": "ABC스터디",
+      "content": "ABC스터디해요",
+      "recruitState": "모집중",
+      "memberNum": 10,
+      "currentMemberNum": 2,
+      "createdAt": "2022-02-10 17:00"
+    },
+    {
+      "id": 8,
+      "category": "가나다",
+      "name": "가나다스터디",
+      "content": "가나다스터디해요",
+      "recruitState": "모집중",
+      "memberNum": 10,
+      "currentMemberNum": 2,
+      "createdAt": "2022-02-10 17:00"
+    },
+    {
+      "id": 9,
+      "category": "동해물과",
+      "name": "백두산이",
+      "content": "마르고",
+      "recruitState": "모집중",
+      "memberNum": 10,
+      "currentMemberNum": 2,
+      "createdAt": "2022-02-10 17:00"
+    },
+    {
+      "id": 10,
+      "category": "남산위에",
+      "name": "저소나무",
+      "content": "철갑",
+      "recruitState": "모집중",
+      "memberNum": 10,
+      "currentMemberNum": 2,
+      "createdAt": "2022-02-10 17:00"
+    }
+  ],
+  "login": [
+    {
+      "username": "aa",
+      "password": "bb"
+    }
+  ],
+  "profile": [
+    {
+      "name": "typicode"
+    }
+  ],
+  "write": [
+    {
+      "id": 1,
+      "category": "Java",
+      "name": "11111111",
+      "content": "11111111",
+      "memberNum": "11111111"
+    },
+    {
+      "id": 2,
+      "category": "Java",
+      "name": "22222222",
+      "content": "22222222",
+      "memberNum": "22222222"
+    },
+    {
+      "id": 3,
+      "category": "Java",
+      "name": "33333333",
+      "content": "33333333",
+      "memberNum": "33333333"
+    },
+    {
+      "id": 4,
+      "category": "Java",
+      "name": "44444444",
+      "content": "44444444",
+      "memberNum": "44444444"
+    },
+    {
+      "id": 5,
+      "category": "React",
+      "name": "55555555",
+      "content": "55555555",
+      "memberNum": "55555555"
+    },
+    {
+      "category": "React",
+      "name": "테스트입니디ㅏ",
+      "content": "테스트에요",
+      "memberNum": "4",
+      "id": 6
+    }
+  ],
+  "java": [
+    {
+      "id": 1,
+      "category": "영어",
+      "name": "토익스터디",
+      "content": "스터디해요",
+      "recruitState": "모집중",
+      "memberNum": 4,
+      "currentMemberNum": 2,
+      "createdAt": "2022-02-11 17:00"
+    },
+    {
+      "id": 2,
+      "category": "수학",
+      "name": "토익스ddddddddd터디",
+      "content": "스터dddddddddddddd디해요",
+      "recruitState": "모집중",
+      "memberNum": 4,
+      "currentMemberNum": 2,
+      "createdAt": "2022-02-11 17:00"
+    },
+    {
+      "id": 3,
+      "category": "과학",
+      "name": "토익스터디",
+      "content": "스터디해요",
+      "recruitState": "모집중",
+      "memberNum": 4,
+      "currentMemberNum": 2,
+      "createdAt": "2022-02-11 17:00"
+    }
+  ]
+}

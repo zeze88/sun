@@ -3,8 +3,9 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { actionsCreators as userActions} from "../redux/modules/user"
 
-function Signup () {
+function Signup (props) {
     const dispatch = useDispatch();
+    const {history} = props
 
     const [username, setUsername] = React.useState("");
     const [nickname, setNickname] = React.useState("");
@@ -19,7 +20,7 @@ function Signup () {
             return;
         }
         console.log(username, "중복요청");
-        dispatch(userActions.isCheckUsernameDB(username, false));
+        dispatch(userActions.checkUsernameDB(username, false));
         setIsCheckUsername(true);
     }
 
@@ -90,7 +91,7 @@ function Signup () {
                     />
                 </div>
                 <div>
-                    <span>아이디</span>
+                    <span>비밀번호 확인</span>
                     <input
                     type="password"
                     placeholder="passwordCheck"
@@ -99,6 +100,8 @@ function Signup () {
                     }}
                     />
                 </div>
+                <button onClick={signup}>회원가입</button>
+                <button onClick={() => {history.push('/login')}}>로그인</button>
             </div>
         </>
     );
