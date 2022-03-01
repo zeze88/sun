@@ -1,9 +1,12 @@
 import React from "react";
 import { Route } from "react-router-dom";
+import { ConnectedRouter } from "connected-react-router";
+import { history } from "../src/redux/configureStore";
 
 import Main from "./page/Main";
 import Signup from "./page/Signup";
 import Post from "./page/Post";
+import Login from "./page/Login"
 
 function App() {
   return (
@@ -11,6 +14,7 @@ function App() {
       <Route path="/" exact component={Main} />
       <Route path="/post" exact component={Post} />
       <Route path="/signup" exact component={Signup} />
+        <Route path="/login" exact component={Login} />
     </div>
   );
 }

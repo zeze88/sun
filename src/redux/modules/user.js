@@ -3,6 +3,8 @@ import { produce } from "immer";
 import history from "../configureStore"
 import axios from "axios";
 
+import { setToken } from "../../shared/token";
+
 //initialState
 const initialState = {
     user: null,
@@ -14,10 +16,12 @@ const initialState = {
 //action
 const CHECK_USERNAME = "CHECK_USERNAME";
 const CHECK_NICKNAME = "CHECK_NICKNAME";
+const LOGIN = "LOGIN";
 
 //action creators
 const setCheckUsername = createAction(CHECK_USERNAME, (isCheckUsername) => ({ isCheckUsername }))
 const setCheckNickname = createAction(CHECK_NICKNAME, (isCheckNickname) => ({ isCheckNickname }))
+const setLogin = createAction(LOGIN, user => ({ user }));
 
 //middleware actions
 const checkUsernameDB = (username, isCheckUsername) => {
@@ -62,6 +66,51 @@ const signupDB = (username, userNickname, userPwd) => {
     };
 };
 
+const loginDB = (username, password) => {
+    return function (dispatch, getState, {history}) {
+        console.log(username,password)
+        axios
+            .post("http://localhost:3003/login", {
+                username: username,
+                password: password,
+            }
+            )
+            .then((res) => {
+                console.log(res)
+                const token_res = res.headers.authorization;
+                setToken(token_res);
+                return token_res
+            })
+            .then((res) => {
+                axios({
+                    method: "post",
+                    url:  "/islogin/user",
+                    // headers: {
+                    //     "Authorization": `${token_res}`,
+                    // },
+                })
+                .then ((res)=> {
+                    console.log("로그인 유지")
+                    dispatch(setLogin(
+                        {
+                            uid: res.data.uid,
+                            username: res.data.username,
+                            nickname: res.data.nickname,
+                        })
+                        );
+                })
+                .catch((err) => {
+                    console.log("로그인 확인 실패", err)
+                })
+                history.replace("/")
+            })
+            .catch((err) => {
+                console.log(err)
+                window.alert("이메일이나 패스워드를 다시 확인해주세요!")
+            })
+    }
+}
+
 export default handleActions (
     {
         [CHECK_USERNAME] : (state, action) => produce(state, (draft) => {
@@ -73,7 +122,12 @@ export default handleActions (
             console.log("CHECK_NICKNAME 리듀서 적용", state, action.payload);
             draft.isCheckNickname = action.payload.isCheckNickname;
             window.alert("사용 가능한 닉네임입니다.");
-        })
+        }),
+        [LOGIN]: (state, action) =>
+            produce(state, (draft) => {
+                draft.userInfo = action.payload.user;
+                draft.isLogin = true;
+            }),
     },
     initialState
 );
@@ -82,6 +136,7 @@ const actionsCreators = {
     signupDB,
     checkUsernameDB,
     checkNicknameDB,
+    loginDB,
 };
 
 export { actionsCreators };
