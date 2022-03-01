@@ -23,7 +23,7 @@ const Post = () => {
   };
 
   const submit = () => {
-    // console.log(img_list);
+    console.log(img_list);
     // console.log(addPost);
     dispatch(postActions.addPostDB(addPost));
   };

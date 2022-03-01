@@ -65,8 +65,9 @@ const addPostDB = ({ title, comment }) => {
 
     const formData = new FormData();
     formData.append("images", img_list);
+
     axios
-      .post(`/images/upload`, formData, {
+      .post(`http://175.118.48.164:7050/images/upload`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((res) => {
