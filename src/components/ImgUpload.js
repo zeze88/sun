@@ -9,11 +9,12 @@ const ImgUpload = () => {
   const onChange = (e) => {
     const reader = new FileReader();
     const file = fileInput.current.files[0];
-
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      dispatch(postActions.imgPost(reader.result));
-    };
+    dispatch(postActions.imgPost(file));
+    console.log(file);
+    // reader.readAsDataURL(file);
+    // reader.onloadend = () => {
+    //   dispatch(postActions.imgPost(reader.result));
+    // };
   };
 
   return (
