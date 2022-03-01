@@ -23,15 +23,15 @@ const Post = () => {
   };
 
   const submit = () => {
-    console.log(img_list);
-    // console.log(addPost);
-    dispatch(postActions.imgUPUPDB(img_list?.img));
+    dispatch(postActions.addPostDB(addPost));
+    // dispatch(postActions.imgUPUPDB(img_list?.img));
   };
 
   const revise = () => {
     console.log(img_list?.img);
     dispatch(postActions.editPostDB(addPost));
   };
+  console.log(img_list);
 
   return (
     <PostWrap>

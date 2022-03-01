@@ -57,20 +57,22 @@ const onePostDB = () => {
   };
 };
 
-const imgUPUPDB = () => {
+const imgUPUPDB = (img) => {
   return function (dispatch, getState, { history }) {
+    const token = sessionStorage.getItem("token");
     const img_list = getState().post.preview;
 
-    const formData = new FormData();
-    formData.append("images", img_list);
-
+    let frm = new FormData();
+    frm.append("images", img);
+    console.log(frm);
+    return;
     axios
       .post(
         `http://175.118.48.164:7050/images/upload`,
         {
-          headers: { "Content-type": "application/x-www-form-urlencoded" },
+          headers: { Authorization: `${token}` },
         },
-        formData
+        frm
       )
       .then((res) => {
         console.log("img업로드 성공");
@@ -84,32 +86,41 @@ const imgUPUPDB = () => {
 // ================================ 추가 ================================
 const addPostDB = ({ title, comment }) => {
   return function (dispatch, getState, { history }) {
+    const token_res = sessionStorage.getItem("token");
     const img_list = getState().post.preview;
-
     const formData = new FormData();
     formData.append("images", img_list);
 
     axios
-      .post(`http://175.118.48.164:7050/images/upload`, formData)
+      .post(`http://175.118.48.164:7050/images/upload`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `${token_res}`,
+        },
+      })
       .then((res) => {
-        console.log("img업로드 성공");
         console.log(res);
-        //  img는 받아온 url로  변경
-        return;
-        apis
-          .addpost(title, comment, img_list)
-          .then((res) => {
-            console.log("post 업로드 성공");
-            console.log(res);
-            dispatch(addPost({ title, comment, img_list }));
-          })
-          .catch((err) => {
-            console.log(err);
-            console.log("post 올리기 실패");
-          });
+        console.log("img업로드 성공");
+        const imgUrl = res.data.url;
+        return imgUrl;
+      })
+      .then((imgUrl) => {
+        console.log("포스트 성공!");
+        console.log(imgUrl);
+        axios({
+          method: "post",
+          url: "http://175.118.48.164:7050/islogin/post/write",
+          data: {
+            postTitle: title,
+            postComment: comment,
+            postImg: imgUrl,
+          },
+          headers: { Authorization: `${token_res}` },
+        });
+        dispatch(addPost({ title, comment, imgUrl }));
       })
       .catch((err) => {
-        console.log("이미지 전송 실패!");
+        console.log(err);
       });
   };
 };
