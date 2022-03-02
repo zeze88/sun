@@ -6,7 +6,9 @@ import styled from "styled-components";
 
 let stompClient = null;
 const Test = () => {
-  const token = sessionStorage.getItem("token");
+  const token = {
+    connectHeaders: { Authorization: sessionStorage.getItem("token") },
+  };
   const [privChats, setPrivChats] = React.useState(new Map());
   const [publicChats, setPublicChats] = React.useState([]);
   const [connected, setConnected] = React.useState(false);
@@ -16,9 +18,6 @@ const Test = () => {
     receivername: "",
     message: "",
   });
-
-  let socket = new SockJs("http://175.118.48.164:7050/ws");
-  stompClient = Stomp.over(socket);
 
   React.useEffect(() => {
     stompConnect();
@@ -54,30 +53,36 @@ const Test = () => {
   };
 
   const stompConnect = () => {
-    try {
-      stompClient.debug = null;
-      stompClient.connect({}, onConnected, onError);
-    } catch (err) {}
+    // stompClient.debug = null;
+
+    let socket = new SockJs("http://175.118.48.164:7050/ws");
+    stompClient = Stomp.over(socket);
+    stompClient.connect(token, onConnected, onError);
   };
 
   //connect의 함수
   const onConnected = () => {
-    console.log("connect");
-    setConnected(true);
-
-    return;
-    const username = sessionStorage.getItem("nick");
-    if (!username) {
-      alert("로그인이 필요한 기능입니다. :)");
-      return;
-    } else {
-      setUserData({ ...userData, username: username });
-      setConnected(true);
-      console.log(userData);
-
-      stompClient.send("/app/hello", {}, JSON.stringify({ username }));
-      stompClient.subscribe("/topic/greetings", onPublicMessageReceived);
+    try {
+      const username = sessionStorage.getItem("nickname");
+      console.log(username);
+      if (!username) {
+        alert("로그인이 필요한 기능입니다 :)");
+      } else {
+        setConnected(true);
+        setUserData({ ...userData, username: username });
+        console.log(userData);
+        stompClient.send("/app/hello", {}, JSON.stringify({ username }));
+        stompClient.subscribe(
+          "/topic/greetings",
+          onPublicMessageReceived,
+          token
+        );
+        // userJoin();
+      }
+    } catch (err) {
+      console.log(err);
     }
+
     // stompClient.subscribe(
     //   `/topic/${userData.username}/private`,
     //   onPrivateMesssageReceived
@@ -85,16 +90,17 @@ const Test = () => {
   };
 
   const sendPublicMessage = () => {
-    const username = sessionStorage.getItem("nick");
+    const username = sessionStorage.getItem("nickname");
+
     if (stompClient) {
-      if (!userData) {
+      if (!userData.message) {
         alert("내용을 입력해주세요!");
-        return;
       } else {
         let chatMessage = {
           senderName: username,
           message: userData.message,
         };
+
         stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
         setUserData({ ...userData, message: "" });
       }
@@ -104,23 +110,25 @@ const Test = () => {
   // sendName과 같은 동작
   const userJoin = () => {
     let chatMessage = {
-      senderName: sessionStorage.getItem("nick"),
+      senderName: sessionStorage.getItem("nickname"),
     };
     stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
   };
 
   //subscribe의 함수
   const onPublicMessageReceived = (payload) => {
-    let payloadData = JSON.parse(payload.body);
+    console.log("what");
+    try {
+      let payloadData = JSON.parse(payload.body);
+      if (!privChats.get(payloadData.senderName)) {
+        privChats.set(payloadData.senderName, []);
+        setPrivChats(new Map(privChats));
+      }
 
-    if (!privChats.get(payloadData.senderName)) {
-      privChats.set(payloadData.senderName, []);
-      setPrivChats(new Map(privChats));
-    }
-
-    publicChats.push(payloadData);
-    setPublicChats([...publicChats]);
-    console.log(publicChats);
+      publicChats.push(payloadData);
+      setPublicChats([...publicChats]);
+      console.log(publicChats);
+    } catch (err) {}
   };
 
   const onError = (err) => {
@@ -143,7 +151,6 @@ const Test = () => {
                   ChatRoom
                 </li>
                 {[...privChats.keys()].map((name, index) => {
-                  console.log(name);
                   return (
                     <li
                       className={`member ${tab === name && "active"}`}
