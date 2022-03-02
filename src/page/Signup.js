@@ -56,54 +56,92 @@ function Signup (props) {
         setIsCheckNickname(false);
     }
     return (
-        <>
-            <div>
-                <div>
-                    <span>아이디</span>
-                    <input
+        <Container>
+                <Grid>
+                    <Input1
                     type="text"
                     placeholder="ID"
                     onChange={(e) => {
                         setUsername(e.target.value);
                     }}
                     />
-                    <button onClick={checkUsername} >중복체크</button>
-                </div>
-                <div>
-                    <span>닉네임</span>
-                    <input
+                    <CheckButton onClick={checkUsername} >중복체크</CheckButton>
+                </Grid>
+                <Grid>
+                    <Input1
                     type="text"
                     placeholder="Nickname"
                     onChange={(e) => {
                         setNickname(e.target.value);
                     }}
                     />
-                    <button onClick={checkNickname} >중복체크</button>
-                </div>
-                <div>
-                    <span>비밀번호</span>
-                    <input
+                    <CheckButton onClick={checkNickname}>중복체크</CheckButton>
+                </Grid>
+                <Grid>
+                    <Input2
                     type="password"
                     placeholder="password"
                     onChange={(e) => {
                         setPassword(e.target.value);
                     }}
                     />
-                </div>
-                <div>
-                    <span>비밀번호 확인</span>
-                    <input
+                </Grid>
+                <Grid>
+                    <Input2
                     type="password"
                     placeholder="passwordCheck"
                     onChange={(e) => {
                         setCheckPassword(e.target.value);
                     }}
                     />
-                </div>
-                <button onClick={signup}>회원가입</button>
-                <button onClick={() => {history.push('/login')}}>로그인</button>
-            </div>
-        </>
+                </Grid>
+                <Grid>
+                    <SignupButtom onClick={signup}>회원가입</SignupButtom>
+                </Grid>
+        </Container>
     );
 }
+
+const Container = styled.div`
+    width : 20rem;
+    margin : auto;
+    text-align : center;
+    align-items : center;
+    justify-content : center;
+`;
+
+const Grid = styled.div`
+width : 100%;
+display : flex;
+margin : 1rem;
+`;
+
+const Input1 = styled.input`
+width: 65%;
+border-top-left-radius : 1rem;
+border-bottom-left-radius : 1rem;
+border : 0px solid black;
+`;
+
+const Input2 = styled.input`
+width: 100%;
+border-radius : 1rem;
+border : 0px solid black;
+`;
+
+const CheckButton = styled.button`
+border-top-right-radius : 1rem;
+border-bottom-right-radius : 1rem;
+height: 2.8rem;
+margin-left: -1px;
+background-color: #393bdb;
+`;
+
+const SignupButtom = styled.button`
+width : 100%;
+border-radius : 1rem;
+border : 0px solid black;
+background-color: #393bdb;
+`;
+
 export default Signup;
