@@ -97,7 +97,10 @@ const loginDB = (username, password) => {
                     },
                 })
                 .then ((res)=> {
-                    console.log("로그인 유지")
+                    console.log(res)
+                    sessionStorage.setItem("uid", res.data.uid)
+                    sessionStorage.setItem("username", res.data.username)
+                    sessionStorage.setItem("nickname", res.data.nickname)
                     dispatch(setLogin(
                         {
                             uid: res.data.uid,
@@ -105,6 +108,7 @@ const loginDB = (username, password) => {
                             nickname: res.data.nickname,
                         })
                         );
+                    
                 })
                 .catch((err) => {
                     console.log("로그인 확인 실패", err)
