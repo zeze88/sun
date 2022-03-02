@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { actionsCreators as userActions } from "../redux/modules/user";
 import styled from "styled-components";
-import { setToken } from "../shared/token";
+import Signup from "./Signup";
 
 const Login = (props) => {
     const {history} = props
@@ -27,14 +27,18 @@ const Login = (props) => {
             <Text>Sign in to your account</Text>
             <Sign>
                 <Switch>
-                <input  onChange={ e => {setCheck(e.target.value)}} type="radio" name="select" value="login" ></input>
-                <label> 로그인 </label>
-
-                <input onChange={ e => {setCheck(e.target.value)}} type="radio" name="select" value="signup"></input>
-                <label >회원가입</label>
-
-                <input onChange={ e => {setCheck(e.target.value)}} type="radio" name="select" value="forget"></input>
-                <label >비밀번호 찾기</label>
+                    <label style={{textAlign:"left"}}>
+                        <input style={{display:"none"}} onChange={ e => {setCheck(e.target.value)}} type="radio" name="select" value="login"/>
+                        로그인
+                    </label>
+                    <label style={{textAlign:"left"}}>
+                        <input style={{display:"none"}} onChange={ e => {setCheck(e.target.value)}} type="radio" name="select" value="signup" />
+                        회원가입
+                    </label>
+                    <label style={{textAlign:"right"}}>
+                        <input style={{display:"none"}} onChange={ e => {setCheck(e.target.value)}} type="radio" name="select" value="forget" />
+                        비밀번호 찾기
+                    </label>
                 </Switch>
                 {
                     check === "login" ?
@@ -42,19 +46,11 @@ const Login = (props) => {
                     <InputDiv transform= "translate(rotate(45deg))">
                     <input type="text" placeholder="ID입력" onChange={e => {setUsername(e.target.value)}} />
                     <input type="password" placeholder="Password입력" onChange={e => {setPassword(e.target.value)}} />
-                    <button onClick={login}>로그인</button>
+                    <Button onClick={login}>Sign in</Button>
                     </InputDiv>
                 </Signin>
                 : check === "signup" 
-                ?   <Signup>
-                    <InputDiv>
-                        <input></input>
-                    </InputDiv>
-                    <InputDiv>
-                        <input></input>
-                    </InputDiv>
-                    <button onClick={() => {history.push('/signup')}}>회원가입</button>
-                </Signup>
+                ?  <Signup />
                 :
                 <Forget>
                     <input></input>
@@ -68,7 +64,9 @@ const Login = (props) => {
 const Container = styled.div`
 width : 100%;
 height : 100%;
-min-height : 1905px;
+min-width : 1900px;
+min-height : 940px;
+background: linear-gradient( #393bdb,  #aaabed);
 `;
 
 const Logo = styled.div`
@@ -100,18 +98,11 @@ const Sign = styled.div`
 `;
 
 const Switch = styled.div`
-    position: relative;
-    width : 20rem;
-    padding: 0 1rem;
+    width : 100%;
 `;
 
 const Signin = styled.div`
         
-`;
-
-const Signup = styled.div`
-
-line-height : 1rem;
 `;
 
 const Forget = styled.div`
@@ -120,7 +111,11 @@ line-height : 1rem;
 `;
 
 const InputDiv = styled.div`
+width : 100%
+`;
 
+const Button = styled.button`
+width : 100%;
 `;
 
 export default Login;
