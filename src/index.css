@@ -123,6 +123,10 @@ ul {
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
   margin: 5px 10px;
 }
+
+.message .self {
+  text-align: right;
+}
 .message-data {
   padding: 5px;
 }
