@@ -98,6 +98,7 @@ function Signup (props) {
                 <Grid>
                     <SignupButtom onClick={signup}>회원가입</SignupButtom>
                 </Grid>
+                <Indicator/>
         </Container>
     );
 }
@@ -106,42 +107,50 @@ const Container = styled.div`
     width : 20rem;
     margin : auto;
     text-align : center;
-    align-items : center;
-    justify-content : center;
 `;
 
 const Grid = styled.div`
-width : 100%;
-display : flex;
-margin : 1rem;
+    width : 100%;
+    display : flex;
+    margin : 1rem;
 `;
 
 const Input1 = styled.input`
-width: 65%;
-border-top-left-radius : 1rem;
-border-bottom-left-radius : 1rem;
-border : 0px solid black;
+    width: 65%;
+    border-top-left-radius : 0.5rem;
+    border-bottom-left-radius : 0.5rem;
+    border : 0px solid black;
 `;
 
 const Input2 = styled.input`
-width: 100%;
-border-radius : 1rem;
-border : 0px solid black;
+    width: 100%;
+    border-radius : 0.5rem;
+    border : 0px solid black;
 `;
 
 const CheckButton = styled.button`
-border-top-right-radius : 1rem;
-border-bottom-right-radius : 1rem;
-height: 2.8rem;
-margin-left: -1px;
-background-color: #393bdb;
+    border-top-right-radius : 1rem;
+    border-bottom-right-radius : 1rem;
+    height: 2.8rem;
+    margin-left: -1px;
+    background-color: #393bdb;
 `;
 
 const SignupButtom = styled.button`
-width : 100%;
-border-radius : 1rem;
-border : 0px solid black;
-background-color: #393bdb;
+    width : 100%;
+    border-radius : 1rem;
+    border : 0px solid black;
+    background-color: #393bdb;
 `;
 
+const Indicator = styled.div`
+    width: 1rem;
+    height: 1rem;
+    position: absolute;
+    background: white;
+    transition: transform 600ms cubic-bezier(.02,.94,.09,.97);
+    transform: rotate(45deg);
+    top: 20.8rem;
+    left: 57rem;
+`;
 export default Signup;
