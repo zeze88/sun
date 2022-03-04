@@ -15,7 +15,6 @@ const Test = () => {
   const [tab, setTab] = React.useState("CHATROOM");
   const [userData, setUserData] = React.useState({
     username: "",
-    receivername: "",
     message: "",
   });
 
@@ -57,7 +56,7 @@ const Test = () => {
 
     let socket = new SockJs("http://175.118.48.164:7050/ws");
     stompClient = Stomp.over(socket);
-    stompClient.connect(token, onConnected, onError);
+    stompClient.connect({}, onConnected, onError);
   };
 
   //connect의 함수
@@ -214,6 +213,7 @@ const Test = () => {
     </div>
   );
 };
+
 const ChatDiv = styled.div`
   /* display: flex;
   flex-direction: column;
