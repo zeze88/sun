@@ -19,12 +19,18 @@ const Create = () => {
   const onChange = (e) => {
     const id = e.target.id;
     const content = e.target.value;
+
     setAddPost({ ...addPost, [id]: content });
   };
 
   const submit = () => {
-    dispatch(postActions.addPostDB(addPost));
-    // dispatch(postActions.imgUPUPDB(img_list?.img));
+    const tag = addPost.tags.split("#").splice(1);
+    dispatch(
+      postActions.addPostDB({
+        ...addPost,
+        tags: tag,
+      })
+    );
   };
 
   const revise = () => {
@@ -37,6 +43,13 @@ const Create = () => {
     <PostWrap>
       <input id="title" onChange={onChange} type="text" />
       <input id="comment" onChange={onChange} type="text" />
+      <input
+        id="tags"
+        onChange={onChange}
+        type="text"
+        placeholder="tag 입력 # 붙여 주세요"
+      />
+
       <ImgUpload />
       <button onClick={submit}>click click</button>
       <button onClick={revise}>revise click</button>
