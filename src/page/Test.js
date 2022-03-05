@@ -98,22 +98,6 @@ const Test = () => {
     // );
   };
 
-  const sendPrivatMessage = () => {
-    if (stompClient) {
-      let chatMessage = {
-        senderName: userData.username,
-        receiverName: tab,
-        message: userData.message,
-      };
-      if (userData.username !== tab) {
-        privChats.get(tab).push(chatMessage);
-        setPrivChats(new Map(privChats));
-      }
-      stompClient.send("/app/private-message", {}, JSON.stringify(chatMessage));
-      setUserData({ ...userData, message: "" });
-    }
-  };
-
   const sendPublicMessage = () => {
     const username = sessionStorage.getItem("nickname");
 
