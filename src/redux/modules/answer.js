@@ -77,10 +77,10 @@ const delAnswerDB = (answsrId) => {
   };
 };
 
-const likeAnswerDB = (uid, pid, answrId, answerUid) => {
+const chooseAnswerDB = (uid, pid, answrId, answerUid) => {
   return function (dispatch, getState, { history }) {
     apis
-      .likeanswer(uid, pid, answrId, answerUid)
+      .chooseAnswer(uid, pid, answrId, answerUid)
       .then((res) => {
         console.log(res.data.status);
         const status = res.data.status;
@@ -123,7 +123,7 @@ const actionCreators = {
   addAnswerDB,
   editAnswerDB,
   delAnswerDB,
-  likeAnswerDB,
+  chooseAnswerDB,
 };
 
 export { actionCreators };
