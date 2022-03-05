@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 const NoticeList = ({ list }) => {
-  console.log(list);
   return (
     <React.Fragment>
       {list.map((data, idx) => (

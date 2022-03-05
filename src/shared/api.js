@@ -22,21 +22,29 @@ instance.interceptors.request.use(function (config) {
 // 데이터 요청 to 서버
 export const apis = {
   // ==================== post api ====================//
-  getpost: () => instance.get(`/post/get`),
+  getpost: () => instance.get(`/post/get/check`),
+  getpostnocheck: () => instance.get(`/post/get/nocheck`),
   onepost: () => instance.get(`/post/detailget`),
-  addpost: (title, comment, img) =>
+  addpost: (title, comment, img, tags) =>
     instance.post(`/islogin/post/write/`, {
       postTitle: title,
       postComment: comment,
       postImg: img,
+      tags: tags,
     }),
-  editpost: (pid, title, comment, img) =>
+  editpost: (pid, title, comment, img, tags) =>
     instance.put(`/islogin/post/revice/${pid}`, {
       postTitle: title,
       postComment: comment,
       postImg: img,
+      tags: tags,
     }),
   delpost: (pid) => instance.delete(`/islogin/post/delete/${pid}`),
+  likepost: (uid, pid) =>
+    instance.post(`/islogin/post/like`, {
+      uid: uid,
+      pid: pid,
+    }),
 
   // ==================== answer api ====================//
   getanswer: (answrId) => instance.get(`/answer/${answrId}`),
@@ -58,7 +66,7 @@ export const apis = {
     instance.delete(`/islogin/answer/delete/${answsrId}`, {
       answsrId: answsrId,
     }),
-  likeanswer: (uid, pid, answsrId, answerUid) =>
+  chooseAnswer: (uid, pid, answsrId, answerUid) =>
     instance.post(`/islogin/answer/like/`, {
       uid: uid,
       pid: pid,
