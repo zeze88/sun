@@ -48,22 +48,27 @@ export const apis = {
       answerComment: comment,
       answerImg: img,
     }),
-  editanswer: (pid, uid, title, comment, img) =>
-    instance.put(`/islogin/answer/revice/${pid}`, {
-      uid: uid,
-      pid: pid,
+  editanswer: (answsrId, title, comment, img) =>
+    instance.put(`/islogin/answer/revice/${answsrId}`, {
       answerTitle: title,
       answerComment: comment,
       answerImg: img,
     }),
-  delanswer: (uid, answsrId) =>
-    instance.delete(`/islogin/answer/delete/`, {
-      uid: uid,
+  delanswer: (answsrId) =>
+    instance.delete(`/islogin/answer/delete/${answsrId}`, {
       answsrId: answsrId,
     }),
-  likeanswer: (uid, pid) =>
+  likeanswer: (uid, pid, answsrId, answerUid) =>
     instance.post(`/islogin/answer/like/`, {
       uid: uid,
       pid: pid,
+      answsrId: answsrId,
+      answerUid: answerUid,
+    }),
+
+  // ==================== tag api ====================//\
+  tagsearch: (uid, pid, answsrId, answerUid) =>
+    instance.post(`/islogin/tag/search`, {
+      tag: [],
     }),
 };
