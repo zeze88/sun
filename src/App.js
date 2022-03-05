@@ -8,6 +8,7 @@ import Post from "./page/Post";
 import Login from "./page/Login";
 import Create from "./page/Create";
 import Test from "./page/Test";
+import Detail from "./page/Detail";
 import _Test from "./components/_Test";
 
 function App() {
@@ -19,6 +20,8 @@ function App() {
       <Route path="/login" exact component={Login} />
       <Route path="/chatchat" exact component={Test} />
       <Route path="/chatchat1" exact component={_Test} />
+      <Route path="/postD" exact component={Detail} />
+
     </div>
   );
 }

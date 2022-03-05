@@ -58,7 +58,7 @@ const _Test = () => {
     stompClient.subscribe('/topic/greetings2',Public, token);
 
     //1:1 대화에서는 topic이 아닌 quene를 사용해볼수도? ( topic은 1대 다수 - quene는 1:1)
-    // stompClient.subscribe('/user/'+userData.username+'/private', onPrivateMessageReceived)
+    stompClient.subscribe(`/queue/user${username1}`, onPrivateMessageReceived, token)
 
     //userJoin 함수 실행
     userJoin();
@@ -81,18 +81,18 @@ const _Test = () => {
     console.log(err);
   }
 // // 1:1메세지 (귓속말) 함수
-//   const onPrivateMessageReceived = (payload) =>{
-//     let payloadData=JSON.parse(payload.body);
-//     if(privateChats.get(payloadData.senderName)){
-//       privateChats.get(payloadData.senderName).push(payloadData);
-//       setprivateChats(new Map(privateChats));
-//     }else{
-//       let list = [];
-//       list.push(payloadData);
-//       privateChats.set(payloadData.senderName, list);
-//       setprivateChats(new Map(privateChats));
-//     }
-//   }
+  const onPrivateMessageReceived = (payload) =>{
+    let payloadData=JSON.parse(payload.body);
+    if(privateChats.get(payloadData.senderName)){
+      privateChats.get(payloadData.senderName).push(payloadData);
+      setprivateChats(new Map(privateChats));
+    }else{
+      let list = [];
+      list.push(payloadData);
+      privateChats.set(payloadData.senderName, list);
+      setprivateChats(new Map(privateChats));
+    }
+  }
 
   //오픈 채팅방 메세지 보내기 함수
   const sendPublicMessage = ()=> {
@@ -110,22 +110,23 @@ const _Test = () => {
   }
 
   // //1:1 메세지보내기 함수
-  // const sendPrivateMessage = ()=> {
-  //   if(stompClient){
-  //     let chatMessage={
-  //       senderName:userData.username,
-  //       recieverName:tab,
-  //       message:userData.message,
-  //       status:'MESSAGE'
-  //     };
-  //     if(userData.username !== tab){
-  //       privateChats.get(tab).push(chatMessage);
-  //       setprivateChats(new Map(privateChats))
-  //     }
-  //     stompClient.send("/app/privat-/message", {}, JSON.stringify(chatMessage));
-  //     setUserData({ ...userData, message: "" });
-  //   }
-  // }
+  const sendPrivateMessage = ()=> {
+    if(stompClient){
+      let chatMessage={
+        senderName:userData.username,
+        message:userData.message,
+        status:'MESSAGE',
+        opposingUserName:'jjy',
+      };
+      
+      // if(userData.username !== tab){
+      //   privateChats.get(tab).push(chatMessage);
+      //   setprivateChats(new Map(privateChats))
+      // }
+      stompClient.send("/app/user", token, JSON.stringify(chatMessage));
+      setUserData({ ...userData, message: "" });
+    }
+  }
 
   //전체 채팅방 메세지
   const Public =(payload) => {
@@ -177,15 +178,22 @@ const _Test = () => {
           </ul>
 
           <div className='send-message'>
-            <input type='text' className='input-maeeage'
+            <input  type='text' className='input-maeeage'
             name='message' placeholder='메세지를 입력하세요' value={userData.message}
             onChange={handleValue}/>
             <button type='button' className='send-button' onClick={sendPublicMessage}>send</button>
           </div>
+
+          <div className='send-message'>
+            <input type='text' className='input-maeeage' 
+            name='message' placeholder={'에게 메세지 보내기'} value={userData.message}
+            onChange={handleValue}/>
+            <button type='button' className='send-button' onClick={sendPrivateMessage}>2</button>
+          </div>
         </div>}
 
         {/* 1:1 채팅창 */}
-        {/* {tab !== "CHATROOM" && <div className='chat-content'>
+        {tab !== "CHATROOM" && <div className='chat-content'>
         <ul className='chat-message'>
         {[,,,privateChats.get(tab)].map((chat, index) =>(
               <li className='message' key={index}>
@@ -202,7 +210,7 @@ const _Test = () => {
             onChange={handleValue}/>
             <button type='button' className='send-button' onClick={sendPrivateMessage}>send</button>
           </div>
-        </div>} */}
+        </div>}
         
       </div>
     </div>
