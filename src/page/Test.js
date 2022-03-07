@@ -81,11 +81,7 @@ const Test = () => {
           onPublicMessageReceived,
           token
         );
-        stompClient.subscribe(
-          "/topic/greetings",
-          onPublicMessageReceived,
-          token
-        );
+
         // userJoin();
       }
     } catch (err) {
@@ -118,13 +114,13 @@ const Test = () => {
   };
 
   // sendName과 같은 동작
-  const userJoin = () => {
-    let chatMessage = {
-      senderName: sessionStorage.getItem("nickname"),
-      status: "JOIN",
-    };
-    stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
-  };
+  // const userJoin = () => {
+  //   let chatMessage = {
+  //     senderName: sessionStorage.getItem("nickname"),
+  //     status: "JOIN",
+  //   };
+  //   stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
+  // };
 
   //subscribe의 함수
   const onPublicMessageReceived = (payload) => {
@@ -141,7 +137,6 @@ const Test = () => {
       case "MESSAGE":
         publicChats.push(payloadData);
         setPublicChats([...publicChats]);
-
         break;
     }
   };
