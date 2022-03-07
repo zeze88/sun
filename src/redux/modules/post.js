@@ -4,6 +4,7 @@ import axios from "axios";
 import { apis } from "../../shared/api";
 
 const GET_POST = "GET_POST";
+const GET_POSTCHK = "GET_POSTCHK";
 const ONE_POST = "ONE_POST";
 const ADD_POST = "ADD_POST";
 const EDIT_POST = "EDIT_POST";
@@ -11,6 +12,7 @@ const DEL_POST = "DEL_POST";
 const IMG_POST = "IMG_POST";
 
 const getPost = createAction(GET_POST, (post) => ({ post }));
+const getPostNoChk = createAction(GET_POSTCHK, (post) => ({ post }));
 const onePost = createAction(ONE_POST, (post) => ({ post }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
 const editPost = createAction(EDIT_POST, (post) => ({ post }));
@@ -19,19 +21,83 @@ const imgPost = createAction(IMG_POST, (preview) => ({ preview }));
 
 const initialState = {
   list: [],
+  nockeckList: [],
   preview: "",
 };
+const mock = [
+  {
+    pId: 1,
+    uid: 1,
+    nickname: "자바킬러",
+    postTitle: "자바 쉽게 설명해주실분",
+    postComment: "가능한가요?",
+    postImg: "img",
+    tags: ["자바", "소켓", "socket"],
+    postLikeCount: 1,
+    createdAt: "2022-03-07T14:20:37.679",
+  },
+  {
+    pId: 2,
+    uid: 2,
+    nickname: "사냥꾼",
+    postTitle: "살려줘",
+    postComment: " 이거오늘 안해 해결 안하면 퇴사하래요. 살려줘!!!!",
+    postImg: "img",
+    tags: ["자바", "자바스크립트"],
+    postLikeCount: 11,
+    createdAt: "2022-03-07T14:20:37.679",
+  },
+];
 
+const mock2 = [
+  {
+    pId: 1,
+    uid: 1,
+    nickname: "2222자바킬러",
+    postTitle: "222222자바 쉽게 설명해주실분",
+    postComment: "2222222가능한가요?",
+    postImg: "img",
+    tags: ["자바", "소켓", "socket"],
+    postLikeCount: 1,
+    createdAt: "2020-02-01 22:11:00",
+  },
+  {
+    pId: 2,
+    uid: 2,
+    nickname: "222사냥꾼",
+    postTitle: "2222살려줘",
+    postComment: " 222222222이거오늘 안해 해결 안하면 퇴사하래요. 살려줘!!!!",
+    postImg: "222222img",
+    tags: ["자바", "자바스크립트"],
+    postLikeCount: 11,
+    createdAt: "2020-03-03 22:00:00",
+  },
+];
 // ===================================================================
 // ======================== 게시글 리스트 가지고오기========================
 
-const getPostDB = (token) => {
+const getPostDB = () => {
   return function (dispatch, getState, { history }) {
     apis
       .getpost()
       .then((res) => {
         console.log(res);
-        dispatch(getPost());
+        dispatch(getPost(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log("error get post");
+      });
+  };
+};
+
+const getPostNocheckDB = () => {
+  return function (dispatch, getState, { history }) {
+    apis
+      .getpostnocheck()
+      .then((res) => {
+        console.log(res);
+        dispatch(getPostNoChk(res.data));
       })
       .catch((err) => {
         console.log(err);
@@ -42,13 +108,13 @@ const getPostDB = (token) => {
 
 // ====================================================================
 // ======================== 선택한 게시글 가지고오기 ========================
-const onePostDB = () => {
+const getOnePostDB = (pid) => {
   return function (dispatch, getState, { history }) {
     apis
-      .onepost()
+      .onepost(pid)
       .then((res) => {
         console.log(res);
-        dispatch(onePost());
+        // dispatch(getPost([res.post]));
       })
       .catch((err) => {
         console.log(err);
@@ -57,34 +123,9 @@ const onePostDB = () => {
   };
 };
 
-const imgUPUPDB = (img) => {
-  return function (dispatch, getState, { history }) {
-    const token = sessionStorage.getItem("token");
-    const img_list = getState().post.preview;
-
-    let frm = new FormData();
-    frm.append("images", img);
-    console.log(frm);
-    return;
-    axios
-      .post(
-        `http://175.118.48.164:7050/images/upload`,
-        {
-          headers: { Authorization: `${token}` },
-        },
-        frm
-      )
-      .then((res) => {
-        console.log("img업로드 성공");
-        console.log(res);
-        //  img는 받아온 url로  변경
-        return;
-      });
-  };
-};
 // =====================================================================
 // ================================ 추가 ================================
-const addPostDB = ({ title, comment }) => {
+const addPostDB = ({ title, comment, tags }) => {
   return function (dispatch, getState, { history }) {
     const token_res = sessionStorage.getItem("token");
     const img_list = getState().post.preview;
@@ -99,14 +140,14 @@ const addPostDB = ({ title, comment }) => {
         },
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         console.log("img업로드 성공");
         const imgUrl = res.data.url;
         return imgUrl;
       })
       .then((imgUrl) => {
         console.log("포스트 성공!");
-        console.log(imgUrl);
+        // console.log(imgUrl);
         axios({
           method: "post",
           url: "http://175.118.48.164:7050/islogin/post/write",
@@ -114,10 +155,13 @@ const addPostDB = ({ title, comment }) => {
             postTitle: title,
             postComment: comment,
             postImg: imgUrl,
+            tags: tags,
           },
           headers: { Authorization: `${token_res}` },
+        }).then((res) => {
+          console.log(res);
+          dispatch(addPost({ title, comment, imgUrl, tags, pid: res.data }));
         });
-        dispatch(addPost({ title, comment, imgUrl }));
       })
       .catch((err) => {
         console.log(err);
@@ -127,27 +171,44 @@ const addPostDB = ({ title, comment }) => {
 
 // =====================================================================
 // ================================ 수정 ================================
-const editPostDB = ({ pid, title, comment, img }) => {
+const editPostDB = ({ pid, title, comment, tags }) => {
   return function (dispatch, getState, { history }) {
+    const token_res = sessionStorage.getItem("token");
+    const img_list = getState().post.preview;
     const formData = new FormData();
-    formData.append("images", img);
+    formData.append("images", img_list);
+    console.log(token_res);
+
     axios
-      .post(`/images/upload`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+      .post(`http://175.118.48.164:7050/images/upload`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `${token_res}`,
+        },
       })
       .then((res) => {
-        console.log(res);
-        //  img는 받아온 url로  변경
-        apis
-          .editpost(pid, title, comment, img)
-          .then((res) => {
-            console.log(res);
-            dispatch(editPost({ pid, title, comment, img }));
-          })
-          .catch((err) => {
-            console.log(err);
-            console.log("포스트 수정 실패");
-          });
+        console.log("img업로드 성공");
+        const imgUrl = res.data.url;
+        return imgUrl;
+      })
+      .then((imgUrl) => {
+        console.log("포스트 성공!");
+        axios({
+          method: "PUT",
+          url: `http://175.118.48.164:7050/islogin/post/revice/${pid}`,
+          data: {
+            pid: pid,
+            postTitle: title,
+            postComment: comment,
+            postImg: imgUrl,
+            tags: tags,
+          },
+          headers: { Authorization: `${token_res}` },
+        });
+        dispatch(editPost({ title, comment, imgUrl, tags, pid }));
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 };
@@ -168,7 +229,20 @@ const delPostDB = (pid) => {
       });
   };
 };
-
+const postLikeDB = (uid, pid) => {
+  return function (dispatch, getState, { history }) {
+    apis
+      .likepost(uid, pid)
+      .then((res) => {
+        console.log(res);
+        // dispatch(delPost(uid,pid));
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log("error");
+      });
+  };
+};
 // =====================================================================
 // ============================== reducer ==============================
 export default handleActions(
@@ -176,6 +250,10 @@ export default handleActions(
     [GET_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.list = action.payload.post;
+      }),
+    [GET_POSTCHK]: (state, action) =>
+      produce(state, (draft) => {
+        draft.nockeckList = action.payload.post;
       }),
     [ONE_POST]: (state, action) =>
       produce(state, (draft) => {
@@ -203,12 +281,13 @@ export default handleActions(
 
 const actionCreators = {
   getPostDB,
-  onePostDB,
+  getOnePostDB,
   addPostDB,
   editPostDB,
   delPostDB,
   imgPost,
-  imgUPUPDB,
+  getPostNocheckDB,
+  postLikeDB,
 };
 
 export { actionCreators };

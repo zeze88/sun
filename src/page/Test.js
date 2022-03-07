@@ -81,11 +81,7 @@ const Test = () => {
           onPublicMessageReceived,
           token
         );
-        stompClient.subscribe(
-          "/topic/greetings",
-          onPublicMessageReceived,
-          token
-        );
+
         // userJoin();
       }
     } catch (err) {
@@ -96,22 +92,6 @@ const Test = () => {
     //   `/topic/${userData.username}/private`,
     //   onPrivateMesssageReceived
     // );
-  };
-
-  const sendPrivatMessage = () => {
-    if (stompClient) {
-      let chatMessage = {
-        senderName: userData.username,
-        receiverName: tab,
-        message: userData.message,
-      };
-      if (userData.username !== tab) {
-        privChats.get(tab).push(chatMessage);
-        setPrivChats(new Map(privChats));
-      }
-      stompClient.send("/app/private-message", {}, JSON.stringify(chatMessage));
-      setUserData({ ...userData, message: "" });
-    }
   };
 
   const sendPublicMessage = () => {
@@ -134,13 +114,13 @@ const Test = () => {
   };
 
   // sendName과 같은 동작
-  const userJoin = () => {
-    let chatMessage = {
-      senderName: sessionStorage.getItem("nickname"),
-      status: "JOIN",
-    };
-    stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
-  };
+  // const userJoin = () => {
+  //   let chatMessage = {
+  //     senderName: sessionStorage.getItem("nickname"),
+  //     status: "JOIN",
+  //   };
+  //   stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
+  // };
 
   //subscribe의 함수
   const onPublicMessageReceived = (payload) => {
@@ -157,7 +137,6 @@ const Test = () => {
       case "MESSAGE":
         publicChats.push(payloadData);
         setPublicChats([...publicChats]);
-
         break;
     }
   };
