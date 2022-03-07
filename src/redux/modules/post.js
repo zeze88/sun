@@ -34,7 +34,7 @@ const mock = [
     postImg: "img",
     tags: ["자바", "소켓", "socket"],
     postLikeCount: 1,
-    createdAt: "2020-02-01 22:11:00",
+    createdAt: "2022-03-07T14:20:37.679",
   },
   {
     pId: 2,
@@ -45,7 +45,7 @@ const mock = [
     postImg: "img",
     tags: ["자바", "자바스크립트"],
     postLikeCount: 11,
-    createdAt: "2020-03-03 22:00:00",
+    createdAt: "2022-03-07T14:20:37.679",
   },
 ];
 
@@ -78,13 +78,11 @@ const mock2 = [
 
 const getPostDB = () => {
   return function (dispatch, getState, { history }) {
-    dispatch(getPost(mock));
-    return;
     apis
       .getpost()
       .then((res) => {
         console.log(res);
-        dispatch(getPost(mock));
+        dispatch(getPost(res.data));
       })
       .catch((err) => {
         console.log(err);
@@ -95,14 +93,11 @@ const getPostDB = () => {
 
 const getPostNocheckDB = () => {
   return function (dispatch, getState, { history }) {
-    dispatch(getPostNoChk(mock2));
-
-    return;
     apis
       .getpostnocheck()
       .then((res) => {
         console.log(res);
-        dispatch(getPostNoChk(mock));
+        dispatch(getPostNoChk(res.data));
       })
       .catch((err) => {
         console.log(err);
@@ -113,13 +108,13 @@ const getPostNocheckDB = () => {
 
 // ====================================================================
 // ======================== 선택한 게시글 가지고오기 ========================
-const onePostDB = () => {
+const getOnePostDB = (pid) => {
   return function (dispatch, getState, { history }) {
     apis
-      .onepost()
+      .onepost(pid)
       .then((res) => {
         console.log(res);
-        dispatch(onePost());
+        // dispatch(getPost([res.post]));
       })
       .catch((err) => {
         console.log(err);
@@ -145,14 +140,14 @@ const addPostDB = ({ title, comment, tags }) => {
         },
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         console.log("img업로드 성공");
         const imgUrl = res.data.url;
         return imgUrl;
       })
       .then((imgUrl) => {
         console.log("포스트 성공!");
-        console.log(imgUrl);
+        // console.log(imgUrl);
         axios({
           method: "post",
           url: "http://175.118.48.164:7050/islogin/post/write",
@@ -163,8 +158,10 @@ const addPostDB = ({ title, comment, tags }) => {
             tags: tags,
           },
           headers: { Authorization: `${token_res}` },
+        }).then((res) => {
+          console.log(res);
+          dispatch(addPost({ title, comment, imgUrl, tags, pid: res.data }));
         });
-        dispatch(addPost({ title, comment, imgUrl }));
       })
       .catch((err) => {
         console.log(err);
@@ -180,6 +177,7 @@ const editPostDB = ({ pid, title, comment, tags }) => {
     const img_list = getState().post.preview;
     const formData = new FormData();
     formData.append("images", img_list);
+    console.log(token_res);
 
     axios
       .post(`http://175.118.48.164:7050/images/upload`, formData, {
@@ -189,17 +187,15 @@ const editPostDB = ({ pid, title, comment, tags }) => {
         },
       })
       .then((res) => {
-        console.log(res);
         console.log("img업로드 성공");
         const imgUrl = res.data.url;
         return imgUrl;
       })
       .then((imgUrl) => {
         console.log("포스트 성공!");
-        console.log(imgUrl);
         axios({
-          method: "post",
-          url: "http://175.118.48.164:7050/islogin/post/write",
+          method: "PUT",
+          url: `http://175.118.48.164:7050/islogin/post/revice/${pid}`,
           data: {
             pid: pid,
             postTitle: title,
@@ -209,7 +205,7 @@ const editPostDB = ({ pid, title, comment, tags }) => {
           },
           headers: { Authorization: `${token_res}` },
         });
-        dispatch(addPost({ title, comment, imgUrl }));
+        dispatch(editPost({ title, comment, imgUrl, tags, pid }));
       })
       .catch((err) => {
         console.log(err);
@@ -233,7 +229,20 @@ const delPostDB = (pid) => {
       });
   };
 };
-
+const postLikeDB = (uid, pid) => {
+  return function (dispatch, getState, { history }) {
+    apis
+      .likepost(uid, pid)
+      .then((res) => {
+        console.log(res);
+        // dispatch(delPost(uid,pid));
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log("error");
+      });
+  };
+};
 // =====================================================================
 // ============================== reducer ==============================
 export default handleActions(
@@ -272,12 +281,13 @@ export default handleActions(
 
 const actionCreators = {
   getPostDB,
-  onePostDB,
+  getOnePostDB,
   addPostDB,
   editPostDB,
   delPostDB,
   imgPost,
   getPostNocheckDB,
+  postLikeDB,
 };
 
 export { actionCreators };

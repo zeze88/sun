@@ -1,12 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import { useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import ImgUpload from "../components/ImgUpload";
 import { actionCreators as postActions } from "../redux/modules/post";
 
 const Create = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const params = useParams().pid;
+  const pathName = location.pathname === "/create";
   const img_list = useSelector((state) => state.post?.preview);
   const [addPost, setAddPost] = React.useState("");
 
@@ -24,23 +27,25 @@ const Create = () => {
   };
 
   const submit = () => {
-    const tag = addPost.tags.split("#").splice(1);
+    const tags = addPost.tags.split("#").splice(1);
+
     dispatch(
       postActions.addPostDB({
         ...addPost,
-        tags: tag,
+        tags: tags,
       })
     );
   };
 
   const revise = () => {
-    console.log(img_list?.img);
-    dispatch(postActions.editPostDB(addPost));
+    const tags = addPost.tags.split("#").splice(1);
+    console.log(tags);
+    dispatch(postActions.editPostDB({ pid: params, ...addPost, tags: tags }));
   };
-  console.log(img_list);
 
   return (
     <PostWrap>
+      {pathName ? <h1>글쓰기 페이지</h1> : <h1>수정페이지</h1>}
       <input id="title" onChange={onChange} type="text" />
       <input id="comment" onChange={onChange} type="text" />
       <input
@@ -51,8 +56,12 @@ const Create = () => {
       />
 
       <ImgUpload />
-      <button onClick={submit}>click click</button>
-      <button onClick={revise}>revise click</button>
+
+      {pathName ? (
+        <button onClick={submit}>글쓰기 click</button>
+      ) : (
+        <button onClick={revise}>수정 click</button>
+      )}
     </PostWrap>
   );
 };
