@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Comment from '../components/Comment';
 
 const Detail = () => {
     return (
@@ -20,8 +21,15 @@ const Detail = () => {
                 </div>
             </Top>
             <Line/>
+            <ContentBox>
+            <Content>
+                내용
+            </Content>
+            </ContentBox>
             </Question>
-            
+            <Commentbox className='comment'>
+                <Comment />
+            </Commentbox>
         </Container>
     );
 };
@@ -37,7 +45,7 @@ const Question = styled.div`
 width : 70%;
 height : 100%;
 min-height : 500px;
-border-radius : 2rem;
+border-radius : 1rem;
 background-color : #d3d3d3;
 `;
 
@@ -51,6 +59,22 @@ const Line = styled.hr`
     color : #D3D3D3;
     border-width : 1px;
     width: 98.8%;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
 `;
+
+const ContentBox = styled.div`
+width : 100%;
+height : 21rem;
+`;
+const Content = styled.div`
+width : 95%;
+height : 95%;
+margin : auto;
+`;
+const Commentbox = styled.div`
+@media screen and (min-width: 1050px){
+    .comment { width : 50%}
+}
+`;
+
 export default Detail;

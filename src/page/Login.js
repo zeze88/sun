@@ -12,14 +12,12 @@ const Login = (props) => {
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
     
-
     const login = () => {
         if ( username === "" || password === "") {
             window.alert("모두 입력해주세요.")
             return;
         }
         dispatch(userActions.loginDB(username, password));
-        
     }
     return (
         <Container>
