@@ -40,12 +40,14 @@ const checkUsernameDB = (username, isCheckUsername) => {
 
 const checkNicknameDB = (userNickname, isCheckNickname) => {
     return async function (dispatch, getState, { history }) {
-        await axios.post("http://175.118.48.164:7050/user/signup/nickname", { "userNickname" : userNickname }
+        console.log(userNickname, isCheckNickname);
+        await axios.post("http://175.118.48.164:7050/user/signup/nickname", { "nickname" : userNickname }
         ).then((res) => {
             if (res.data === true) {
                 window.alert("이미 존재하는 닉네임 입니다.");
                 return;
             }
+            console.log(res)
             dispatch(setCheckNickname(!isCheckNickname));
         })
     }

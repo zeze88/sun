@@ -1,22 +1,28 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useDispatch } from "react-redux";
+import { actionsCreators as userActions} from "../redux/modules/user"
 
 
-const isLogin = sessionStorage.getItem("isLogin")
-const nickname = sessionStorage.getItem("nickname")
-console.log(nickname)
-
-const onKeyPress = (e) => {
-    if(e.key == 'Enter'){
-        test();
-    }
-}
-
-const test = () => {
-    console.log("검색을 시작합니다.")
-}
 
 const Serch = () => {
+
+    const dispatch = useDispatch
+    const isLogin = sessionStorage.getItem("isLogin")
+    const nickname = sessionStorage.getItem("nickname")
+    console.log(nickname)
+    
+    const onKeyPress = (e) => {
+        if(e.key == 'Enter'){
+            test(e);
+        }
+    }
+    
+    const test = (e) => {
+        const find = e.target.value 
+        dispatch(userActions.serchDB(find));
+    }
+    
     return (
         <Container>
             <CategoryImg>
@@ -25,11 +31,10 @@ const Serch = () => {
             <SerchBar>
                 <Img>🔍</Img>
                 <SerchInput onKeyPress={onKeyPress} placeholder="검색">
-
                 </SerchInput>
                 
                 {isLogin 
-                ? 
+                ?
                 <>
                     <Line/>
                     <My>
