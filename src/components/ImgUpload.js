@@ -1,20 +1,25 @@
 import React from "react";
+import { useLocation, useParams } from "react-router";
 import { useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
+import { actionCreators as answerActions } from "../redux/modules/answer";
 
 const ImgUpload = () => {
   const fileInput = React.useRef();
+  const location = useLocation();
+  const pathName = location.pathname !== "/create";
   const dispatch = useDispatch();
+  console.log(pathName);
 
   const onChange = (e) => {
-    const reader = new FileReader();
     const file = fileInput.current.files[0];
-    dispatch(postActions.imgPost(file));
-    console.log(file);
-    // reader.readAsDataURL(file);
-    // reader.onloadend = () => {
-    //   dispatch(postActions.imgPost(reader.result));
-    // };
+    if (pathName) {
+      console.log("답변");
+      dispatch(answerActions.asImgPost(file));
+    } else {
+      console.log("게시글");
+      dispatch(postActions.imgPost(file));
+    }
   };
 
   return (
