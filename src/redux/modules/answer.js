@@ -40,6 +40,7 @@ const addAnswerDB = ({ pid, uid, title, comment }) => {
   return function (dispatch, getState, { history }) {
     const token_res = sessionStorage.getItem("token");
     const img_list = getState().answer.asPreview;
+    console.log(img_list);
     const formData = new FormData();
     formData.append("images", img_list);
 
@@ -51,7 +52,7 @@ const addAnswerDB = ({ pid, uid, title, comment }) => {
         },
       })
       .then((res) => {
-        // console.log(res);
+        console.log("img업로드 성공");
         const imgUrl = res.data.url;
         return imgUrl;
       })
@@ -154,7 +155,7 @@ const delAnswerDB = (answsrId) => {
 };
 
 const chooseAnswerDB = ({ uid, pid, answrId, answerUid }) => {
-  return function (dispatch, getState, { history }) {
+  return function (dispatch) {
     apis
       .chooseAnswer(uid, pid, answrId, answerUid)
       .then((res) => {
@@ -190,6 +191,10 @@ export default handleActions(
       produce(state, (draft) => {
         // draft.list;
       }),
+    [AS_IMG_POST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.asPreview = action.payload.asPreview;
+      }),
   },
   initialState
 );
@@ -200,6 +205,7 @@ const actionCreators = {
   editAnswerDB,
   delAnswerDB,
   chooseAnswerDB,
+  asImgPost,
 };
 
 export { actionCreators };
