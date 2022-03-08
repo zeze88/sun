@@ -7,7 +7,7 @@ const MONTH_RANKING = "MONTH_RANKING";
 const WEEK_RANKING = "WEEK_RANKING";
 
 const initialState = {
-  totla_list: [],
+  total_list: [],
   month_list: [],
   week_list: [],
 };
@@ -58,7 +58,7 @@ export default handleActions(
   {
     [TOTAL_RANKING]: (state, action) =>
       produce(state, (draft) => {
-        draft.totla_list = action.payload.list;
+        draft.total_list = action.payload.list;
       }),
     [MONTH_RANKING]: (state, action) =>
       produce(state, (draft) => {
@@ -66,7 +66,7 @@ export default handleActions(
       }),
     [WEEK_RANKING]: (state, action) =>
       produce(state, (draft) => {
-        draft.list = action.payload.list;
+        draft.week_list = action.payload.list;
       }),
   },
   initialState
