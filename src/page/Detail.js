@@ -77,9 +77,9 @@ const Detail = () => {
       <Answer />
       <AnswerList />
 
-      <Commentbox className="comment">
+      {/* <Commentbox className="comment">
         <Comment />
-      </Commentbox>
+      </Commentbox> */}
     </Container>
   );
 };
@@ -121,6 +121,7 @@ const Content = styled.div`
   height: 95%;
   margin: auto;
 `;
+
 const Commentbox = styled.div`
   @media screen and (min-width: 1050px) {
     .comment {
