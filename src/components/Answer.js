@@ -4,20 +4,19 @@ import styled from "styled-components";
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import ImgUpload from "./ImgUpload";
-import AnswerList from "../components/AnswerList";
 
 import { actionCreators as answerActions } from "../redux/modules/answer";
 
-const Answer = ({ edit }) => {
+const Answer = () => {
   const dispatch = useDispatch();
 
   const params = useParams().pid;
   const user_info = sessionStorage.getItem("uid");
   const [addAnswer, setAddAnswer] = React.useState("");
+
   const onChange = (e) => {
     const id = e.target.id;
     const content = e.target.value;
-
     setAddAnswer({ ...addAnswer, [id]: content });
   };
 
@@ -31,7 +30,7 @@ const Answer = ({ edit }) => {
   const editAnswer = () => {
     // dispatch(answerActions.editAnswerDB(answsrId, addAnswer));
     //answsrId 가 null 로 내려와요
-    dispatch(answerActions.editAnswerDB({ answsrId: 4, ...addAnswer }));
+    // dispatch(answerActions.editAnswerDB({ answsrId: 5005, ...addAnswer }));
   };
 
   return (
