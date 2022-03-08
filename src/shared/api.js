@@ -38,7 +38,7 @@ export const apis = {
     }),
 
   // ==================== answer api ====================//
-  getanswer: (answrId) => instance.get(`/answer/${answrId}`),
+  getanswer: (pid) => instance.get(`/answer/get/${pid}`),
 
   addanswer: (pid, uid, title, comment, img) =>
     instance.post(`/islogin/answer/${pid}`, {

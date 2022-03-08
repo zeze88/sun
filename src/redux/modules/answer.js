@@ -22,16 +22,13 @@ const initialState = {
   asPreview: "",
 };
 
-const getAnswerDB = (answrId, answerList) => {
+const getAnswerDB = (pid) => {
   return function (dispatch, getState, { history }) {
-    console.log(answerList);
     apis
-      .getpost(answrId)
+      .getanswer(pid)
       .then((res) => {
-        console.log(res);
-        // const answerList = res.data
-        // console.log(answerList);
-        dispatch(getAnswer(answrId));
+        console.log(res.data);
+        dispatch(getAnswer(res.data));
       })
       .catch((err) => {
         console.log(err);
@@ -108,12 +105,11 @@ const editAnswerDB = ({ answsrId, title, comment }) => {
         },
       })
       .then((res) => {
-        console.log("img업로드 성공");
         const imgUrl = res.data.url;
         return imgUrl;
       })
       .then((imgUrl) => {
-        console.log("answer 성공!");
+        console.log("img업로드 성공");
         console.log(imgUrl);
         axios({
           method: "put",
@@ -123,9 +119,10 @@ const editAnswerDB = ({ answsrId, title, comment }) => {
             answerComment: comment,
             answerImg: imgUrl,
           },
-          headers: { Authorization: `${token_res}` },
+          headers: { Authorization: token_res },
         }).then((res) => {
           console.log(res);
+          console.log("answer 성공!");
           dispatch(
             editAnswer({
               title,
@@ -156,9 +153,7 @@ const delAnswerDB = (answsrId) => {
   };
 };
 
-
 const chooseAnswerDB = ({ uid, pid, answrId, answerUid }) => {
-
   return function (dispatch, getState, { history }) {
     apis
       .chooseAnswer(uid, pid, answrId, answerUid)
@@ -177,7 +172,7 @@ export default handleActions(
   {
     [GET_ANSWER]: (state, action) =>
       produce(state, (draft) => {
-        draft.list = action.payload.list;
+        draft.list = action.payload.answer;
       }),
     [ADD_ANSWER]: (state, action) =>
       produce(state, (draft) => {
@@ -205,7 +200,6 @@ const actionCreators = {
   editAnswerDB,
   delAnswerDB,
   chooseAnswerDB,
-
 };
 
 export { actionCreators };
