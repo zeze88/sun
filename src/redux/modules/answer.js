@@ -24,6 +24,7 @@ const initialState = {
 
 const getAnswerDB = (pid) => {
   return function (dispatch, getState, { history }) {
+    console.log(answerList);
     apis
       .getanswer(pid)
       .then((res) => {
@@ -140,7 +141,6 @@ const editAnswerDB = ({ answsrId, title, comment }) => {
 };
 
 const delAnswerDB = (answsrId) => {
-  console.log(answsrId);
   return function (dispatch, getState, { history }) {
     apis
       .delanswer(answsrId)
@@ -191,10 +191,6 @@ export default handleActions(
       produce(state, (draft) => {
         // draft.list;
       }),
-    [AS_IMG_POST]: (state, action) =>
-      produce(state, (draft) => {
-        draft.asPreview = action.payload.asPreview;
-      }),
   },
   initialState
 );
@@ -205,7 +201,6 @@ const actionCreators = {
   editAnswerDB,
   delAnswerDB,
   chooseAnswerDB,
-  asImgPost,
 };
 
 export { actionCreators };

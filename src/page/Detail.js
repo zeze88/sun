@@ -12,7 +12,6 @@ const Detail = () => {
   const post_one = useSelector((state) => state.post.list);
   const dispatch = useDispatch();
   const user_info = sessionStorage.getItem("uid");
-
   const delPost = () => {
     dispatch(postActions.delPostDB(pid));
   };
