@@ -8,7 +8,7 @@ import AnswerList from "../components/AnswerList";
 
 import { actionCreators as answerActions } from "../redux/modules/answer";
 
-const Answer = () => {
+const Answer = ({ edit }) => {
   const dispatch = useDispatch();
 
   const params = useParams().pid;
@@ -27,13 +27,22 @@ const Answer = () => {
       answerActions.addAnswerDB({ pid: params, uid: user_info, ...addAnswer })
     );
   };
+
+  const editAnswer = () => {
+    // dispatch(answerActions.editAnswerDB(answsrId, addAnswer));
+    //answsrId 가 null 로 내려와요
+    dispatch(answerActions.editAnswerDB({ answsrId: 4, ...addAnswer }));
+  };
+
   return (
     <SC_Answer>
       <input id="title" onChange={onChange} type="text" />
       <input id="comment" onChange={onChange} type="text" />
       <ImgUpload />
       <button onClick={answerSubmit}>답변 click</button>
-      <AnswerList edit={addAnswer} />
+      <hr />
+      <button onClick={editAnswer}>수정</button>
+      <hr />
     </SC_Answer>
   );
 };
