@@ -24,55 +24,7 @@ const initialState = {
   nockeckList: [],
   preview: "",
 };
-const mock = [
-  {
-    pId: 1,
-    uid: 1,
-    nickname: "자바킬러",
-    postTitle: "자바 쉽게 설명해주실분",
-    postComment: "가능한가요?",
-    postImg: "img",
-    tags: ["자바", "소켓", "socket"],
-    postLikeCount: 1,
-    createdAt: "2022-03-07T14:20:37.679",
-  },
-  {
-    pId: 2,
-    uid: 2,
-    nickname: "사냥꾼",
-    postTitle: "살려줘",
-    postComment: " 이거오늘 안해 해결 안하면 퇴사하래요. 살려줘!!!!",
-    postImg: "img",
-    tags: ["자바", "자바스크립트"],
-    postLikeCount: 11,
-    createdAt: "2022-03-07T14:20:37.679",
-  },
-];
 
-const mock2 = [
-  {
-    pId: 1,
-    uid: 1,
-    nickname: "2222자바킬러",
-    postTitle: "222222자바 쉽게 설명해주실분",
-    postComment: "2222222가능한가요?",
-    postImg: "img",
-    tags: ["자바", "소켓", "socket"],
-    postLikeCount: 1,
-    createdAt: "2020-02-01 22:11:00",
-  },
-  {
-    pId: 2,
-    uid: 2,
-    nickname: "222사냥꾼",
-    postTitle: "2222살려줘",
-    postComment: " 222222222이거오늘 안해 해결 안하면 퇴사하래요. 살려줘!!!!",
-    postImg: "222222img",
-    tags: ["자바", "자바스크립트"],
-    postLikeCount: 11,
-    createdAt: "2020-03-03 22:00:00",
-  },
-];
 // ===================================================================
 // ======================== 게시글 리스트 가지고오기========================
 
@@ -114,7 +66,7 @@ const getOnePostDB = (pid) => {
       .onepost(pid)
       .then((res) => {
         console.log(res);
-        // dispatch(getPost([res.post]));
+        dispatch(getPost(res.data));
       })
       .catch((err) => {
         console.log(err);
@@ -133,7 +85,7 @@ const addPostDB = ({ title, comment, tags }) => {
     formData.append("images", img_list);
 
     axios
-      .post(`http://175.118.48.164:7050/images/upload`, formData, {
+      .post(`http://15.164.231.31/images/upload`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `${token_res}`,
@@ -147,10 +99,10 @@ const addPostDB = ({ title, comment, tags }) => {
       })
       .then((imgUrl) => {
         console.log("포스트 성공!");
-        // console.log(imgUrl);
+
         axios({
           method: "post",
-          url: "http://175.118.48.164:7050/islogin/post/write",
+          url: "http://15.164.231.31/islogin/post/write",
           data: {
             postTitle: title,
             postComment: comment,
@@ -180,7 +132,7 @@ const editPostDB = ({ pid, title, comment, tags }) => {
     console.log(token_res);
 
     axios
-      .post(`http://175.118.48.164:7050/images/upload`, formData, {
+      .post(`http://15.164.231.31/images/upload`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `${token_res}`,
@@ -195,7 +147,7 @@ const editPostDB = ({ pid, title, comment, tags }) => {
         console.log("포스트 성공!");
         axios({
           method: "PUT",
-          url: `http://175.118.48.164:7050/islogin/post/revice/${pid}`,
+          url: `http://15.164.231.31/islogin/post/revice/${pid}`,
           data: {
             pid: pid,
             postTitle: title,
@@ -229,6 +181,7 @@ const delPostDB = (pid) => {
       });
   };
 };
+
 const postLikeDB = (uid, pid) => {
   return function (dispatch, getState, { history }) {
     apis
