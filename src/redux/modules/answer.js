@@ -24,7 +24,6 @@ const initialState = {
 
 const getAnswerDB = (pid) => {
   return function (dispatch, getState, { history }) {
-    console.log(answerList);
     apis
       .getanswer(pid)
       .then((res) => {
