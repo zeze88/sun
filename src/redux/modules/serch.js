@@ -16,7 +16,8 @@ const serchDB = (title) => {
     return async function (dispatch, getState, {history}) {
         console.log(title)
         await axios
-        .get(`http://15.164.231.31/islogin/post/search/${title}`,{
+        .get(`http://175.118.48.164:7050/islogin/post/search/${title}`,{
+        // .get(`http://15.164.231.31/islogin/post/search/${title}`,{
             headers: {
                 Authorization: token
             },
