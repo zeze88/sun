@@ -1,17 +1,17 @@
-import React from "react";
-import styled from "styled-components";
-import Comment from "../components/Comment";
-import { useParams } from "react-router";
-import { useSelector, useDispatch } from "react-redux";
-import { actionCreators as postActions } from "../redux/modules/post";
-import { history } from "../redux/configureStore";
-import Answer from "../components/Answer";
-import AnswerList from "../components/AnswerList";
+import React from 'react';
+import styled from 'styled-components';
+import Comment from '../components/Comment';
+import { useParams } from 'react-router';
+import { useSelector, useDispatch } from 'react-redux';
+import { actionCreators as postActions } from '../redux/modules/post';
+import { history } from '../redux/configureStore';
+import Answer from '../components/Answer';
+import AnswerList from '../components/AnswerList';
 const Detail = () => {
   const pid = useParams().pid;
   const post_one = useSelector((state) => state.post.list);
   const dispatch = useDispatch();
-  const user_info = sessionStorage.getItem("uid");
+  const user_info = sessionStorage.getItem('uid');
   const delPost = () => {
     dispatch(postActions.delPostDB(pid));
   };
@@ -27,12 +27,12 @@ const Detail = () => {
   return (
     <Container>
       <button onClick={likebtn}>관심</button>
-      {user_info === post_one.uid && ""}
-      <button styled={{ fontSize: "40px" }} onClick={delPost}>
+      {user_info === post_one.uid && ''}
+      <button styled={{ fontSize: '40px' }} onClick={delPost}>
         삭제
       </button>
       <button
-        styled={{ fontSize: "40px" }}
+        styled={{ fontSize: '40px' }}
         onClick={() => {
           history.push(`/edit/${pid}`);
         }}>
@@ -42,27 +42,27 @@ const Detail = () => {
         <Top>
           <div
             style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
             }}>
-            <div style={{ fontSize: "2rem", fontWeight: "700" }}>
+            <div style={{ fontSize: '2rem', fontWeight: '700' }}>
               {post_one.postTitle}
             </div>
-            <div style={{ textAlign: "right", marginRight: "2rem" }}>
+            <div style={{ textAlign: 'right', marginRight: '2rem' }}>
               <div>💻 Img</div>
               화면공유
             </div>
           </div>
           <div
             style={{
-              display: "flex",
-              justifyContent: "space-between",
-              margin: "1rem 2rem 0px 0px",
+              display: 'flex',
+              justifyContent: 'space-between',
+              margin: '1rem 2rem 0px 0px',
             }}>
             <span>조회수 작성일</span>
             {post_one.tag?.map((v, idx) => (
-              <div key={idx} style={{ minWidth: "2rem", border: "1px solid " }}>
+              <div key={idx} style={{ minWidth: '2rem', border: '1px solid ' }}>
                 {v}
               </div>
             ))}

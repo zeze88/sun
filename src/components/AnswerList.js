@@ -1,15 +1,16 @@
-import React from "react";
-import styled from "styled-components";
-import { useParams } from "react-router";
+import React from 'react';
+import styled from 'styled-components';
+import { useParams } from 'react-router';
 
-import { useDispatch, useSelector } from "react-redux";
-import { actionCreators as answerActions } from "../redux/modules/answer";
-import Comment from "./Comment";
+import { useDispatch, useSelector } from 'react-redux';
+import { actionCreators as answerActions } from '../redux/modules/answer';
+import Comment from './Comment';
+import Answer from './Answer';
 
 const AnswerList = ({ edit }) => {
   const pid = useParams().pid;
   const dispatch = useDispatch();
-  const user_info = sessionStorage.getItem("uid");
+  const user_info = sessionStorage.getItem('uid');
   const answer_list = useSelector((state) => state.answer.list);
   const [isEdit, setIsEdit] = React.useState(false);
 
@@ -38,12 +39,12 @@ const AnswerList = ({ edit }) => {
   return (
     <SC_List>
       {answer_list.map((v, idx) => (
-        <div key={idx} className="wrap">
-          <div className="header">
+        <div key={idx} className='wrap'>
+          <div className='header'>
             <h2>답변</h2>
           </div>
           <div>
-            <div className="content_wrap">
+            <div className='content_wrap'>
               {v.uid === Number(user_info) && (
                 <>
                   <button
@@ -61,22 +62,26 @@ const AnswerList = ({ edit }) => {
                 </>
               )}
 
-              <div>{v.answerTitle}</div>
-              <div>{v.answerComment}</div>
+              <div>v.answerTitle</div>
+              <div>v.answerComment</div>
+
+              <div>{/* <Answer /> */}</div>
             </div>
-            <AnswerEdit isEdit={isEdit} list={v} />
-            <div className="comment_wrap">
-              <dl>
-                <dt>imgurl response에 없어요.</dt>
-                <dd>jjy nickname response에 없어요</dd>
-              </dl>
-              <div>{v.commnetResponseDtoList.commentTitle}</div>
-              <div>{v.commnetResponseDtoList.comment}</div>
+
+            <Commentbox className='comment'>
+              <Comment />
+            </Commentbox>
+            <div className='comment_wrap'>
+              <React.Fragment>
+                <dl>
+                  <dt>imgurl response에 없어요.</dt>
+                  <dd>jjy nickname response에 없어요</dd>
+                </dl>
+                <div>{v.commnetResponseDtoList.commentTitle}</div>
+                <div>{v.commnetResponseDtoList.comment}</div>
+              </React.Fragment>
             </div>
           </div>
-          <Commentbox className="comment">
-            <Comment />
-          </Commentbox>
         </div>
       ))}
     </SC_List>
