@@ -27,8 +27,8 @@ const setLogin = createAction(LOGIN, user => ({ user }));
 const checkUsernameDB = (username, isCheckUsername) => {
     return async function (dispatch, getState, {history}) {
         console.log(username, isCheckUsername);
-        // await axios.post("http://175.118.48.164:7050/user/signup/username", { "username" : username }
-        await axios.post("http://15.164.231.31/user/signup/username", { "username" : username }
+        await axios.post("http://175.118.48.164:7050/user/signup/username", { "username" : username }
+        // await axios.post("http://15.164.231.31/user/signup/username", { "username" : username }
         ).then((res) => {
             if (res.data === true) {
                 window.alert("이미 존재하는 ID입니다.");
@@ -42,8 +42,8 @@ const checkUsernameDB = (username, isCheckUsername) => {
 const checkNicknameDB = (userNickname, isCheckNickname) => {
     return async function (dispatch, getState, { history }) {
         console.log(userNickname, isCheckNickname);
-        // await axios.post("http://175.118.48.164:7050/user/signup/nickname", { "nickname" : userNickname }
-        await axios.post("http://15.164.231.31/user/signup/nickname", { "nickname" : userNickname }
+        await axios.post("http://175.118.48.164:7050/user/signup/nickname", { "nickname" : userNickname }
+        // await axios.post("http://15.164.231.31/user/signup/nickname", { "nickname" : userNickname }
         ).then((res) => {
             if (res.data === true) {
                 window.alert("이미 존재하는 닉네임 입니다.");
@@ -81,8 +81,8 @@ const loginDB = (username, password) => {
     return function (dispatch, getState, {history}) {
         console.log(username,password)
         axios
-            // .post("http://175.118.48.164:7050/user/login", {
-            .post("http://15.164.231.31/user/login", {
+            .post("http://175.118.48.164:7050/user/login", {
+            // .post("http://15.164.231.31/user/login", {
                 username: username,
                 password: password,
             }
@@ -97,8 +97,8 @@ const loginDB = (username, password) => {
                 console.log(token_res)
                 axios({
                     method: "post",
-                    // url:  "http://175.118.48.164:7050/islogin/user",
-                    url:  "http://15.164.231.31/islogin/user",
+                    url:  "http://175.118.48.164:7050/islogin/user",
+                    // url:  "http://15.164.231.31/islogin/user",
                     headers: {
                         "Authorization": `${token_res}`,
                     },

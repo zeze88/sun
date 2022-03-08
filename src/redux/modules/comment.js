@@ -17,15 +17,15 @@ const initialState = {
     list : []
 }
 
-const addCommentDB = (uid, pid, answerId, title, comment) => {
+const addCommentDB = (uid, pid, answerId, comment) => {
     return function (dispatch, getState, { history }) {
+        console.log(uid, pid, answerId, comment)
         axios
-        // .post('http://175.118.48.164:7050/islogin/comment/write',{
-        .post('http://15.164.231.31/islogin/comment/write',{
+        .post('http://175.118.48.164:7050/islogin/comment/write',{
+        // .post('http://15.164.231.31/islogin/comment/write',{
             "uid" : uid,
             "pid" : pid,
             "answerId" : answerId,
-            "commentTitle" : title,
             "comment" : comment,
         },
         {
