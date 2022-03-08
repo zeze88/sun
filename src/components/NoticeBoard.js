@@ -10,19 +10,16 @@ import { history } from "../redux/configureStore";
 const NoticeBoard = () => {
   const dispatch = useDispatch();
   const post_list = useSelector((state) => state.post);
-  const serch_list = useSelector((state) => state.serch);
-  const state = useSelector((state) => state);
   const tabRef = React.useRef();
   const [TabList, setTabList] = React.useState();
   const [postList, setPostList] = React.useState();
   const [postListNocheck, setPostListNocheck] = React.useState();
-  const postingId = post_list.list.pid
 
   React.useEffect(() => {
     dispatch(postActions.getPostDB());
     dispatch(postActions.getPostNocheckDB());
   }, []);
-  console.log(postingId)
+
   console.log(post_list.list);
   console.log(TabList);
 

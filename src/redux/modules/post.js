@@ -114,7 +114,7 @@ const getOnePostDB = (pid) => {
       .onepost(pid)
       .then((res) => {
         console.log(res);
-        dispatch(getPost([res.post]));
+        dispatch(getPost(res.data));
       })
       .catch((err) => {
         console.log(err);
@@ -133,26 +133,21 @@ const addPostDB = ({ title, comment, tags }) => {
     formData.append("images", img_list);
 
     axios
-      // .post(`http://175.118.48.164:7050/image÷s/upload`, formData, {
-      .post(`http://15.164.231.31/images/upload`, formData, {
+      .post(`http://175.118.48.164:7050/images/upload`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `${token_res}`,
         },
       })
       .then((res) => {
-        // console.log(res);
         console.log("img업로드 성공");
         const imgUrl = res.data.url;
         return imgUrl;
       })
       .then((imgUrl) => {
-        console.log("포스트 성공!");
-        // console.log(imgUrl);
         axios({
           method: "post",
-          // url: "http://175.118.48.164:7050/islogin/post/write",
-          url: "http://15.164.231.31/islogin/post/write",
+          url: "http://175.118.48.164:7050/islogin/post/write",
           data: {
             postTitle: title,
             postComment: comment,
@@ -161,7 +156,7 @@ const addPostDB = ({ title, comment, tags }) => {
           },
           headers: { Authorization: `${token_res}` },
         }).then((res) => {
-          console.log(res);
+          console.log("포스트 성공!");
           dispatch(addPost({ title, comment, imgUrl, tags, pid: res.data }));
         });
       })
@@ -179,27 +174,22 @@ const editPostDB = ({ pid, title, comment, tags }) => {
     const img_list = getState().post.preview;
     const formData = new FormData();
     formData.append("images", img_list);
-    console.log(token_res);
-
     axios
-      // .post(`http://175.118.48.164:7050/images/upload`, formData, {
-      .post(`http://15.164.231.31/images/upload`, formData, {
+      .post(`http://175.118.48.164:7050/images/upload`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `${token_res}`,
         },
       })
       .then((res) => {
-        console.log("img업로드 성공");
         const imgUrl = res.data.url;
         return imgUrl;
       })
       .then((imgUrl) => {
-        console.log("포스트 성공!");
+        console.log("img업로드 성공");
         axios({
           method: "PUT",
-          // url: `http://175.118.48.164:7050/islogin/post/revice/${pid}`,
-          url: `http://15.164.231.31/islogin/post/revice/${pid}`,
+          url: `http://175.118.48.164:7050/islogin/post/revice/${pid}`,
           data: {
             pid: pid,
             postTitle: title,
@@ -208,8 +198,10 @@ const editPostDB = ({ pid, title, comment, tags }) => {
             tags: tags,
           },
           headers: { Authorization: `${token_res}` },
+        }).then(() => {
+          console.log("포스트 성공!");
+          dispatch(editPost({ title, comment, imgUrl, tags, pid }));
         });
-        dispatch(editPost({ title, comment, imgUrl, tags, pid }));
       })
       .catch((err) => {
         console.log(err);
@@ -292,7 +284,6 @@ const actionCreators = {
   imgPost,
   getPostNocheckDB,
   postLikeDB,
-  onePost
 };
 
 export { actionCreators };

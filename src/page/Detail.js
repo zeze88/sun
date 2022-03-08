@@ -5,6 +5,8 @@ import { useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { history } from "../redux/configureStore";
+import Answer from "../components/Answer";
+import AnswerList from "../components/AnswerList";
 const Detail = () => {
   const pid = useParams().pid;
   const post_one = useSelector((state) => state.post.list);
@@ -14,13 +16,14 @@ const Detail = () => {
     dispatch(postActions.delPostDB(pid));
   };
 
-  React.useEffect(() => {
-    dispatch(postActions.getOnePostDB(pid));
-  }, []);
-  console.log(post_one);
   const likebtn = () => {
     dispatch(postActions.postLikeDB(user_info, pid));
   };
+
+  React.useEffect(() => {
+    dispatch(postActions.getOnePostDB(pid));
+  }, []);
+
   return (
     <Container>
       <button onClick={likebtn}>관심</button>
@@ -44,7 +47,7 @@ const Detail = () => {
               alignItems: "center",
             }}>
             <div style={{ fontSize: "2rem", fontWeight: "700" }}>
-              제목adadadas
+              {post_one.postTitle}
             </div>
             <div style={{ textAlign: "right", marginRight: "2rem" }}>
               <div>💻 Img</div>
@@ -58,14 +61,22 @@ const Detail = () => {
               margin: "1rem 2rem 0px 0px",
             }}>
             <span>조회수 작성일</span>
-            <div style={{ minWidth: "2rem", border: "1px solid " }}>태그들</div>
+            {post_one.tag?.map((v, idx) => (
+              <div key={idx} style={{ minWidth: "2rem", border: "1px solid " }}>
+                {v}
+              </div>
+            ))}
           </div>
         </Top>
         <Line />
+        <img src={post_one.postImg} />
         <ContentBox>
-          <Content>내용</Content>
+          <Content> {post_one.postComment}</Content>
         </ContentBox>
       </Question>
+      <Answer />
+      <AnswerList />
+
       <Commentbox className="comment">
         <Comment />
       </Commentbox>

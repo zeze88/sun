@@ -1,13 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { history } from "../redux/configureStore";
-
 const NoticeList = ({ list }) => {
-
   return (
     <React.Fragment>
       {list.map((data, idx) => {
-        console.log(data);
         // const date = data.createdAt.split(".")[0].replace("T", " ");
         // console.log(date);
         return (

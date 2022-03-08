@@ -1,18 +1,16 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
 import NoticeBoard from "../components/NoticeBoard";
 
 const Post = () => {
   const dispatch = useDispatch();
   const postList = useSelector((state) => state.post);
   const [post_list, SetPostList] = React.useState();
-
+  //  삭제 해주세용
+  const search = "";
   console.log(postList);
   React.useEffect(() => {}, []);
-  return (
-      <NoticeBoard />
-  );
+  return <div>{search ? "" : <NoticeBoard />}</div>;
 };
 
 export default Post;
