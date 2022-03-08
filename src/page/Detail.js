@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { history } from "../redux/configureStore";
 import Answer from "../components/Answer";
-
+import AnswerList from "../components/AnswerList";
 const Detail = () => {
   const pid = useParams().pid;
   const post_one = useSelector((state) => state.post.list);
@@ -75,6 +75,8 @@ const Detail = () => {
         </ContentBox>
       </Question>
       <Answer />
+      <AnswerList />
+
       <Commentbox className="comment">
         <Comment />
       </Commentbox>
