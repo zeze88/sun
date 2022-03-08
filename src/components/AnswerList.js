@@ -9,9 +9,9 @@ const AnswerList = ({ edit }) => {
   const dispatch = useDispatch();
   const pid = useParams().pid;
   const user_info = sessionStorage.getItem("uid");
-
+  const answrId = 1;
   React.useEffect(() => {
-    dispatch(answerActions.getAnswerDB());
+    // dispatch(answerActions.getAnswerDB(answrId));
     setAnswerInfo({
       uid: user_info,
       pid: pid,
@@ -22,7 +22,6 @@ const AnswerList = ({ edit }) => {
       answerImg: "img",
     });
   }, []);
-  console.log(answerInfo);
   const editAnswer = () => {
     dispatch(answerActions.editAnswerDB({ ...edit }));
   };

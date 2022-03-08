@@ -12,18 +12,19 @@ const Answer = () => {
   const dispatch = useDispatch();
 
   const params = useParams().pid;
-  const img_list = useSelector((state) => state.post?.preview);
   const user_info = sessionStorage.getItem("uid");
-  const [addPost, setAddPost] = React.useState("");
+  const [addAnswer, setAddAnswer] = React.useState("");
   const onChange = (e) => {
     const id = e.target.id;
     const content = e.target.value;
 
-    setAddPost({ ...addPost, [id]: content });
+    setAddAnswer({ ...addAnswer, [id]: content });
   };
+
   const answerSubmit = () => {
+    console.log(addAnswer);
     dispatch(
-      answerActions.addAnswerDB({ pid: params, uid: user_info, ...addPost })
+      answerActions.addAnswerDB({ pid: params, uid: user_info, ...addAnswer })
     );
   };
   return (
@@ -32,7 +33,7 @@ const Answer = () => {
       <input id="comment" onChange={onChange} type="text" />
       <ImgUpload />
       <button onClick={answerSubmit}>답변 click</button>
-      <AnswerList edit={addPost} />
+      <AnswerList edit={addAnswer} />
     </SC_Answer>
   );
 };

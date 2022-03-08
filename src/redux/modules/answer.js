@@ -44,8 +44,9 @@ const addAnswerDB = ({ pid, uid, title, comment }) => {
     const img_list = getState().answer.asPreview;
     const formData = new FormData();
     formData.append("images", img_list);
+
     axios
-      .post(`http://15.164.231.31/images/upload`, formData, {
+      .post(`http://175.118.48.164:7050/images/upload`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `${token_res}`,
@@ -53,26 +54,25 @@ const addAnswerDB = ({ pid, uid, title, comment }) => {
       })
       .then((res) => {
         // console.log(res);
-        console.log("img업로드 성공");
         const imgUrl = res.data.url;
         return imgUrl;
       })
       .then((imgUrl) => {
-        // console.log(imgUrl);
-        console.log("answer 성공!");
+        console.log("img업로드 성공");
         axios({
           method: "post",
-          url: `http://15.164.231.31/islogin/answer/${pid}`,
+          url: `http://175.118.48.164:7050/islogin/answer/${pid}`,
           data: {
-            uid: uid,
             pid: pid,
+            uid: uid,
             answerTitle: title,
             answerComment: comment,
             answerImg: imgUrl,
           },
-          headers: { Authorization: `${token_res}` },
+          headers: { Authorization: token_res },
         }).then((res) => {
           console.log(res);
+
           dispatch(
             addAnswer({
               pid,
@@ -100,7 +100,7 @@ const editAnswerDB = ({ answsrId, title, comment }) => {
     formData.append("images", img_list);
 
     axios
-      .post(`http://15.164.231.31/images/upload`, formData, {
+      .post(`http://175.118.48.164:7050/images/upload`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `${token_res}`,
@@ -116,7 +116,7 @@ const editAnswerDB = ({ answsrId, title, comment }) => {
         console.log(imgUrl);
         axios({
           method: "put",
-          url: `http://15.164.231.31/islogin/answer/revice/${answsrId}`,
+          url: `http://175.118.48.164:7050/islogin/answer/revice/${answsrId}`,
           data: {
             answerTitle: title,
             answerComment: comment,

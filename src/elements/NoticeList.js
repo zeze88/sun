@@ -4,7 +4,6 @@ const NoticeList = ({ list }) => {
   return (
     <React.Fragment>
       {list.map((data, idx) => {
-        console.log(data.createdAt);
         // const date = data.createdAt.split(".")[0].replace("T", " ");
         // console.log(date);
         return (

@@ -9,15 +9,12 @@ const ImgUpload = () => {
   const location = useLocation();
   const pathName = location.pathname !== "/create";
   const dispatch = useDispatch();
-  console.log(pathName);
 
   const onChange = (e) => {
     const file = fileInput.current.files[0];
     if (pathName) {
-      console.log("답변");
       dispatch(answerActions.asImgPost(file));
     } else {
-      console.log("게시글");
       dispatch(postActions.imgPost(file));
     }
   };
