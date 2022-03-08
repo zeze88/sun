@@ -9,7 +9,8 @@ const Test = () => {
   const token = {
     Authorization: sessionStorage.getItem("token"),
   };
-  console.log(token);
+
+  const [welcome, setWelcome] = React.useState(new Map());
   const [privChats, setPrivChats] = React.useState(new Map());
   const [publicChats, setPublicChats] = React.useState([]);
   const [connected, setConnected] = React.useState(false);
@@ -17,6 +18,7 @@ const Test = () => {
   const [userData, setUserData] = React.useState({
     username: "",
     message: "",
+    opposingUserName: "",
   });
 
   React.useEffect(() => {
@@ -55,31 +57,32 @@ const Test = () => {
   const stompConnect = () => {
     // stompClient.debug = null;
 
-    let socket = new SockJs("http://175.118.48.164:7050/ws");
+    // let socket = new SockJs("http://175.118.48.164:7050/ws");
+    let socket = new SockJs("http://15.164.231.31/ws");
     stompClient = Stomp.over(socket);
     stompClient.connect({}, onConnected, onError);
   };
 
   //connect의 함수
-  const onConnected = (payload) => {
+  const onConnected = () => {
     try {
       const username = sessionStorage.getItem("nickname");
 
       if (!username) {
         alert("로그인이 필요한 기능입니다 :)");
       } else {
-        const welcome = { status: "JOIN" };
+        const user_join = { status: "JOIN" };
         setConnected(true);
         setUserData({ ...userData, username: username, status: "JOIN" });
         console.log(userData);
         stompClient.send("/app/hello", {}, JSON.stringify({ username }));
-        stompClient.send("/app/message", token, JSON.stringify(welcome));
+        stompClient.send("/app/message", token, JSON.stringify(user_join));
         stompClient.subscribe(
           "/topic/greetings",
           onPublicMessageReceived,
           token
         );
-        console.log(payload);
+
         // userJoin();
       }
     } catch (err) {
@@ -112,13 +115,13 @@ const Test = () => {
   };
 
   // sendName과 같은 동작
-  const userJoin = () => {
-    let chatMessage = {
-      senderName: sessionStorage.getItem("nickname"),
-      status: "JOIN",
-    };
-    stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
-  };
+  // const userJoin = () => {
+  //   let chatMessage = {
+  //     senderName: sessionStorage.getItem("nickname"),
+  //     status: "JOIN",
+  //   };
+  //   stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
+  // };
 
   //subscribe의 함수
   const onPublicMessageReceived = (payload) => {
@@ -126,17 +129,15 @@ const Test = () => {
 
     switch (payloadData.status) {
       case "JOIN":
-        if (!privChats.get(payloadData.senderName)) {
+        if (!welcome.get(payloadData.senderName)) {
           console.log(payloadData);
-          privChats.set(payloadData.message, []);
-          setPrivChats(new Map(privChats));
-          console.log(privChats);
+          welcome.set(payloadData.message, []);
+          setWelcome(new Map(welcome));
         }
         break;
       case "MESSAGE":
         publicChats.push(payloadData);
         setPublicChats([...publicChats]);
-
         break;
     }
   };
@@ -164,14 +165,9 @@ const Test = () => {
             </div>
             <div className="chat-content">
               <ul className="chat-messages">
-                {[...privChats.keys()].map((name, index) => {
+                {[...welcome.keys()].map((name, index) => {
                   return (
-                    <li
-                      className={` ${tab === name && "active"}`}
-                      key={index}
-                      onClick={() => {
-                        setTab(name);
-                      }}>
+                    <li className={` ${tab === name && "active"}`} key={index}>
                       {name}
                     </li>
                   );

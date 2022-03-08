@@ -1,42 +1,41 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { actionCreators as postActions } from "../redux/modules/post";
 import styled from "styled-components";
 import NoticeList from "../elements/NoticeList";
 import Pagination from "./Pagination";
 import TabMenu from "./TabMenu";
-const mock = [
-  {
-    pId: 1,
-    uid: 1,
-    nickname: "자바킬러",
-    postTitle: "자바 쉽게 설명해주실분",
-    postComment: "가능한가요?",
-    postImg: "img",
-    tags: ["자바", "소켓", "socket"],
-    postLikeCount: 1,
-    createdAt: "2020-02-01 22:11:00",
-  },
-  {
-    pId: 2,
-    uid: 2,
-    nickname: "사냥꾼",
-    postTitle: "살려줘",
-    postComment: " 이거오늘 안해 해결 안하면 퇴사하래요. 살려줘!!!!",
-    postImg: "img",
-    tags: ["자바", "자바스크립트"],
-    postLikeCount: 11,
-    createdAt: "2020-03-03 22:00:00",
-  },
-];
+import { history } from "../redux/configureStore";
 
 const NoticeBoard = () => {
+  const dispatch = useDispatch();
+  const post_list = useSelector((state) => state.post);
+  const serch_list = useSelector((state) => state.serch);
+  const state = useSelector((state) => state);
+  const tabRef = React.useRef();
+  const [TabList, setTabList] = React.useState();
+  const [postList, setPostList] = React.useState();
+  const [postListNocheck, setPostListNocheck] = React.useState();
+  const postingId = post_list.list.pid
+
+  React.useEffect(() => {
+    dispatch(postActions.getPostDB());
+    dispatch(postActions.getPostNocheckDB());
+  }, []);
+  console.log(postingId)
+  console.log(post_list.list);
+  console.log(TabList);
+
   return (
     <SC_NoticeDiv>
       <h2>전체 게시물</h2>
       <div className="tab_wrap">
-        <TabMenu menus={["답변대기", "답변완료"]} />
-        <TabMenu menus={["최신순", "조회순"]} />
+        <TabMenu menus={["답변대기", "답변완료"]} tab={setTabList} />
+        <TabMenu menus={["최신순", "조회순"]} tab={setTabList} />
       </div>
-      <NoticeList list={mock} />
+      <NoticeList
+        list={TabList === "답변완료" ? post_list.list : post_list.nockeckList}
+      />
       <SC_BtnWrap>
         <button>글쓰기</button>
       </SC_BtnWrap>
@@ -67,4 +66,5 @@ const SC_BtnWrap = styled.div`
     background-color: #676767;
   }
 `;
+
 export default NoticeBoard;

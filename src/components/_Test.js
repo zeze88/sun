@@ -125,7 +125,6 @@ const _Test = () => {
       stompClient.send("/app/message", token, JSON.stringify(chatMessage));
       setUserData({ ...userData, message: "" });
     }
-    
   }
 
   //1:1 메세지보내기 함수

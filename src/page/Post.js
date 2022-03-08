@@ -1,9 +1,7 @@
 import React from "react";
-import styled from "styled-components";
-import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import ImgUpload from "../components/ImgUpload";
-import { actionCreators as postActions } from "../redux/modules/post";
+import styled from "styled-components";
+import NoticeBoard from "../components/NoticeBoard";
 
 const Post = () => {
   const dispatch = useDispatch();
@@ -12,7 +10,9 @@ const Post = () => {
 
   console.log(postList);
   React.useEffect(() => {}, []);
-  return <div></div>;
+  return (
+      <NoticeBoard />
+  );
 };
 
 export default Post;

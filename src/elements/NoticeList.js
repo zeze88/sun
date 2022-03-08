@@ -1,34 +1,41 @@
 import React from "react";
 import styled from "styled-components";
+import { history } from "../redux/configureStore";
+
 const NoticeList = ({ list }) => {
-  console.log(list);
+
   return (
     <React.Fragment>
-      {list.map((data, idx) => (
-        <NoticeListDiv key={idx}>
-          <div className="title">
-            <dl>
-              <dt>{data.postTitle}</dt>
-              <dd>new</dd>
-            </dl>
-            <TagUl>
-              {data.tags.map((v, idx) => (
-                <li key={idx}>{v}</li>
-              ))}
-            </TagUl>
-          </div>
-          <div className="content">
-            <div>{data.postComment}</div>
-          </div>
-          <div className="info">
-            <em>{data.createdAt}</em>
-            <span>
-              <img scr={data.img} /> {data.nickname}
-            </span>
-            <i>{data.postLikeCount}</i>
-          </div>
-        </NoticeListDiv>
-      ))}
+      {list.map((data, idx) => {
+        console.log(data);
+        // const date = data.createdAt.split(".")[0].replace("T", " ");
+        // console.log(date);
+        return (
+          <NoticeListDiv key={idx} onClick={() => {history.push(`/detail/${data.pid}`)}}>
+            <div className="title">
+              <dl>
+                <dt>{data.postTitle}</dt>
+                <dd>new</dd>
+              </dl>
+              <TagUl>
+                {data.tag.map((v, idx) => (
+                  <li key={idx}>{v}</li>
+                ))}
+              </TagUl>
+            </div>
+            <div className="content">
+              <div>{data.postComment}</div>
+            </div>
+            <div className="info">
+              <em>{data.createdAt}</em>
+              <span>
+                <img scr={data.img} /> {data.nickname}
+              </span>
+              <i>{data.postLikeCount}</i>
+            </div>
+          </NoticeListDiv>
+        );
+      })}
     </React.Fragment>
   );
 };

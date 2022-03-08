@@ -2,7 +2,8 @@ import axios from "axios";
 
 // 사용자 정의 인스턴스 기본 설정 참고 (https://yamoo9.github.io/axios/guide/config-defaults.html#%EA%B8%80%EB%A1%9C%EB%B2%8C-axios-%EA%B8%B0%EB%B3%B8-defaults-%EC%84%A4%EC%A0%95)
 const instance = axios.create({
-  baseURL: "http://175.118.48.164:7050",
+  // baseURL: "http://175.118.48.164:7050",
+  baseURL: "http://15.164.231.31",
   headers: {
     "content-type": "application/json;charset=UTF-8", // 자바스크립트는 json형태로 받아와야 한다.
     accept: "application/json",
@@ -22,24 +23,23 @@ instance.interceptors.request.use(function (config) {
 // 데이터 요청 to 서버
 export const apis = {
   // ==================== post api ====================//
-  getpost: () => instance.get(`/post/get`),
-  onepost: () => instance.get(`/post/detailget`),
-  addpost: (title, comment, img) =>
-    instance.post(`/islogin/post/write/`, {
-      postTitle: title,
-      postComment: comment,
-      postImg: img,
-    }),
-  editpost: (pid, title, comment, img) =>
-    instance.put(`/islogin/post/revice/${pid}`, {
-      postTitle: title,
-      postComment: comment,
-      postImg: img,
-    }),
+  getpost: () => instance.get(`/post/get/check`),
+
+  getpostnocheck: () => instance.get(`/post/get/nocheck`),
+
+  onepost: (pid) => instance.get(`/post/detailget/${pid}`),
+
   delpost: (pid) => instance.delete(`/islogin/post/delete/${pid}`),
+
+  likepost: (uid, pid) =>
+    instance.post(`/islogin/post/like`, {
+      uid: uid,
+      pid: pid,
+    }),
 
   // ==================== answer api ====================//
   getanswer: (answrId) => instance.get(`/answer/${answrId}`),
+
   addanswer: (pid, uid, title, comment, img) =>
     instance.post(`/islogin/answer/${pid}`, {
       uid: uid,
@@ -48,22 +48,30 @@ export const apis = {
       answerComment: comment,
       answerImg: img,
     }),
-  editanswer: (pid, uid, title, comment, img) =>
-    instance.put(`/islogin/answer/revice/${pid}`, {
-      uid: uid,
-      pid: pid,
+
+  editanswer: (answsrId, title, comment, img) =>
+    instance.put(`/islogin/answer/revice/${answsrId}`, {
       answerTitle: title,
       answerComment: comment,
       answerImg: img,
     }),
-  delanswer: (uid, answsrId) =>
-    instance.delete(`/islogin/answer/delete/`, {
-      uid: uid,
+
+  delanswer: (answsrId) =>
+    instance.delete(`/islogin/answer/delete/${answsrId}`, {
       answsrId: answsrId,
     }),
-  likeanswer: (uid, pid) =>
+
+  chooseAnswer: (uid, pid, answsrId, answerUid) =>
     instance.post(`/islogin/answer/like/`, {
       uid: uid,
       pid: pid,
+      answsrId: answsrId,
+      answerUid: answerUid,
+    }),
+
+  // ==================== tag api ====================//\
+  tagsearch: (uid, pid, answsrId, answerUid) =>
+    instance.post(`/islogin/tag/search`, {
+      tag: [],
     }),
 };
