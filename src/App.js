@@ -18,6 +18,7 @@ function App() {
       <Route path="/post" exact component={Post} />
       <Route path="/create" exact component={Create} />
       <Route path="/edit/:pid" exact component={Create} />
+      <Route path="/createanswer" exact component={Create} />
       <Route path="/login" exact component={Login} />
       <Route path="/chatchat" exact component={Test} />
       <Route path="/chatchat1" exact component={_Test} />
