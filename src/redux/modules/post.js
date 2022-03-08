@@ -133,15 +133,13 @@ const addPostDB = ({ title, comment, tags }) => {
     formData.append("images", img_list);
 
     axios
-      .post(`http://175.118.48.164:7050/image÷s/upload`, formData, {
-      // .post(`http://15.164.231.31/images/upload`, formData, {
+      .post(`http://175.118.48.164:7050/images/upload`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `${token_res}`,
         },
       })
       .then((res) => {
-        // console.log(res);
         console.log("img업로드 성공");
         const imgUrl = res.data.url;
         return imgUrl;
@@ -150,7 +148,6 @@ const addPostDB = ({ title, comment, tags }) => {
         axios({
           method: "post",
           url: "http://175.118.48.164:7050/islogin/post/write",
-          // url: "http://15.164.231.31/islogin/post/write",
           data: {
             postTitle: title,
             postComment: comment,
@@ -179,7 +176,6 @@ const editPostDB = ({ pid, title, comment, tags }) => {
     formData.append("images", img_list);
     axios
       .post(`http://175.118.48.164:7050/images/upload`, formData, {
-      // .post(`http://15.164.231.31/images/upload`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `${token_res}`,
@@ -194,7 +190,6 @@ const editPostDB = ({ pid, title, comment, tags }) => {
         axios({
           method: "PUT",
           url: `http://175.118.48.164:7050/islogin/post/revice/${pid}`,
-          // url: `http://15.164.231.31/islogin/post/revice/${pid}`,
           data: {
             pid: pid,
             postTitle: title,

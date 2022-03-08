@@ -61,11 +61,11 @@ export const apis = {
       answsrId: answsrId,
     }),
 
-  chooseAnswer: (uid, pid, answsrId, answerUid) =>
+  chooseAnswer: (uid, pid, answerId, answerUid) =>
     instance.post(`/islogin/answer/like/`, {
       uid: uid,
       pid: pid,
-      answsrId: answsrId,
+      answerId: answerId,
       answerUid: answerUid,
     }),
 
@@ -74,4 +74,7 @@ export const apis = {
     instance.post(`/islogin/tag/search`, {
       tag: [],
     }),
+  totalRanking: () => instance.get(`/user/ranking/total`),
+  monthRanking: () => instance.get(`/user/ranking/month`),
+  weekRanking: () => instance.get(`/user/ranking/weekend`),
 };
