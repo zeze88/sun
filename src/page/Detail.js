@@ -6,12 +6,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { history } from "../redux/configureStore";
 import Answer from "../components/Answer";
+
 const Detail = () => {
   const pid = useParams().pid;
   const post_one = useSelector((state) => state.post.list);
   const dispatch = useDispatch();
   const user_info = sessionStorage.getItem("uid");
-
   const delPost = () => {
     dispatch(postActions.delPostDB(pid));
   };

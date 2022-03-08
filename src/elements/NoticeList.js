@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { history } from "../redux/configureStore";
 const NoticeList = ({ list }) => {
   return (
     <React.Fragment>
@@ -7,7 +8,7 @@ const NoticeList = ({ list }) => {
         // const date = data.createdAt.split(".")[0].replace("T", " ");
         // console.log(date);
         return (
-          <NoticeListDiv key={idx}>
+          <NoticeListDiv key={idx} onClick={() => {history.push(`/detail/${data.pid}`)}}>
             <div className="title">
               <dl>
                 <dt>{data.postTitle}</dt>

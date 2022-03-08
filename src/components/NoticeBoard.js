@@ -5,6 +5,7 @@ import styled from "styled-components";
 import NoticeList from "../elements/NoticeList";
 import Pagination from "./Pagination";
 import TabMenu from "./TabMenu";
+import { history } from "../redux/configureStore";
 
 const NoticeBoard = () => {
   const dispatch = useDispatch();

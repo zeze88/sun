@@ -22,8 +22,9 @@ const initialState = {
   asPreview: "",
 };
 
-const getAnswerDB = (answrId) => {
+const getAnswerDB = (answrId, answerList) => {
   return function (dispatch, getState, { history }) {
+    console.log(answerList);
     apis
       .getpost(answrId)
       .then((res) => {
@@ -142,7 +143,6 @@ const editAnswerDB = ({ answsrId, title, comment }) => {
 };
 
 const delAnswerDB = (answsrId) => {
-  console.log(answsrId);
   return function (dispatch, getState, { history }) {
     apis
       .delanswer(answsrId)
@@ -156,7 +156,9 @@ const delAnswerDB = (answsrId) => {
   };
 };
 
+
 const chooseAnswerDB = ({ uid, pid, answrId, answerUid }) => {
+
   return function (dispatch, getState, { history }) {
     apis
       .chooseAnswer(uid, pid, answrId, answerUid)
@@ -193,10 +195,6 @@ export default handleActions(
       produce(state, (draft) => {
         // draft.list;
       }),
-    [AS_IMG_POST]: (state, action) =>
-      produce(state, (draft) => {
-        draft.asPreview = action.payload.asPreview;
-      }),
   },
   initialState
 );
@@ -207,7 +205,7 @@ const actionCreators = {
   editAnswerDB,
   delAnswerDB,
   chooseAnswerDB,
-  asImgPost,
+
 };
 
 export { actionCreators };

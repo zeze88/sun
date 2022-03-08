@@ -1,26 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useDispatch } from "react-redux";
-import { actionsCreators as userActions} from "../redux/modules/user"
+import { actionsCreator as serchActions} from "../redux/modules/serch"
 
 
 
 const Serch = () => {
-
-    const dispatch = useDispatch
+    const dispatch = useDispatch();
     const isLogin = sessionStorage.getItem("isLogin")
     const nickname = sessionStorage.getItem("nickname")
-    console.log(nickname)
+    const [find, setFind] = React.useState();
     
     const onKeyPress = (e) => {
         if(e.key == 'Enter'){
-            test(e);
+            const setFind = e.target.value
+            serchgo(setFind);
         }
     }
     
-    const test = (e) => {
-        const find = e.target.value 
-        dispatch(userActions.serchDB(find));
+    const serchgo = (find) => {
+        console.log()
+        dispatch(serchActions.serchDB(find));
     }
     
     return (
@@ -30,9 +30,8 @@ const Serch = () => {
             </CategoryImg>
             <SerchBar>
                 <Img>🔍</Img>
-                <SerchInput onKeyPress={onKeyPress} placeholder="검색">
+                <SerchInput onKeyPress={onKeyPress} onChange={ e => {setFind(e.target.value)}} placeholder="검색">
                 </SerchInput>
-                
                 {isLogin 
                 ?
                 <>
