@@ -2,6 +2,7 @@ import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 import axios from "axios";
 import { apis } from "../../shared/api";
+import { apiUrl } from "../../elements/testApiUrl";
 
 const GET_ANSWER = "GET_ANSWER";
 const ADD_ANSWER = "ADD_ANSWER";
@@ -45,7 +46,7 @@ const addAnswerDB = ({ pid, uid, title, comment }) => {
     formData.append("images", img_list);
 
     axios
-      .post(`http://175.118.48.164:7050/images/upload`, formData, {
+      .post(`${apiUrl}/images/upload`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `${token_res}`,
@@ -60,7 +61,7 @@ const addAnswerDB = ({ pid, uid, title, comment }) => {
         console.log("img업로드 성공");
         axios({
           method: "post",
-          url: `http://175.118.48.164:7050/islogin/answer/${pid}`,
+          url: `${apiUrl}/islogin/answer/${pid}`,
           data: {
             pid: pid,
             uid: uid,
@@ -99,7 +100,7 @@ const editAnswerDB = ({ answsrId, title, comment }) => {
     formData.append("images", img_list);
 
     axios
-      .post(`http://175.118.48.164:7050/images/upload`, formData, {
+      .post(`${apiUrl}/images/upload`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `${token_res}`,
@@ -114,7 +115,7 @@ const editAnswerDB = ({ answsrId, title, comment }) => {
         console.log(imgUrl);
         axios({
           method: "put",
-          url: `http://175.118.48.164:7050/islogin/answer/revice/${answsrId}`,
+          url: `${apiUrl}/islogin/answer/revice/${answsrId}`,
           data: {
             answerTitle: title,
             answerComment: comment,

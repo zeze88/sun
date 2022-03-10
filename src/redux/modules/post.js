@@ -2,6 +2,7 @@ import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 import axios from "axios";
 import { apis } from "../../shared/api";
+import { apiUrl } from "../../elements/testApiUrl";
 
 const GET_POST = "GET_POST";
 const GET_POSTCHK = "GET_POSTCHK";
@@ -13,7 +14,6 @@ const IMG_POST = "IMG_POST";
 
 const getPost = createAction(GET_POST, (post) => ({ post }));
 const getPostNoChk = createAction(GET_POSTCHK, (post) => ({ post }));
-const onePost = createAction(ONE_POST, (post) => ({ post }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
 const editPost = createAction(EDIT_POST, (post) => ({ post }));
 const delPost = createAction(DEL_POST, (pid) => ({ pid }));
@@ -82,8 +82,7 @@ const addPostDB = ({ title, comment, tags, category }) => {
     console.log(category);
 
     axios
-      // .post(`http://175.118.48.164:7050/images/upload`, formData, {
-      .post(`http://13.125.211.125/images/upload`, formData, {
+      .post(`${apiUrl}/images/upload`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `${token_res}`,
@@ -97,8 +96,7 @@ const addPostDB = ({ title, comment, tags, category }) => {
       .then((imgUrl) => {
         axios({
           method: "post",
-          // url: "http://175.118.48.164:7050/islogin/post/write",
-          url: "http://13.125.211.125/islogin/post/write",
+          url: `${apiUrl}/islogin/post/write`,
           data: {
             postTitle: title,
             postComment: comment,
@@ -110,6 +108,7 @@ const addPostDB = ({ title, comment, tags, category }) => {
         }).then((res) => {
           console.log("포스트 성공!");
           dispatch(addPost({ title, comment, imgUrl, tags, pid: res.data }));
+          history.replace("/");
         });
       })
       .catch((err) => {
@@ -128,8 +127,7 @@ const editPostDB = ({ pid, title, comment, tags, category }) => {
     const formData = new FormData();
     formData.append("images", img_list);
     axios
-      // .post(`http://175.118.48.164:7050/images/upload`, formData, {
-      .post(`http://13.125.211.125/images/upload`, formData, {
+      .post(`${apiUrl}/images/upload`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `${token_res}`,
@@ -143,8 +141,7 @@ const editPostDB = ({ pid, title, comment, tags, category }) => {
         console.log("img업로드 성공");
         axios({
           method: "PUT",
-          // url: `http://175.118.48.164:7050/islogin/post/revice/${pid}`,
-          url: `http://13.125.211.125/islogin/post/revice/${pid}`,
+          url: `${apiUrl}/islogin/post/revice/${pid}`,
           data: {
             pid: pid,
             postTitle: title,
@@ -186,8 +183,18 @@ const postLikeDB = (uid, pid) => {
     apis
       .likepost(uid, pid)
       .then((res) => {
-        console.log(res);
-        // dispatch(delPost(uid,pid));
+        const post_list = getState().post.list;
+        const like_count = "";
+        // if (res.data.postLike === "true") {
+        //   like_count = post_list.postLikeCount + 1;
+        // } else {
+        //   like_count = post_list.postLikeCount - 1;
+        // }
+
+        console.log({ ...post_list, post_list, postLikeCount: like_count });
+        dispatch(
+          getOnePostDB({ ...post_list, post_list, postLikeCount: like_count })
+        );
       })
       .catch((err) => {
         console.log(err);
@@ -206,10 +213,6 @@ export default handleActions(
     [GET_POSTCHK]: (state, action) =>
       produce(state, (draft) => {
         draft.nockeckList = action.payload.post;
-      }),
-    [ONE_POST]: (state, action) =>
-      produce(state, (draft) => {
-        draft.list = action.payload.post;
       }),
     [ADD_POST]: (state, action) =>
       produce(state, (draft) => {

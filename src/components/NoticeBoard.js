@@ -23,9 +23,7 @@ const NoticeBoard = () => {
   return (
     <SC_NoticeDiv>
       <h2>전체 게시물</h2>
-      <div className='tab_wrap'>
-        <TabMenu menus={["답변대기", "답변완료"]} tab={setTabList} />
-      </div>
+      <TabMenu menus={["답변대기", "답변완료"]} tab={setTabList} />
       <NoticeList
         list={TabList === "답변완료" ? post_list.list : post_list.nockeckList}
       />
@@ -38,14 +36,9 @@ const NoticeBoard = () => {
 };
 
 const SC_NoticeDiv = styled.div`
-  background-color: #f7f7f7;
   h2 {
-    margin: 0;
     padding: 30px 20px;
     font-weight: 700;
-  }
-  .tab_wrap {
-    border-bottom: solid 1px #dadada;
   }
 `;
 
