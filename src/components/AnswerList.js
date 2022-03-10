@@ -14,7 +14,7 @@ const AnswerList = () => {
   const user_info = sessionStorage.getItem("uid");
   const answer_list = useSelector((state) => state.answer.list);
   const [isEdit, setIsEdit] = React.useState();
-  console.log(answer_list);
+
   React.useEffect(() => {
     dispatch(answerActions.getAnswerDB(pid));
     if (!answer_list) {

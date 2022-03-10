@@ -18,14 +18,17 @@ const Create = () => {
   const [addPost, setAddPost] = React.useState("");
   const [isSelect, setIsSelect] = React.useState(false);
   const [oneCategory, setOneCategory] = React.useState("카테고리를 선택");
-
+  console.log(post_one);
   React.useEffect(() => {
     dispatch(postActions.getOnePostDB(params));
+    if (!pathName) {
+      setAddPost(post_one);
+    }
     if (!img_list?.preview) {
       return;
     }
   }, []);
-  console.log(post_one);
+
   const onChange = (e) => {
     const id = e.target.id;
     const content = e.target.value;
@@ -46,11 +49,12 @@ const Create = () => {
   };
 
   const revise = () => {
-    const tags = addPost?.tags.split("#").splice(1);
+    const tags = addPost.tags?.split("#").splice(1);
+
     dispatch(
       postActions.editPostDB({
-        pid: params,
         ...addPost,
+        pid: params,
         tags: tags,
         category: oneCategory,
       })
@@ -84,19 +88,19 @@ const Create = () => {
         {post_one && (
           <>
             <input
-              id='title'
+              id='postTitle'
               onChange={onChange}
               type='text'
               placeholder={post_one.postTitle}
             />
             <input
-              id='comment'
+              id='postComment'
               onChange={onChange}
               type='text'
               placeholder={post_one.postComment}
             />
             <input
-              id='tags'
+              id='tag'
               onChange={onChange}
               type='text'
               placeholder={post_one.tag?.join("#")}
