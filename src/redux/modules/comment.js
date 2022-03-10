@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
+import { apiUrl } from "../../elements/testApiUrl";
 
 const token = sessionStorage.getItem("token");
 
@@ -22,9 +23,8 @@ const addCommentDB = (uid, pid, answerId, comment) => {
     console.log(uid, pid, answerId, comment);
     axios
       .post(
-        "http://13.125.211.125/islogin/comment/write",
+        `${apiUrl}/islogin/comment/write`,
         {
-          // .post('http://15.164.231.31/islogin/comment/write',{
           uid: uid,
           pid: pid,
           answerId: answerId,
@@ -50,9 +50,8 @@ const addCommentDB = (uid, pid, answerId, comment) => {
 const editCommentDB = (commentId, title, comment) => {
   return function (dispatch, getState, { history }) {
     axios
-      // .put (`http://175.118.48.164:7050/islogin/comment/revice/${commentId}`, {
       .put(
-        `http://15.164.231.31/islogin/comment/revice/${commentId}`,
+        `${apiUrl}1/islogin/comment/revice/${commentId}`,
         {
           commentTitle: title,
           comment: comment,
@@ -76,15 +75,11 @@ const editCommentDB = (commentId, title, comment) => {
 const deleteCommentDB = (commentId) => {
   return function (dispatch, getState, { history }) {
     axios
-      // .delete (`http://175.118.48.164:7050/islogin/comment/revice/${commentId}`,
-      .delete(
-        `http://15.164.231.31/islogin//islogin/comment/delete/${commentId}`,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      )
+      .delete(`${apiUrl}/islogin//islogin/comment/delete/${commentId}`, {
+        headers: {
+          Authorization: token,
+        },
+      })
       .then((res) => {
         console.log(res);
         dispatch(deleteComment(commentId));

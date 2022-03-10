@@ -2,48 +2,49 @@ import { createAction, handleActions } from "redux-actions";
 import axios from "axios";
 import { setToken } from "../../shared/token";
 import produce from "immer";
+import { apiUrl } from "../../elements/testApiUrl";
 
 const SERCH = "SERCH";
 
-const serch = createAction((SERCH), (serch)=> ({serch}));
-const token = sessionStorage.getItem("token")
+const serch = createAction(SERCH, (serch) => ({ serch }));
+const token = sessionStorage.getItem("token");
 
 const initialState = {
-    serchlist:[],
-}
+  serchlist: [],
+};
 
 const serchDB = (title) => {
-    return async function (dispatch, getState, {history}) {
-        console.log(title)
-        await axios
-        .get(`http://175.118.48.164:7050/islogin/post/search/${title}`,{
-        // .get(`http://15.164.231.31/islogin/post/search/${title}`,{
-            headers: {
-                Authorization: token
-            },
-        })
-        .then((res) => {
-            console.log(res)
-            dispatch(serch(res.data));
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-        }
-}
+  return async function (dispatch, getState, { history }) {
+    console.log(title);
+    await axios
+      .get(`${apiUrl}/islogin/post/search/${title}`, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        dispatch(serch(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
 
-export default handleActions (
-    {
-        [SERCH] : (state, action) => produce(state, (draft)=>{
-            draft.serch = action.payload.serch;
-        })
-    },
-    initialState
-)
+export default handleActions(
+  {
+    [SERCH]: (state, action) =>
+      produce(state, (draft) => {
+        draft.serch = action.payload.serch;
+      }),
+  },
+  initialState
+);
 
 const actionsCreator = {
-    serchDB,
-    serch
-}
+  serchDB,
+  serch,
+};
 
-export { actionsCreator }
+export { actionsCreator };

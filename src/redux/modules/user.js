@@ -4,6 +4,7 @@ import history from "../configureStore";
 import axios from "axios";
 
 import { setToken, delToken } from "../../shared/token";
+import { apiUrl } from "../../elements/testApiUrl";
 
 //initialState
 const initialState = {
@@ -37,9 +38,8 @@ const token = sessionStorage.getItem("token");
 const checkUsernameDB = (username, isCheckUsername) => {
   return async function (dispatch, getState, { history }) {
     console.log(username, isCheckUsername);
-    // await axios.post("http://175.118.48.164:7050/user/signup/username", { "username" : username }
     await axios
-      .post("http://15.164.231.31/user/signup/username", { username: username })
+      .post(`${apiUrl}/user/signup/username`, { username: username })
       .then((res) => {
         if (res.data === true) {
           window.alert("이미 존재하는 ID입니다.");
@@ -53,9 +53,8 @@ const checkUsernameDB = (username, isCheckUsername) => {
 const checkNicknameDB = (userNickname, isCheckNickname) => {
   return async function (dispatch, getState, { history }) {
     console.log(userNickname, isCheckNickname);
-    // await axios.post("http://175.118.48.164:7050/user/signup/nickname", { "nickname" : userNickname }
     await axios
-      .post("http://15.164.231.31/user/signup/nickname", {
+      .post(`${apiUrl}/user/signup/nickname`, {
         nickname: userNickname,
       })
       .then((res) => {
@@ -73,8 +72,7 @@ const signupDB = (username, nickname, password, passwordCheck, career) => {
   return function (dispatch, getState, { history }) {
     console.log(username, nickname, password, passwordCheck, career);
     axios
-      // .post('http://175.118.48.164:7050/user/signup', {
-      .post("http://15.164.231.31/user/signup", {
+      .post(`${apiUrl}/user/signup`, {
         username: username,
         nickname: nickname,
         password: password,
@@ -96,8 +94,7 @@ const loginDB = (username, password) => {
   return function (dispatch, getState, { history }) {
     console.log(username, password);
     axios
-      // .post("http://175.118.48.164:7050/user/login", {
-      .post("http://15.164.231.31/user/login", {
+      .post(`${apiUrl}/user/login`, {
         username: username,
         password: password,
       })
@@ -111,8 +108,7 @@ const loginDB = (username, password) => {
         console.log(token_res);
         axios({
           method: "post",
-          // url: "http://175.118.48.164:7050/islogin/user",
-          url: "http://15.164.231.31/islogin/user",
+          url: `${apiUrl}/islogin/user`,
           headers: {
             Authorization: `${token_res}`,
           },
@@ -148,8 +144,7 @@ const loginDB = (username, password) => {
 const logoutDB = () => {
   return async function (dispatch, getState, { history }) {
     await axios
-      // .post("http://175.118.48.164:7050/islogin/user", {
-      .post("http://15.164.231.31/islogin/user/logout", {
+      .post(`${apiUrl}/islogin/user/logout`, {
         headers: {
           Authorization: token,
         },
