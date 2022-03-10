@@ -24,9 +24,9 @@ const Test = () => {
   React.useEffect(() => {
     stompConnect();
 
-    return () => {
-      stompDisConnect();
-    };
+    // return () => {
+    //   stompDisConnect();
+    // };
   }, []);
 
   const handleValue = (e) => {
@@ -150,8 +150,8 @@ const Test = () => {
     <div>
       <ChatDiv>
         {connected ? (
-          <div className="chat-box">
-            <div className="member-list">
+          <div className='chat-box'>
+            <div className='member-list'>
               <ul>
                 <li
                   className={`member ${tab === "CHATROOM" && "active"}`}
@@ -162,8 +162,8 @@ const Test = () => {
                 </li>
               </ul>
             </div>
-            <div className="chat-content">
-              <ul className="chat-messages">
+            <div className='chat-content'>
+              <ul className='chat-messages'>
                 {[...welcome.keys()].map((name, index) => {
                   return (
                     <li className={` ${tab === name && "active"}`} key={index}>
@@ -178,37 +178,37 @@ const Test = () => {
                     }`}
                     key={index}>
                     {chat.senderName !== userData.username && (
-                      <div className="avatar">{chat.senderName}</div>
+                      <div className='avatar'>{chat.senderName}</div>
                     )}
-                    <div className="message-data">{chat.message}</div>
+                    <div className='message-data'>{chat.message}</div>
 
                     {chat.senderName === userData.username && (
-                      <div className="avatar self">{chat.senderName}</div>
+                      <div className='avatar self'>{chat.senderName}</div>
                     )}
                   </li>
                 ))}
               </ul>
-              <div className="send-message">
+              <div className='send-message'>
                 <input
-                  type="text"
-                  name="message"
-                  className="input-message"
+                  type='text'
+                  name='message'
+                  className='input-message'
                   value={userData.message}
-                  placeholder="enter public message"
+                  placeholder='enter public message'
                   onChange={handleValue}
                 />
-                <button className="send-button" onClick={sendPublicMessage}>
+                <button className='send-button' onClick={sendPublicMessage}>
                   send
                 </button>
               </div>
             </div>
           </div>
         ) : (
-          <div className="register">
+          <div className='register'>
             <input
-              id="user-name"
-              name="username"
-              placeholder="이름입력"
+              id='user-name'
+              name='username'
+              placeholder='이름입력'
               value={userData.username}
               onChange={handleValue}
             />

@@ -1,145 +1,159 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { actionsCreators as userActions } from "../redux/modules/user";
+import { actionCreators as userActions } from "../redux/modules/user";
 import styled from "styled-components";
 import Signup from "../components/Signup";
 
 const Login = (props) => {
-    const {history} = props
-    const dispatch = useDispatch();
+  const { history } = props;
+  const dispatch = useDispatch();
 
-    const [check, setCheck] = React.useState("login");
-    const [username, setUsername] = React.useState("");
-    const [password, setPassword] = React.useState("");
-    
-    const login = () => {
-        if ( username === "" || password === "") {
-            window.alert("모두 입력해주세요.")
-            return;
-        }
-        dispatch(userActions.loginDB(username, password));
+  const [check, setCheck] = React.useState("login");
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+
+  const login = () => {
+    if (username === "" || password === "") {
+      window.alert("모두 입력해주세요.");
+      return;
     }
-    return (
-        <Container>
-            <Logo>Logo</Logo>
-            <Middle>Sign in to your account</Middle>
-                <Switch>
-                    <Grid style={{textAlign:"left"}}>
-                        <label style={{width:"2.7rem"}}>
-                            <input style={{display:"none"}} onChange={ e => {setCheck(e.target.value)}} type="radio" name="select" value="login"/>
-                            로그인
-                        </label>
-                    </Grid>
-                    <Grid style={{textAlign:"left"}}>
-                        <label style={{width:"3.6rem"}}>
-                            <input style={{textAlign:"left", display:"none"}} onChange={ e => {setCheck(e.target.value)}} type="radio" name="select" value="signup" />
-                            회원가입
-                        </label>
-                    </Grid>
-                    <Grid style={{textAlign:"right"}}>
-                        <label style={{width:"9rem"}}>
-                            <input style={{display:"none"}} onChange={ e => {setCheck(e.target.value)}} type="radio" name="select" value="forget" />
-                            비밀번호찾기
-                        </label>
-                    </Grid>
-                </Switch>
-                {
-                check === "login" ?
-                <Sign>
-                    <Grid>
-                        <Input type="text" placeholder="ID입력" onChange={e => {setUsername(e.target.value)}} />
-                    </Grid>
-                    <Grid>
-                        <Input type="password" placeholder="Password입력" onChange={e => {setPassword(e.target.value)}} />  
-                    </Grid>
-                    <Grid>
-                        <Button onClick={login}>Sign in</Button>
-                    </Grid>
-                    <Indicator style={{top:"20.8rem", left:"52rem"}}/>
-                </Sign>
-                : check === "signup"
-                ? <Signup />
-                :
-                <Sign>
-                    <Grid>
-                        <Input type="text" placeholder="ID입력"/>
-                    </Grid>
-                    <Grid>
-                        <Button>비밀번호 찾기</Button>
-                    </Grid>
-                    <Indicator style={{top:"20.8rem", left:"67.5rem"}}/>
-                </Sign>
-                }
-        </Container>
-    )
-}
+    dispatch(userActions.loginDB(username, password));
+  };
+  return (
+    <Container>
+      <div className='Logo'>Logo</div>
+      <div className='Middle'>공백</div>
+      <div className='Switch'>
+        <div>
+          <label>
+            <input
+              style={{}}
+              onChange={(e) => {
+                setCheck(e.target.value);
+              }}
+              type='radio'
+              name='select'
+              value='login'
+            />
+            로그인
+          </label>
+        </div>
+        <div>
+          <label>
+            <input
+              style={{}}
+              onChange={(e) => {
+                setCheck(e.target.value);
+              }}
+              type='radio'
+              name='select'
+              value='signup'
+            />
+            회원가입
+          </label>
+        </div>
+      </div>
+      {check === "login" ? (
+        <div className='Sign'>
+          <div>
+            <input
+              type='text'
+              placeholder='ID입력'
+              onChange={(e) => {
+                setUsername(e.target.value);
+              }}
+            />
+          </div>
+          <div>
+            <input
+              type='password'
+              placeholder='Password입력'
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
+          </div>
+          <div>
+            <button className='Login' onClick={login}>
+              로그인
+            </button>
+          </div>
+        </div>
+      ) : (
+        <Signup />
+      )}
+    </Container>
+  );
+};
 
 const Container = styled.div`
-    width : 100%;
-    height : 100%;
-    min-width : 1900px;
-    min-height : 940px;
-    background: linear-gradient( #393bdb,  #aaabed);
-`;
+  width: 100%;
+  height: 1024px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
-const Logo = styled.div`
-    width : 100%;
-    height: 4rem;
-    margin : auto;
-    text-align : center;
-    padding-top : 2rem;
-    font-size : 1.5rem;
-    font-weight : 600;
-`;
-
-const Middle = styled.div`
-    width : 20rem;
-    height: 8rem;
-    margin : 1rem auto 0 auto;
-    text-align : center;
-    padding-top : 2rem;
-    font-size : 1.5rem;
-    font-weight : 600;
-`;
-
-const Sign = styled.div`
-    width : 20rem;
-    margin : auto;
-    text-align : center;
-`;
-
-const Switch = styled.div`
-    width : 20rem;
-    margin : auto;
-    display : flex;
-`;
-
-const Grid = styled.div`
-    width : 100%;
-    display : flex;
-    margin : 1rem;
-`;
-
-const Input = styled.input`
+  div.Logo {
     width: 100%;
-    border-radius : 0.5rem;
-    border : 0px solid black;
-`;
+    height: 4rem;
+    margin: 0 auto;
+    text-align: center;
+    padding-top: 2rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
 
-const Button = styled.button`
-    width : 100%;
-    border-radius : 1rem;
-    border : 0px solid black;
-    background-color: #393bdb;
-`;
+  div.Middle {
+    width: 20rem;
+    height: 8rem;
+    margin: 1rem auto 0 auto;
+    text-align: center;
+    padding-top: 2rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
 
-const Indicator = styled.div`
-    width: 1rem;
-    height: 1rem;
-    position: absolute;
-    background: white;
-    transition: transform 600ms cubic-bezier(.02,.94,.09,.97);
-    transform: rotate(45deg);
-`;
+  div.Switch {
+    width: 400px;
+    margin: 0 auto;
+    display: flex;
+  }
 
+  div.Switch > div {
+    width: 60px;
+    height: 30px;
+    display: flex;
+    text-align: "left";
+  }
+
+  div.Sign {
+    width: 400px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  div.Sign > div {
+    width: 100%;
+    display: flex;
+    margin-bottom: 1rem;
+  }
+
+  label > input {
+    display: none;
+  }
+
+  input {
+    width: 100%;
+    border-radius: 0.5rem;
+    border: 0px solid black;
+    background-color: #f7f7f7;
+  }
+
+  button.Login {
+    width: 100%;
+    border-radius: 1rem;
+    border: 0px solid black;
+    background-color: #343434;
+  }
+`;
 export default Login;
