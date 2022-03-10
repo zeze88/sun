@@ -49,16 +49,26 @@ const Create = () => {
   };
 
   const revise = () => {
-    const tags = addPost.tags?.split("#").splice(1);
+    console.log(typeof addPost.tags);
+    if (typeof addPost.tags === "string") {
+      const tags = addPost.tags?.split("#").splice(1);
 
-    dispatch(
-      postActions.editPostDB({
-        ...addPost,
-        pid: params,
-        tags: tags,
-        category: oneCategory,
-      })
-    );
+      dispatch(
+        postActions.editPostDB({
+          ...addPost,
+          pid: params,
+          tag: tags,
+          category: oneCategory,
+        })
+      );
+    } else {
+      dispatch(
+        postActions.editPostDB({
+          ...addPost,
+          pid: params,
+        })
+      );
+    }
   };
 
   if (!pathName) {
@@ -100,17 +110,17 @@ const Create = () => {
               placeholder={post_one.postComment}
             />
             <input
-              id='tag'
+              id='tags'
               onChange={onChange}
               type='text'
-              placeholder={post_one.tag?.join("#")}
+              placeholder={`#${post_one.tag?.join(" #")}`}
             />
 
-            <ImgUpload />
+            <ImgUpload isEdit={true} />
             <button onClick={revise}>수정 click</button>
             <button
               onClick={() => {
-                history.push(`/detail/${params}`);
+                history.replace(`/detail/${params}`);
               }}>
               취소
             </button>

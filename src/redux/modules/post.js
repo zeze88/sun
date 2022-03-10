@@ -119,45 +119,90 @@ const addPostDB = ({ title, comment, tags, category }) => {
 
 // =====================================================================
 // ================================ 수정 ================================
-const editPostDB = ({ pid, postTitle, postComment, tag, category }) => {
+const editPostDB = (props) => {
   return function (dispatch, getState, { history }) {
+    const {
+      blogUrl,
+      career,
+      category,
+      createdAt,
+      nickname,
+      pid,
+      postComment,
+      postImg,
+      postLikeCount,
+      postTitle,
+      status,
+      tag,
+      uid,
+      userImage,
+    } = props;
+
     const token_res = sessionStorage.getItem("token");
     const img_list = getState().post.preview;
     const formData = new FormData();
     formData.append("images", img_list);
 
-    axios
-      .post(`${apiUrl}/images/upload`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `${token_res}`,
+    console.log(props);
+
+    if (postImg) {
+      console.log("yes img");
+
+      axios({
+        method: "PUT",
+        url: `${apiUrl}/islogin/post/revice/${pid}`,
+        data: {
+          pid: pid,
+          postTitle: postTitle,
+          postComment: postComment,
+          postImg: postImg,
+          tags: tag,
+          category: category,
         },
-      })
-      .then((res) => {
-        const imgUrl = res.data.url;
-        return imgUrl;
-      })
-      .then((imgUrl) => {
-        axios({
-          method: "PUT",
-          url: `${apiUrl}/islogin/post/revice/${pid}`,
-          data: {
-            pid: pid,
-            postTitle: postTitle,
-            postComment: postComment,
-            postImg: imgUrl,
-            tags: tag,
-            category: category,
-          },
-          headers: { Authorization: `${token_res}` },
-        }).then(() => {
-          console.log("포스트 성공!");
-          dispatch(editPost({ postTitle, postComment, tag, category, pid }));
-        });
-      })
-      .catch((err) => {
-        console.log(err);
+        headers: { Authorization: `${token_res}` },
+      }).then(() => {
+        console.log("포스트 성공!");
+        dispatch(editPost({ postTitle, postComment, tag, category, pid }));
+        history.replace(`/detail/${pid}`);
       });
+    } else {
+      console.log("no img");
+
+      axios
+        .post(`${apiUrl}/images/upload`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `${token_res}`,
+          },
+        })
+        .then((res) => {
+          const imgUrl = res.data.url;
+          return imgUrl;
+        })
+        .then((imgUrl) => {
+          console.log("이미지 업로드 성공");
+          axios({
+            method: "PUT",
+            url: `${apiUrl}/islogin/post/revice/${pid}`,
+            data: {
+              pid: pid,
+              postTitle: postTitle,
+              postComment: postComment,
+              postImg: imgUrl,
+              tags: tag,
+              category: category,
+            },
+            headers: { Authorization: `${token_res}` },
+          }).then(() => {
+            console.log("포스트 성공!");
+            dispatch(editPost({ postTitle, postComment, tag, category, pid }));
+            history.replace(`/detail/${pid}`);
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 };
 
