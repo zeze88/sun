@@ -61,5 +61,7 @@ const Answer = ({ isEdit = null, list = null }) => {
     </SC_Answer>
   );
 };
-const SC_Answer = styled.div``;
+const SC_Answer = styled.div`
+  padding: 30px;
+`;
 export default Answer;
