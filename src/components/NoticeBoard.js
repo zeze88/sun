@@ -20,15 +20,11 @@ const NoticeBoard = () => {
     dispatch(postActions.getPostNocheckDB());
   }, []);
 
-  console.log(post_list.list);
-  console.log(TabList);
-
   return (
     <SC_NoticeDiv>
       <h2>전체 게시물</h2>
-      <div className="tab_wrap">
+      <div className='tab_wrap'>
         <TabMenu menus={["답변대기", "답변완료"]} tab={setTabList} />
-        <TabMenu menus={["최신순", "조회순"]} tab={setTabList} />
       </div>
       <NoticeList
         list={TabList === "답변완료" ? post_list.list : post_list.nockeckList}
