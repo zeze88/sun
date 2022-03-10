@@ -41,7 +41,7 @@ const Container = styled.div`
   display: flex;
   div.img {
     position: absolute;
-    margin: 14px 0 0 40px;
+    margin: 14px 0 0 25px;
   }
   div.inputdiv {
     width: 702px;
@@ -51,12 +51,12 @@ const Container = styled.div`
     border: 1px solid black;
   }
   input {
-    width: 632px;
+    width: 600px;
     height: 52px;
-    border-radius: 2rem;
     padding: 0px;
-    margin-left: 70px;
     border: 0px solid;
+    margin: 0 auto;
+    outline: 0;
   }
 `;
 

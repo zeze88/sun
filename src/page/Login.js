@@ -21,13 +21,13 @@ const Login = (props) => {
   };
   return (
     <Container>
-      <Logo>Logo</Logo>
-      <Middle>Sign in to your account</Middle>
+      <div className='Logo'>Logo</div>
+      <div className='Middle'>공백</div>
       <div className='Switch'>
-        <div style={{}}>
-          <label style={{ width: "2.7rem" }}>
+        <div>
+          <label>
             <input
-              style={{ display: "none" }}
+              style={{}}
               onChange={(e) => {
                 setCheck(e.target.value);
               }}
@@ -38,10 +38,10 @@ const Login = (props) => {
             로그인
           </label>
         </div>
-        <div style={{ textAlign: "left" }}>
-          <label style={{ width: "3.6rem" }}>
+        <div>
+          <label>
             <input
-              style={{ textAlign: "left", display: "none" }}
+              style={{}}
               onChange={(e) => {
                 setCheck(e.target.value);
               }}
@@ -54,30 +54,31 @@ const Login = (props) => {
         </div>
       </div>
       {check === "login" ? (
-        <Sign>
-          <Grid>
-            <Input
+        <div className='Sign'>
+          <div>
+            <input
               type='text'
               placeholder='ID입력'
               onChange={(e) => {
                 setUsername(e.target.value);
               }}
             />
-          </Grid>
-          <Grid>
-            <Input
+          </div>
+          <div>
+            <input
               type='password'
               placeholder='Password입력'
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
             />
-          </Grid>
-          <Grid>
-            <Button onClick={login}>Sign in</Button>
-          </Grid>
-          <Indicator style={{ top: "20.8rem", left: "52rem" }} />
-        </Sign>
+          </div>
+          <div>
+            <button className='Login' onClick={login}>
+              로그인
+            </button>
+          </div>
+        </div>
       ) : (
         <Signup />
       )}
@@ -87,76 +88,72 @@ const Login = (props) => {
 
 const Container = styled.div`
   width: 100%;
-  height: 100%;
-  min-width: 1900px;
-  min-height: 940px;
-  background: linear-gradient(#393bdb, #aaabed);
+  height: 1024px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  div.Logo {
+    width: 100%;
+    height: 4rem;
+    margin: 0 auto;
+    text-align: center;
+    padding-top: 2rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  div.Middle {
+    width: 20rem;
+    height: 8rem;
+    margin: 1rem auto 0 auto;
+    text-align: center;
+    padding-top: 2rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
 
   div.Switch {
     width: 400px;
-    margin: auto;
+    margin: 0 auto;
     display: flex;
   }
+
   div.Switch > div {
     width: 60px;
     height: 30px;
     display: flex;
     text-align: "left";
   }
-`;
 
-const Logo = styled.div`
-  width: 100%;
-  height: 4rem;
-  margin: auto;
-  text-align: center;
-  padding-top: 2rem;
-  font-size: 1.5rem;
-  font-weight: 600;
-`;
+  div.Sign {
+    width: 400px;
+    margin: 0 auto;
+    text-align: center;
+  }
 
-const Middle = styled.div`
-  width: 20rem;
-  height: 8rem;
-  margin: 1rem auto 0 auto;
-  text-align: center;
-  padding-top: 2rem;
-  font-size: 1.5rem;
-  font-weight: 600;
-`;
+  div.Sign > div {
+    width: 100%;
+    display: flex;
+    margin-bottom: 1rem;
+  }
 
-const Sign = styled.div`
-  width: 20rem;
-  margin: auto;
-  text-align: center;
-`;
+  label > input {
+    display: none;
+  }
 
-const Grid = styled.div`
-  width: 100%;
-  display: flex;
-  margin: 1rem;
-`;
+  input {
+    width: 100%;
+    border-radius: 0.5rem;
+    border: 0px solid black;
+    background-color: #f7f7f7;
+  }
 
-const Input = styled.input`
-  width: 100%;
-  border-radius: 0.5rem;
-  border: 0px solid black;
+  button.Login {
+    width: 100%;
+    border-radius: 1rem;
+    border: 0px solid black;
+    background-color: #343434;
+  }
 `;
-
-const Button = styled.button`
-  width: 100%;
-  border-radius: 1rem;
-  border: 0px solid black;
-  background-color: #393bdb;
-`;
-
-const Indicator = styled.div`
-  width: 1rem;
-  height: 1rem;
-  position: absolute;
-  background: white;
-  transition: transform 600ms cubic-bezier(0.02, 0.94, 0.09, 0.97);
-  transform: rotate(45deg);
-`;
-
 export default Login;

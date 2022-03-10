@@ -143,14 +143,14 @@ function Signup(props) {
 const Container = styled.div`
   width: 400px;
   height: 406px;
-  margin: auto;
+  margin: 0 auto;
   text-align: center;
 
   div {
     width: 100%;
     height: 40px;
     display: flex;
-    margin: 1rem;
+    margin-bottom: 1rem;
   }
 
   input.input1 {
@@ -159,28 +159,23 @@ const Container = styled.div`
     border-bottom-left-radius: 0.5rem;
     border: 0px solid black;
   }
-  input.input2 {
-    width: 100%;
-    border-radius: 0.5rem;
-    border: 0px solid black;
-  }
   button.CheckButton {
     width: 30%;
     border-top-right-radius: 1rem;
     border-bottom-right-radius: 1rem;
     margin-left: -1px;
-    background-color: #393bdb;
+    background-color: #343434;
   }
   button.SignupButtom {
     width: 100%;
     border-radius: 1rem;
     border: 0px solid black;
-    background-color: #393bdb;
+    background-color: #343434;
   }
   select {
     display: block;
     width: 100%;
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 400;
     line-height: 1rem;
     border: 0px solid;
@@ -188,6 +183,7 @@ const Container = styled.div`
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+    background-color: #f7f7f7;
     option {
       text-align: center;
     }
