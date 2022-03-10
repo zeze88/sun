@@ -24,55 +24,7 @@ const initialState = {
   nockeckList: [],
   preview: "",
 };
-const mock = [
-  {
-    pId: 1,
-    uid: 1,
-    nickname: "자바킬러",
-    postTitle: "자바 쉽게 설명해주실분",
-    postComment: "가능한가요?",
-    postImg: "img",
-    tags: ["자바", "소켓", "socket"],
-    postLikeCount: 1,
-    createdAt: "2022-03-07T14:20:37.679",
-  },
-  {
-    pId: 2,
-    uid: 2,
-    nickname: "사냥꾼",
-    postTitle: "살려줘",
-    postComment: " 이거오늘 안해 해결 안하면 퇴사하래요. 살려줘!!!!",
-    postImg: "img",
-    tags: ["자바", "자바스크립트"],
-    postLikeCount: 11,
-    createdAt: "2022-03-07T14:20:37.679",
-  },
-];
 
-const mock2 = [
-  {
-    pId: 1,
-    uid: 1,
-    nickname: "2222자바킬러",
-    postTitle: "222222자바 쉽게 설명해주실분",
-    postComment: "2222222가능한가요?",
-    postImg: "img",
-    tags: ["자바", "소켓", "socket"],
-    postLikeCount: 1,
-    createdAt: "2020-02-01 22:11:00",
-  },
-  {
-    pId: 2,
-    uid: 2,
-    nickname: "222사냥꾼",
-    postTitle: "2222살려줘",
-    postComment: " 222222222이거오늘 안해 해결 안하면 퇴사하래요. 살려줘!!!!",
-    postImg: "222222img",
-    tags: ["자바", "자바스크립트"],
-    postLikeCount: 11,
-    createdAt: "2020-03-03 22:00:00",
-  },
-];
 // ===================================================================
 // ======================== 게시글 리스트 가지고오기========================
 
@@ -81,11 +33,9 @@ const getPostDB = () => {
     apis
       .getpost()
       .then((res) => {
-        console.log(res);
         dispatch(getPost(res.data));
       })
       .catch((err) => {
-        console.log(err);
         console.log("error get post");
       });
   };
@@ -96,11 +46,9 @@ const getPostNocheckDB = () => {
     apis
       .getpostnocheck()
       .then((res) => {
-        console.log(res);
         dispatch(getPostNoChk(res.data));
       })
       .catch((err) => {
-        console.log(err);
         console.log("error get post");
       });
   };
@@ -125,15 +73,17 @@ const getOnePostDB = (pid) => {
 
 // =====================================================================
 // ================================ 추가 ================================
-const addPostDB = ({ title, comment, tags }) => {
+const addPostDB = ({ title, comment, tags, category }) => {
   return function (dispatch, getState, { history }) {
     const token_res = sessionStorage.getItem("token");
     const img_list = getState().post.preview;
     const formData = new FormData();
     formData.append("images", img_list);
+    console.log(category);
 
     axios
-      .post(`http://175.118.48.164:7050/images/upload`, formData, {
+      // .post(`http://175.118.48.164:7050/images/upload`, formData, {
+      .post(`http://13.125.211.125/images/upload`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `${token_res}`,
@@ -147,12 +97,14 @@ const addPostDB = ({ title, comment, tags }) => {
       .then((imgUrl) => {
         axios({
           method: "post",
-          url: "http://175.118.48.164:7050/islogin/post/write",
+          // url: "http://175.118.48.164:7050/islogin/post/write",
+          url: "http://13.125.211.125/islogin/post/write",
           data: {
             postTitle: title,
             postComment: comment,
             postImg: imgUrl,
             tags: tags,
+            category: category,
           },
           headers: { Authorization: `${token_res}` },
         }).then((res) => {
@@ -168,14 +120,16 @@ const addPostDB = ({ title, comment, tags }) => {
 
 // =====================================================================
 // ================================ 수정 ================================
-const editPostDB = ({ pid, title, comment, tags }) => {
+const editPostDB = ({ pid, title, comment, tags, category }) => {
+  console.log(category);
   return function (dispatch, getState, { history }) {
     const token_res = sessionStorage.getItem("token");
     const img_list = getState().post.preview;
     const formData = new FormData();
     formData.append("images", img_list);
     axios
-      .post(`http://175.118.48.164:7050/images/upload`, formData, {
+      // .post(`http://175.118.48.164:7050/images/upload`, formData, {
+      .post(`http://13.125.211.125/images/upload`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `${token_res}`,
@@ -189,13 +143,15 @@ const editPostDB = ({ pid, title, comment, tags }) => {
         console.log("img업로드 성공");
         axios({
           method: "PUT",
-          url: `http://175.118.48.164:7050/islogin/post/revice/${pid}`,
+          // url: `http://175.118.48.164:7050/islogin/post/revice/${pid}`,
+          url: `http://13.125.211.125/islogin/post/revice/${pid}`,
           data: {
             pid: pid,
             postTitle: title,
             postComment: comment,
             postImg: imgUrl,
             tags: tags,
+            category: category,
           },
           headers: { Authorization: `${token_res}` },
         }).then(() => {

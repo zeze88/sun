@@ -10,11 +10,11 @@ const DEL_ANSWER = "DEL_ANSWER";
 const LIKE_ANSWER = "LIKE_ANSWER";
 const AS_IMG_POST = "AS_IMG_POST";
 
-const getAnswer = createAction(GET_ANSWER, (answer) => ({ answer }));
-const addAnswer = createAction(ADD_ANSWER, (answer) => ({ answer }));
-const editAnswer = createAction(EDIT_ANSWER, (answer) => ({ answer }));
-const likeAnswer = createAction(LIKE_ANSWER, (answer) => ({ answer }));
-const delAnswer = createAction(DEL_ANSWER, (answer) => ({ answer }));
+const getAnswer = createAction(GET_ANSWER, (list) => ({ list }));
+const addAnswer = createAction(ADD_ANSWER, (list) => ({ list }));
+const editAnswer = createAction(EDIT_ANSWER, (list) => ({ list }));
+const likeAnswer = createAction(LIKE_ANSWER, (list) => ({ list }));
+const delAnswer = createAction(DEL_ANSWER, (list) => ({ list }));
 const asImgPost = createAction(AS_IMG_POST, (asPreview) => ({ asPreview }));
 
 const initialState = {
@@ -122,16 +122,14 @@ const editAnswerDB = ({ answsrId, title, comment }) => {
           },
           headers: { Authorization: token_res },
         }).then((res) => {
+          const _answer_list = getState().list;
+          console.log(_answer_list);
+
+          const answer_list = _answer_list.find((v) => v.answsrId === answsrId);
+
           console.log(res);
           console.log("answer 성공!");
-          dispatch(
-            editAnswer({
-              title,
-              comment,
-              answerImg: imgUrl,
-              answsrId: answsrId,
-            })
-          );
+          dispatch(editAnswer(answer_list));
         });
       })
       .catch((err) => {
@@ -173,7 +171,7 @@ export default handleActions(
   {
     [GET_ANSWER]: (state, action) =>
       produce(state, (draft) => {
-        draft.list = action.payload.answer;
+        draft.list = action.payload.list;
       }),
     [ADD_ANSWER]: (state, action) =>
       produce(state, (draft) => {
@@ -181,7 +179,7 @@ export default handleActions(
       }),
     [EDIT_ANSWER]: (state, action) =>
       produce(state, (draft) => {
-        // draft.list;
+        draft.list = action.payload.list;
       }),
     [DEL_ANSWER]: (state, action) =>
       produce(state, (draft) => {

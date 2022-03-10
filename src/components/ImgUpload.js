@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as answerActions } from "../redux/modules/answer";
 
-const ImgUpload = () => {
+const ImgUpload = ({ isEdit = null, editImg = null }) => {
   const fileInput = React.useRef();
   const location = useLocation();
   const pathName = location.pathname !== "/create";
@@ -19,9 +19,17 @@ const ImgUpload = () => {
     }
   };
 
+  if (isEdit) {
+    return (
+      <label htmlFor='img'>
+        <input onChange={onChange} id='img' type='file' ref={fileInput} />
+      </label>
+    );
+  }
+
   return (
-    <label htmlFor="img">
-      <input onChange={onChange} id="img" type="file" ref={fileInput} />
+    <label htmlFor='img'>
+      <input onChange={onChange} id='img' type='file' ref={fileInput} />
     </label>
   );
 };

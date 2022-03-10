@@ -3,13 +3,12 @@ import styled from "styled-components";
 
 const TabMenu = ({ menus, tab }) => {
   const [menu, setMenu] = React.useState(menus[0]);
-
+  console.log(tab);
   return (
     <SC_TabMenu ref={tab}>
       {menus.map((v, idx) => (
         <li
           key={idx}
-          value={v}
           className={menu === v ? "active" : ""}
           onClick={() => {
             setMenu(v);
