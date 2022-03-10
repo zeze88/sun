@@ -7,6 +7,7 @@ import post, { actionCreators as postActions } from "../redux/modules/post";
 import { history } from "../redux/configureStore";
 import Answer from "../components/Answer";
 import AnswerList from "../components/AnswerList";
+import Profile from "../elements/Profile";
 const Detail = () => {
   const dispatch = useDispatch();
   const pid = useParams().pid;
@@ -25,54 +26,43 @@ const Detail = () => {
   React.useEffect(() => {
     dispatch(postActions.getOnePostDB(pid));
   }, []);
+  // const date = post_one.createdAt?.split(".")[0].split("T").join(" ");
+  const date = post_one.createdAt?.split("T")[0];
 
-  console.log(post_one);
   return (
     <Container>
       <Question>
         <Top>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}>
-            <div style={{ fontSize: "2rem", fontWeight: "700" }}>
-              {post_one.postTitle}
-            </div>
-            <div style={{ textAlign: "right", marginRight: "2rem" }}>
-              <div>💻 Img</div>
-              화면공유
-            </div>
+          <div className='header'>
+            <h3>{post_one.postTitle}</h3>
+            <ul>
+              {post_one.tag?.map((v, idx) => (
+                <li
+                  key={idx}
+                  style={{ minWidth: "2rem", border: "1px solid " }}>
+                  {v}
+                </li>
+              ))}
+            </ul>
           </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              margin: "1rem 2rem 0px 0px",
-            }}>
-            <dl>
+          <div className='top_info'>
+            <dl className='user_info'>
               <dt>
-                <img src={post_one.userImage} alt='프로필 이미지' />
+                <Profile />
               </dt>
               <dd>{post_one.nickname}</dd>
             </dl>
-            <em>작성시간이 없어요</em>
-            {/* {post_one.tag?.map((v, idx) => (
-              <div key={idx} style={{ minWidth: "2rem", border: "1px solid " }}>
-                {v}
-              </div>
-            ))} */}
+            <em>{date}</em>
           </div>
         </Top>
         <ContextWrap>
-          <p>{post_one.postComment}</p>
-          <div>
+          <div className='text-wrap'>
+            <p>{post_one.postComment}</p>
             <img src={post_one.postImg} />
           </div>
 
-          <div>
-            <button onClick={likebtn}>관심</button>
+          <div className='btn_wrap'>
+            <button onClick={likebtn}>관심 {post_one.postLikeCount}</button>
             <button styled={{ fontSize: "40px" }} onClick={delPost}>
               삭제
             </button>
@@ -110,34 +100,55 @@ const Detail = () => {
   );
 };
 
-const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  min-height: 1050px;
-  padding: 2rem 1.5rem;
-`;
+const Container = styled.div``;
 
 const Question = styled.div`
-  width: 70%;
-  height: 100%;
-  min-height: 500px;
-  border-radius: 1rem;
-  background-color: #d3d3d3;
+  border-bottom: solid 1px #ebebeb;
 `;
 
 const Top = styled.div`
-  width: 100%;
-  height: 16%;
-  padding: 1rem;
+  padding: 10px;
+  border-bottom: solid 1px #ebebeb;
+
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  ul {
+    display: flex;
+  }
+
+  li {
+    margin-left: 10px;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+  .header {
+    padding: 30px 0;
+  }
+
+  .user_info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
 `;
 
-const ContextWrap = styled.div``;
-
-const Line = styled.hr`
-  color: #d3d3d3;
-  border-width: 1px;
-  width: 98.8%;
-  margin-bottom: 2rem;
+const ContextWrap = styled.div`
+  padding: 10px;
+  .text-wrap {
+    min-height: 250px;
+  }
+  .btn_wrap {
+    text-align: right;
+    button {
+      margin-left: 10px;
+      border-radius: 5px;
+      background-color: #676767;
+    }
+  }
 `;
 
 const ContentBox = styled.div`

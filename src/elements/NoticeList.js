@@ -5,7 +5,8 @@ const NoticeList = ({ list }) => {
   return (
     <React.Fragment>
       {list.map((data, idx) => {
-        // const date = data.createdAt.split(".")[0].replace("T", " ");
+        // const date = data.createdAt?.split(".")[0].replace("T", " ");
+        const date = data.createdAt?.split("T")[0];
 
         return (
           <NoticeListDiv
@@ -28,10 +29,10 @@ const NoticeList = ({ list }) => {
               <div>{data.postComment}</div>
             </div>
             <div className='info'>
-              <em>{data.createdAt}</em>
               <span>
                 <img scr={data.img} /> {data.nickname}
               </span>
+              <em>{date}</em>
               <i>{data.postLikeCount}</i>
             </div>
           </NoticeListDiv>
@@ -51,6 +52,7 @@ const NoticeListDiv = styled.div`
   }
   .title {
     justify-content: space-between;
+    margin-bottom: 10px;
   }
 
   .info {
@@ -80,6 +82,7 @@ const NoticeListDiv = styled.div`
   }
 
   dt {
+    margin-right: 10px;
     font-weight: 700;
     color: #343434;
   }
@@ -98,8 +101,12 @@ const NoticeListDiv = styled.div`
   }
 
   em {
-    margin-right: 10px;
+    padding: 0 10px;
+    margin: 0 10px;
     font-style: normal;
+    border: solid 1px #222;
+    border-top: none;
+    border-bottom: none;
   }
 
   i {
