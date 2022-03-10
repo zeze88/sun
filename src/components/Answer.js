@@ -7,9 +7,8 @@ import ImgUpload from "./ImgUpload";
 
 import { actionCreators as answerActions } from "../redux/modules/answer";
 
-const Answer = () => {
+const Answer = ({ isEdit = null, list = null }) => {
   const dispatch = useDispatch();
-
   const params = useParams().pid;
   const user_info = sessionStorage.getItem("uid");
   const [addAnswer, setAddAnswer] = React.useState("");
@@ -21,27 +20,44 @@ const Answer = () => {
   };
 
   const answerSubmit = () => {
-    console.log(addAnswer);
     dispatch(
       answerActions.addAnswerDB({ pid: params, uid: user_info, ...addAnswer })
     );
   };
 
   const editAnswer = () => {
-    // dispatch(answerActions.editAnswerDB(answsrId, addAnswer));
-    //answsrId 가 null 로 내려와요
-    // dispatch(answerActions.editAnswerDB({ answsrId: 5005, ...addAnswer }));
+    dispatch(
+      answerActions.editAnswerDB({ answsrId: list.answerId, ...addAnswer })
+    );
   };
+
+  if (isEdit) {
+    return (
+      <SC_Answer>
+        <input
+          id='title'
+          onChange={onChange}
+          type='text'
+          placeholder={list.answerTitle}
+        />
+        <input
+          id='comment'
+          onChange={onChange}
+          type='text'
+          placeholder={list.answerComment}
+        />
+        <ImgUpload isEdit={isEdit} editImg={list.answerImg} />
+        <button onClick={editAnswer}>수정 go</button>
+      </SC_Answer>
+    );
+  }
 
   return (
     <SC_Answer>
-      <input id="title" onChange={onChange} type="text" />
-      <input id="comment" onChange={onChange} type="text" />
+      <input id='title' onChange={onChange} type='text' />
+      <input id='comment' onChange={onChange} type='text' />
       <ImgUpload />
       <button onClick={answerSubmit}>답변 click</button>
-      <hr />
-      <button onClick={editAnswer}>수정</button>
-      <hr />
     </SC_Answer>
   );
 };

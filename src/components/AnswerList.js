@@ -1,26 +1,27 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useParams } from 'react-router';
+import React from "react";
+import styled from "styled-components";
+import { useParams } from "react-router";
 
-import { useDispatch, useSelector } from 'react-redux';
-import { actionCreators as answerActions } from '../redux/modules/answer';
-import Comment from './Comment';
-import Answer from './Answer';
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as answerActions } from "../redux/modules/answer";
+import Comment from "./Comment";
+import Answer from "./Answer";
+import AnswerEdit from "./AnswerEdit";
 
-const AnswerList = ({ edit }) => {
+const AnswerList = () => {
   const pid = useParams().pid;
   const dispatch = useDispatch();
-  const user_info = sessionStorage.getItem('uid');
+  const user_info = sessionStorage.getItem("uid");
   const answer_list = useSelector((state) => state.answer.list);
-  const [isEdit, setIsEdit] = React.useState(false);
-
+  const [isEdit, setIsEdit] = React.useState();
+  console.log(answer_list);
   React.useEffect(() => {
     dispatch(answerActions.getAnswerDB(pid));
+    if (!answer_list) {
+      return;
+      dispatch(answerActions.getAnswerDB(pid));
+    }
   }, []);
-
-  const editAnswer = () => {
-    dispatch(answerActions.editAnswerDB({ ...edit }));
-  };
 
   const chooseAnswer = (uid, answrId) => {
     dispatch(
@@ -36,9 +37,10 @@ const AnswerList = ({ edit }) => {
   const deleAnswer = (answerId) => {
     dispatch(answerActions.delAnswerDB(answerId));
   };
+
   return (
     <SC_List>
-      {answer_list.map((v, idx) => (
+      {answer_list?.map((v, idx) => (
         <div key={idx} className='wrap'>
           <div className='header'>
             <h2>답변</h2>
@@ -59,27 +61,38 @@ const AnswerList = ({ edit }) => {
                     }}>
                     삭제
                   </button>
+                  <button
+                    onClick={() => {
+                      setIsEdit(v.answerId);
+                    }}>
+                    수정
+                  </button>
                 </>
               )}
 
-              <div>v.answerTitle</div>
-              <div>v.answerComment</div>
+              <div>{v.answerTitle}</div>
+              <div>{v.answerComment}</div>
 
-              <div>{/* <Answer /> */}</div>
+              <div>
+                {isEdit === v.answerId && <Answer isEdit={true} list={v} />}
+              </div>
             </div>
 
             <Commentbox className='comment'>
               <Comment />
             </Commentbox>
             <div className='comment_wrap'>
-              <React.Fragment>
-                <dl>
-                  <dt>imgurl response에 없어요.</dt>
-                  <dd>jjy nickname response에 없어요</dd>
-                </dl>
-                <div>{v.commnetResponseDtoList.commentTitle}</div>
-                <div>{v.commnetResponseDtoList.comment}</div>
-              </React.Fragment>
+              {v.commnetResponseDtoList.map((list, idx) => {
+                return (
+                  <React.Fragment key={idx}>
+                    <dl>
+                      <dt>{list.userImage}</dt>
+                      <dd>{list.nickname}</dd>
+                    </dl>
+                    <div>{list.comment}</div>
+                  </React.Fragment>
+                );
+              })}
             </div>
           </div>
         </div>
