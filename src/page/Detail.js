@@ -16,6 +16,7 @@ const Detail = () => {
   const user_info = sessionStorage.getItem("uid");
 
   const delPost = () => {
+    // alert();
     dispatch(postActions.delPostDB(pid));
   };
 

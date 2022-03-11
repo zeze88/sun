@@ -95,6 +95,7 @@ export default handleActions(
   {
     [COMMENT_ADD]: (state, action) =>
       produce(state, (draft) => {
+        console.log("코멘트");
         draft.list.push(action.payload);
       }),
     [COMMENT_EDIT]: (state, action) =>
@@ -125,15 +126,3 @@ const actionCreators = {
 };
 
 export { actionCreators };
-
-// <Commentbox className="comment">
-// <Comment />
-// </Commentbox>
-
-// const Commentbox = styled.div`
-//   @media screen and (min-width: 1050px) {
-//     .comment {
-//       width: 50%;
-//     }
-//   }
-// `;

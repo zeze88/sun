@@ -3,12 +3,16 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import Serch from "../components/Serch";
 import Post from "./Post";
+import Category from "../components/Category";
 
 const Main = () => {
   return (
     <Container>
       <Header />
-      <Post />
+      <Category />
+      <div>
+        <Post />
+      </div>
     </Container>
   );
 };
@@ -16,8 +20,9 @@ const Main = () => {
 const Container = styled.div`
   display: flex;
   padding: 2rem;
-
-  div {
+  flex-direction: column;
+  justify-content: center;
+  > div {
     display: flex;
   }
 `;
