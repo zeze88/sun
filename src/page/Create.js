@@ -106,10 +106,10 @@ const Create = () => {
                     <li
                       key={idx}
                       onClick={() => {
-                        setOneCategory(v);
+                        setOneCategory(v.name);
                         setIsSelect(false);
                       }}>
-                      {v}
+                      {v.name}
                     </li>
                   ))}
                 </ul>
@@ -164,10 +164,10 @@ const Create = () => {
               <li
                 key={idx}
                 onClick={() => {
-                  setOneCategory(v);
+                  setOneCategory(v.name);
                   setIsSelect(false);
                 }}>
-                {v}
+                {v.name}
               </li>
             ))}
           </ul>

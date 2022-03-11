@@ -13,6 +13,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+img {
+  max-width: 100%;
+}
+
 input {
   padding: 10px;
   font-size: 1.2em;
