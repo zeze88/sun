@@ -8,10 +8,7 @@ const Main = () => {
   return (
     <Container>
       <Header />
-      {/* <div>
-        <Serch />
-        <Post />
-      </div> */}
+      <Post />
     </Container>
   );
 };
@@ -22,7 +19,6 @@ const Container = styled.div`
 
   div {
     display: flex;
-    /* flex-direction: column; */
   }
 `;
 
