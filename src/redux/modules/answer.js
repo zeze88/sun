@@ -28,7 +28,6 @@ const getAnswerDB = (pid) => {
     apis
       .getanswer(pid)
       .then((res) => {
-        console.log(res.data);
         dispatch(getAnswer(res.data));
       })
       .catch((err) => {
@@ -41,7 +40,6 @@ const addAnswerDB = ({ pid, uid, title, comment }) => {
   return function (dispatch, getState, { history }) {
     const token_res = sessionStorage.getItem("token");
     const img_list = getState().answer.asPreview;
-    console.log(img_list);
     const formData = new FormData();
     formData.append("images", img_list);
 
@@ -71,17 +69,21 @@ const addAnswerDB = ({ pid, uid, title, comment }) => {
           },
           headers: { Authorization: token_res },
         }).then((res) => {
-          console.log(res);
-
           dispatch(
             addAnswer({
               pid,
               uid,
-              title,
-              comment,
+              answerTitle: title,
+              answerComment: comment,
               answerImg: imgUrl,
               answsrId: res.data,
-              answerUid: uid,
+              answerLike: false,
+              blogUrl: null,
+              career: null,
+              commnetResponseDtoList: [],
+              createdAt: "",
+              nickname: "",
+              userImage: null,
             })
           );
         });
@@ -143,9 +145,10 @@ const delAnswerDB = (answsrId) => {
   return function (dispatch, getState, { history }) {
     apis
       .delanswer(answsrId)
-      .then((res) => {
-        console.log(res);
-        dispatch(delAnswer(answsrId));
+      .then(() => {
+        const _answer_list = getState().answer.list;
+        const answer_list = _answer_list.filter((v) => v.answerId !== answsrId);
+        dispatch(delAnswer(answer_list));
       })
       .catch((err) => {
         console.log(err);
@@ -158,7 +161,6 @@ const chooseAnswerDB = ({ uid, pid, answrId, answerUid }) => {
     apis
       .chooseAnswer(uid, pid, answrId, answerUid)
       .then((res) => {
-        console.log(res.data.status);
         const status = res.data.status;
         dispatch(likeAnswer({ uid, pid, answrId, answerUid, status }));
       })
@@ -176,15 +178,17 @@ export default handleActions(
       }),
     [ADD_ANSWER]: (state, action) =>
       produce(state, (draft) => {
-        draft.list = draft.list.push(action.payload.list);
+        draft.list.unshift(action.payload.list);
+        draft.asPreview = "";
       }),
     [EDIT_ANSWER]: (state, action) =>
       produce(state, (draft) => {
         draft.list = action.payload.list;
+        draft.asPreview = "";
       }),
     [DEL_ANSWER]: (state, action) =>
       produce(state, (draft) => {
-        // draft.list;
+        draft.list = action.payload.list;
       }),
     [LIKE_ANSWER]: (state, action) =>
       produce(state, (draft) => {

@@ -16,10 +16,12 @@ const Answer = ({ isEdit = null, list = null }) => {
   const onChange = (e) => {
     const id = e.target.id;
     const content = e.target.value;
+
     setAddAnswer({ ...addAnswer, [id]: content });
   };
 
   const answerSubmit = () => {
+    setAddAnswer({});
     dispatch(
       answerActions.addAnswerDB({ pid: params, uid: user_info, ...addAnswer })
     );
