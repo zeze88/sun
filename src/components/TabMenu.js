@@ -1,19 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-const TabMenu = ({ tab }) => {
-  const tab_list = [
-    {
-      title: "nockeck",
-      value: "답변대기",
-    },
-    {
-      title: "check",
-      value: "답변완료",
-    },
-  ];
-
-  const [menu, setMenu] = React.useState("nockeck");
+const TabMenu = ({ tab_list, tab }) => {
+  const [menu, setMenu] = React.useState(tab_list[0].title);
 
   return (
     <SC_TabMenu>

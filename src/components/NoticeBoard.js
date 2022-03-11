@@ -1,31 +1,33 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import styled from "styled-components";
 import NoticeList from "../elements/NoticeList";
 import Pagination from "./Pagination";
 import TabMenu from "./TabMenu";
-import { history } from "../redux/configureStore";
 
 const NoticeBoard = () => {
+  const tab_list = [
+    {
+      title: "nockeck",
+      value: "답변대기",
+    },
+    {
+      title: "check",
+      value: "답변완료",
+    },
+  ];
   const dispatch = useDispatch();
-  const post_list = useSelector((state) => state.post);
-  const tabRef = React.useRef();
   const [TabList, setTabList] = React.useState();
-  const [postList, setPostList] = React.useState();
-  const [postListNocheck, setPostListNocheck] = React.useState();
-
   React.useEffect(() => {
     dispatch(postActions.getPostDB());
     dispatch(postActions.getPostNocheckDB());
   }, []);
 
-  console.log(TabList);
-
   return (
     <SC_NoticeDiv>
       <h2>전체 게시물</h2>
-      <TabMenu tab={setTabList} />
+      <TabMenu tab_list={tab_list} tab={setTabList} />
       <NoticeList list={TabList} />
       <SC_BtnWrap>
         <button>글쓰기</button>
