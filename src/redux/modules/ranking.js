@@ -20,7 +20,6 @@ const totalRankingDB = () => {
     apis
       .totalRanking()
       .then((res) => {
-        console.log(res.data);
         dispatch(totalRanking(res.data));
       })
       .catch((err) => {
@@ -33,7 +32,6 @@ const monthRankingDB = () => {
     apis
       .totalRanking()
       .then((res) => {
-        console.log(res.data);
         dispatch(monthRanking(res.data));
       })
       .catch((err) => {
@@ -46,7 +44,6 @@ const weekRankingDB = () => {
     apis
       .totalRanking()
       .then((res) => {
-        console.log(res.data);
         dispatch(weekRanking(res.data));
       })
       .catch((err) => {
