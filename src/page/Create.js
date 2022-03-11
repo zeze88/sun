@@ -18,14 +18,18 @@ const Create = () => {
   const [addPost, setAddPost] = React.useState("");
   const [isSelect, setIsSelect] = React.useState(false);
   const [oneCategory, setOneCategory] = React.useState("카테고리를 선택");
+  const token = sessionStorage.getItem("token");
+  React.useEffect(() => {
+    if (!token) {
+      window.alert("토큰이 없습니다");
+      history.replace("/login");
+    }
+  }, []);
 
   React.useEffect(() => {
     dispatch(postActions.getOnePostDB(params));
     if (!pathName) {
       setAddPost(post_one);
-    }
-    if (!img_list?.preview) {
-      return;
     }
   }, []);
 
@@ -49,7 +53,6 @@ const Create = () => {
   };
 
   const revise = () => {
-    console.log(typeof addPost.tags);
     if (typeof addPost.tags === "string") {
       const tags = addPost.tags?.split("#").splice(1);
 
