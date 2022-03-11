@@ -51,7 +51,7 @@ const Container = styled.div`
   }
   input {
     width: 600px;
-    height: 52px;
+    height: 50px;
     padding: 0px;
     border: 0px solid;
     margin: 0 auto;

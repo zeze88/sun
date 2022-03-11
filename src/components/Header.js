@@ -100,7 +100,7 @@ const Container = styled.div`
   }
   div.view > ul {
     border: 1px solid black;
-    height: 1rem;
+    height: 2rem;
     padding: 0.5rem 0 0.5rem 0;
     font-size: 1rem;
     text-align: center;
