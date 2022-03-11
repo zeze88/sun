@@ -14,10 +14,11 @@ const AnswerList = () => {
   const user_info = sessionStorage.getItem("uid");
   const answer_list = useSelector((state) => state.answer.list);
   const [isEdit, setIsEdit] = React.useState();
-
+  console.log(answer_list);
   React.useEffect(() => {
     dispatch(answerActions.getAnswerDB(pid));
     if (!answer_list) {
+      return;
       dispatch(answerActions.getAnswerDB(pid));
     }
   }, []);
@@ -43,17 +44,17 @@ const AnswerList = () => {
         <div key={idx} className='wrap'>
           <div className='header'>
             <h2>답변</h2>
-            <button
-              onClick={() => {
-                chooseAnswer(v.uid, v.answerId);
-              }}>
-              채택
-            </button>
           </div>
           <div>
             <div className='content_wrap'>
               {v.uid === Number(user_info) && (
                 <>
+                  <button
+                    onClick={() => {
+                      chooseAnswer(v.uid, v.answerId);
+                    }}>
+                    채택
+                  </button>
                   <button
                     onClick={() => {
                       deleAnswer(v.answerId);
@@ -101,23 +102,20 @@ const AnswerList = () => {
 };
 
 const SC_List = styled.div`
-  border-top: solid 1px #ebebeb;
-
   h2 {
     margin: 0;
   }
 
   .wrap {
     margin: 30px 0;
+    background-color: #f7f7f7;
   }
 
   .header {
-    display: flex;
+    height: 50px;
+    line-height: 50px;
     padding: 20px;
     border-bottom: solid 1px #ebebeb;
-    button {
-      margin-left: auto;
-    }
   }
 
   .content_wrap {

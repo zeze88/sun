@@ -1,24 +1,24 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { history } from "../redux/configureStore";
-import { useDispatch } from "react-redux";
-import { actionCreators as userAction } from "../redux/modules/user";
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as loOutAction } from "../redux/modules/user";
 import Serch from "./Serch";
+import Profile from "../elements/Profile";
+import { delToken } from "../shared/token";
 
 const Header = () => {
-  const dispatch = useDispatch();
   const isLogin = sessionStorage.getItem("isLogin");
   const nickname = sessionStorage.getItem("nickname");
   const [view, setView] = useState(false);
-  console.log(isLogin);
-
+  const userInfo = useSelector((state) => state);
+  console.log(userInfo);
   const View = () => {
     setView(!view);
-    console.log(view);
   };
 
   const Logout = () => {
-    dispatch(userAction.logoutDB());
+    delToken();
   };
 
   return (
@@ -27,7 +27,7 @@ const Header = () => {
         아아
       </div>
       <Serch />
-      {isLogin ? (
+      {!isLogin ? (
         <div className='none'>
           <button onClick={() => history.push("/login")}>
             회원가입/로그인
@@ -35,15 +35,16 @@ const Header = () => {
         </div>
       ) : (
         <div className='my' onClick={View}>
-          <i></i>
-          최모씨
-          {/* {nickname} */}
+          <i>
+            <Profile />
+          </i>
+          {nickname}
           <div>아래꺽쇠</div>
           {view ? (
             <div className='view'>
               <ul onClick={() => console.log("history.push('서해')")}>1</ul>
               <ul onClick={() => console.log("history.push('동해')")}>2</ul>
-              <ul onClick={() => console.log("history.push('남해')")}>3</ul>
+              <ul onClick={Logout}>로그아웃</ul>
             </div>
           ) : null}
         </div>
@@ -55,12 +56,11 @@ const Header = () => {
 const Container = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
   height: 72px;
-  width: 1440px;
+  width: 1280px;
   margin: auto;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   div.Logo {
     width: 220px;
     height: 52px;
@@ -115,7 +115,6 @@ const Container = styled.div`
     height: 40px;
     border: 0px solid #d6d6d6;
     border-radius: 50%;
-    background-color: yellow;
     margin: 0 1rem;
   }
   button {

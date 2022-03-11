@@ -1,31 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 
-const TabMenu = ({ tab }) => {
-  const tab_list = [
-    {
-      title: "nockeck",
-      value: "답변대기",
-    },
-    {
-      title: "check",
-      value: "답변완료",
-    },
-  ];
-
-  const [menu, setMenu] = React.useState("nockeck");
-
+const TabMenu = ({ menus, tab }) => {
+  const [menu, setMenu] = React.useState(menus[0]);
+  console.log(tab);
   return (
-    <SC_TabMenu>
-      {tab_list.map((v, idx) => (
+    <SC_TabMenu ref={tab}>
+      {menus.map((v, idx) => (
         <li
           key={idx}
-          className={menu === v.title ? "active" : ""}
+          className={menu === v ? "active" : ""}
           onClick={() => {
-            setMenu(v.title);
-            tab(v.title);
+            setMenu(v);
+            tab(v);
           }}>
-          {v.value}
+          {v}
         </li>
       ))}
     </SC_TabMenu>

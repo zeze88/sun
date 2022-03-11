@@ -95,6 +95,7 @@ export default handleActions(
   {
     [COMMENT_ADD]: (state, action) =>
       produce(state, (draft) => {
+        console.log("코멘트");
         draft.list.push(action.payload);
       }),
     [COMMENT_EDIT]: (state, action) =>
