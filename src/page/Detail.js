@@ -8,6 +8,7 @@ import { history } from "../redux/configureStore";
 import Answer from "../components/Answer";
 import AnswerList from "../components/AnswerList";
 import Profile from "../elements/Profile";
+
 const Detail = () => {
   const dispatch = useDispatch();
   const pid = useParams().pid;
@@ -15,14 +16,12 @@ const Detail = () => {
   const user_info = sessionStorage.getItem("uid");
 
   const delPost = () => {
-    alert();
     dispatch(postActions.delPostDB(pid));
   };
 
   const likebtn = () => {
     dispatch(postActions.postLikeDB(user_info, pid));
   };
-
   React.useEffect(() => {
     dispatch(postActions.getOnePostDB(pid));
   }, []);
