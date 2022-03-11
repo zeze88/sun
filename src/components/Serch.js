@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { actionsCreators as serchActions } from "../redux/modules/serch";
+import { actionsCreator as serchActions } from "../redux/modules/serch";
 
 const Serch = () => {
   const dispatch = useDispatch();
@@ -17,6 +17,7 @@ const Serch = () => {
   };
 
   const serchgo = (find) => {
+    console.log();
     dispatch(serchActions.serchDB(find));
   };
 
@@ -43,7 +44,7 @@ const Container = styled.div`
     margin: 14px 0 0 25px;
   }
   div.inputdiv {
-    width: 700px;
+    width: 702px;
     height: 52px;
     border-radius: 2rem;
     padding: 0px;
@@ -56,8 +57,6 @@ const Container = styled.div`
     border: 0px solid;
     margin: 0 auto;
     outline: 0;
-    display: flex;
-    justify-content: center;
   }
 `;
 

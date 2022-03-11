@@ -8,13 +8,7 @@ import { apiUrl } from "../../elements/testApiUrl";
 
 //initialState
 const initialState = {
-  userinfo: {
-    uid: "",
-    username: "",
-    nickname: "",
-    career: "",
-    userImage: "",
-  },
+  user: null,
   isLogin: false,
   isCheckUsername: false,
   isCheckNickname: false,
@@ -23,8 +17,8 @@ const initialState = {
 //action
 const CHECK_USERNAME = "CHECK_USERNAME";
 const CHECK_NICKNAME = "CHECK_NICKNAME";
-const LOG_IN = "LOG_IN";
-const LOG_OUT = "LOG_OUT";
+const LOGIN = "LOGIN";
+const LOGOUT = "LOGOUT";
 
 //action creators
 const setCheckUsername = createAction(CHECK_USERNAME, (isCheckUsername) => ({
@@ -33,9 +27,11 @@ const setCheckUsername = createAction(CHECK_USERNAME, (isCheckUsername) => ({
 const setCheckNickname = createAction(CHECK_NICKNAME, (isCheckNickname) => ({
   isCheckNickname,
 }));
-const logIn = createAction(LOG_IN, (user) => ({ user }));
-const logOut = createAction(LOG_OUT, () => ({}));
-// //token
+const setLogin = createAction(LOGIN, (user) => ({ user }));
+
+const setLogout = createAction(LOGOUT, () => ({}));
+
+//token
 const token = sessionStorage.getItem("token");
 
 //middleware actions
@@ -50,7 +46,6 @@ const checkUsernameDB = (username, isCheckUsername) => {
           return;
         }
         dispatch(setCheckUsername(!isCheckUsername));
-        console.log("리듀서로");
       });
   };
 };
@@ -64,7 +59,7 @@ const checkNicknameDB = (userNickname, isCheckNickname) => {
       })
       .then((res) => {
         if (res.data === true) {
-          window.alert("이미 존재하는 닉네임입니다.");
+          window.alert("이미 존재하는 닉네임 입니다.");
           return;
         }
         console.log(res);
@@ -124,24 +119,20 @@ const loginDB = (username, password) => {
             sessionStorage.setItem("username", res.data.username);
             sessionStorage.setItem("nickname", res.data.nickname);
             sessionStorage.setItem("isLogin", true);
-            console.log("1번");
             dispatch(
-              logIn({
+              setLogin({
                 uid: res.data.uid,
                 username: res.data.username,
                 nickname: res.data.nickname,
-                career: res.data.career,
-                userImage: res.data.userImage,
+                //career: res
+                //userImage: res
               })
             );
           })
           .catch((err) => {
             console.log("로그인 확인 실패", err);
           });
-        if (sessionStorage.getItem("isLogin")) {
-          history.push("/");
-          window.location.reload();
-        }
+        history.replace("/");
       })
       .catch((err) => {
         console.log(err);
@@ -150,13 +141,35 @@ const loginDB = (username, password) => {
   };
 };
 
+const logoutDB = () => {
+  return async function (dispatch, getState, { history }) {
+    await axios
+      .post(`${apiUrl}/islogin/user/logout`, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        sessionStorage.removeItem("uid");
+        sessionStorage.removeItem("username");
+        sessionStorage.removeItem("nickname");
+        sessionStorage.removeItem("isLogin");
+      })
+      .catch((err) => {
+        console.log(err);
+        window.alert("로그아웃실패");
+      });
+  };
+};
+
 export default handleActions(
   {
     [CHECK_USERNAME]: (state, action) =>
       produce(state, (draft) => {
-        console.log("CHECK_USERNAME 리듀서로 적용 완료", state, action.payload);
+        console.log("CHECK_USERNAME 리듀서 적용", state, action.payload);
         draft.isCheckUsername = action.payload.isCheckUsername;
-        window.alert("해당 이메일은 사용 가능합니다.");
+        window.alert("사용 가능한 ID입니다.");
       }),
     [CHECK_NICKNAME]: (state, action) =>
       produce(state, (draft) => {
@@ -164,15 +177,14 @@ export default handleActions(
         draft.isCheckNickname = action.payload.isCheckNickname;
         window.alert("사용 가능한 닉네임입니다.");
       }),
-    [LOG_IN]: (state, action) =>
+    [LOGIN]: (state, action) =>
       produce(state, (draft) => {
-        console.log("로그인");
-        draft.user = action.payload.userinfo;
+        draft.userInfo = action.payload.user;
         draft.isLogin = true;
       }),
-    [LOG_OUT]: (state, action) =>
+    [LOGIN]: (state, action) =>
       produce(state, (draft) => {
-        delToken();
+        draft.userInfo = action.payload.user;
       }),
   },
   initialState
@@ -183,7 +195,7 @@ const actionCreators = {
   checkUsernameDB,
   checkNicknameDB,
   loginDB,
-  logOut,
+  logoutDB,
 };
 
 export { actionCreators };

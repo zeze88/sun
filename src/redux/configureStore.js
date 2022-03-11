@@ -5,9 +5,6 @@ import { connectRouter } from "connected-react-router";
 import Post from "./modules/post";
 import Answer from "./modules/answer";
 import Ranking from "./modules/ranking";
-import user from "./modules/user";
-import comment from "./modules/comment";
-import search from "./modules/serch";
 
 export const history = createBrowserHistory();
 
@@ -16,9 +13,6 @@ const rootReducer = combineReducers({
   answer: Answer,
   ranking: Ranking,
   router: connectRouter(history),
-  user: user,
-  comment: comment,
-  search: search,
 });
 
 const middlewares = [thunk.withExtraArgument({ history: history })];

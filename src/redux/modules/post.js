@@ -65,8 +65,8 @@ const getOnePostDB = (pid) => {
         dispatch(getPost(res.data));
       })
       .catch((err) => {
-        console.log(err);
-        console.log("error get one post");
+        // console.log(err);
+        // console.log("error get one post");
       });
   };
 };
@@ -119,46 +119,90 @@ const addPostDB = ({ title, comment, tags, category }) => {
 
 // =====================================================================
 // ================================ 수정 ================================
-const editPostDB = ({ pid, title, comment, tags, category }) => {
-  console.log(category);
+const editPostDB = (props) => {
   return function (dispatch, getState, { history }) {
+    const {
+      blogUrl,
+      career,
+      category,
+      createdAt,
+      nickname,
+      pid,
+      postComment,
+      postImg,
+      postLikeCount,
+      postTitle,
+      status,
+      tag,
+      uid,
+      userImage,
+    } = props;
+
     const token_res = sessionStorage.getItem("token");
     const img_list = getState().post.preview;
     const formData = new FormData();
     formData.append("images", img_list);
-    axios
-      .post(`${apiUrl}/images/upload`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `${token_res}`,
+
+    console.log(props);
+
+    if (postImg) {
+      console.log("yes img");
+
+      axios({
+        method: "PUT",
+        url: `${apiUrl}/islogin/post/revice/${pid}`,
+        data: {
+          pid: pid,
+          postTitle: postTitle,
+          postComment: postComment,
+          postImg: postImg,
+          tags: tag,
+          category: category,
         },
-      })
-      .then((res) => {
-        const imgUrl = res.data.url;
-        return imgUrl;
-      })
-      .then((imgUrl) => {
-        console.log("img업로드 성공");
-        axios({
-          method: "PUT",
-          url: `${apiUrl}/islogin/post/revice/${pid}`,
-          data: {
-            pid: pid,
-            postTitle: title,
-            postComment: comment,
-            postImg: imgUrl,
-            tags: tags,
-            category: category,
-          },
-          headers: { Authorization: `${token_res}` },
-        }).then(() => {
-          console.log("포스트 성공!");
-          dispatch(editPost({ title, comment, imgUrl, tags, pid }));
-        });
-      })
-      .catch((err) => {
-        console.log(err);
+        headers: { Authorization: `${token_res}` },
+      }).then(() => {
+        console.log("포스트 성공!");
+        dispatch(editPost({ postTitle, postComment, tag, category, pid }));
+        history.replace(`/detail/${pid}`);
       });
+    } else {
+      console.log("no img");
+
+      axios
+        .post(`${apiUrl}/images/upload`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `${token_res}`,
+          },
+        })
+        .then((res) => {
+          const imgUrl = res.data.url;
+          return imgUrl;
+        })
+        .then((imgUrl) => {
+          console.log("이미지 업로드 성공");
+          axios({
+            method: "PUT",
+            url: `${apiUrl}/islogin/post/revice/${pid}`,
+            data: {
+              pid: pid,
+              postTitle: postTitle,
+              postComment: postComment,
+              postImg: imgUrl,
+              tags: tag,
+              category: category,
+            },
+            headers: { Authorization: `${token_res}` },
+          }).then(() => {
+            console.log("포스트 성공!");
+            dispatch(editPost({ postTitle, postComment, tag, category, pid }));
+            history.replace(`/detail/${pid}`);
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 };
 
@@ -171,6 +215,7 @@ const delPostDB = (pid) => {
       .then((res) => {
         console.log(res);
         dispatch(delPost(pid));
+        history.replace("/");
       })
       .catch((err) => {
         console.log(err);
@@ -184,16 +229,16 @@ const postLikeDB = (uid, pid) => {
       .likepost(uid, pid)
       .then((res) => {
         const post_list = getState().post.list;
-        const like_count = "";
-        // if (res.data.postLike === "true") {
-        //   like_count = post_list.postLikeCount + 1;
-        // } else {
-        //   like_count = post_list.postLikeCount - 1;
-        // }
+        let like_count = "";
+        console.log(res.data.postLike);
+        if (res.data.postLike === "true") {
+          like_count = post_list.postLikeCount + 1;
+        } else {
+          like_count = post_list.postLikeCount - 1;
+        }
 
-        console.log({ ...post_list, post_list, postLikeCount: like_count });
         dispatch(
-          getOnePostDB({ ...post_list, post_list, postLikeCount: like_count })
+          getPost({ ...post_list, post_list, postLikeCount: like_count })
         );
       })
       .catch((err) => {
@@ -209,7 +254,6 @@ export default handleActions(
     [GET_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.list = action.payload.post;
-        console.log("겟포스트");
       }),
     [GET_POSTCHK]: (state, action) =>
       produce(state, (draft) => {
@@ -225,7 +269,7 @@ export default handleActions(
       }),
     [DEL_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.list = draft.list.filter((v) => v.pid !== action.payload.pid);
+        draft.list = draft.list;
       }),
     [IMG_POST]: (state, action) =>
       produce(state, (draft) => {
