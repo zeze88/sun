@@ -10,9 +10,8 @@ import { delToken } from "../shared/token";
 const Header = () => {
   const isLogin = sessionStorage.getItem("isLogin");
   const nickname = sessionStorage.getItem("nickname");
+  const userImage = sessionStorage.getItem("userImage");
   const [view, setView] = useState(false);
-  const userInfo = useSelector((state) => state.user.userinfo);
-  console.log(userInfo);
   const View = () => {
     setView(!view);
   };
@@ -36,13 +35,15 @@ const Header = () => {
       ) : (
         <div className='my' onClick={View}>
           <i>
-            <Profile imgUrl={userInfo.userImage} />
+            <Profile imgUrl={userImage} />
           </i>
           {nickname}
           <div>아래꺽쇠</div>
           {view ? (
             <div className='view'>
               <ul onClick={() => history.push("/Mypage")}>Mypage</ul>
+              <ul onClick={() => console.log("history.push('동해')")}>2</ul>
+              <ul onClick={() => console.log("history.push('동해')")}>2</ul>
               <ul onClick={() => console.log("history.push('동해')")}>2</ul>
               <ul onClick={Logout}>로그아웃</ul>
             </div>
@@ -92,7 +93,7 @@ const Container = styled.div`
   div.view {
     width: 191px;
     position: absolute;
-    margin-top: 10.5rem;
+    margin-top: 14rem;
     /* background-color: black; */
     display: flex;
     flex-direction: column;

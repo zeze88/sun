@@ -25,6 +25,7 @@ const CHECK_USERNAME = "CHECK_USERNAME";
 const CHECK_NICKNAME = "CHECK_NICKNAME";
 const LOG_IN = "LOG_IN";
 const LOG_OUT = "LOG_OUT";
+const LOG_EDIT = "LOG_EDIT";
 
 //action creators
 const setCheckUsername = createAction(CHECK_USERNAME, (isCheckUsername) => ({
@@ -35,6 +36,7 @@ const setCheckNickname = createAction(CHECK_NICKNAME, (isCheckNickname) => ({
 }));
 const logIn = createAction(LOG_IN, (user) => ({ user }));
 const logOut = createAction(LOG_OUT, () => ({}));
+const logEdit = createAction(LOG_EDIT, (user) => ({ user }));
 // //token
 const token = sessionStorage.getItem("token");
 
@@ -123,6 +125,8 @@ const loginDB = (username, password) => {
             sessionStorage.setItem("uid", res.data.uid);
             sessionStorage.setItem("username", res.data.username);
             sessionStorage.setItem("nickname", res.data.nickname);
+            sessionStorage.setItem("career", res.data.career);
+            sessionStorage.setItem("userImage", res.data.userImage);
             sessionStorage.setItem("isLogin", true);
             console.log("1번");
             dispatch(
@@ -147,6 +151,44 @@ const loginDB = (username, password) => {
   };
 };
 
+const logEditDB = (uid, nickname, career, userImg) => {
+  return function (dispatch, getState, { history }) {
+    axios
+      .put(
+        `${apiUrl}/islogin/user/getinfo/${uid}`,
+        {
+          nickname: nickname,
+          career: career,
+          userImg: userImg,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      )
+      .then((res) => {
+        dispatch(
+          logEdit({
+            nickname: nickname,
+            career: career,
+            userImage: userImg,
+          })
+        );
+        sessionStorage.setItem("nickname", nickname);
+        sessionStorage.setItem("career", career);
+        sessionStorage.setItem("userImage", userImg);
+        history.push("/");
+        window.location.reload();
+      })
+
+      .catch((err) => {
+        console.log(err);
+        window.alert("회원 정보 수정 실패");
+      });
+  };
+};
+
 export default handleActions(
   {
     [CHECK_USERNAME]: (state, action) =>
@@ -163,7 +205,6 @@ export default handleActions(
       }),
     [LOG_IN]: (state, action) =>
       produce(state, (draft) => {
-        console.log(draft.user);
         draft.userinfo = action.payload.user;
         draft.isLogin = true;
       }),
@@ -171,6 +212,14 @@ export default handleActions(
       produce(state, (draft) => {
         delToken();
       }),
+    [LOG_EDIT]: (state, action) =>
+      produce(
+        state,
+        (draft) => {
+          draft.userinfo = action.payload.user;
+        },
+        console.log(action.payload.user)
+      ),
   },
   initialState
 );
@@ -181,6 +230,7 @@ const actionCreators = {
   checkNicknameDB,
   loginDB,
   logOut,
+  logEditDB,
 };
 
 export { actionCreators };
