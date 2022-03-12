@@ -5,6 +5,7 @@ import styled from "styled-components";
 import NoticeList from "../elements/NoticeList";
 import Pagination from "./Pagination";
 import TabMenu from "./TabMenu";
+import { history } from "../redux/configureStore";
 
 const NoticeBoard = () => {
   const tab_list = [
@@ -34,7 +35,12 @@ const NoticeBoard = () => {
       <TabMenu tab_list={tab_list} tab={setTabList} />
       <NoticeList list={postList} />
       <SC_BtnWrap>
-        <button>글쓰기</button>
+        <button
+          onClick={() => {
+            history.push("/create");
+          }}>
+          글쓰기
+        </button>
       </SC_BtnWrap>
       <Pagination />
     </SC_NoticeDiv>
