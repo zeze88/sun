@@ -3,7 +3,9 @@ import styled from "styled-components";
 import Comment from "../components/Comment";
 import { useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import post, { actionCreators as postActions } from "../redux/modules/post";
+import { actionCreators as postActions } from "../redux/modules/post";
+import { actionCreators as answerActions } from "../redux/modules/answer";
+
 import { history } from "../redux/configureStore";
 import Answer from "../components/Answer";
 import AnswerList from "../components/AnswerList";
@@ -16,14 +18,15 @@ const Detail = () => {
   const user_info = sessionStorage.getItem("uid");
 
   const delPost = () => {
-    // alert();
     dispatch(postActions.delPostDB(pid));
   };
 
   const likebtn = () => {
     dispatch(postActions.postLikeDB(user_info, pid));
   };
+
   React.useEffect(() => {
+    dispatch(answerActions.getAnswerDB(pid));
     dispatch(postActions.getOnePostDB(pid));
   }, []);
   // const date = post_one.createdAt?.split(".")[0].split("T").join(" ");
