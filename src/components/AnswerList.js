@@ -11,15 +11,14 @@ const AnswerList = () => {
   const pid = useParams().pid;
   const dispatch = useDispatch();
   const list = useSelector((state) => state.answer.list);
-  console.log(list);
   const user_info = sessionStorage.getItem("uid");
   const [isEdit, setIsEdit] = React.useState(null);
 
   React.useEffect(() => {
-    dispatch(answerActions.getAnswerDB(pid));
-    if (!list) {
+    if (list.length <= 1) {
       return;
     }
+    dispatch(answerActions.getAnswerDB(pid));
   }, []);
 
   const chooseAnswer = (uid, answrId) => {

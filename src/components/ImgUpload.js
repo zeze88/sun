@@ -10,12 +10,12 @@ const ImgUpload = ({ isEdit = null, editImg = null, cleanImg = null }) => {
   const location = useLocation();
   const pathName = location.pathname !== "/create";
 
-  console.log(cleanImg);
   React.useEffect(() => {
     if (cleanImg === "") {
       fileInput.current.value = "";
     }
   }, [cleanImg]);
+
   const onChange = (e) => {
     const file = fileInput.current.files[0];
     if (pathName) {
@@ -27,8 +27,9 @@ const ImgUpload = ({ isEdit = null, editImg = null, cleanImg = null }) => {
 
   if (isEdit) {
     return (
-      <label htmlFor='img'>
-        <input onChange={onChange} id='img' type='file' ref={fileInput} />
+      <label htmlFor='editImg'>
+        <input onChange={onChange} id='editImg' type='file' ref={fileInput} />
+        <img src={editImg} />
       </label>
     );
   }

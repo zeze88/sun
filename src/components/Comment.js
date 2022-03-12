@@ -12,9 +12,9 @@ const Comment = () => {
   const state = useSelector((state) => state);
   const answerId = "1";
   const [comment, setComment] = React.useState("");
-  console.log(uid);
-  console.log(state.answer);
-  console.log(pid);
+  // console.log(uid);
+  // console.log(state.answer);
+  // console.log(pid);
 
   // React.useEffect(() => {
   //     dispatch()

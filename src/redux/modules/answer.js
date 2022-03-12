@@ -20,6 +20,7 @@ const asImgPost = createAction(AS_IMG_POST, (asPreview) => ({ asPreview }));
 
 const initialState = {
   list: [],
+  editList: [],
   asPreview: "",
 };
 
@@ -36,7 +37,7 @@ const getAnswerDB = (pid) => {
   };
 };
 
-const addAnswerDB = ({ pid, uid, title, comment }) => {
+const addAnswerDB = ({ pid, uid, answerTitle, answerComment }) => {
   return function (dispatch, getState, { history }) {
     const token_res = sessionStorage.getItem("token");
     const img_list = getState().answer.asPreview;
@@ -63,8 +64,8 @@ const addAnswerDB = ({ pid, uid, title, comment }) => {
           data: {
             pid: pid,
             uid: uid,
-            answerTitle: title,
-            answerComment: comment,
+            answerTitle: answerTitle,
+            answerComment: answerComment,
             answerImg: imgUrl,
           },
           headers: { Authorization: token_res },
@@ -73,8 +74,8 @@ const addAnswerDB = ({ pid, uid, title, comment }) => {
             addAnswer({
               pid,
               uid,
-              answerTitle: title,
-              answerComment: comment,
+              answerTitle: answerTitle,
+              answerComment: answerComment,
               answerImg: imgUrl,
               answsrId: res.data,
               answerLike: false,
@@ -94,50 +95,87 @@ const addAnswerDB = ({ pid, uid, title, comment }) => {
   };
 };
 
-const editAnswerDB = ({ answsrId, title, comment }) => {
+const editAnswerDB = (props) => {
   return function (dispatch, getState, { history }) {
+    const {
+      pid,
+      uid,
+      nickname,
+      answsrId,
+      answerTitle,
+      answerComment,
+      answerImg,
+    } = props;
+
     const token_res = sessionStorage.getItem("token");
     const img_list = getState().answer.asPreview;
     const formData = new FormData();
     formData.append("images", img_list);
+    console.log(answsrId, answerTitle, answerComment, answerImg);
 
-    axios
-      .post(`${apiUrl}/images/upload`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `${token_res}`,
+    if (img_list === "") {
+      axios({
+        method: "put",
+        url: `${apiUrl}/islogin/answer/revice/${answsrId}`,
+        data: {
+          answerTitle: answerTitle,
+          answerComment: answerComment,
+          answerImg: answerImg,
         },
-      })
-      .then((res) => {
-        const imgUrl = res.data.url;
-        return imgUrl;
-      })
-      .then((imgUrl) => {
-        console.log("img업로드 성공");
-        console.log(imgUrl);
-        axios({
-          method: "put",
-          url: `${apiUrl}/islogin/answer/revice/${answsrId}`,
-          data: {
-            answerTitle: title,
-            answerComment: comment,
-            answerImg: imgUrl,
-          },
-          headers: { Authorization: token_res },
-        }).then((res) => {
-          const _answer_list = getState().list;
-          console.log(_answer_list);
-
-          const answer_list = _answer_list.find((v) => v.answsrId === answsrId);
-
-          console.log(res);
-          console.log("answer 성공!");
-          dispatch(editAnswer(answer_list));
-        });
-      })
-      .catch((err) => {
-        console.log(err);
+        headers: { Authorization: token_res },
+      }).then((res) => {
+        window.location.replace(`/detail/${pid}`);
       });
+    } else {
+      axios
+        .post(`${apiUrl}/images/upload`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `${token_res}`,
+          },
+        })
+        .then((res) => {
+          const imgUrl = res.data.url;
+          return imgUrl;
+        })
+        .then((imgUrl) => {
+          console.log("img업로드 성공");
+          console.log(imgUrl);
+          axios({
+            method: "put",
+            url: `${apiUrl}/islogin/answer/revice/${answsrId}`,
+            data: {
+              answerTitle: answerTitle,
+              answerComment: answerComment,
+              answerImg: imgUrl,
+            },
+            headers: { Authorization: token_res },
+          }).then((res) => {
+            window.location.replace(`/detail/${pid}`);
+
+            // dispatch(
+            //   editAnswer({
+            //     answsrId,
+            //     answerTitle,
+            //     answerComment,
+            //     answerImg: imgUrl,
+            //     answerLike: false,
+            //     blogUrl: null,
+            //     career: null,
+            //     commnetResponseDtoList: [],
+            //     createdAt: "",
+            //     nickname,
+            //     pid,
+            //     uid,
+            //     userImage: null,
+            //   })
+            // );
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 };
 
@@ -183,7 +221,8 @@ export default handleActions(
       }),
     [EDIT_ANSWER]: (state, action) =>
       produce(state, (draft) => {
-        draft.list = action.payload.list;
+        console.log(action.payload.list);
+        draft.editList = action.payload.list;
         draft.asPreview = "";
       }),
     [DEL_ANSWER]: (state, action) =>

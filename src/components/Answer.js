@@ -11,14 +11,16 @@ const Answer = ({ isEdit = null, list = null }) => {
   const dispatch = useDispatch();
   const params = useParams().pid;
   const user_info = sessionStorage.getItem("uid");
+  const nickname = sessionStorage.getItem("nickname");
   const [addAnswer, setAddAnswer] = React.useState(
-    isEdit ? list : { title: "", comment: "" }
+    isEdit ? list : { answerTitle: "", answerComment: "" }
   );
-  const { title, comment } = addAnswer;
+  const { answerTitle, answerComment } = addAnswer;
 
   const onChange = (e) => {
     const id = e.target.id;
     const content = e.target.value;
+    console.log(content);
 
     setAddAnswer({ ...addAnswer, [id]: content });
   };
@@ -27,32 +29,35 @@ const Answer = ({ isEdit = null, list = null }) => {
     dispatch(
       answerActions.addAnswerDB({ pid: params, uid: user_info, ...addAnswer })
     );
-    setAddAnswer({ title: "", comment: "" });
+    setAddAnswer({ answerTitle: "", answerComment: "" });
   };
 
   const editAnswer = () => {
     dispatch(
-      answerActions.editAnswerDB({ answsrId: list.answerId, ...addAnswer })
+      answerActions.editAnswerDB({
+        ...addAnswer,
+        answsrId: list.answerId,
+        pid: params,
+        uid: nickname,
+      })
     );
   };
-
-  console.log(addAnswer);
 
   if (isEdit) {
     return (
       <SC_Answer>
         <input
-          id='title'
+          id='answerTitle'
           onChange={onChange}
           type='text'
-          value={title}
+          value={answerTitle}
           // placeholder={list.answerTitle}
         />
         <input
-          id='comment'
+          id='answerComment'
           onChange={onChange}
           type='text'
-          value={comment}
+          value={answerComment}
           // placeholder={list.answerComment}
         />
         <ImgUpload isEdit={isEdit} editImg={list.answerImg} />
@@ -63,9 +68,19 @@ const Answer = ({ isEdit = null, list = null }) => {
 
   return (
     <SC_Answer>
-      <input id='title' value={title} onChange={onChange} type='text' />
-      <input id='comment' value={comment} onChange={onChange} type='text' />
-      <ImgUpload cleanImg={addAnswer.title} />
+      <input
+        id='answerTitle'
+        value={answerTitle}
+        onChange={onChange}
+        type='text'
+      />
+      <input
+        id='answerComment'
+        value={answerComment}
+        onChange={onChange}
+        type='text'
+      />
+      <ImgUpload cleanImg={addAnswer.answerTitle} />
       <button onClick={answerSubmit}>답변 click</button>
     </SC_Answer>
   );
