@@ -5,11 +5,13 @@ import { useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as answerActions } from "../redux/modules/answer";
+import { actionsCreators as searchActions } from "../redux/modules/serch";
 
 import { history } from "../redux/configureStore";
 import Answer from "../components/Answer";
 import AnswerList from "../components/AnswerList";
 import Profile from "../elements/Profile";
+import user from "../redux/modules/user";
 
 const Detail = () => {
   const dispatch = useDispatch();
@@ -22,7 +24,11 @@ const Detail = () => {
   };
 
   const likebtn = () => {
-    dispatch(postActions.postLikeDB(user_info, pid));
+    if (!user_info) {
+      alert("로그인 후 이용해주세요");
+    } else {
+      dispatch(postActions.postLikeDB(user_info, pid));
+    }
   };
 
   React.useEffect(() => {
@@ -42,7 +48,10 @@ const Detail = () => {
               {post_one.tag?.map((v, idx) => (
                 <li
                   key={idx}
-                  style={{ minWidth: "2rem", border: "1px solid " }}>
+                  style={{ minWidth: "2rem", border: "1px solid " }}
+                  onClick={() => {
+                    history.push(`/search/tag_${v}`);
+                  }}>
                   {v}
                 </li>
               ))}
@@ -66,16 +75,20 @@ const Detail = () => {
 
           <div className='btn_wrap'>
             <button onClick={likebtn}>관심 {post_one.postLikeCount}</button>
-            <button styled={{ fontSize: "40px" }} onClick={delPost}>
-              삭제
-            </button>
-            <button
-              styled={{ fontSize: "40px" }}
-              onClick={() => {
-                history.push(`/edit/${pid}`);
-              }}>
-              수정
-            </button>
+            {Number(user_info) === post_one.uid && (
+              <>
+                <button styled={{ fontSize: "40px" }} onClick={delPost}>
+                  삭제
+                </button>
+                <button
+                  styled={{ fontSize: "40px" }}
+                  onClick={() => {
+                    history.push(`/edit/${pid}`);
+                  }}>
+                  수정
+                </button>
+              </>
+            )}
             {user_info === post_one.uid && (
               <>
                 <button styled={{ fontSize: "40px" }} onClick={delPost}>

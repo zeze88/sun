@@ -21,7 +21,7 @@ const Create = () => {
   const token = sessionStorage.getItem("token");
   React.useEffect(() => {
     if (!token) {
-      window.alert("토큰이 없습니다");
+      window.alert("로그인 후 사용해주세요 :)");
       history.replace("/login");
     }
   }, []);

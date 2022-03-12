@@ -61,12 +61,10 @@ const getOnePostDB = (pid) => {
     apis
       .onepost(pid)
       .then((res) => {
-        console.log(res);
         dispatch(getPost(res.data));
       })
       .catch((err) => {
-        // console.log(err);
-        // console.log("error get one post");
+        console.log(err);
       });
   };
 };
@@ -89,7 +87,6 @@ const addPostDB = ({ title, comment, tags, category }) => {
         },
       })
       .then((res) => {
-        console.log("img업로드 성공");
         const imgUrl = res.data.url;
         return imgUrl;
       })
@@ -106,7 +103,6 @@ const addPostDB = ({ title, comment, tags, category }) => {
           },
           headers: { Authorization: `${token_res}` },
         }).then((res) => {
-          console.log("포스트 성공!");
           dispatch(addPost({ title, comment, imgUrl, tags, pid: res.data }));
           history.replace("/");
         });
@@ -143,11 +139,7 @@ const editPostDB = (props) => {
     const formData = new FormData();
     formData.append("images", img_list);
 
-    console.log(props);
-
     if (postImg) {
-      console.log("yes img");
-
       axios({
         method: "PUT",
         url: `${apiUrl}/islogin/post/revice/${pid}`,
@@ -161,13 +153,10 @@ const editPostDB = (props) => {
         },
         headers: { Authorization: `${token_res}` },
       }).then(() => {
-        console.log("포스트 성공!");
         dispatch(editPost({ postTitle, postComment, tag, category, pid }));
         history.replace(`/detail/${pid}`);
       });
     } else {
-      console.log("no img");
-
       axios
         .post(`${apiUrl}/images/upload`, formData, {
           headers: {
@@ -180,7 +169,6 @@ const editPostDB = (props) => {
           return imgUrl;
         })
         .then((imgUrl) => {
-          console.log("이미지 업로드 성공");
           axios({
             method: "PUT",
             url: `${apiUrl}/islogin/post/revice/${pid}`,
@@ -194,7 +182,6 @@ const editPostDB = (props) => {
             },
             headers: { Authorization: `${token_res}` },
           }).then(() => {
-            console.log("포스트 성공!");
             dispatch(editPost({ postTitle, postComment, tag, category, pid }));
             history.replace(`/detail/${pid}`);
           });
@@ -213,13 +200,11 @@ const delPostDB = (pid) => {
     apis
       .delpost(pid)
       .then((res) => {
-        console.log(res);
         dispatch(delPost(pid));
         history.replace("/");
       })
       .catch((err) => {
         console.log(err);
-        console.log("포스트 삭제 실패");
       });
   };
 };
@@ -230,7 +215,6 @@ const postLikeDB = (uid, pid) => {
       .then((res) => {
         const post_list = getState().post.list;
         let like_count = "";
-        console.log(res.data.postLike);
         if (res.data.postLike === "true") {
           like_count = post_list.postLikeCount + 1;
         } else {
@@ -243,7 +227,6 @@ const postLikeDB = (uid, pid) => {
       })
       .catch((err) => {
         console.log(err);
-        console.log("error");
       });
   };
 };
