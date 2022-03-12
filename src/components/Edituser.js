@@ -9,7 +9,6 @@ const userNickname = sessionStorage.getItem("nickname");
 const userCareer = sessionStorage.getItem("career");
 const userImage = sessionStorage.getItem("userImage");
 const uid = sessionStorage.getItem("uid");
-console.log(userImage);
 
 const Edituser = (props) => {
   const dispatch = useDispatch();

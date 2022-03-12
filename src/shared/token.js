@@ -22,6 +22,8 @@ const delToken = () => {
   sessionStorage.removeItem("username");
   sessionStorage.removeItem("nickname");
   sessionStorage.removeItem("isLogin");
+  sessionStorage.removeItem("career");
+  sessionStorage.removeItem("userImage");
 };
 
 export { getToken, setToken, delToken };

@@ -1,5 +1,5 @@
 export const category = [
-  { value: "Javascript", name: "Javascript" },
+  { value: "javascript", name: "Javascript" },
   { value: "Java", name: "Java" },
   { value: "Python", name: "Python" },
   { value: "HTML/CSS", name: "HTML/CSS" },

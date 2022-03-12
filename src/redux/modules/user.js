@@ -18,6 +18,7 @@ const initialState = {
   isLogin: false,
   isCheckUsername: false,
   isCheckNickname: false,
+  preview: "",
 };
 
 //action
@@ -25,7 +26,9 @@ const CHECK_USERNAME = "CHECK_USERNAME";
 const CHECK_NICKNAME = "CHECK_NICKNAME";
 const LOG_IN = "LOG_IN";
 const LOG_OUT = "LOG_OUT";
-const LOG_EDIT = "LOG_EDIT";
+const USER_EDUT = "USER_EDUT";
+const NEW_PASSWORD = "NEW_PASSWORD";
+const IMG_POST = "IMG_POST";
 
 //action creators
 const setCheckUsername = createAction(CHECK_USERNAME, (isCheckUsername) => ({
@@ -36,7 +39,8 @@ const setCheckNickname = createAction(CHECK_NICKNAME, (isCheckNickname) => ({
 }));
 const logIn = createAction(LOG_IN, (user) => ({ user }));
 const logOut = createAction(LOG_OUT, () => ({}));
-const logEdit = createAction(LOG_EDIT, (user) => ({ user }));
+const logEdit = createAction(USER_EDUT, (user) => ({ user }));
+const imgPost = createAction(IMG_POST, (preview) => ({ preview }));
 // //token
 const token = sessionStorage.getItem("token");
 
@@ -138,11 +142,12 @@ const loginDB = (username, password) => {
                 userImage: res.data.userImage,
               })
             );
+            history.push("/");
+            window.location.reload();
           })
           .catch((err) => {
             console.log("로그인 확인 실패", err);
           });
-        history.push("/");
       })
       .catch((err) => {
         console.log(err);
@@ -152,14 +157,68 @@ const loginDB = (username, password) => {
 };
 
 const logEditDB = (uid, nickname, career, userImg) => {
+  const Data = new FormData();
+  Data.append("images", userImg);
+  console.log(Data);
+  return function (dispatch, getState, { history }) {
+    axios
+      .post(`${apiUrl}/images/upload`, Data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: token,
+        },
+      })
+      .then((res) => {
+        console.log("img업로드 성공");
+        const imgUrl = res.data.url;
+        return imgUrl;
+      })
+      .then((res) => {
+        axios
+          .put(
+            `${apiUrl}/islogin/user/getinfo/${uid}`,
+            {
+              nickname: nickname,
+              career: career,
+            },
+            {
+              headers: {
+                Authorization: token,
+              },
+            }
+          )
+          .then((res) => {
+            dispatch(
+              logEdit({
+                nickname: nickname,
+                career: career,
+                userImage: userImg,
+              })
+            );
+            sessionStorage.setItem("nickname", nickname);
+            sessionStorage.setItem("career", career);
+            sessionStorage.setItem("userImage", userImg);
+            history.push("/");
+            window.location.reload();
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+        window.alert("회원 정보 수정 실패");
+      });
+  };
+};
+
+const NewPassWordDB = (uid, password, newPassword, newPasswordCheck) => {
+  console.log("간다");
   return function (dispatch, getState, { history }) {
     axios
       .put(
-        `${apiUrl}/islogin/user/getinfo/${uid}`,
+        `${apiUrl}/islogin/user/password/${uid}`,
         {
-          nickname: nickname,
-          career: career,
-          userImg: userImg,
+          password: password,
+          newPassword: newPassword,
+          newPasswordCheck: newPasswordCheck,
         },
         {
           headers: {
@@ -168,23 +227,12 @@ const logEditDB = (uid, nickname, career, userImg) => {
         }
       )
       .then((res) => {
-        dispatch(
-          logEdit({
-            nickname: nickname,
-            career: career,
-            userImage: userImg,
-          })
-        );
-        sessionStorage.setItem("nickname", nickname);
-        sessionStorage.setItem("career", career);
-        sessionStorage.setItem("userImage", userImg);
-        history.push("/");
-        window.location.reload();
+        console.log(res);
+        window.alert("비밀번호 수정 성공");
       })
-
       .catch((err) => {
         console.log(err);
-        window.alert("회원 정보 수정 실패");
+        window.alert("비밀번호 수정 실패");
       });
   };
 };
@@ -208,18 +256,14 @@ export default handleActions(
         draft.userinfo = action.payload.user;
         draft.isLogin = true;
       }),
-    [LOG_OUT]: (state, action) =>
+    [USER_EDUT]: (state, action) =>
       produce(state, (draft) => {
-        delToken();
+        draft.userinfo = action.payload.user;
       }),
-    [LOG_EDIT]: (state, action) =>
-      produce(
-        state,
-        (draft) => {
-          draft.userinfo = action.payload.user;
-        },
-        console.log(action.payload.user)
-      ),
+    [IMG_POST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.preview = action.payload.preview;
+      }),
   },
   initialState
 );
@@ -231,6 +275,8 @@ const actionCreators = {
   loginDB,
   logOut,
   logEditDB,
+  NewPassWordDB,
+  imgPost,
 };
 
 export { actionCreators };
