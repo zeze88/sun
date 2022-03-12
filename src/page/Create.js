@@ -19,6 +19,8 @@ const Create = () => {
   const [isSelect, setIsSelect] = React.useState(false);
   const [oneCategory, setOneCategory] = React.useState("");
   const token = sessionStorage.getItem("token");
+  const reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
+
   React.useEffect(() => {
     if (!token) {
       window.alert("로그인 후 사용해주세요 :)");
@@ -27,8 +29,8 @@ const Create = () => {
   }, []);
 
   React.useEffect(() => {
-    dispatch(postActions.getOnePostDB(params));
     if (!isCreate) {
+      dispatch(postActions.getOnePostDB(params));
       setAddPost(post_one);
     }
   }, []);
@@ -41,8 +43,6 @@ const Create = () => {
   };
 
   const submit = () => {
-    console.log(!addPost.postTitle);
-    console.log(addPost.title);
     if (!addPost.title || !addPost.comment) {
       alert("내용을 모두 입력해주세요 :)");
       return;
@@ -52,26 +52,35 @@ const Create = () => {
     } else if (!img_list) {
       alert("이미지를 추가 해주세요 :)");
     } else {
-      const tags = !addPost.tags ? null : addPost.tags.split("#").splice(1);
+      const tags = addPost.tags?.split("#").splice(1);
+
+      let text_tag = tags
+        .map((v) => (reg.test(v) ? v.replace(reg, "") : v))
+        .filter((v) => v !== "");
+
       dispatch(
         postActions.addPostDB({
           ...addPost,
-          tags: tags,
+          tags: text_tag,
           category: oneCategory,
         })
       );
     }
   };
-  console.log(oneCategory);
+
   const revise = () => {
     if (typeof addPost.tags === "string") {
       const tags = addPost.tags?.split("#").splice(1);
+
+      let text_tag = tags
+        .map((v) => (reg.test(v) ? v.replace(reg, "") : v))
+        .filter((v) => v !== "");
 
       dispatch(
         postActions.editPostDB({
           ...addPost,
           pid: params,
-          tag: tags,
+          tag: text_tag,
           category: oneCategory,
         })
       );
