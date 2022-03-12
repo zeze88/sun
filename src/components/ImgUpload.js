@@ -4,12 +4,18 @@ import { useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as answerActions } from "../redux/modules/answer";
 
-const ImgUpload = ({ isEdit = null, editImg = null }) => {
+const ImgUpload = ({ isEdit = null, editImg = null, cleanImg = null }) => {
+  const dispatch = useDispatch();
   const fileInput = React.useRef();
   const location = useLocation();
   const pathName = location.pathname !== "/create";
-  const dispatch = useDispatch();
 
+  console.log(cleanImg);
+  React.useEffect(() => {
+    if (cleanImg === "") {
+      fileInput.current.value = "";
+    }
+  }, [cleanImg]);
   const onChange = (e) => {
     const file = fileInput.current.files[0];
     if (pathName) {

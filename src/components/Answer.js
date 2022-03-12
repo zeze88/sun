@@ -11,7 +11,10 @@ const Answer = ({ isEdit = null, list = null }) => {
   const dispatch = useDispatch();
   const params = useParams().pid;
   const user_info = sessionStorage.getItem("uid");
-  const [addAnswer, setAddAnswer] = React.useState("");
+  const [addAnswer, setAddAnswer] = React.useState(
+    isEdit ? list : { title: "", comment: "" }
+  );
+  const { title, comment } = addAnswer;
 
   const onChange = (e) => {
     const id = e.target.id;
@@ -21,10 +24,10 @@ const Answer = ({ isEdit = null, list = null }) => {
   };
 
   const answerSubmit = () => {
-    setAddAnswer({});
     dispatch(
       answerActions.addAnswerDB({ pid: params, uid: user_info, ...addAnswer })
     );
+    setAddAnswer({ title: "", comment: "" });
   };
 
   const editAnswer = () => {
@@ -33,6 +36,8 @@ const Answer = ({ isEdit = null, list = null }) => {
     );
   };
 
+  console.log(addAnswer);
+
   if (isEdit) {
     return (
       <SC_Answer>
@@ -40,13 +45,15 @@ const Answer = ({ isEdit = null, list = null }) => {
           id='title'
           onChange={onChange}
           type='text'
-          placeholder={list.answerTitle}
+          value={title}
+          // placeholder={list.answerTitle}
         />
         <input
           id='comment'
           onChange={onChange}
           type='text'
-          placeholder={list.answerComment}
+          value={comment}
+          // placeholder={list.answerComment}
         />
         <ImgUpload isEdit={isEdit} editImg={list.answerImg} />
         <button onClick={editAnswer}>수정 go</button>
@@ -56,9 +63,9 @@ const Answer = ({ isEdit = null, list = null }) => {
 
   return (
     <SC_Answer>
-      <input id='title' onChange={onChange} type='text' />
-      <input id='comment' onChange={onChange} type='text' />
-      <ImgUpload />
+      <input id='title' value={title} onChange={onChange} type='text' />
+      <input id='comment' value={comment} onChange={onChange} type='text' />
+      <ImgUpload cleanImg={addAnswer.title} />
       <button onClick={answerSubmit}>답변 click</button>
     </SC_Answer>
   );
