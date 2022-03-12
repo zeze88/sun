@@ -12,12 +12,12 @@ const Create = () => {
   const location = useLocation();
   const params = useParams().pid;
 
-  const pathName = location.pathname === "/create";
+  const isCreate = location.pathname === "/create";
   const img_list = useSelector((state) => state.post?.preview);
   const post_one = useSelector((state) => state.post.list);
-  const [addPost, setAddPost] = React.useState("");
+  const [addPost, setAddPost] = React.useState(!isCreate ? post_one : []);
   const [isSelect, setIsSelect] = React.useState(false);
-  const [oneCategory, setOneCategory] = React.useState("카테고리를 선택");
+  const [oneCategory, setOneCategory] = React.useState("");
   const token = sessionStorage.getItem("token");
   React.useEffect(() => {
     if (!token) {
@@ -28,7 +28,7 @@ const Create = () => {
 
   React.useEffect(() => {
     dispatch(postActions.getOnePostDB(params));
-    if (!pathName) {
+    if (!isCreate) {
       setAddPost(post_one);
     }
   }, []);
@@ -41,17 +41,28 @@ const Create = () => {
   };
 
   const submit = () => {
-    const tags = addPost.tags.split("#").splice(1);
-
-    dispatch(
-      postActions.addPostDB({
-        ...addPost,
-        tags: tags,
-        category: oneCategory,
-      })
-    );
+    console.log(!addPost.postTitle);
+    console.log(addPost.title);
+    if (!addPost.title || !addPost.comment) {
+      alert("내용을 모두 입력해주세요 :)");
+      return;
+    } else if (!oneCategory) {
+      alert("카테고리를 선택해 주세요 :)");
+      return;
+    } else if (!img_list) {
+      alert("이미지를 추가 해주세요 :)");
+    } else {
+      const tags = !addPost.tags ? null : addPost.tags.split("#").splice(1);
+      dispatch(
+        postActions.addPostDB({
+          ...addPost,
+          tags: tags,
+          category: oneCategory,
+        })
+      );
+    }
   };
-
+  console.log(oneCategory);
   const revise = () => {
     if (typeof addPost.tags === "string") {
       const tags = addPost.tags?.split("#").splice(1);
@@ -73,8 +84,8 @@ const Create = () => {
       );
     }
   };
-
-  if (!pathName) {
+  console.log(addPost);
+  if (!isCreate) {
     return (
       <PostWrap>
         <div className='left'>
@@ -83,15 +94,15 @@ const Create = () => {
             id='postTitle'
             onChange={onChange}
             type='text'
-            placeholder={post_one.postTitle}
+            value={addPost.postTitle}
           />
           <textarea
             id='postComment'
             onChange={onChange}
             type='text'
-            placeholder={post_one.postComment}></textarea>
+            value={addPost.postComment}></textarea>
 
-          <ImgUpload isEdit={true} />
+          <ImgUpload isEdit={true} editImg={addPost.postImg} />
         </div>
         <div className='right'>
           {post_one && (
@@ -102,7 +113,7 @@ const Create = () => {
                   onClick={() => {
                     setIsSelect(!isSelect);
                   }}>
-                  {oneCategory}
+                  {oneCategory === "" ? " 카테고리를 선택" : oneCategory}
                 </span>
                 <ul className={isSelect ? "" : "close"}>
                   {category.map((v, idx) => (
@@ -160,7 +171,7 @@ const Create = () => {
             onClick={() => {
               setIsSelect(!isSelect);
             }}>
-            {oneCategory}
+            {oneCategory === "" ? " 카테고리를 선택" : oneCategory}
           </span>
           <ul className={isSelect ? "" : "close"}>
             {category.map((v, idx) => (
