@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import styled from "styled-components";
 import NoticeList from "../elements/NoticeList";
@@ -19,6 +19,10 @@ const NoticeBoard = () => {
   ];
   const dispatch = useDispatch();
   const [TabList, setTabList] = React.useState();
+  const post_list = useSelector((state) => state.post.list);
+  const post_nocheck = useSelector((state) => state.post.nockeckList);
+  const postList = TabList === "check" ? post_list : post_nocheck;
+
   React.useEffect(() => {
     dispatch(postActions.getPostDB());
     dispatch(postActions.getPostNocheckDB());
@@ -28,7 +32,7 @@ const NoticeBoard = () => {
     <SC_NoticeDiv>
       <h2>전체 게시물</h2>
       <TabMenu tab_list={tab_list} tab={setTabList} />
-      <NoticeList list={TabList} />
+      <NoticeList list={postList} />
       <SC_BtnWrap>
         <button>글쓰기</button>
       </SC_BtnWrap>

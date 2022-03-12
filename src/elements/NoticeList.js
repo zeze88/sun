@@ -1,23 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
-import { actionCreators as postActions } from "../redux/modules/post";
+
 import { history } from "../redux/configureStore";
 
 const NoticeList = ({ list }) => {
-  const dispatch = useDispatch();
-  const post_list = useSelector((state) => state.post.list);
-  const post_nocheck = useSelector((state) => state.post.nockeckList);
-  const postList = list === "check" ? post_list : post_nocheck;
-
-  React.useEffect(() => {
-    dispatch(postActions.getPostDB());
-    dispatch(postActions.getPostNocheckDB());
-  }, []);
-
   return (
     <React.Fragment>
-      {postList.map((data, idx) => {
+      {list.map((data, idx) => {
         // const date = data.createdAt?.split(".")[0].replace("T", " ");
         const date = data.createdAt?.split("T")[0];
 

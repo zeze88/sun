@@ -3,14 +3,15 @@ import axios from "axios";
 import { setToken } from "../../shared/token";
 import produce from "immer";
 import { apiUrl } from "../../elements/testApiUrl";
+import { apis } from "../../shared/api";
 
 const SERCH = "SERCH";
 const CATEGORY = "CATEGORY";
 const TAG = "TAG";
 
 const serch = createAction(SERCH, (serch_list) => ({ serch_list }));
-const category = createAction(SERCH, (category_list) => ({ category_list }));
-const tag = createAction(SERCH, (tag_list) => ({ tag_list }));
+const category = createAction(CATEGORY, (category_list) => ({ category_list }));
+const tagSearch = createAction(TAG, (tag_list) => ({ tag_list }));
 
 const token = sessionStorage.getItem("token");
 
@@ -59,17 +60,15 @@ const categoryDB = (category) => {
 };
 
 const tagDB = (tag) => {
-  return async function (dispatch, getState, { history }) {
-    console.log(tag);
-    await axios
+  return function (dispatch, getState, { history }) {
+    axios
       .get(`${apiUrl}/tag/search/${tag}`, {
         headers: {
           Authorization: token,
         },
       })
       .then((res) => {
-        console.log(res);
-        dispatch(tag(res.data));
+        dispatch(tagSearch(res.data));
       })
       .catch((err) => {
         console.log(err);
@@ -101,7 +100,6 @@ const actionsCreators = {
   categoryDB,
   category,
   tagDB,
-  tag,
 };
 
 export { actionsCreators };

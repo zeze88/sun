@@ -5,6 +5,7 @@ import { useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as answerActions } from "../redux/modules/answer";
+import { actionsCreators as searchActions } from "../redux/modules/serch";
 
 import { history } from "../redux/configureStore";
 import Answer from "../components/Answer";
@@ -42,7 +43,10 @@ const Detail = () => {
               {post_one.tag?.map((v, idx) => (
                 <li
                   key={idx}
-                  style={{ minWidth: "2rem", border: "1px solid " }}>
+                  style={{ minWidth: "2rem", border: "1px solid " }}
+                  onClick={() => {
+                    history.push(`/search/tag_${v}`);
+                  }}>
                   {v}
                 </li>
               ))}

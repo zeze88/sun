@@ -69,11 +69,8 @@ export const apis = {
       answerUid: answerUid,
     }),
 
-  // ==================== tag api ====================//\
-  tagsearch: (uid, pid, answsrId, answerUid) =>
-    instance.post(`/islogin/tag/search`, {
-      tag: [],
-    }),
+  // ==================== tag api ====================//
+  tagsearch: (tag) => instance.get(`${apiUrl}/tag/search/${tag}`),
   totalRanking: () => instance.get(`/user/ranking/total`),
   monthRanking: () => instance.get(`/user/ranking/month`),
   weekRanking: () => instance.get(`/user/ranking/weekend`),
