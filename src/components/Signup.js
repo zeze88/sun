@@ -5,7 +5,6 @@ import { actionCreators as userActions } from "../redux/modules/user";
 
 function Signup(props) {
   const dispatch = useDispatch();
-  const { history } = props;
   const [username, setUsername] = React.useState("");
   const [nickname, setNickname] = React.useState("");
   const [password, setPassword] = React.useState("");
