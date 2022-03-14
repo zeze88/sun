@@ -10,9 +10,6 @@ const SearchResult = () => {
   const search_type = useParams().keyword.split("_")[0];
   const search_keyword = useParams().keyword.split("_")[1];
   const tag_list = useSelector((state) => state.search.tag_list);
-  console.log(tag_list);
-  console.log(search_type);
-  console.log(search_keyword);
 
   React.useEffect(() => {
     switch (search_type) {

@@ -21,16 +21,17 @@ const NoticeList = ({ list }) => {
                 <dt>{data.postTitle}</dt>
                 {data.status === "selection" && <dd>답변완료</dd>}
               </dl>
-              <TagUl>
-                {data.tag.map((v, idx) => (
-                  <li key={idx}>{v}</li>
-                ))}
-              </TagUl>
+              {data.category && <div className='category'></div>}
             </div>
             <div className='content'>
               <div>{data.postComment}</div>
             </div>
             <div className='info'>
+              <TagUl>
+                {data.tag.map((v, idx) => (
+                  <li key={idx}>{v}</li>
+                ))}
+              </TagUl>
               <span>
                 <img scr={data.img} /> {data.nickname}
               </span>
@@ -52,15 +53,18 @@ const NoticeListDiv = styled.div`
     display: flex;
     align-items: center;
   }
+
   .title {
     justify-content: space-between;
     margin-bottom: 10px;
   }
 
   .info {
-    justify-content: flex-end;
     text-align: right;
     color: #676767;
+    span {
+      margin-left: auto;
+    }
   }
 
   .content {
@@ -76,6 +80,15 @@ const NoticeListDiv = styled.div`
       overflow: hidden;
       text-overflow: ellipsis;
     }
+  }
+
+  .category {
+    padding: 4px 6px;
+    margin-left: 10px;
+    text-align: center;
+    border-radius: 30px;
+    color: #b9b9b9;
+    border: solid 1px #b9b9b9;
   }
 
   dl {
@@ -130,13 +143,7 @@ const TagUl = styled.div`
   display: inline-flex;
 
   li {
-    padding: 4px 6px;
-    margin-left: 10px;
-    text-align: center;
-    border-radius: 30px;
     color: #b9b9b9;
-    border: solid 1px #b9b9b9;
-    list-style: none;
   }
 `;
 export default NoticeList;

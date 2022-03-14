@@ -77,7 +77,6 @@ const addPostDB = ({ title, comment, tags, category }) => {
     const img_list = getState().post.preview;
     const formData = new FormData();
     formData.append("images", img_list);
-    console.log(category);
 
     axios
       .post(`${apiUrl}/images/upload`, formData, {

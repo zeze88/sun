@@ -6,6 +6,9 @@ import styled from "styled-components";
 
 let stompClient = null;
 const Test = () => {
+  let socket = new SockJs("http://15.164.231.31/ws");
+  stompClient = Stomp.over(socket);
+
   const token = {
     Authorization: sessionStorage.getItem("token"),
   };
@@ -21,27 +24,20 @@ const Test = () => {
     opposingUserName: "",
   });
 
+  // window.onbeforeunload = function (e) {
+  //   stompDisConnect();
+  // };
+
   React.useEffect(() => {
     stompConnect();
-
-    // return () => {
-    //   stompDisConnect();
-    // };
+    return () => {
+      stompDisConnect();
+    };
   }, []);
 
   const handleValue = (e) => {
     const { value, name } = e.target;
     setUserData({ ...userData, [name]: value });
-  };
-
-  const stompDisConnect = () => {
-    try {
-      stompClient.debug = null;
-      stompClient.disconnect(() => {
-        stompClient.unsubscribe("sub-0");
-        clearTimeout(waitForConnect);
-      }, token);
-    } catch (err) {}
   };
 
   const waitForConnect = (ws, callback) => {
@@ -57,9 +53,39 @@ const Test = () => {
   const stompConnect = () => {
     // stompClient.debug = null;
     // let socket = new SockJs("http://175.118.48.164:7050/ws");
-    let socket = new SockJs("http://15.164.231.31/ws");
-    stompClient = Stomp.over(socket);
+    // let socket = new SockJs("http://15.164.231.31/ws");
     stompClient.connect({}, onConnected, onError);
+  };
+
+  const stompDisConnect = () => {
+    try {
+      stompClient.debug = null;
+
+      stompClient.disconnect(() => {
+        let chatMessage = {
+          status: "OUT",
+        };
+        stompClient.send(
+          "/app/message",
+          token,
+          JSON.stringify(chatMessage),
+          console.log("전체 채팅방 OUT")
+        );
+        stompClient.unsubscribe("/topic/greetings");
+        clearTimeout(waitForConnect);
+      }, token);
+    } catch (err) {}
+
+    // stompClient.disconnect();
+  };
+  const waitForConnect = (ws, callback) => {
+    setTimeout(() => {
+      if (stompClient.ws.readyState === 1) {
+        callback();
+      } else {
+        waitForConnect(ws, callback);
+      }
+    }, 0.1);
   };
 
   //connect의 함수
