@@ -1,13 +1,13 @@
 import React from "react";
+import { Route } from "react-router-dom";
 import styled from "styled-components";
-import Header from "../components/Header";
 import Post from "./Post";
 import Category from "../components/Category";
+import { useParams } from "react-router";
 
 const Main = () => {
   return (
     <Container>
-      <Header />
       <Category />
       <div>
         <Post />

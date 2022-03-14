@@ -2,22 +2,16 @@ import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { actionsCreators as serchActions } from "../redux/modules/serch";
+import { history } from "../redux/configureStore";
 
 const Serch = () => {
-  const dispatch = useDispatch();
-  const isLogin = sessionStorage.getItem("isLogin");
-  const nickname = sessionStorage.getItem("nickname");
   const [find, setFind] = React.useState();
 
   const onKeyPress = (e) => {
     if (e.key == "Enter") {
       const setFind = e.target.value;
-      serchgo(setFind);
+      history.push(`/search/serch_${setFind}`);
     }
-  };
-
-  const serchgo = (find) => {
-    dispatch(serchActions.serchDB(find));
   };
 
   return (

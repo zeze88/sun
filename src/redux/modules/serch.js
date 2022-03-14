@@ -10,7 +10,9 @@ const CATEGORY = "CATEGORY";
 const TAG = "TAG";
 
 const serch = createAction(SERCH, (serch_list) => ({ serch_list }));
-const category = createAction(CATEGORY, (category_list) => ({ category_list }));
+const categorySerch = createAction(CATEGORY, (category_list) => ({
+  category_list,
+}));
 const tagSearch = createAction(TAG, (tag_list) => ({ tag_list }));
 
 const token = sessionStorage.getItem("token");
@@ -41,17 +43,15 @@ const serchDB = (title) => {
 };
 
 const categoryDB = (category) => {
-  return async function (dispatch, getState, { history }) {
-    console.log(category);
-    await axios
+  return function (dispatch, getState, { history }) {
+    axios
       .get(`${apiUrl}/category/search/${category}`, {
         headers: {
           Authorization: token,
         },
       })
       .then((res) => {
-        console.log(res);
-        dispatch(category(res.data));
+        dispatch(categorySerch(res.data));
       })
       .catch((err) => {
         console.log(err);
@@ -98,7 +98,7 @@ const actionsCreators = {
   serchDB,
   serch,
   categoryDB,
-  category,
+  categorySerch,
   tagDB,
 };
 

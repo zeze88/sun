@@ -27,8 +27,8 @@ const _Test = () => {
   // Start!!
   const connect = () => {
     // 접속하고자라는 Sock 주소 가져오기
-    // let Sock = new SockJS("http://175.118.48.164:7050/ws");
-    let Sock = new SockJS("http://15.164.231.31/ws");
+    let Sock = new SockJS("http://175.118.48.164:7050/ws");
+    // let Sock = new SockJS("http://15.164.231.31/ws");
     // Sock 열기
     stompClient = over(Sock);
 
@@ -41,7 +41,6 @@ const _Test = () => {
     let chatMessage = {
       status: "OUT",
     };
-    //포스트에따라 여기가 바뀔수도!! *****************
     stompClient.send(
       "/app/message1",
       token,
@@ -235,6 +234,7 @@ const _Test = () => {
               onClick={sendPublicMessage}>
               send
             </button>
+            {publicChats.count}
           </div>
         </div>
         {/* 

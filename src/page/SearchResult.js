@@ -2,6 +2,7 @@ import React from "react";
 import { useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import NoticeList from "../elements/NoticeList";
+import Serch from "../components/Serch";
 import { history } from "../redux/configureStore";
 import { actionsCreators as searchActions } from "../redux/modules/serch";
 
@@ -15,13 +16,22 @@ const SearchResult = () => {
     switch (search_type) {
       case "tag":
         dispatch(searchActions.tagDB(search_keyword));
+      case "serch":
+        dispatch(searchActions.serchDB(search_keyword));
+      case "category":
+        dispatch(searchActions.categoryDB(search_keyword));
         break;
     }
-  }, []);
+  }, [search_type]);
+
   return (
     <div>
-      {tag_list.length > 0 ? (
+      {search_type === "tag" ? (
         <NoticeList list={tag_list} />
+      ) : search_type === "serch" ? (
+        <NoticeList list={serch_list} />
+      ) : search_type === "category" ? (
+        <NoticeList list={category_list} />
       ) : (
         <>
           <div>검색 결과가 없습니다 :)</div>
