@@ -16,6 +16,7 @@ const categorySerch = createAction(CATEGORY, (category_list) => ({
 const tagSearch = createAction(TAG, (tag_list) => ({ tag_list }));
 
 const token = sessionStorage.getItem("token");
+console.log(token);
 
 const initialState = {
   serch_list: [],

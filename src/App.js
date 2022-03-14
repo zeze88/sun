@@ -13,12 +13,18 @@ import _Test from "./components/_Test";
 import Ranking from "./page/Ranking";
 import SearchResult from "./page/SearchResult";
 import Header from "./components/Header";
+import Category from "./components/Category";
 
 function App() {
   const login = useLocation();
+  const check = login.pathname.indexOf("edit");
   return (
     <div className='App'>
       {login.pathname === "/login" ? null : <Header />}
+      {login.pathname === "/login" ? null : login.pathname ===
+        "/create" ? null : check === 1 ? null : (
+        <Category />
+      )}
       <Route path='/' exact component={Main} />
       <Route path='/post' exact component={Post} />
       <Route path='/create' exact component={Create} />

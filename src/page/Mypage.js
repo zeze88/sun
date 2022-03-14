@@ -12,9 +12,7 @@ const Mypage = () => {
       <Header />
       <Category />
       <Password />
-      {/* <Route path={"/Mypage/:Edituser"}> */}
       <Edituser />
-      {/* </Route> */}
     </Container>
   );
 };

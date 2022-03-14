@@ -23,12 +23,13 @@ const SearchResult = () => {
   React.useEffect(() => {
     switch (search_type) {
       case "tag":
-        dispatch(searchActions.tagDB(search_keyword));
+        return dispatch(searchActions.tagDB(search_keyword));
       case "serch":
-        dispatch(searchActions.serchDB(search_keyword));
+        return dispatch(searchActions.serchDB(search_keyword));
       case "category":
-        dispatch(searchActions.categoryDB(search_keyword));
-        break;
+        return dispatch(searchActions.categoryDB(search_keyword));
+      default:
+        return null;
     }
   }, [search_type]);
 

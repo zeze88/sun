@@ -8,7 +8,6 @@ import { useParams } from "react-router";
 const Main = () => {
   return (
     <Container>
-      <Category />
       <div>
         <Post />
       </div>
