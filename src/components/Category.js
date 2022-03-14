@@ -4,20 +4,20 @@ import { history } from "../redux/configureStore";
 import { category } from "../elements/category";
 import { useDispatch, useSelector } from "react-redux";
 import { actionsCreators as categoryActions } from "../redux/modules/serch";
+import { useParams } from "react-router";
 
 const Category = () => {
   const dispatch = useDispatch();
   const category_list = useSelector((state) => state.category_list);
   const [categoryView, setcategortView] = useState(false);
-
   const CategoryView = () => {
     setcategortView(!categoryView);
-    console.log(categoryView);
   };
 
   const CategoryList = (v) => {
-    dispatch(categoryActions.categoryDB(v));
-    console.log(category_list);
+    // dispatch(categoryActions.categoryDB(v));
+    // console.log(category_list)
+    history.push(`/search/category_${v}`);
   };
 
   return (
@@ -25,7 +25,7 @@ const Category = () => {
       <div>
         <div onClick={() => history.push("/")}>전체 게시글</div>
         <div onClick={CategoryView}>언어 카테고리</div>
-        <div onClick={() => history.push("/login")}>랭킹</div>
+        <div onClick={() => history.push("/ranking")}>랭킹</div>
       </div>
       <div>
         {categoryView ? (

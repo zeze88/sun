@@ -1,7 +1,6 @@
 import React from "react";
 import Stomp, { over } from "stompjs";
 import SockJs from "sockjs-client";
-
 import styled from "styled-components";
 
 let stompClient = null;
@@ -15,6 +14,7 @@ const Test = () => {
   const [publicChats, setPublicChats] = React.useState([]);
   const [connected, setConnected] = React.useState(false);
   const [tab, setTab] = React.useState("CHATROOM");
+  const [userCount, setUserCount] = React.useState("");
   const [userData, setUserData] = React.useState({
     username: "",
     message: "",
@@ -23,10 +23,7 @@ const Test = () => {
 
   React.useEffect(() => {
     stompConnect();
-
-    // return () => {
-    //   stompDisConnect();
-    // };
+    return () => disConnect();
   }, []);
 
   const handleValue = (e) => {
@@ -34,14 +31,30 @@ const Test = () => {
     setUserData({ ...userData, [name]: value });
   };
 
-  const stompDisConnect = () => {
-    try {
-      stompClient.debug = null;
-      stompClient.disconnect(() => {
-        stompClient.unsubscribe("sub-0");
-        clearTimeout(waitForConnect);
-      }, token);
-    } catch (err) {}
+  // const disconnect = () => {
+  //   let chatMessage = {
+  //     status: "OUT",
+  //   };
+  //   stompClient.send(
+  //     "/app/message",
+  //     token,
+  //     JSON.stringify(chatMessage),
+  //     console.log("전체 채팅방 OUT")
+  //   );
+  //   stompClient.disconnect();
+  // };
+
+  const disConnect = () => {
+    let chatMessage = {
+      status: "OUT",
+    };
+    stompClient.send(
+      "/app/message",
+      token,
+      JSON.stringify(chatMessage),
+      console.log("전체 채팅방 OUT")
+    );
+    stompClient.deactivate();
   };
 
   const waitForConnect = (ws, callback) => {
@@ -129,9 +142,9 @@ const Test = () => {
     switch (payloadData.status) {
       case "JOIN":
         if (!welcome.get(payloadData.senderName)) {
-          console.log(payloadData);
           welcome.set(payloadData.message, []);
           setWelcome(new Map(welcome));
+          setUserCount(payloadData.userCount);
         }
         break;
       case "MESSAGE":
@@ -149,6 +162,7 @@ const Test = () => {
   return (
     <div>
       <ChatDiv>
+        {userCount}
         {connected ? (
           <div className='chat-box'>
             <div className='member-list'>
@@ -158,7 +172,7 @@ const Test = () => {
                   onClick={() => {
                     setTab("CHATROOM");
                   }}>
-                  ChatRoom
+                  ChatRoom {publicChats}
                 </li>
               </ul>
             </div>
