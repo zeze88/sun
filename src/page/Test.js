@@ -6,10 +6,6 @@ import styled from "styled-components";
 
 let stompClient = null;
 const Test = () => {
-  let socket = new SockJs("http://15.164.231.31/ws");
-
-  stompClient = Stomp.over(socket);
-
   const token = {
     Authorization: sessionStorage.getItem("token"),
   };
@@ -25,41 +21,36 @@ const Test = () => {
     opposingUserName: "",
   });
 
-  // window.onbeforeunload = function (e) {
-  //   stompDisConnect();
-  // };
-
   React.useEffect(() => {
     stompConnect();
+
     return () => {
       stompDisConnect();
     };
   }, []);
+
+  const stompDisConnect = () => {
+    try {
+      stompClient.debug = null;
+
+      stompClient.disconnect(() => {
+        stompClient.unsubscribe("/topic/greetings");
+      }, token);
+    } catch (err) {}
+
+    // stompClient.disconnect();
+  };
 
   const handleValue = (e) => {
     const { value, name } = e.target;
     setUserData({ ...userData, [name]: value });
   };
 
-  const waitForConnect = (ws, callback) => {
-    setTimeout(() => {
-      if (stompClient.ws.readyState === 1) {
-        callback();
-      } else {
-        waitForConnect(ws, callback);
-      }
-    }, 0.1);
-  };
-
   const stompConnect = () => {
-    stompClient.debug = null;
-    // let socket = new SockJs("http://175.118.48.164:7050/ws");
     let socket = new SockJs("http://15.164.231.31/ws");
-    stompClient.connect({}, onConnected, onError);
-  };
+    stompClient = Stomp.over(socket);
 
-  const stompDisConnect = () => {
-    stompClient.disconnect();
+    stompClient.connect({}, onConnected, onError);
   };
 
   //connect의 함수
@@ -67,23 +58,15 @@ const Test = () => {
     try {
       const username = sessionStorage.getItem("nickname");
 
-      if (!username) {
-        alert("로그인이 필요한 기능입니다 :)");
-      } else {
-        const user_join = { status: "JOIN" };
-        setConnected(true);
-        setUserData({ ...userData, username: username, status: "JOIN" });
-        console.log(userData);
-        stompClient.send("/app/hello", {}, JSON.stringify({ username }));
-        stompClient.send("/app/message", token, JSON.stringify(user_join));
-        stompClient.subscribe(
-          "/topic/greetings",
-          onPublicMessageReceived,
-          token
-        );
+      const user_join = { status: "JOIN" };
+      setConnected(true);
+      setUserData({ ...userData, username: username, status: "JOIN" });
+      console.log(userData);
+      stompClient.send("/app/hello", {}, JSON.stringify({ username }));
+      stompClient.send("/app/message", token, JSON.stringify(user_join));
+      stompClient.subscribe("/topic/greetings", onPublicMessageReceived, token);
 
-        // userJoin();
-      }
+      // userJoin();
     } catch (err) {
       console.log(err);
     }
@@ -149,79 +132,66 @@ const Test = () => {
   return (
     <div>
       <ChatDiv>
-        {connected ? (
-          <div className='chat-box'>
-            <div className='member-list'>
-              <ul>
-                <li
-                  className={`member ${tab === "CHATROOM" && "active"}`}
-                  onClick={() => {
-                    setTab("CHATROOM");
-                  }}>
-                  ChatRoom
-                </li>
-              </ul>
-            </div>
-            <div className='chat-content'>
-              <ul className='chat-messages'>
-                {[...welcome.keys()].map((name, index) => {
-                  return (
-                    <li className={` ${tab === name && "active"}`} key={index}>
-                      {name}
-                    </li>
-                  );
-                })}
-                {publicChats.map((chat, index) => (
-                  <li
-                    className={`message ${
-                      chat.senderName === userData.username && "self"
-                    }`}
-                    key={index}>
-                    {chat.senderName !== userData.username && (
-                      <div className='avatar'>{chat.senderName}</div>
-                    )}
-                    <div className='message-data'>{chat.message}</div>
-
-                    {chat.senderName === userData.username && (
-                      <div className='avatar self'>{chat.senderName}</div>
-                    )}
+        <div className='chat-box'>
+          <div className='member-list'>
+            <ul>
+              <li
+                className={`member ${tab === "CHATROOM" && "active"}`}
+                onClick={() => {
+                  setTab("CHATROOM");
+                }}>
+                ChatRoom
+              </li>
+            </ul>
+          </div>
+          <div className='chat-content'>
+            <ul className='chat-messages'>
+              {[...welcome.keys()].map((name, index) => {
+                return (
+                  <li className={` ${tab === name && "active"}`} key={index}>
+                    {name}
                   </li>
-                ))}
-              </ul>
-              <div className='send-message'>
-                <input
-                  type='text'
-                  name='message'
-                  className='input-message'
-                  value={userData.message}
-                  placeholder='enter public message'
-                  onChange={handleValue}
-                />
-                <button className='send-button' onClick={sendPublicMessage}>
-                  send
-                </button>
-              </div>
+                );
+              })}
+              {publicChats.map((chat, index) => (
+                <li
+                  className={`message ${
+                    chat.senderName === userData.username && "self"
+                  }`}
+                  key={index}>
+                  {chat.senderName !== userData.username && (
+                    <div className='avatar'>{chat.senderName}</div>
+                  )}
+                  <div className='message-data'>{chat.message}</div>
+
+                  {chat.senderName === userData.username && (
+                    <div className='avatar self'>{chat.senderName}</div>
+                  )}
+                </li>
+              ))}
+            </ul>
+            <div className='send-message'>
+              <input
+                type='text'
+                name='message'
+                className='input-message'
+                value={userData.message}
+                placeholder='enter public message'
+                onChange={handleValue}
+              />
+              <button className='send-button' onClick={sendPublicMessage}>
+                send
+              </button>
             </div>
           </div>
-        ) : (
-          <div className='register'>
-            <input
-              id='user-name'
-              name='username'
-              placeholder='이름입력'
-              value={userData.username}
-              onChange={handleValue}
-            />
-            {/* <button onClick={connect}>set name</button> */}
-          </div>
-        )}
+        </div>
       </ChatDiv>
     </div>
   );
 };
 
 const ChatDiv = styled.div`
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   width: 300px;
   background-color: #ebebeb;
@@ -230,7 +200,7 @@ const ChatDiv = styled.div`
     height: 80%;
     background-color: #efefef;
     padding: 30px;
-  }
+  } */
 `;
 
 export default Test;
