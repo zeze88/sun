@@ -78,15 +78,6 @@ const Test = () => {
 
     // stompClient.disconnect();
   };
-  const waitForConnect = (ws, callback) => {
-    setTimeout(() => {
-      if (stompClient.ws.readyState === 1) {
-        callback();
-      } else {
-        waitForConnect(ws, callback);
-      }
-    }, 0.1);
-  };
 
   //connect의 함수
   const onConnected = () => {
