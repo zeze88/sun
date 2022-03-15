@@ -118,6 +118,10 @@ const AnswerList = () => {
 };
 
 const SC_List = styled.div`
+  > div {
+    border-bottom: solid 8px #f7f7f7;
+  }
+
   h2 {
     margin: 0;
   }
@@ -154,7 +158,7 @@ const SC_List = styled.div`
     padding: 24px;
 
     button {
-      padding: 10px 32px;
+      padding: 10px 20px;
       color: #7966ff;
       font-size: 16px;
     }

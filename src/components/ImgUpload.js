@@ -15,6 +15,7 @@ const ImgUpload = ({ isEdit = null, editImg = null, cleanImg = null }) => {
   React.useEffect(() => {
     if (cleanImg === "") {
       fileInput.current.value = "";
+      setPreImg("");
     }
   }, [cleanImg]);
 

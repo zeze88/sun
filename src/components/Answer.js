@@ -55,14 +55,14 @@ const Answer = ({ isEdit = null, list = null }) => {
             value={answerTitle}
             // placeholder={list.answerTitle}
           />
-          <input
+          <textarea
             id='answerComment'
             onChange={onChange}
             type='text'
             value={answerComment}
             // placeholder={list.answerComment}
-          />
-          <button onClick={editAnswer}>수정</button>
+          ></textarea>
+          <RoundBtn onClick={editAnswer} title='수정' />
         </SC_InputWrap>
         <ImgUpload isEdit={isEdit} editImg={list.answerImg} />
       </SC_Answer>
@@ -96,6 +96,7 @@ const SC_InputWrap = styled.div`
   display: flex;
   flex-direction: column;
   padding: 24px;
+  border-top: solid 1px #f7f7f7;
 
   input {
     padding: 0;
