@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-
+import Profile from "./Profile";
 import { history } from "../redux/configureStore";
 
 const NoticeList = ({ list }) => {
@@ -16,10 +16,10 @@ const NoticeList = ({ list }) => {
             onClick={() => {
               history.push(`/detail/${data.pid}`);
             }}>
+            {data.category && <div className='category'>{data.category}</div>}
             <div className='title'>
               <h3>{data.postTitle}</h3>
               {data.status === "selection" && <em>답변완료</em>}
-              <div className='category'>{data.category}</div>
             </div>
             <div className='content'>
               <div>{data.postComment}</div>
@@ -31,10 +31,11 @@ const NoticeList = ({ list }) => {
                 ))}
               </TagUl>
               <span>
-                <img scr={data.img} /> {data.nickname}
+                <Profile imgUrl={data.userImage} size='24' />
+                {data.nickname}
               </span>
               <em>{date}</em>
-              <i>{data.postLikeCount}</i>
+              <i>관심 {data.postLikeCount}</i>
             </div>
           </NoticeListDiv>
         );
@@ -44,7 +45,7 @@ const NoticeList = ({ list }) => {
 };
 
 const NoticeListDiv = styled.div`
-  padding: 24px 0;
+  padding: 22px 0 26px;
   border-bottom: solid 1px #dadada;
   margin: 0 24px;
 
@@ -54,9 +55,20 @@ const NoticeListDiv = styled.div`
     align-items: center;
   }
 
+  .category {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 14px;
+    text-align: center;
+    border-radius: 30px;
+    color: #5e45f2;
+    font-size: 12px;
+    border: solid 1px #5e45f2;
+  }
+
   .title {
     gap: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
 
     em {
       flex: none;
@@ -80,27 +92,10 @@ const NoticeListDiv = styled.div`
     white-space: nowrap;
   }
 
-  .info {
-    text-align: right;
-    color: #333;
-    span {
-      margin-left: auto;
-    }
-    em {
-      padding: 0 10px;
-      margin: 0 10px;
-      font-style: normal;
-      border: solid 1px #333;
-      border-top: none;
-      border-bottom: none;
-    }
-  }
-
   .content {
     align-items: flex-start;
     height: 56px;
     margin-bottom: 28px;
-    color: #343434;
 
     > div {
       display: -webkit-box;
@@ -112,31 +107,32 @@ const NoticeListDiv = styled.div`
     }
   }
 
-  .category {
-    padding: 4px 6px;
-    text-align: center;
-    border-radius: 30px;
-    color: #5e45f2;
-    border: solid 1px #5e45f2;
-  }
+  .info {
+    text-align: right;
+    color: #333;
 
-  span {
-    display: inline-flex;
-    align-items: center;
+    span {
+      margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+
+      span {
+        margin-right: 6px;
+      }
+    }
+
+    em {
+      padding: 0 18px;
+      margin: 0 18px;
+      font-style: normal;
+      border: solid 1px #333;
+      border-top: none;
+      border-bottom: none;
+    }
   }
 
   i {
     font-style: normal;
-  }
-
-  img {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    margin-right: 4px;
-    border-radius: 20px;
-    border: solid 1px #fff;
-    background-color: #d6d6d6;
   }
 `;
 
@@ -145,6 +141,7 @@ const TagUl = styled.div`
 
   li {
     color: #797979;
+    font-size: 12px;
     margin-right: 10px;
   }
 `;

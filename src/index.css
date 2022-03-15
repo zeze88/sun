@@ -3,6 +3,7 @@
   padding: 0;
   list-style: none;
   box-sizing: border-box;
+  font-size: 14px;
 }
 
 body {
@@ -18,7 +19,6 @@ img {
 }
 
 input {
-  font-size: 14px;
   padding: 10px;
   outline: none;
 }
@@ -30,7 +30,6 @@ textarea {
 button {
   border: none;
   color: #fff;
-  font-size: 14px;
   font-weight: bold;
 }
 
