@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as commentActions } from "../redux/modules/comment";
 import answer from "../redux/modules/answer";
+import RoundBtn from "../elements/RoundBtn";
 import { useParams } from "react-router-dom";
 
 const Comment = () => {
@@ -34,53 +35,47 @@ const Comment = () => {
       <CommentCount>댓글 0 개</CommentCount>
       <CommentInput>
         <CommentWrite onChange={onChange} />
+        <RoundBtn onClick={addComment} title='등록' />
       </CommentInput>
-      <Buttom onClick={addComment}>입력하기</Buttom>
     </Container>
   );
 };
 
 const Container = styled.div`
-  width: 70%;
-  height: 8rem;
-  background-color: #d3d3d3;
-  border-radius: 1rem;
   display: flex;
-  margin-top: 2rem;
 `;
 
 const CommentCount = styled.div`
-  width: 4rem;
-  padding: 1rem 0px 0px 2rem;
+  flex: none;
+  font-weight: 700;
+  margin-right: 22px;
 `;
 
 const CommentInput = styled.div`
-  width: 100%;
-  height: 100%;
+  flex: auto;
   display: flex;
-  align-items: center;
-  margin-left: 2rem;
+  align-items: flex-end;
+  height: 80px;
+  padding: 14px;
+  border: 1px solid #c5c5c5;
+  border-radius: 10px;
+  overflow: hidden;
 `;
 
-const CommentWrite = styled.input`
-  width: 95%;
-  height: 50%;
-  border: 0px solid black;
-  border-radius: 1rem;
+const CommentWrite = styled.textarea`
+  flex: auto;
+  height: 100%;
+  padding: 14px;
 `;
 
 const Buttom = styled.button`
-  width: 5rem;
-  height: 1.5rem;
-  position: absolute;
-  font-size: 1rem;
-  color: black;
-  text-align: center;
-  padding: 0px;
-  border-radius: 1rem;
-  margin: 4% 0px 0px 62%;
-  background-color: #676767;
-  cursor: pointer;
+  flex: none;
+  padding: 10px 32px;
+  margin-left: 10px;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 30px;
+  background-color: #7966ff;
 `;
 
 export default Comment;

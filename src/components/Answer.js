@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ImgUpload from "./ImgUpload";
 
 import { actionCreators as answerActions } from "../redux/modules/answer";
+import RoundBtn from "../elements/RoundBtn";
 
 const Answer = ({ isEdit = null, list = null }) => {
   const dispatch = useDispatch();
@@ -46,46 +47,75 @@ const Answer = ({ isEdit = null, list = null }) => {
   if (isEdit) {
     return (
       <SC_Answer>
-        <input
-          id='answerTitle'
-          onChange={onChange}
-          type='text'
-          value={answerTitle}
-          // placeholder={list.answerTitle}
-        />
-        <input
-          id='answerComment'
-          onChange={onChange}
-          type='text'
-          value={answerComment}
-          // placeholder={list.answerComment}
-        />
+        <SC_InputWrap>
+          <input
+            id='answerTitle'
+            onChange={onChange}
+            type='text'
+            value={answerTitle}
+            // placeholder={list.answerTitle}
+          />
+          <textarea
+            id='answerComment'
+            onChange={onChange}
+            type='text'
+            value={answerComment}
+            // placeholder={list.answerComment}
+          ></textarea>
+          <RoundBtn onClick={editAnswer} title='수정' />
+        </SC_InputWrap>
         <ImgUpload isEdit={isEdit} editImg={list.answerImg} />
-        <button onClick={editAnswer}>수정 go</button>
       </SC_Answer>
     );
   }
 
   return (
     <SC_Answer>
-      <input
-        id='answerTitle'
-        value={answerTitle}
-        onChange={onChange}
-        type='text'
-      />
-      <input
-        id='answerComment'
-        value={answerComment}
-        onChange={onChange}
-        type='text'
-      />
+      <SC_InputWrap>
+        <input
+          id='answerTitle'
+          value={answerTitle}
+          onChange={onChange}
+          type='text'
+          placeholder='답변 제목 입력 해주세요'
+        />
+        <textarea
+          id='answerComment'
+          value={answerComment}
+          onChange={onChange}
+          type='text'
+          placeholder='답변을 입력 해주세요'></textarea>
+        <RoundBtn onClick={answerSubmit} title='등록' />
+      </SC_InputWrap>
       <ImgUpload cleanImg={addAnswer.answerTitle} />
-      <button onClick={answerSubmit}>답변 click</button>
     </SC_Answer>
   );
 };
+
+const SC_InputWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  border-top: solid 1px #f7f7f7;
+
+  input {
+    padding: 0;
+    display: block;
+    font-size: 20px;
+  }
+
+  textarea {
+    width: 100%;
+    height: 130px;
+    padding: 24px 0;
+  }
+
+  button {
+    margin-left: auto;
+  }
+`;
+
 const SC_Answer = styled.div`
-  padding: 30px;
+  border-bottom: solid 8px #f7f7f7;
 `;
 export default Answer;

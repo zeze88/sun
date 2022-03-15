@@ -44,24 +44,23 @@ const Detail = () => {
         <Top>
           <div className='header'>
             <h3>{post_one.postTitle}</h3>
-            <TagUl>
-              <li
-                style={{ minWidth: "2rem", border: "1px solid " }}
-                onClick={() => {
-                  history.push(`/search/category_${post_one.category}`);
-                }}>
-                {post_one.category}
-              </li>
-            </TagUl>
+            <span
+              className='category'
+              onClick={() => {
+                history.push(`/search/category_${post_one.category}`);
+              }}>
+              {post_one.category}
+            </span>
           </div>
-          <div className='top_info'>
+          <div className='post_info'>
             <dl className='user_info'>
               <dt>
-                <Profile />
+                <Profile size='24' migUrl={post_one.userImage} />
               </dt>
               <dd>{post_one.nickname}</dd>
             </dl>
             <em>{date}</em>
+            <i>관심 {post_one.postLikeCount}</i>
           </div>
         </Top>
         <ContextWrap>
@@ -75,7 +74,6 @@ const Detail = () => {
               {post_one.tag?.map((v, idx) => (
                 <li
                   key={idx}
-                  style={{ minWidth: "2rem", border: "1px solid " }}
                   onClick={() => {
                     history.push(`/search/tag_${v}`);
                   }}>
@@ -84,7 +82,8 @@ const Detail = () => {
               ))}
             </TagUl>
             <button onClick={likebtn}>관심 {post_one.postLikeCount}</button>
-            {Number(user_info) === post_one.uid && (
+
+            {Number(user_info) === post_one.uid ? (
               <>
                 <button styled={{ fontSize: "40px" }} onClick={delPost}>
                   삭제
@@ -97,6 +96,8 @@ const Detail = () => {
                   수정
                 </button>
               </>
+            ) : (
+              <button onClick={likebtn}>관심 {post_one.postLikeCount}</button>
             )}
             {user_info === post_one.uid && (
               <>
@@ -125,15 +126,22 @@ const Detail = () => {
   );
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+  max-width: 1440px;
+  margin: 0 auto;
+`;
 
 const Question = styled.div`
-  border-bottom: solid 1px #ebebeb;
+  border-bottom: solid 8px #f7f7f7;
 `;
 
 const Top = styled.div`
-  padding: 10px;
-  border-bottom: solid 1px #ebebeb;
+  padding: 30px 24px;
+  border-bottom: solid 1px #dadada;
+
+  h3 {
+    font-size: 20px;
+  }
 
   > div {
     display: flex;
@@ -142,20 +150,35 @@ const Top = styled.div`
   }
 
   .header {
-    padding: 30px 0;
+    padding-bottom: 30px;
+  }
 
-    ul {
-      flex: none;
-      display: flex;
+  .category {
+    --cate-color: #797979;
+    font-size: 12px;
+    color: var(--cate-color);
+    border: solid 1px var(--cate-color);
+    margin-left: 10px;
+    padding: 8px 12px;
+    border-radius: 20px;
+  }
+
+  .post_info {
+    --main-color: #c4c4c4;
+    justify-content: flex-end;
+    color: var(--main-color);
+    font-weight: 700;
+
+    span {
+      vertical-align: middle;
     }
 
-    li {
-      margin-left: 10px;
-      padding: 4px 10px;
-      border-radius: 20px;
-
-      color: #5e45f2;
-      border: solid 1px #5e45f2;
+    em {
+      padding: 0 16px;
+      margin: 0 16px;
+      font-style: normal;
+      border-left: solid 1px var(--main-color);
+      border-right: solid 1px var(--main-color);
     }
   }
 
@@ -167,10 +190,15 @@ const Top = styled.div`
 `;
 
 const ContextWrap = styled.div`
-  padding: 10px;
+  padding: 24px;
+  padding-bottom: 17px;
 
   .text-wrap {
     min-height: 250px;
+
+    > *:not(style) {
+      margin-bottom: 10px;
+    }
   }
 
   .btn_wrap {
@@ -182,21 +210,25 @@ const ContextWrap = styled.div`
     }
 
     button {
-      margin-left: 10px;
-      border-radius: 5px;
-      background-color: #676767;
+      padding: 10px 16px;
+      color: #7966ff;
+      font-size: 16px;
     }
   }
 `;
 
 const TagUl = styled.ul`
+  --main-color: #797979;
+
   display: inline-flex;
+  color: var(--main-color);
+  font-size: 14px;
 
   li {
-    color: #797979;
     padding: 6px 10px;
     margin-right: 10px;
     border-radius: 30px;
+    border: solid 1px var(--main-color);
     cursor: pointer;
   }
 `;

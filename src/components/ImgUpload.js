@@ -15,6 +15,7 @@ const ImgUpload = ({ isEdit = null, editImg = null, cleanImg = null }) => {
   React.useEffect(() => {
     if (cleanImg === "") {
       fileInput.current.value = "";
+      setPreImg("");
     }
   }, [cleanImg]);
 
@@ -36,11 +37,11 @@ const ImgUpload = ({ isEdit = null, editImg = null, cleanImg = null }) => {
 
   if (isEdit) {
     return (
-      <ImgWrap htmlFor='editImg'>
-        <div>
+      <ImgWrap>
+        <label htmlFor='editImg'>
           <i className='icon'></i>
           <span>첨부하기</span>
-        </div>
+        </label>
         <input onChange={onChange} id='editImg' type='file' ref={fileInput} />
         <div className='img_box'>
           <img src={editImg} />
@@ -50,12 +51,12 @@ const ImgUpload = ({ isEdit = null, editImg = null, cleanImg = null }) => {
   }
 
   return (
-    <ImgWrap htmlFor='img'>
-      <div>
+    <ImgWrap>
+      <label htmlFor='img'>
         이미지
         <i className='icon'></i>
         <span>첨부하기</span>
-      </div>
+      </label>
       <input onChange={onChange} id='img' type='file' ref={fileInput} />
       {preImg && (
         <div className='img_box'>
@@ -66,17 +67,19 @@ const ImgUpload = ({ isEdit = null, editImg = null, cleanImg = null }) => {
   );
 };
 
-const ImgWrap = styled.label`
+const ImgWrap = styled.div`
   display: flex;
   gap: 24px;
   width: 100%;
   padding: 24px;
   font-weight: 700;
   border-top: solid 1px #ebebeb;
+
   .img_box {
     flex: auto;
   }
-  > div {
+
+  > label {
     flex: none;
   }
 
