@@ -20,6 +20,11 @@ img {
 input {
   font-size: 14px;
   padding: 10px;
+  outline: none;
+}
+
+textarea {
+  outline: none;
 }
 
 button {

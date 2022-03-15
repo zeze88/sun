@@ -67,7 +67,7 @@ const Create = () => {
       );
     }
   };
-  console.log(oneCategory);
+
   const revise = () => {
     if (typeof addPost.tags === "string") {
       const tags = addPost.tags?.split("#").splice(1);
@@ -201,7 +201,7 @@ const Create = () => {
           </ul>
         </CategoryDiv>
         <h4>
-          태그입력<em></em>
+          태그입력<em>(선택사항)</em>
         </h4>
         <input
           id='tags'
@@ -220,7 +220,6 @@ const PostWrap = styled.div`
   margin: 0 auto;
   display: flex;
   align-items: flex-start;
-
   gap: 24px;
 
   label > input#file-upload-button {
@@ -229,7 +228,15 @@ const PostWrap = styled.div`
 
   h4 {
     margin-bottom: 8px;
-    font-size: 20px;
+    font-size: 14px;
+
+    em {
+      font-weight: normal;
+      font-style: normal;
+      margin-left: 4px;
+      color: #797979;
+      font-size: 12px;
+    }
   }
 
   input {
@@ -251,19 +258,22 @@ const PostWrap = styled.div`
 
   .left {
     flex: auto;
+
     input {
+      font-size: 20px;
       padding: 24px;
     }
   }
 
   .right {
+    flex: none;
     width: 342px;
     padding: 63px 20px;
     font-size: 14px;
     background-color: #f9f8ff;
 
     input {
-      padding: 0 10px;
+      padding: 0 14px;
       color: #7966ff;
       background-color: #fff;
       border-radius: 8px;
@@ -277,7 +287,7 @@ const PostWrap = styled.div`
       width: 100%;
       line-height: 50px;
       margin-top: 48px;
-      background-color: #333;
+      background-color: #7966ff;
       border-radius: 8px;
       font-size: 16px;
     }
@@ -293,8 +303,8 @@ const CategoryDiv = styled.div`
   > span {
     display: block;
     width: 100%;
+    padding: 0 14px;
     line-height: 46px;
-    text-align: center;
     border-radius: 8px;
     color: #7966ff;
     background-color: #fff;
@@ -302,7 +312,7 @@ const CategoryDiv = styled.div`
 
   ul {
     position: absolute;
-    top: 48px;
+    top: calc(46px + 8px);
     left: 0;
     width: 100%;
     height: ${(props) => `calc(${props.length} * 46px + 20px)`};
