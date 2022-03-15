@@ -17,11 +17,9 @@ const NoticeList = ({ list }) => {
               history.push(`/detail/${data.pid}`);
             }}>
             <div className='title'>
-              <dl>
-                <dt>{data.postTitle}</dt>
-                {data.status === "selection" && <dd>답변완료</dd>}
-              </dl>
-              {data.category && <div className='category'></div>}
+              <h3>{data.postTitle}</h3>
+              {data.status === "selection" && <em>답변완료</em>}
+              {data.category && <div className='category'>{data.category}</div>}
             </div>
             <div className='content'>
               <div>{data.postComment}</div>
@@ -29,7 +27,7 @@ const NoticeList = ({ list }) => {
             <div className='info'>
               <TagUl>
                 {data.tag.map((v, idx) => (
-                  <li key={idx}>{v}</li>
+                  <li key={idx}>#{v} </li>
                 ))}
               </TagUl>
               <span>
@@ -46,36 +44,68 @@ const NoticeList = ({ list }) => {
 };
 
 const NoticeListDiv = styled.div`
-  padding: 30px 20px;
+  padding: 24px 0;
   border-bottom: solid 1px #dadada;
+  margin: 0 24px;
 
   > div {
+    flex: auto;
     display: flex;
     align-items: center;
   }
 
   .title {
-    justify-content: space-between;
-    margin-bottom: 10px;
+    gap: 10px;
+    margin-bottom: 20px;
+
+    em {
+      flex: none;
+      display: inline-block;
+
+      padding: 4px 6px;
+      color: #5e45f2;
+      border-radius: 2px;
+      background-color: #f0ecfd;
+      font-style: normal;
+    }
+  }
+
+  h3 {
+    margin-right: auto;
+    font-weight: 700;
+    color: #333;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .info {
     text-align: right;
-    color: #676767;
+    color: #333;
     span {
       margin-left: auto;
+    }
+    em {
+      padding: 0 10px;
+      margin: 0 10px;
+      font-style: normal;
+      border: solid 1px #333;
+      border-top: none;
+      border-bottom: none;
     }
   }
 
   .content {
     align-items: flex-start;
-    height: 50px;
+    height: 56px;
+    margin-bottom: 28px;
     color: #343434;
 
     > div {
       display: -webkit-box;
       word-wrap: break-word;
-      -webkit-line-clamp: 2;
+      -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -84,44 +114,15 @@ const NoticeListDiv = styled.div`
 
   .category {
     padding: 4px 6px;
-    margin-left: 10px;
     text-align: center;
     border-radius: 30px;
-    color: #b9b9b9;
-    border: solid 1px #b9b9b9;
-  }
-
-  dl {
-    display: flex;
-    align-items: center;
-  }
-
-  dt {
-    margin-right: 10px;
-    font-weight: 700;
-    color: #343434;
-  }
-
-  dd {
-    display: inline-block;
-    padding: 4px 6px;
-    color: #fff;
-    border-radius: 40px;
-    background-color: #676767;
+    color: #5e45f2;
+    border: solid 1px #5e45f2;
   }
 
   span {
     display: inline-flex;
     align-items: center;
-  }
-
-  em {
-    padding: 0 10px;
-    margin: 0 10px;
-    font-style: normal;
-    border: solid 1px #222;
-    border-top: none;
-    border-bottom: none;
   }
 
   i {
@@ -143,7 +144,8 @@ const TagUl = styled.div`
   display: inline-flex;
 
   li {
-    color: #b9b9b9;
+    color: #797979;
+    margin-right: 10px;
   }
 `;
 export default NoticeList;

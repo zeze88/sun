@@ -48,9 +48,14 @@ const NoticeBoard = () => {
 };
 
 const SC_NoticeDiv = styled.div`
+  width: 100%;
+
   h2 {
     padding: 30px 20px;
     font-weight: 700;
+  }
+  > ul {
+    margin-left: 20px;
   }
 `;
 
