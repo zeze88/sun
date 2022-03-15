@@ -28,7 +28,6 @@ const LOG_IN = "LOG_IN";
 const LOG_OUT = "LOG_OUT";
 const USER_EDUT = "USER_EDUT";
 const NEW_PASSWORD = "NEW_PASSWORD";
-const IMG_POST = "IMG_POST";
 
 //action creators
 const setCheckUsername = createAction(CHECK_USERNAME, (isCheckUsername) => ({
@@ -40,7 +39,7 @@ const setCheckNickname = createAction(CHECK_NICKNAME, (isCheckNickname) => ({
 const logIn = createAction(LOG_IN, (user) => ({ user }));
 const logOut = createAction(LOG_OUT, () => ({}));
 const logEdit = createAction(USER_EDUT, (user) => ({ user }));
-const imgPost = createAction(IMG_POST, (preview) => ({ preview }));
+
 // //token
 const token = sessionStorage.getItem("token");
 
@@ -131,6 +130,7 @@ const loginDB = (username, password) => {
             sessionStorage.setItem("nickname", res.data.nickname);
             sessionStorage.setItem("career", res.data.career);
             sessionStorage.setItem("userImage", res.data.userImage);
+            sessionStorage.setItem("url", res.data.blogUrl);
             sessionStorage.setItem("isLogin", true);
             console.log("1번");
             dispatch(
@@ -140,6 +140,7 @@ const loginDB = (username, password) => {
                 nickname: res.data.nickname,
                 career: res.data.career,
                 userImage: res.data.userImage,
+                url: res.data.blogUrl,
               })
             );
             history.push("/");
@@ -156,11 +157,12 @@ const loginDB = (username, password) => {
   };
 };
 
-const logEditDB = (uid, nickname, career, userImg) => {
-  const Data = new FormData();
-  Data.append("images", userImg);
-  console.log(Data);
+const logEditDB = (uid, nickname, career, url, userImg) => {
   return function (dispatch, getState, { history }) {
+    const img_list = sessionStorage.getItem("url");
+    const Data = new FormData();
+    Data.append("images", img_list);
+    console.log(Data);
     axios
       .post(`${apiUrl}/images/upload`, Data, {
         headers: {
@@ -173,13 +175,15 @@ const logEditDB = (uid, nickname, career, userImg) => {
         const imgUrl = res.data.url;
         return imgUrl;
       })
-      .then((res) => {
+      .then((imgUrl) => {
         axios
           .put(
             `${apiUrl}/islogin/user/getinfo/${uid}`,
             {
               nickname: nickname,
               career: career,
+              userImage: imgUrl,
+              blogUrl: url,
             },
             {
               headers: {
@@ -193,11 +197,13 @@ const logEditDB = (uid, nickname, career, userImg) => {
                 nickname: nickname,
                 career: career,
                 userImage: userImg,
+                blogUrl: url,
               })
             );
             sessionStorage.setItem("nickname", nickname);
             sessionStorage.setItem("career", career);
             sessionStorage.setItem("userImage", userImg);
+            sessionStorage.setItem("url", url);
             history.push("/");
             window.location.reload();
           });
@@ -260,10 +266,6 @@ export default handleActions(
       produce(state, (draft) => {
         draft.userinfo = action.payload.user;
       }),
-    [IMG_POST]: (state, action) =>
-      produce(state, (draft) => {
-        draft.preview = action.payload.preview;
-      }),
   },
   initialState
 );
@@ -276,7 +278,6 @@ const actionCreators = {
   logOut,
   logEditDB,
   NewPassWordDB,
-  imgPost,
 };
 
 export { actionCreators };

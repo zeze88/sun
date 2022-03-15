@@ -75,6 +75,7 @@ const addPostDB = ({ title, comment, tags, category }) => {
   return function (dispatch, getState, { history }) {
     const token_res = sessionStorage.getItem("token");
     const img_list = getState().post.preview;
+    console.log(img_list);
     const formData = new FormData();
     formData.append("images", img_list);
 

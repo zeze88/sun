@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Profile from "../elements/Profile";
 import { actionCreators as userActions } from "../redux/modules/user";
-import Signup from "./Signup";
 
 const userNickname = sessionStorage.getItem("nickname");
 const userCareer = sessionStorage.getItem("career");
 const userImage = sessionStorage.getItem("userImage");
+const userURL = sessionStorage.getItem("url");
 const uid = sessionStorage.getItem("uid");
 
 const Edituser = (props) => {
@@ -15,7 +15,9 @@ const Edituser = (props) => {
   const [isCheckNickname, setIsCheckNickname] = React.useState(false);
   const [nickname, setNickname] = useState(userNickname);
   const [userImg, setUserImg] = useState(userImage);
+  const [userUrl, setUserUrl] = useState(userURL);
   const [career, setCareer] = useState(userCareer);
+  const imgInput = React.useRef();
   const options = [
     { value: "", name: "==경력을 선택해 주세요==" },
     { value: "코린이", name: "코린이" },
@@ -52,19 +54,29 @@ const Edituser = (props) => {
     setIsCheckNickname(true);
   };
 
-  ////////////////////////////////////////사진 변경
-  const editImg = (e) => {
-    const img = e.target.files[0];
-    const imgUrl = URL.createObjectURL(img);
-    setUserImg(imgUrl);
+  const url = (e) => {
+    console.log(e.target.value);
+    setUserUrl(e.target.value);
   };
 
+  ////////////////////////////////////////사진 변경
+  const editImg = (e) => {
+    const img = imgInput.current.files[0];
+    console.log(img);
+    const imgReader = new FileReader();
+    imgReader.readAsDataURL(img);
+    imgReader.onloadend = () => {
+      setUserImg(imgReader.result);
+    };
+    sessionStorage.setItem("url", img);
+  };
   //////////////////////////////////////////SAVE
-  const save = () => {
+  const _save = () => {
     if (
       userNickname === nickname &&
       userCareer === career &&
-      userImage === userImg
+      userImage === userImg &&
+      userURL === userUrl
     ) {
       window.alert("변경 사항이 없습니다.");
       window.location.assign("/");
@@ -86,7 +98,7 @@ const Edituser = (props) => {
       window.alert("경력을해 주세요.");
       return;
     } else if (window.confirm("수정?")) {
-      dispatch(userActions.logEditDB(uid, nickname, career, userImg));
+      dispatch(userActions.logEditDB(uid, nickname, career, userUrl, userImg));
       return;
     }
   };
@@ -99,7 +111,13 @@ const Edituser = (props) => {
           <i>
             <Profile imgUrl={userImg} size={175} />
           </i>
-          <input id='profile' type='file' hidden={true} onChange={editImg} />
+          <input
+            id='profile'
+            type='file'
+            hidden={true}
+            onChange={editImg}
+            ref={imgInput}
+          />
           <label htmlFor='profile'>사진 편집</label>
         </div>
         <div className='profile'>
@@ -112,6 +130,14 @@ const Edituser = (props) => {
               </button>
             </div>
           </div>
+          <div className='nickname'>
+            <p>URL</p>
+            <div>
+              <input
+                onChange={url}
+                value={userUrl === "undefined" ? null : userUrl}></input>
+            </div>
+          </div>
           <div className='career'>
             <p>나의 경력</p>
             <select onChange={Career} value={career}>
@@ -122,7 +148,7 @@ const Edituser = (props) => {
               ))}
             </select>
           </div>
-          <button onClick={save}>저장하기</button>
+          <button onClick={_save}>저장하기</button>
         </div>
       </div>
     </Container>
