@@ -27,10 +27,12 @@ const SC_TabMenu = styled.ul`
     list-style: none;
     color: #7e7e7e;
     cursor: pointer;
+    margin-right: 50px;
+    padding-bottom: 9px;
 
     &.active {
       color: #343434;
-      border-bottom: solid 3px #343434;
+      border-bottom: solid 3px #676767;
     }
   }
 `;

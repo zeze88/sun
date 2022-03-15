@@ -2,11 +2,7 @@ import React from "react";
 import NoticeBoard from "../components/NoticeBoard";
 
 const Post = () => {
-  return (
-    <div>
-      <NoticeBoard />
-    </div>
-  );
+  return <NoticeBoard />;
 };
 
 export default Post;
