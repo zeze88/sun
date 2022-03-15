@@ -91,7 +91,6 @@ const ImgWrap = styled.label`
   }
 
   span {
-    font-size: 14px;
     color: #797979;
   }
 

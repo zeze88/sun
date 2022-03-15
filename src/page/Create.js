@@ -228,7 +228,6 @@ const PostWrap = styled.div`
 
   h4 {
     margin-bottom: 8px;
-    font-size: 14px;
 
     em {
       font-weight: normal;
@@ -253,7 +252,6 @@ const PostWrap = styled.div`
     resize: none;
     border: none;
     padding: 24px;
-    font-size: 14px;
   }
 
   .left {
@@ -269,7 +267,6 @@ const PostWrap = styled.div`
     flex: none;
     width: 342px;
     padding: 63px 20px;
-    font-size: 14px;
     background-color: #f9f8ff;
 
     input {
