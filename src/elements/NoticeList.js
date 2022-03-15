@@ -73,7 +73,6 @@ const NoticeListDiv = styled.div`
     em {
       flex: none;
       display: inline-block;
-
       padding: 4px 6px;
       color: #5e45f2;
       border-radius: 2px;
@@ -83,10 +82,8 @@ const NoticeListDiv = styled.div`
   }
 
   h3 {
-    margin-right: auto;
     font-weight: 700;
     color: #333;
-
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
