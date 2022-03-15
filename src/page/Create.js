@@ -207,19 +207,29 @@ const Create = () => {
           id='tags'
           onChange={onChange}
           type='text'
-          placeholder='tag 입력 # 붙여 주세요'
+          placeholder='특수문자는 # 만 입력 가능합니다.'
         />
-        <button onClick={submit}>글쓰기 click</button>
+        <button onClick={submit}>올리기</button>
       </div>
     </PostWrap>
   );
 };
 
 const PostWrap = styled.div`
+  max-width: 1440px;
+  margin: 0 auto;
   display: flex;
   align-items: flex-start;
+
+  gap: 24px;
+
   label > input#file-upload-button {
     display: none;
+  }
+
+  h4 {
+    margin-bottom: 8px;
+    font-size: 20px;
   }
 
   input {
@@ -235,28 +245,41 @@ const PostWrap = styled.div`
     min-height: 400px;
     resize: none;
     border: none;
-    padding: 30px;
+    padding: 24px;
+    font-size: 14px;
   }
 
   .left {
-    flex: 1.2;
+    flex: auto;
     input {
-      padding: 30px;
+      padding: 24px;
     }
   }
 
   .right {
-    padding: 20px;
-    background-color: #f7f7f7;
+    width: 342px;
+    padding: 63px 20px;
+    font-size: 14px;
+    background-color: #f9f8ff;
 
     input {
+      padding: 0 10px;
+      color: #7966ff;
       background-color: #fff;
-      border-radius: 4px;
+      border-radius: 8px;
+      line-height: 46px;
+      &::placeholder {
+        color: #7966ff;
+      }
     }
 
     button {
-      margin-top: 20px;
       width: 100%;
+      line-height: 50px;
+      margin-top: 48px;
+      background-color: #333;
+      border-radius: 8px;
+      font-size: 16px;
     }
   }
 `;
@@ -270,34 +293,49 @@ const CategoryDiv = styled.div`
   > span {
     display: block;
     width: 100%;
-    padding: 10px;
+    line-height: 46px;
     text-align: center;
-    background-color: #e7e7e7;
+    border-radius: 8px;
+    color: #7966ff;
+    background-color: #fff;
   }
 
   ul {
     position: absolute;
-    top: 40px;
+    top: 48px;
     left: 0;
     width: 100%;
-    height: ${(props) => `calc(${props.length} * 40px)`};
-    cursor: pointer;
-    border: solid 1px #ebebeb;
-    border-bottom: none;
+    height: ${(props) => `calc(${props.length} * 46px + 20px)`};
     overflow: hidden;
     margin: 0;
     transition: height 0.5s ease-out;
     background-color: #fff;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 5px 5px 15px 9px rgba(157, 157, 157, 0.1);
 
     &.close {
       height: 0;
+      padding: 0;
     }
   }
 
   li {
+    margin: 0 10px;
     text-align: center;
-    padding: 10px;
-    border-bottom: solid 1px #ebebeb;
+    line-height: 46px;
+    cursor: pointer;
+
+    &:nth-child(1) {
+      margin-top: 10px;
+    }
+
+    &:last-child {
+      margin-bottom: 10px;
+    }
+    &:hover {
+      background-color: #7966ff;
+      color: #fff;
+    }
   }
 `;
 

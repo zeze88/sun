@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import { useLocation, useParams } from "react-router";
 import { useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
@@ -35,10 +36,31 @@ const ImgUpload = ({ isEdit = null, editImg = null, cleanImg = null }) => {
   }
 
   return (
-    <label htmlFor='img'>
+    <ImgWrap htmlFor='img'>
+      이미지
+      <div>
+        <img src='' />
+        <span>첨부하기</span>
+      </div>
       <input onChange={onChange} id='img' type='file' ref={fileInput} />
-    </label>
+    </ImgWrap>
   );
 };
+
+const ImgWrap = styled.label`
+  display: flex;
+  width: 100%;
+  padding: 24px;
+  border-top: solid 1px #ebebeb;
+
+  input {
+    display: none;
+  }
+
+  span {
+    font-size: 14px;
+    color: #797979;
+  }
+`;
 
 export default ImgUpload;

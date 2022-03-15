@@ -18,16 +18,14 @@ img {
 }
 
 input {
+  font-size: 14px;
   padding: 10px;
-  font-size: 1.2em;
 }
 
 button {
   border: none;
-  padding: 10px;
-  background: green;
   color: #fff;
-  font-size: 1.2em;
+  font-size: 14px;
   font-weight: bold;
 }
 
