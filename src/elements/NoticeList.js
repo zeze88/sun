@@ -19,7 +19,7 @@ const NoticeList = ({ list }) => {
             <div className='title'>
               <h3>{data.postTitle}</h3>
               {data.status === "selection" && <em>답변완료</em>}
-              {data.category && <div className='category'>{data.category}</div>}
+              <div className='category'>{data.category}</div>
             </div>
             <div className='content'>
               <div>{data.postComment}</div>

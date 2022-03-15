@@ -67,7 +67,7 @@ const Create = () => {
       );
     }
   };
-
+  console.log(oneCategory);
   const revise = () => {
     if (typeof addPost.tags === "string") {
       const tags = addPost.tags?.split("#").splice(1);
@@ -89,6 +89,7 @@ const Create = () => {
         postActions.editPostDB({
           ...addPost,
           pid: params,
+          category: oneCategory,
         })
       );
     }
@@ -122,7 +123,11 @@ const Create = () => {
                   onClick={() => {
                     setIsSelect(!isSelect);
                   }}>
-                  {oneCategory === "" ? " 카테고리를 선택" : oneCategory}
+                  {oneCategory
+                    ? oneCategory
+                    : addPost.category
+                    ? addPost.category
+                    : " 카테고리를 선택"}
                 </span>
                 <ul className={isSelect ? "" : "close"}>
                   {category.map((v, idx) => (
