@@ -130,77 +130,133 @@ const Test = () => {
   };
 
   return (
-    <div>
-      <ChatDiv>
-        <div className='chat-box'>
-          <div className='member-list'>
-            <ul>
-              <li
-                className={`member ${tab === "CHATROOM" && "active"}`}
-                onClick={() => {
-                  setTab("CHATROOM");
-                }}>
-                ChatRoom
+    <ChatDiv>
+      <div className='member_list'>
+        <ul>
+          <li
+            onClick={() => {
+              setTab("CHATROOM");
+            }}>
+            채팅
+          </li>
+        </ul>
+      </div>
+      <div className='chat_content'>
+        <ul className='chat_messages'>
+          {[...welcome.keys()].map((name, index) => {
+            return (
+              <li className={` ${tab === name && "active"}`} key={index}>
+                {name}
               </li>
-            </ul>
-          </div>
-          <div className='chat-content'>
-            <ul className='chat-messages'>
-              {[...welcome.keys()].map((name, index) => {
-                return (
-                  <li className={` ${tab === name && "active"}`} key={index}>
-                    {name}
-                  </li>
-                );
-              })}
-              {publicChats.map((chat, index) => (
-                <li
-                  className={`message ${
-                    chat.senderName === userData.username && "self"
-                  }`}
-                  key={index}>
-                  {chat.senderName !== userData.username && (
-                    <div className='avatar'>{chat.senderName}</div>
-                  )}
-                  <div className='message-data'>{chat.message}</div>
+            );
+          })}
+          {publicChats.map((chat, index) => (
+            <li
+              className={` ${chat.senderName === userData.username && "self"}`}
+              key={index}>
+              {chat.senderName !== userData.username && (
+                <div className='avatar'>{chat.senderName}</div>
+              )}
+              <div className='message-data'>{chat.message}</div>
 
-                  {chat.senderName === userData.username && (
-                    <div className='avatar self'>{chat.senderName}</div>
-                  )}
-                </li>
-              ))}
-            </ul>
-            <div className='send-message'>
-              <input
-                type='text'
-                name='message'
-                className='input-message'
-                value={userData.message}
-                placeholder='enter public message'
-                onChange={handleValue}
-              />
-              <button className='send-button' onClick={sendPublicMessage}>
-                send
-              </button>
-            </div>
+              {chat.senderName === userData.username && (
+                <div className='avatar self'>{chat.senderName}</div>
+              )}
+            </li>
+          ))}
+        </ul>
+        <div className='send_message'>
+          <div>
+            <input
+              type='text'
+              name='message'
+              value={userData.message}
+              placeholder='댓글을 입력해주세요 :)'
+              onChange={handleValue}
+            />
+            <button onClick={sendPublicMessage}>send</button>
           </div>
         </div>
-      </ChatDiv>
-    </div>
+      </div>
+    </ChatDiv>
   );
 };
 
 const ChatDiv = styled.div`
-  /* display: flex;
-  flex-direction: column;
-  width: 300px;
-  background-color: #ebebeb;
+  flex: none;
+  width: 342px;
+  height: calc(100vh - 102px);
+  background-color: #f9f8ff;
+  border-radius: 8px;
+  overflow: hidden;
 
-  section {
-    height: 80%;
-    background-color: #efefef;
-    padding: 30px;
-  } */
+  .member_list {
+    overflow: auto;
+
+    ul {
+      display: flex;
+    }
+
+    li {
+      padding: 0 22px;
+      margin: 0 10px;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 58px;
+      color: #5e45f2;
+      border-bottom: solid 3px #5e45f2;
+    }
+  }
+
+  .chat_content {
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 61px);
+
+    ul {
+      flex: auto;
+    }
+  }
+
+  .chat_messages {
+    li {
+      background-color: #fff;
+      border-radius: 4px;
+      box-shadow: 0 4px 14px 0 rgba(65, 0, 131, 0.06);
+    }
+
+    li.self {
+      color: #fff;
+      background-color: #7966ff;
+    }
+  }
+
+  .send_message {
+    padding: 24px 16px;
+    background-color: #f9f8ff;
+    box-shadow: 0 -4px 10px 0 rgba(133, 47, 243, 0.05);
+
+    > div {
+      display: flex;
+      align-items: center;
+      height: 42px;
+      padding: 8px 14px;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: inset 0 4px 20px 0 rgba(60, 4, 105, 0.08);
+      background-color: #fff;
+    }
+
+    input {
+      flex: auto;
+      padding: 0;
+      background-color: transparent;
+    }
+
+    button {
+      flex: none;
+    }
+  }
 `;
 
 export default Test;
