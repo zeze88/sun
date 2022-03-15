@@ -126,11 +126,12 @@ const Detail = () => {
   );
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+  max-width: 1440px;
+  margin: 0 auto;
+`;
 
 const Question = styled.div`
-  min-width: 1440px;
-  margin: 0 auto;
   border-bottom: solid 8px #f7f7f7;
 `;
 
