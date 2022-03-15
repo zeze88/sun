@@ -20,19 +20,23 @@ const TabMenu = ({ tab_list, tab }) => {
     </SC_TabMenu>
   );
 };
+
 const SC_TabMenu = styled.ul`
-  display: inline-flex;
+  display: flex;
+  border-bottom: solid 1px #f0ecfd;
 
   li {
-    list-style: none;
-    color: #7e7e7e;
-    cursor: pointer;
     margin-right: 50px;
+    padding: 0 4px;
     padding-bottom: 9px;
+    cursor: pointer;
+    color: #c4c4c4;
+    transition: all 0.2s ease-in-out;
+    border-bottom: solid 3px transparent;
 
     &.active {
-      color: #343434;
-      border-bottom: solid 3px #676767;
+      color: #7966ff;
+      border-bottom: solid 3px #7966ff;
     }
   }
 `;

@@ -60,13 +60,14 @@ const SC_NoticeDiv = styled.div`
 `;
 
 const SC_BtnWrap = styled.div`
+  margin: 32px 24px 48px;
   text-align: right;
   color: #fff;
 
   button {
-    margin: 10px 10px;
+    padding: 16px 40px;
     border-radius: 5px;
-    background-color: #676767;
+    background-color: #7966ff;
   }
 `;
 
