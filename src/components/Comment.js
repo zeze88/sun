@@ -26,7 +26,6 @@ const Comment = () => {
 
   const onChange = (e) => {
     setComment(e.target.value);
-    console.log(comment);
   };
 
   return (

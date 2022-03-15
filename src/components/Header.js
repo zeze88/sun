@@ -12,7 +12,6 @@ const Header = () => {
   const nickname = sessionStorage.getItem("nickname");
   const userImage = sessionStorage.getItem("userImage");
   const [view, setView] = useState(false);
-  console.log(userImage);
   const View = () => {
     setView(!view);
   };
@@ -42,8 +41,8 @@ const Header = () => {
           <div>아래꺽쇠</div>
           {view ? (
             <div className='view'>
-              <ul onClick={() => history.push("/Mypage")}>Mypage</ul>
-              <ul onClick={() => history.push("/Mypage/Edituser")}>2</ul>
+              <ul onClick={() => history.push("/useredit")}>Mypage</ul>
+              <ul onClick={() => history.push("/passedit")}>비밀번호변경</ul>
               <ul onClick={() => console.log("history.push('동해')")}>2</ul>
               <ul onClick={Logout}>로그아웃</ul>
             </div>
