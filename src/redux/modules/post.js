@@ -116,6 +116,7 @@ const addPostDB = ({ title, comment, tags, category }) => {
 // ================================ 수정 ================================
 const editPostDB = (props) => {
   return function (dispatch, getState, { history }) {
+    console.log(props);
     const {
       blogUrl,
       career,

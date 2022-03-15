@@ -44,18 +44,15 @@ const Detail = () => {
         <Top>
           <div className='header'>
             <h3>{post_one.postTitle}</h3>
-            <ul>
-              {post_one.tag?.map((v, idx) => (
-                <li
-                  key={idx}
-                  style={{ minWidth: "2rem", border: "1px solid " }}
-                  onClick={() => {
-                    history.push(`/search/tag_${v}`);
-                  }}>
-                  {v}
-                </li>
-              ))}
-            </ul>
+            <TagUl>
+              <li
+                style={{ minWidth: "2rem", border: "1px solid " }}
+                onClick={() => {
+                  history.push(`/search/category_${post_one.category}`);
+                }}>
+                {post_one.category}
+              </li>
+            </TagUl>
           </div>
           <div className='top_info'>
             <dl className='user_info'>
@@ -74,6 +71,18 @@ const Detail = () => {
           </div>
 
           <div className='btn_wrap'>
+            <TagUl>
+              {post_one.tag?.map((v, idx) => (
+                <li
+                  key={idx}
+                  style={{ minWidth: "2rem", border: "1px solid " }}
+                  onClick={() => {
+                    history.push(`/search/tag_${v}`);
+                  }}>
+                  #{v}
+                </li>
+              ))}
+            </TagUl>
             <button onClick={likebtn}>관심 {post_one.postLikeCount}</button>
             {Number(user_info) === post_one.uid && (
               <>
@@ -132,17 +141,22 @@ const Top = styled.div`
     justify-content: space-between;
   }
 
-  ul {
-    display: flex;
-  }
-
-  li {
-    margin-left: 10px;
-    padding: 4px 10px;
-    border-radius: 20px;
-  }
   .header {
     padding: 30px 0;
+
+    ul {
+      flex: none;
+      display: flex;
+    }
+
+    li {
+      margin-left: 10px;
+      padding: 4px 10px;
+      border-radius: 20px;
+
+      color: #5e45f2;
+      border: solid 1px #5e45f2;
+    }
   }
 
   .user_info {
@@ -154,16 +168,36 @@ const Top = styled.div`
 
 const ContextWrap = styled.div`
   padding: 10px;
+
   .text-wrap {
     min-height: 250px;
   }
+
   .btn_wrap {
-    text-align: right;
+    display: flex;
+    align-items: center;
+
+    ul {
+      margin-right: auto;
+    }
+
     button {
       margin-left: 10px;
       border-radius: 5px;
       background-color: #676767;
     }
+  }
+`;
+
+const TagUl = styled.ul`
+  display: inline-flex;
+
+  li {
+    color: #797979;
+    padding: 6px 10px;
+    margin-right: 10px;
+    border-radius: 30px;
+    cursor: pointer;
   }
 `;
 
