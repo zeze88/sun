@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as answerActions } from "../redux/modules/answer";
 import { actionsCreators as searchActions } from "../redux/modules/serch";
+import Swal from "sweetalert2";
 
 import { history } from "../redux/configureStore";
 import Answer from "../components/Answer";
@@ -20,7 +21,26 @@ const Detail = () => {
   const user_info = sessionStorage.getItem("uid");
 
   const delPost = () => {
-    dispatch(postActions.delPostDB(pid));
+    Swal.fire({
+      title: "게시글을 삭제하시겠습니까?",
+      text: "삭제된 게시물은 다시 복구할 수 없습니다.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "네 삭제하겠습니다.",
+      confirmButtonColor: "#7966FF",
+      cancelButtonText: "아니오",
+      cancelTextColor: "#7966FF",
+
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("", "게시글이 삭제 되었습니다.", "success");
+        dispatch(postActions.delPostDB(pid));
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire("", "삭제가 취소 되었습니다 :)", "error");
+      }
+    });
+    return;
   };
 
   const likebtn = () => {
@@ -132,7 +152,10 @@ const Container = styled.div`
 `;
 
 const Question = styled.div`
-  border-bottom: solid 8px #f7f7f7;
+  background-color: #fff;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  /* border-bottom: solid 8px #f7f7f7; */
 `;
 
 const Top = styled.div`

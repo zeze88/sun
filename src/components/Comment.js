@@ -6,7 +6,7 @@ import answer from "../redux/modules/answer";
 import RoundBtn from "../elements/RoundBtn";
 import { useParams } from "react-router-dom";
 
-const Comment = () => {
+const Comment = ({ list }) => {
   const dispatch = useDispatch();
   const pid = useParams().pid;
   const uid = sessionStorage.getItem("uid");

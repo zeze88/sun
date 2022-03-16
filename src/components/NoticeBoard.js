@@ -49,6 +49,8 @@ const NoticeBoard = () => {
 
 const SC_NoticeDiv = styled.div`
   width: 100%;
+  background-color: #fff;
+  border-radius: 8px;
 
   h2 {
     padding: 30px 20px;
@@ -62,9 +64,9 @@ const SC_NoticeDiv = styled.div`
 const SC_BtnWrap = styled.div`
   margin: 32px 24px 48px;
   text-align: right;
-  color: #fff;
 
   button {
+    color: #fff;
     padding: 16px 40px;
     border-radius: 5px;
     background-color: #7966ff;

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useLocation, useParams } from "react-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as answerActions } from "../redux/modules/answer";
 
@@ -11,6 +11,7 @@ const ImgUpload = ({ isEdit = null, editImg = null, cleanImg = null }) => {
   const [preImg, setPreImg] = React.useState("");
   const location = useLocation();
   const pathName = location.pathname !== "/create";
+  const prev_img = useSelector((state) => state.answer.asPreview);
 
   React.useEffect(() => {
     if (cleanImg === "") {
@@ -44,7 +45,7 @@ const ImgUpload = ({ isEdit = null, editImg = null, cleanImg = null }) => {
         </label>
         <input onChange={onChange} id='editImg' type='file' ref={fileInput} />
         <div className='img_box'>
-          <img src={editImg} />
+          <img src={preImg ? preImg : editImg} />
         </div>
       </ImgWrap>
     );
@@ -53,9 +54,8 @@ const ImgUpload = ({ isEdit = null, editImg = null, cleanImg = null }) => {
   return (
     <ImgWrap>
       <label htmlFor='img'>
-        이미지
         <i className='icon'></i>
-        <span>첨부하기</span>
+        <span>이미지 첨부하기</span>
       </label>
       <input onChange={onChange} id='img' type='file' ref={fileInput} />
       {preImg && (
@@ -73,7 +73,7 @@ const ImgWrap = styled.div`
   width: 100%;
   padding: 24px;
   font-weight: 700;
-  border-top: solid 1px #ebebeb;
+  border-bottom: solid 1px #ccc;
 
   .img_box {
     flex: auto;

@@ -77,7 +77,7 @@ const addAnswerDB = ({ pid, uid, answerTitle, answerComment }) => {
               answerTitle: answerTitle,
               answerComment: answerComment,
               answerImg: imgUrl,
-              answsrId: res.data,
+              answerId: res.data,
               answerLike: false,
               blogUrl: null,
               career: null,
@@ -97,11 +97,12 @@ const addAnswerDB = ({ pid, uid, answerTitle, answerComment }) => {
 
 const editAnswerDB = (props) => {
   return function (dispatch, getState, { history }) {
+    console.log(props);
     const {
       pid,
       uid,
       nickname,
-      answsrId,
+      answerId,
       answerTitle,
       answerComment,
       answerImg,
@@ -111,12 +112,12 @@ const editAnswerDB = (props) => {
     const img_list = getState().answer.asPreview;
     const formData = new FormData();
     formData.append("images", img_list);
-    console.log(answsrId, answerTitle, answerComment, answerImg);
+    console.log(answerId, answerTitle, answerComment, answerImg);
 
     if (img_list === "") {
       axios({
         method: "put",
-        url: `${apiUrl}/islogin/answer/revice/${answsrId}`,
+        url: `${apiUrl}/islogin/answer/revice/${answerId}`,
         data: {
           answerTitle: answerTitle,
           answerComment: answerComment,
@@ -143,7 +144,7 @@ const editAnswerDB = (props) => {
           console.log(imgUrl);
           axios({
             method: "put",
-            url: `${apiUrl}/islogin/answer/revice/${answsrId}`,
+            url: `${apiUrl}/islogin/answer/revice/${answerId}`,
             data: {
               answerTitle: answerTitle,
               answerComment: answerComment,

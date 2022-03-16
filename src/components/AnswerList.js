@@ -57,7 +57,7 @@ const AnswerList = () => {
                   </div>
 
                   <div className='btn_wrap'>
-                    {Number(user_info) && v.uid === Number(user_info) ? (
+                    {Number(user_info) && v.uid ? (
                       <>
                         <button
                           onClick={() => {
@@ -86,7 +86,7 @@ const AnswerList = () => {
 
                 <div>
                   <SC_Commentbox className='comment'>
-                    <Comment />
+                    <Comment list={v} />
                   </SC_Commentbox>
                   <SC_CommentList className='comment_wrap'>
                     <p>답변 감사합니다!!!!!</p>
