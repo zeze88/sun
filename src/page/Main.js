@@ -1,28 +1,22 @@
 import React from "react";
-import { Route } from "react-router-dom";
 import styled from "styled-components";
-import Post from "./Post";
-import Category from "../components/Category";
-import { useParams } from "react-router";
+import Chat from "../components/Chat";
+import NoticeBoard from "../components/NoticeBoard";
 
 const Main = () => {
   return (
     <Container>
-      <div>
-        <Post />
-      </div>
+      <NoticeBoard />
+      <Chat />
     </Container>
   );
 };
 
 const Container = styled.div`
   display: flex;
-  padding: 2rem;
-  flex-direction: column;
-  justify-content: center;
-  > div {
-    display: flex;
-  }
+  max-width: 1440px;
+  margin: 0 auto;
+  gap: 24px;
 `;
 
 export default Main;

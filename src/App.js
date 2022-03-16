@@ -4,10 +4,8 @@ import { ConnectedRouter } from "connected-react-router";
 import { history } from "../src/redux/configureStore";
 
 import Main from "./page/Main";
-import Post from "./page/Post";
 import Login from "./page/Login";
 import Create from "./page/Create";
-import Test from "./page/Test";
 import Detail from "./page/Detail";
 import _Test from "./components/_Test";
 import Ranking from "./page/Ranking";
@@ -29,13 +27,11 @@ function App() {
         "/create" ? null : check === 1 ? null : (
         <Category />
       )}
-      {/* <Route path='/' exact component={Main} /> */}
-      <Route path='/' exact component={Post} />
+      <Route path='/' exact component={Main} />
       <Route path='/create' exact component={Create} />
       <Route path='/edit/:pid' exact component={Create} />
       <Route path='/ranking' exact component={Ranking} />
       <Route path='/login' exact component={Login} />
-      <Route path='/chatchat' exact component={Test} />
       <Route path='/chatchat1' exact component={_Test} />
       <Route path='/detail/:pid' exact component={Detail} />
       <Route path='/search/:keyword' exact component={SearchResult} />
