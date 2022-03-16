@@ -16,8 +16,8 @@ const RoundTab = ({ currTab }) => {
       value: "작성글",
     },
   ];
-
   const [tab, setTab] = React.useState("total");
+  console.log(tab);
 
   return (
     <RoundTabUl>
@@ -35,19 +35,25 @@ const RoundTab = ({ currTab }) => {
     </RoundTabUl>
   );
 };
+
 const RoundTabUl = styled.ul`
+  --main-color: #7966ff;
   display: flex;
+  gap: 24px;
+  margin-bottom: 32px;
+  padding: 0 24px;
 
   li {
-    padding: 4px 10px;
-    border: solid 1px #ebebeb;
+    padding: 10px 32px;
+    border: solid 1px var(--main-color);
     border-radius: 40px;
     cursor: pointer;
     transition: all 0.3s;
+    color: var(--main-color);
 
     &.active {
       color: #fff;
-      background-color: #797979;
+      background-color: var(--main-color);
     }
   }
 `;

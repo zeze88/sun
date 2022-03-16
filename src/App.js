@@ -17,6 +17,7 @@ import Category from "./components/Category";
 import Edituser from "./page/Edituser";
 import Password from "./page/Password";
 import Footer from "./components/Footer";
+import Arams from "./page/Arams";
 
 function App() {
   const login = useLocation();
@@ -32,7 +33,6 @@ function App() {
       <Route path='/' exact component={Post} />
       <Route path='/create' exact component={Create} />
       <Route path='/edit/:pid' exact component={Create} />
-      <Route path='/createanswer' exact component={Create} />
       <Route path='/ranking' exact component={Ranking} />
       <Route path='/login' exact component={Login} />
       <Route path='/chatchat' exact component={Test} />
@@ -41,6 +41,7 @@ function App() {
       <Route path='/search/:keyword' exact component={SearchResult} />
       <Route path='/useredit' exact component={Edituser} />
       <Route path='/passedit' exact component={Password} />
+      <Route path='/arams' exact component={Arams} />
       <Footer />
     </div>
   );
