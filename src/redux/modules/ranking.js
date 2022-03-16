@@ -14,7 +14,9 @@ const initialState = {
 const totalRanking = createAction(TOTAL_RANKING, (list) => ({ list }));
 const monthRanking = createAction(MONTH_RANKING, (list) => ({ list }));
 const weekRanking = createAction(WEEK_RANKING, (list) => ({ list }));
-
+const mytotalRanking = createAction(TOTAL_RANKING, (list) => ({ list }));
+const mymonthRanking = createAction(MONTH_RANKING, (list) => ({ list }));
+const myweekRanking = createAction(WEEK_RANKING, (list) => ({ list }));
 const totalRankingDB = () => {
   return function (dispatch, getState, { history }) {
     apis
@@ -51,6 +53,48 @@ const weekRankingDB = () => {
       });
   };
 };
+
+const myTotalRankingDB = () => {
+  return function (dispatch, getState, { history }) {
+    apis
+      .mytotalRanking()
+      .then((res) => {
+        console.log(res.data);
+        // dispatch(mytotalRanking(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+const myMonthRankingDB = () => {
+  return function (dispatch, getState, { history }) {
+    apis
+      .mymonthRanking()
+      .then((res) => {
+        console.log(res.data);
+        // dispatch(weekRanking(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
+const myWeekRankingDB = () => {
+  return function (dispatch, getState, { history }) {
+    apis
+      .myweekRanking()
+      .then((res) => {
+        console.log(res.data);
+        // dispatch(weekRanking(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
 export default handleActions(
   {
     [TOTAL_RANKING]: (state, action) =>
@@ -73,6 +117,9 @@ const actionCreators = {
   totalRankingDB,
   monthRankingDB,
   weekRankingDB,
+  myTotalRankingDB,
+  myMonthRankingDB,
+  myWeekRankingDB,
 };
 
 export { actionCreators };

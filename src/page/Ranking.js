@@ -45,11 +45,34 @@ const Ranking = () => {
     dispatch(rankingActions.totalRankingDB());
     dispatch(rankingActions.monthRankingDB());
     dispatch(rankingActions.weekRankingDB());
+    dispatch(rankingActions.myTotalRankingDB());
+
+    dispatch(rankingActions.myMonthRankingDB());
+    dispatch(rankingActions.myWeekRankingDB());
   }, []);
 
   return (
     <SC_Detail>
       <h2>랭킹</h2>
+      <div
+        onClick={() => {
+          dispatch(rankingActions.myWeekRankingDB());
+        }}>
+        week
+      </div>
+      <div
+        onClick={() => {
+          dispatch(rankingActions.myTotalRankingDB());
+        }}>
+        total
+      </div>
+      <div
+        onClick={() => {
+          dispatch(rankingActions.myMonthRankingDB());
+        }}>
+        month
+      </div>
+
       <TabMenu tab_list={tab_list} tab={setTabList} />
       <RankingTop list={cur_list().slice(0, 3)} />
       <RankingOther list={cur_list().slice(3, 10)} />
