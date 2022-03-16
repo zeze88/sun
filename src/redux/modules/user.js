@@ -27,7 +27,7 @@ const CHECK_NICKNAME = "CHECK_NICKNAME";
 const LOG_IN = "LOG_IN";
 const LOG_OUT = "LOG_OUT";
 const USER_EDUT = "USER_EDUT";
-const NEW_PASSWORD = "NEW_PASSWORD";
+const IMG_POST = "IMG_POST";
 
 //action creators
 const setCheckUsername = createAction(CHECK_USERNAME, (isCheckUsername) => ({
@@ -39,6 +39,7 @@ const setCheckNickname = createAction(CHECK_NICKNAME, (isCheckNickname) => ({
 const logIn = createAction(LOG_IN, (user) => ({ user }));
 const logOut = createAction(LOG_OUT, () => ({}));
 const logEdit = createAction(USER_EDUT, (user) => ({ user }));
+const imgPost = createAction(IMG_POST, (preview) => ({ preview }));
 
 // //token
 const token = sessionStorage.getItem("token");
@@ -159,10 +160,10 @@ const loginDB = (username, password) => {
 
 const logEditDB = (uid, nickname, career, url, userImg) => {
   return function (dispatch, getState, { history }) {
-    const img_list = sessionStorage.getItem("url");
+    const img_list = getState().user.preview;
     const Data = new FormData();
     Data.append("images", img_list);
-    console.log(Data);
+    console.log(img_list);
     axios
       .post(`${apiUrl}/images/upload`, Data, {
         headers: {
@@ -192,6 +193,7 @@ const logEditDB = (uid, nickname, career, url, userImg) => {
             }
           )
           .then((res) => {
+            console.log(res);
             dispatch(
               logEdit({
                 nickname: nickname,
@@ -204,8 +206,8 @@ const logEditDB = (uid, nickname, career, url, userImg) => {
             sessionStorage.setItem("career", career);
             sessionStorage.setItem("userImage", userImg);
             sessionStorage.setItem("url", url);
-            history.push("/");
-            window.location.reload();
+            // history.push("/");
+            // window.location.reload();
           });
       })
       .catch((err) => {
@@ -266,6 +268,10 @@ export default handleActions(
       produce(state, (draft) => {
         draft.userinfo = action.payload.user;
       }),
+    [IMG_POST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.preview = action.payload.preview;
+      }),
   },
   initialState
 );
@@ -278,6 +284,7 @@ const actionCreators = {
   logOut,
   logEditDB,
   NewPassWordDB,
+  imgPost,
 };
 
 export { actionCreators };

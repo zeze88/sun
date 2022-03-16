@@ -10,8 +10,7 @@ const Comment = ({ list }) => {
   const dispatch = useDispatch();
   const pid = useParams().pid;
   const uid = sessionStorage.getItem("uid");
-  const state = useSelector((state) => state);
-  const answerId = "1";
+  const answerId = list.answerId;
   const [comment, setComment] = React.useState("");
   // console.log(uid);
   // console.log(state.answer);
