@@ -57,7 +57,7 @@ const AnswerList = () => {
                   </div>
 
                   <div className='btn_wrap'>
-                    {Number(user_info) && v.uid === Number(user_info) ? (
+                    {Number(user_info) && v.uid ? (
                       <>
                         <button
                           onClick={() => {

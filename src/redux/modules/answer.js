@@ -97,6 +97,7 @@ const addAnswerDB = ({ pid, uid, answerTitle, answerComment }) => {
 
 const editAnswerDB = (props) => {
   return function (dispatch, getState, { history }) {
+    console.log(props);
     const {
       pid,
       uid,

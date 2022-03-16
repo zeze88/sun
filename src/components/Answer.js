@@ -32,8 +32,9 @@ const Answer = ({ isEdit = null, list = null }) => {
     );
     setAddAnswer({ answerTitle: "", answerComment: "" });
   };
-
   const editAnswer = () => {
+    console.log(list.answerId);
+
     dispatch(
       answerActions.editAnswerDB({
         ...addAnswer,
@@ -117,9 +118,10 @@ const SC_Answer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 24px;
-  margin-bottom: 8px;
+  /* margin-bottom: 8px; */
   background-color: #fff;
   border-radius: 8px;
+  border-bottom: solid 8px #f7f7f7;
 
   h5 {
     font-size: 20px;
@@ -132,7 +134,5 @@ const SC_Answer = styled.div`
     margin: 16px 0;
     margin-left: auto;
   }
-
-  /* border-bottom: solid 8px #f7f7f7; */
 `;
 export default Answer;

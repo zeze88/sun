@@ -30,7 +30,6 @@ const Detail = () => {
       confirmButtonColor: "#7966FF",
       cancelButtonText: "아니오",
       cancelTextColor: "#7966FF",
-      cancelButtonColor: "#fff",
 
       reverseButtons: true,
     }).then((result) => {
