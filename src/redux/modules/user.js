@@ -160,6 +160,47 @@ const loginDB = (username, password) => {
 
 const logEditDB = (uid, nickname, career, url, userImg) => {
   return function (dispatch, getState, { history }) {
+    console.log(uid, nickname, career, url);
+    axios
+      .put(
+        `${apiUrl}/islogin/user/getinfo/${uid}`,
+        {
+          nickname: nickname,
+          career: career,
+          userImage: "",
+          blogUrl: url,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        dispatch(
+          logEdit({
+            nickname: nickname,
+            career: career,
+            userImage: userImg,
+            blogUrl: url,
+          })
+        );
+        sessionStorage.setItem("nickname", nickname);
+        sessionStorage.setItem("career", career);
+        sessionStorage.setItem("url", url);
+        // history.push("/");
+        // window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+        window.alert("회원 정보 수정 실패");
+      });
+  };
+};
+
+const logEditDB2 = (uid, nickname, career, url, userImg) => {
+  return function (dispatch, getState, { history }) {
     const img_list = getState().user.preview;
     const Data = new FormData();
     Data.append("images", img_list);
@@ -176,6 +217,7 @@ const logEditDB = (uid, nickname, career, url, userImg) => {
         const imgUrl = res.data.url;
         return imgUrl;
       })
+
       .then((imgUrl) => {
         axios
           .put(
@@ -283,6 +325,7 @@ const actionCreators = {
   loginDB,
   logOut,
   logEditDB,
+  logEditDB2,
   NewPassWordDB,
   imgPost,
 };

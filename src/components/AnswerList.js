@@ -14,6 +14,7 @@ const AnswerList = () => {
   const list = useSelector((state) => state.answer.list);
   const choose_status = useSelector((state) => state.answer.status.status);
   const user_info = sessionStorage.getItem("uid");
+  const userImage = sessionStorage.getItem("userImage");
   const [isEdit, setIsEdit] = React.useState(null);
   const [thisAnswer, setThisAnswer] = React.useState(null);
   console.log(typeof choose_status);
@@ -110,9 +111,9 @@ const AnswerList = () => {
                         <div key={idx}>
                           <p>{list.comment}</p>
                           <div>
-                            <Profile size={24} />
+                            <Profile size={24} imgUrl={userImage} />
                             <strong>{list.nickname}</strong>
-                            <em>{list.createdAt}</em>
+                            <em> {list.createdAt?.split("T")[0]}</em>
                           </div>
                         </div>
                       );
