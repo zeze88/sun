@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+
+import Stomp, { over } from "stompjs";
+import SockJs from "sockjs-client";
+
 import { history } from "../redux/configureStore";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as loOutAction } from "../redux/modules/user";
@@ -7,6 +11,7 @@ import Serch from "./Serch";
 import Profile from "../elements/Profile";
 import { delToken } from "../shared/token";
 
+let stompClient = null;
 const Header = () => {
   const isLogin = sessionStorage.getItem("isLogin");
   const nickname = sessionStorage.getItem("nickname");
@@ -16,9 +21,37 @@ const Header = () => {
     setView(!view);
   };
 
+  const [goPost, setGoPost] = React.useState("");
+  const token = {
+    Authorization: sessionStorage.getItem("token"),
+  };
+
   const Logout = () => {
     delToken();
   };
+
+  React.useEffect(() => {
+    if (nickname) {
+      let socket = new SockJs("http://175.118.48.164:7050/ws");
+      stompClient = Stomp.over(socket);
+
+      stompClient.connect({}, () => {
+        stompClient.subscribe(
+          `/queue/user/${nickname}`,
+          (payload) => {
+            let payloadData = JSON.parse(payload.body);
+            console.log(payloadData);
+            setGoPost(payloadData);
+          },
+          token
+        );
+      });
+    } else {
+      // stompClient.disconnect(() => {
+      //   stompClient.unsubscribe(`/queue/user/${nickname}`);
+      // });
+    }
+  }, []);
 
   return (
     <Container>
@@ -34,7 +67,7 @@ const Header = () => {
         </div>
       ) : (
         <div className='my' onClick={View}>
-          <i>
+          <i className={goPost.status ? "active" : ""}>
             <Profile size={36} imgUrl={userImage} />
           </i>
           {nickname}
@@ -76,6 +109,24 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     background-color: #f7f7f7;
+
+    i.active {
+      span {
+        position: relative;
+      }
+      span:before {
+        --alert-size: 10px;
+        content: "";
+        position: absolute;
+        bottom: 2px;
+        right: -2px;
+        width: var(--alert-size);
+        height: var(--alert-size);
+        border-radius: var(--alert-size);
+        background-color: #de0000;
+        box-shadow: 0 1px 3px 0 rgba(245, 80, 80, 0.25);
+      }
+    }
   }
 
   div.my > div {
