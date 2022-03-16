@@ -48,6 +48,7 @@ const Answer = ({ isEdit = null, list = null }) => {
     return (
       <SC_Answer>
         <SC_InputWrap>
+          <h5>답변 수정하기</h5>
           <input
             id='answerTitle'
             onChange={onChange}
@@ -71,6 +72,7 @@ const Answer = ({ isEdit = null, list = null }) => {
 
   return (
     <SC_Answer>
+      <h5>답변 작성하기</h5>
       <SC_InputWrap>
         <input
           id='answerTitle'
@@ -85,37 +87,52 @@ const Answer = ({ isEdit = null, list = null }) => {
           onChange={onChange}
           type='text'
           placeholder='답변을 입력 해주세요'></textarea>
-        <RoundBtn onClick={answerSubmit} title='등록' />
       </SC_InputWrap>
       <ImgUpload cleanImg={addAnswer.answerTitle} />
+      <RoundBtn onClick={answerSubmit} title='등록' />
     </SC_Answer>
   );
 };
 
 const SC_InputWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 24px;
-  border-top: solid 1px #f7f7f7;
-
   input {
-    padding: 0;
     display: block;
-    font-size: 20px;
+    width: 100%;
+    padding: 18px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
   }
 
   textarea {
     width: 100%;
     height: 130px;
-    padding: 24px 0;
-  }
-
-  button {
-    margin-left: auto;
+    padding: 18px 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
   }
 `;
 
 const SC_Answer = styled.div`
-  border-bottom: solid 8px #f7f7f7;
+  display: flex;
+  flex-direction: column;
+  padding: 0 24px;
+  margin-bottom: 8px;
+  background-color: #fff;
+  border-radius: 8px;
+
+  h5 {
+    font-size: 20px;
+    font-weight: 700;
+    padding-top: 30px;
+    padding-bottom: 16px;
+  }
+
+  button {
+    margin: 16px 0;
+    margin-left: auto;
+  }
+
+  /* border-bottom: solid 8px #f7f7f7; */
 `;
 export default Answer;

@@ -153,7 +153,10 @@ const Container = styled.div`
 `;
 
 const Question = styled.div`
-  border-bottom: solid 8px #f7f7f7;
+  background-color: #fff;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  /* border-bottom: solid 8px #f7f7f7; */
 `;
 
 const Top = styled.div`
