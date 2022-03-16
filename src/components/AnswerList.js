@@ -4,6 +4,7 @@ import { useParams } from "react-router";
 
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as answerActions } from "../redux/modules/answer";
+import { actionCreators as commentActions } from "../redux/modules/comment";
 import Comment from "./Comment";
 import Answer from "./Answer";
 import Profile from "../elements/Profile";
@@ -16,7 +17,12 @@ const AnswerList = ({ isWriter }) => {
   const user_info = sessionStorage.getItem("uid");
   const userImage = sessionStorage.getItem("userImage");
   const [isEdit, setIsEdit] = React.useState(null);
+  const [isCommentEdit, setIsCommentEdit] = React.useState(false);
+  const [comment, setComment] = React.useState("");
+  const [commentId, setCommentId] = React.useState(0);
   const isChoose = list?.find((v) => v.status === "true");
+
+  console.log(comment);
 
   React.useEffect(() => {
     if (list.length <= 1) {
@@ -74,12 +80,58 @@ const AnswerList = ({ isWriter }) => {
     dispatch(answerActions.delAnswerDB(answerId));
   };
 
+  const setCommentEdit = (commentId) => {
+    setCommentId(commentId);
+  };
+
+  const commentChange = (e) => {
+    setComment(e.target.value);
+  };
+
+  const commentEdit = (e) => {
+    const commentEditId = e.target.value;
+    Swal.fire({
+      title: "댓글을 수정하시겠습니까?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "네",
+      confirmButtonColor: "#7966FF",
+      cancelButtonText: "아니오",
+      cancelTextColor: "#7966FF",
+      Buttons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(commentActions.editCommentDB(commentEditId, comment));
+      } else {
+        return;
+      }
+    });
+  };
+
+  const commentDelete = (e) => {
+    Swal.fire({
+      title: "댓글을 삭제하시겠습니까?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "네",
+      confirmButtonColor: "#7966FF",
+      cancelButtonText: "아니오",
+      cancelTextColor: "#7966FF",
+      Buttons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(commentActions.deleteCommentDB(e.target.value));
+      } else {
+        return;
+      }
+    });
+  };
+
   return (
     <SC_List>
       {!list
         ? ""
         : list.map((v, idx) => {
-            console.log(v);
             return (
               <div key={idx}>
                 <div className='answer_wrap'>
@@ -129,7 +181,6 @@ const AnswerList = ({ isWriter }) => {
                   </div>
                   {isEdit === v.answerId && <Answer isEdit={true} list={v} />}
                 </div>
-
                 <div>
                   <SC_Commentbox className='comment'>
                     <Comment list={v} />
@@ -138,12 +189,73 @@ const AnswerList = ({ isWriter }) => {
                     {v.commnetResponseDtoList.map((list, idx) => {
                       return (
                         <div key={idx}>
-                          <p>{list.comment}</p>
-                          <div>
-                            <Profile size={24} imgUrl={userImage} />
-                            <strong>{list.nickname}</strong>
-                            <em> {list.createdAt?.split("T")[0]}</em>
-                          </div>
+                          {list.uid == user_info ? (
+                            <>
+                              {isCommentEdit && list.commentId === commentId ? (
+                                <div>
+                                  <div className='mycomment'>
+                                    <div>
+                                      <Profile size={24} imgUrl={userImage} />
+                                      <strong>{list.nickname}</strong>
+                                    </div>
+                                    <div className='button'>
+                                      <button
+                                        className='comment'
+                                        onClick={commentEdit}
+                                        value={list.commentId}>
+                                        수정완료
+                                      </button>
+                                    </div>
+                                  </div>
+                                  <p>
+                                    <textarea
+                                      defaultValue={list.comment}
+                                      type='text'
+                                      onChange={commentChange}></textarea>
+                                  </p>
+                                  <p> {list.createdAt?.split("T")[0]}</p>
+                                </div>
+                              ) : (
+                                <div>
+                                  <div className='mycomment'>
+                                    <div>
+                                      <Profile size={24} imgUrl={userImage} />
+                                      <strong>{list.nickname}</strong>
+                                    </div>
+                                    <div className='button'>
+                                      <button
+                                        className='comment'
+                                        onClick={() => {
+                                          setCommentEdit(list.commentId);
+                                          setIsCommentEdit(!isCommentEdit);
+                                        }}>
+                                        수정
+                                      </button>
+                                      <button
+                                        className='comment'
+                                        onClick={commentDelete}
+                                        value={list.commentId}>
+                                        삭제
+                                      </button>
+                                    </div>
+                                  </div>
+                                  <p className='comment'>{list.comment}</p>
+                                  <p> {list.createdAt?.split("T")[0]}</p>
+                                </div>
+                              )}
+                            </>
+                          ) : (
+                            <div>
+                              <div>
+                                <div className='comment'>
+                                  <Profile size={24} imgUrl={userImage} />
+                                  <strong>{list.nickname}</strong>
+                                </div>
+                                <p>{list.comment}</p>
+                                <p> {list.createdAt?.split("T")[0]}</p>
+                              </div>
+                            </div>
+                          )}
                         </div>
                       );
                     })}
@@ -217,9 +329,11 @@ const SC_CommentList = styled.div`
   --gray-color: #c4c4c4;
   > div {
     display: flex;
-    align-items: flex-end;
     padding: 18px 24px;
     border-bottom: solid 1px #dadada;
+    color: var(--gray-color);
+    flex-direction: column;
+    justify-content: space-between;
   }
 
   &:last-child {
@@ -228,14 +342,22 @@ const SC_CommentList = styled.div`
 
   p {
     flex: auto;
+    margin: 3px;
+    > textarea {
+      width: 1000px;
+      height: 100px;
+    }
   }
-
-  div {
-    flex: none;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    color: var(--gray-color);
+  p.comment {
+    flex: auto;
+    margin: 3px;
+    height: 2rem;
+    width: 20%;
+    height: 100%;
+    > textarea {
+      width: 100%;
+      height: 100%;
+    }
   }
   strong {
     font-weight: normal;
@@ -247,6 +369,27 @@ const SC_CommentList = styled.div`
     padding-left: 16px;
     margin-left: 16px;
     border-left: solid 1px var(--gray-color);
+  }
+  div.mycomment {
+    display: flex;
+    justify-content: space-between;
+    > div {
+      display: flex;
+      align-items: center;
+      line-height: 1rem;
+    }
+    > div.button {
+      width: 60px;
+      justify-content: space-between;
+    }
+  }
+  div.comment {
+    display: flex;
+    align-items: center;
+  }
+  button {
+    color: var(--gray-color);
+    font-size: 1rem;
   }
 `;
 

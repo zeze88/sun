@@ -248,8 +248,8 @@ const logEditDB2 = (uid, nickname, career, url, userImg) => {
             sessionStorage.setItem("career", career);
             sessionStorage.setItem("userImage", userImg);
             sessionStorage.setItem("url", url);
-            // history.push("/");
-            // window.location.reload();
+            history.push("/");
+            window.location.reload();
           });
       })
       .catch((err) => {

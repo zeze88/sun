@@ -12,6 +12,7 @@ const Comment = ({ list }) => {
   const uid = sessionStorage.getItem("uid");
   const answerId = list.answerId;
   const [comment, setComment] = React.useState("");
+  const C = Object.keys(list.commnetResponseDtoList).length;
   // console.log(uid);
   // console.log(state.answer);
   // console.log(pid);
@@ -30,7 +31,7 @@ const Comment = ({ list }) => {
 
   return (
     <Container>
-      <CommentCount>댓글 0 개</CommentCount>
+      <CommentCount>댓글 {C}</CommentCount>
       <CommentInput>
         <CommentWrite onChange={onChange} />
         <RoundBtn onClick={addComment} title='등록' />
