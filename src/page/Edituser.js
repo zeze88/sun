@@ -15,7 +15,7 @@ const Edituser = (props) => {
   const [isCheckNickname, setIsCheckNickname] = React.useState(false);
   const [nickname, setNickname] = useState(userNickname);
   const [userImg, setUserImg] = useState(userImage);
-  const [userUrl, setUserUrl] = useState(userURL);
+  const [blogUrl, setBlogUrl] = useState(userURL);
   const [career, setCareer] = useState(userCareer);
   const imgInput = React.useRef();
   const options = [
@@ -56,11 +56,11 @@ const Edituser = (props) => {
 
   const url = (e) => {
     console.log(e.target.value);
-    setUserUrl(e.target.value);
+    setBlogUrl(e.target.value);
   };
 
   ////////////////////////////////////////사진 변경
-  const editImg = (e) => {
+  const editImg = () => {
     const img = imgInput.current.files[0];
     console.log(img);
     const imgReader = new FileReader();
@@ -68,7 +68,7 @@ const Edituser = (props) => {
     imgReader.onloadend = () => {
       setUserImg(imgReader.result);
     };
-    sessionStorage.setItem("url", img);
+    dispatch(userActions.imgPost(img));
   };
   //////////////////////////////////////////SAVE
   const _save = () => {
@@ -76,11 +76,20 @@ const Edituser = (props) => {
       userNickname === nickname &&
       userCareer === career &&
       userImage === userImg &&
-      userURL === userUrl
+      userURL === blogUrl
     ) {
       window.alert("변경 사항이 없습니다.");
-      window.location.assign("/");
-    } else Save();
+    } else if (userImage === userImg) {
+      const img = imgInput.current.files[0];
+      console.log(img);
+      const imgReader = new FileReader();
+      imgReader.readAsDataURL(img);
+      imgReader.onloadend = () => {
+        setUserImg(imgReader.result);
+      };
+      dispatch(userActions.imgPost(img));
+    }
+    Save();
   };
 
   const Save = () => {
@@ -98,7 +107,7 @@ const Edituser = (props) => {
       window.alert("경력을해 주세요.");
       return;
     } else if (window.confirm("수정?")) {
-      dispatch(userActions.logEditDB(uid, nickname, career, userUrl, userImg));
+      dispatch(userActions.logEditDB(uid, nickname, career, blogUrl, userImg));
       return;
     }
   };
@@ -135,7 +144,7 @@ const Edituser = (props) => {
             <div>
               <input
                 onChange={url}
-                value={userUrl === "undefined" ? null : userUrl}></input>
+                value={userURL === "undefined" ? null : blogUrl}></input>
             </div>
           </div>
           <div className='career'>
