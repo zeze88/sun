@@ -214,7 +214,6 @@ const chooseAnswerDB = (props) => {
       commnetResponseDtoList,
     } = props;
 
-    // console.log(uid, pid, answerId, answerUid);
     apis
       .chooseAnswer(uid, pid, answerId, answerUid)
       .then((res) => {
@@ -225,7 +224,7 @@ const chooseAnswerDB = (props) => {
             status,
           })
         );
-        // window.location.replace(`/detail/${pid}`);
+        window.location.replace(`/detail/${pid}`);
 
         // dispatch(
         //   likeAnswer({

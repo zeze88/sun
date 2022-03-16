@@ -19,7 +19,6 @@ const Detail = () => {
   const pid = useParams().pid;
   const post_one = useSelector((state) => state.post.list);
   const user_info = sessionStorage.getItem("uid");
-
   const delPost = () => {
     Swal.fire({
       title: "게시글을 삭제하시겠습니까?",
@@ -40,7 +39,6 @@ const Detail = () => {
         Swal.fire("", "삭제가 취소 되었습니다 :)", "error");
       }
     });
-    return;
   };
 
   const likebtn = () => {
@@ -137,7 +135,7 @@ const Detail = () => {
         </ContextWrap>
       </Question>
       <Answer />
-      <AnswerList />
+      <AnswerList isWriter={post_one.uid} />
 
       {/* <Commentbox className="comment">
         <Comment />
