@@ -7,16 +7,16 @@ import { actionCreators as answerActions } from "../redux/modules/answer";
 import Comment from "./Comment";
 import Answer from "./Answer";
 import Profile from "../elements/Profile";
+import Swal from "sweetalert2";
 
-const AnswerList = () => {
+const AnswerList = ({ isWriter }) => {
   const pid = useParams().pid;
   const dispatch = useDispatch();
   const list = useSelector((state) => state.answer.list);
-  const choose_status = useSelector((state) => state.answer.status.status);
   const user_info = sessionStorage.getItem("uid");
   const [isEdit, setIsEdit] = React.useState(null);
-  const [thisAnswer, setThisAnswer] = React.useState(null);
-  console.log(typeof choose_status);
+  const isChoose = list?.find((v) => v.status === "true");
+
   React.useEffect(() => {
     if (list.length <= 1) {
       return;
@@ -24,22 +24,49 @@ const AnswerList = () => {
     dispatch(answerActions.getAnswerDB(pid));
   }, []);
 
-  const chooseAnswer = (list) => {
-    setThisAnswer(list.answerId);
+  const chooseAnswer = (choose_list) => {
+    //답변이 채택되었습니다 :) =>
+    //답변이 채택이 취소되었습니다 :)
+    //이미 채택된 답변이 존재합니다 :)
 
-    if (choose_status) {
-      alert("답변이 채택되었습니다 :)");
+    // list.filter((v) => v.status == "true" && setThisAnswer(true));
+    // console.log(thisAnswer);
+    // console.log(list);
+
+    if (!isChoose) {
+      Swal.fire({
+        title: "답변을 채택하시겠습니까?",
+        text: "한번 채택한 답변은 취소 할 수 없습니다",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "네 채택하겠습니다.",
+        confirmButtonColor: "#7966FF",
+        cancelButtonText: "아니오",
+        cancelTextColor: "#7966FF",
+        reverseButtons: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire("", "답변이 채택 되었습니다.", "success");
+          dispatch(
+            answerActions.chooseAnswerDB({
+              ...choose_list,
+              uid: user_info,
+              answerUid: choose_list.uid,
+            })
+          );
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          Swal.fire("", "채택이 취소 되었습니다 :)", "error");
+        }
+      });
     } else {
-      alert("이미 채택된 답변이 존재합니다 :)");
+      Swal.fire({
+        title: "",
+        text: "채택 된 답변이 존재합니다. :)",
+        icon: "warning",
+        confirmButtonText: "확인",
+        confirmButtonColor: "#7966FF",
+      });
     }
-
-    dispatch(
-      answerActions.chooseAnswerDB({
-        ...list,
-        uid: user_info,
-        answerUid: list.uid,
-      })
-    );
   };
 
   const deleAnswer = (answerId) => {
@@ -51,11 +78,18 @@ const AnswerList = () => {
       {!list
         ? ""
         : list.map((v, idx) => {
+            console.log(v);
             return (
               <div key={idx}>
                 <div className='answer_wrap'>
                   <div className='header'>
                     <h2>답변</h2>
+                    <Profile size='24' imgUrl={v.userImage} />
+                    <span>{v.nickname}</span>
+                    {/* 추후 아이콘으로 변경하겠습니다! */}
+                    {v.status === "true" && (
+                      <i style={{ color: "red", fontSize: "30px" }}>채택</i>
+                    )}
                   </div>
                   <div className='content'>
                     <div>{v.answerTitle}</div>
@@ -82,19 +116,15 @@ const AnswerList = () => {
                         </button>
                       </>
                     )}
-                    {Number(user_info) === Number(v.uid) && (
-                      <button
-                        className={`${
-                          thisAnswer === v.answerId && choose_status === "true"
-                            ? "choose"
-                            : "none"
-                        }`}
-                        onClick={() => {
-                          chooseAnswer(v);
-                        }}>
-                        채택
-                      </button>
-                    )}
+                    {Number(user_info) === Number(isWriter) &&
+                      Number(isWriter) !== Number(v.uid) && (
+                        <button
+                          onClick={() => {
+                            chooseAnswer(v);
+                          }}>
+                          채택
+                        </button>
+                      )}
                   </div>
                   {isEdit === v.answerId && <Answer isEdit={true} list={v} />}
                 </div>
@@ -105,7 +135,6 @@ const AnswerList = () => {
                   </SC_Commentbox>
                   <SC_CommentList className='comment_wrap'>
                     {v.commnetResponseDtoList.map((list, idx) => {
-                      console.log(list);
                       return (
                         <div key={idx}>
                           <p>{list.comment}</p>
