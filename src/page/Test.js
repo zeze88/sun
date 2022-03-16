@@ -47,7 +47,7 @@ const Test = () => {
   };
 
   const stompConnect = () => {
-    let socket = new SockJs("http://15.164.231.31/ws");
+    let socket = new SockJs("http://175.118.48.164:7050/ws");
     stompClient = Stomp.over(socket);
 
     stompClient.connect({}, onConnected, onError);
