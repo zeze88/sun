@@ -21,7 +21,6 @@ const Answer = ({ isEdit = null, list = null }) => {
   const onChange = (e) => {
     const id = e.target.id;
     const content = e.target.value;
-    console.log(content);
 
     setAddAnswer({ ...addAnswer, [id]: content });
   };
@@ -33,12 +32,10 @@ const Answer = ({ isEdit = null, list = null }) => {
     setAddAnswer({ answerTitle: "", answerComment: "" });
   };
   const editAnswer = () => {
-    console.log(list.answerId);
-
     dispatch(
       answerActions.editAnswerDB({
         ...addAnswer,
-        answsrId: list.answerId,
+        answerId: list.answerId,
         pid: params,
         uid: nickname,
       })
@@ -46,6 +43,9 @@ const Answer = ({ isEdit = null, list = null }) => {
   };
 
   if (isEdit) {
+    console.log(list);
+    console.log(list.answerId);
+
     return (
       <SC_Answer>
         <SC_InputWrap>

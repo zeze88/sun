@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useLocation, useParams } from "react-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as answerActions } from "../redux/modules/answer";
 
@@ -11,6 +11,7 @@ const ImgUpload = ({ isEdit = null, editImg = null, cleanImg = null }) => {
   const [preImg, setPreImg] = React.useState("");
   const location = useLocation();
   const pathName = location.pathname !== "/create";
+  const prev_img = useSelector((state) => state.answer.asPreview);
 
   React.useEffect(() => {
     if (cleanImg === "") {
@@ -44,7 +45,7 @@ const ImgUpload = ({ isEdit = null, editImg = null, cleanImg = null }) => {
         </label>
         <input onChange={onChange} id='editImg' type='file' ref={fileInput} />
         <div className='img_box'>
-          <img src={editImg} />
+          <img src={preImg ? preImg : editImg} />
         </div>
       </ImgWrap>
     );

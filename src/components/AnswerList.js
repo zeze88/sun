@@ -86,7 +86,7 @@ const AnswerList = () => {
 
                 <div>
                   <SC_Commentbox className='comment'>
-                    <Comment />
+                    <Comment list={v} />
                   </SC_Commentbox>
                   <SC_CommentList className='comment_wrap'>
                     <p>답변 감사합니다!!!!!</p>
