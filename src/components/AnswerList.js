@@ -14,6 +14,7 @@ const AnswerList = ({ isWriter }) => {
   const dispatch = useDispatch();
   const list = useSelector((state) => state.answer.list);
   const user_info = sessionStorage.getItem("uid");
+  const userImage = sessionStorage.getItem("userImage");
   const [isEdit, setIsEdit] = React.useState(null);
   const isChoose = list?.find((v) => v.status === "true");
 
@@ -139,9 +140,9 @@ const AnswerList = ({ isWriter }) => {
                         <div key={idx}>
                           <p>{list.comment}</p>
                           <div>
-                            <Profile size={24} />
+                            <Profile size={24} imgUrl={userImage} />
                             <strong>{list.nickname}</strong>
-                            <em>{list.createdAt}</em>
+                            <em> {list.createdAt?.split("T")[0]}</em>
                           </div>
                         </div>
                       );

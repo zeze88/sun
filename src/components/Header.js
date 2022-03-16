@@ -35,7 +35,7 @@ const Header = () => {
       ) : (
         <div className='my' onClick={View}>
           <i>
-            <Profile imgUrl={userImage} />
+            <Profile size={36} imgUrl={userImage} />
           </i>
           {nickname}
           <div>아래꺽쇠</div>
