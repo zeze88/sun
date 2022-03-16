@@ -165,7 +165,8 @@ const SC_List = styled.div`
   }
 
   .answer_wrap {
-    border-bottom: solid 8px #ebebeb;
+    /* border-bottom: solid 8px #ebebeb; */
+    border-bottom: solid 1px #ebebeb;
   }
 
   .header {

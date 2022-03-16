@@ -16,6 +16,7 @@ import Header from "./components/Header";
 import Category from "./components/Category";
 import Edituser from "./page/Edituser";
 import Password from "./page/Password";
+import Footer from "./components/Footer";
 
 function App() {
   const login = useLocation();
@@ -40,6 +41,7 @@ function App() {
       <Route path='/search/:keyword' exact component={SearchResult} />
       <Route path='/useredit' exact component={Edituser} />
       <Route path='/passedit' exact component={Password} />
+      <Footer />
     </div>
   );
 }
