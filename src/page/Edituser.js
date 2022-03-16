@@ -55,7 +55,6 @@ const Edituser = (props) => {
   };
 
   const url = (e) => {
-    console.log(e.target.value);
     setBlogUrl(e.target.value);
   };
 
@@ -71,7 +70,8 @@ const Edituser = (props) => {
     dispatch(userActions.imgPost(img));
   };
   //////////////////////////////////////////SAVE
-  const _save = () => {
+
+  const Save = () => {
     if (
       userNickname === nickname &&
       userCareer === career &&
@@ -79,21 +79,8 @@ const Edituser = (props) => {
       userURL === blogUrl
     ) {
       window.alert("변경 사항이 없습니다.");
-    } else if (userImage === userImg) {
-      const img = imgInput.current.files[0];
-      console.log(img);
-      const imgReader = new FileReader();
-      imgReader.readAsDataURL(img);
-      imgReader.onloadend = () => {
-        setUserImg(imgReader.result);
-      };
-      dispatch(userActions.imgPost(img));
-    }
-    Save();
-  };
-
-  const Save = () => {
-    if (nickname === "") {
+      return;
+    } else if (nickname === "") {
       window.alert("닉네임이 공란입니다.");
       return;
     } else if (isCheckNickname === false) {
@@ -106,8 +93,16 @@ const Edituser = (props) => {
     } else if (career === "") {
       window.alert("경력을해 주세요.");
       return;
+    } else if (userImg === userImage) {
+      if (window.confirm("수정?")) {
+        dispatch(
+          userActions.logEditDB(uid, nickname, career, blogUrl, userImg)
+        );
+      }
+      return;
     } else if (window.confirm("수정?")) {
-      dispatch(userActions.logEditDB(uid, nickname, career, blogUrl, userImg));
+      console.log("2번");
+      dispatch(userActions.logEditDB2(uid, nickname, career, blogUrl, userImg));
       return;
     }
   };
@@ -157,7 +152,7 @@ const Edituser = (props) => {
               ))}
             </select>
           </div>
-          <button onClick={_save}>저장하기</button>
+          <button onClick={Save}>저장하기</button>
         </div>
       </div>
     </Container>

@@ -15,8 +15,6 @@ const Category = () => {
   };
 
   const CategoryList = (v) => {
-    // dispatch(categoryActions.categoryDB(v));
-    // console.log(category_list)
     history.push(`/search/category_${v}`);
   };
 
@@ -24,7 +22,7 @@ const Category = () => {
     <Container>
       <div>
         <div onClick={() => history.push("/")}>전체 게시글</div>
-        <div onClick={CategoryView}>언어 카테고리</div>
+        <div onClick={CategoryView}>언어</div>
         <div onClick={() => history.push("/ranking")}>랭킹</div>
       </div>
       <div>
