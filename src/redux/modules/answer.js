@@ -22,6 +22,7 @@ const initialState = {
   list: [],
   editList: [],
   asPreview: "",
+  status: false,
 };
 
 const getAnswerDB = (pid) => {
@@ -195,13 +196,54 @@ const delAnswerDB = (answsrId) => {
   };
 };
 
-const chooseAnswerDB = ({ uid, pid, answrId, answerUid }) => {
-  return function (dispatch) {
+const chooseAnswerDB = (props) => {
+  return function (dispatch, getState) {
+    const {
+      uid,
+      pid,
+      answerId,
+      answerUid,
+      userImage,
+      answerComment,
+      answerImg,
+      answerTitle,
+      blogUrl,
+      nickname,
+      createdAt,
+      career,
+      commnetResponseDtoList,
+    } = props;
+
+    // console.log(uid, pid, answerId, answerUid);
     apis
-      .chooseAnswer(uid, pid, answrId, answerUid)
+      .chooseAnswer(uid, pid, answerId, answerUid)
       .then((res) => {
         const status = res.data.status;
-        dispatch(likeAnswer({ uid, pid, answrId, answerUid, status }));
+        console.log(status);
+        dispatch(
+          likeAnswer({
+            status,
+          })
+        );
+        // window.location.replace(`/detail/${pid}`);
+
+        // dispatch(
+        //   likeAnswer({
+        //     uid,
+        //     pid,
+        //     answerId,
+        //     userImage,
+        //     answerComment,
+        //     answerImg,
+        //     answerTitle,
+        //     blogUrl,
+        //     nickname,
+        //     createdAt,
+        //     career,
+        //     status,
+        //     commnetResponseDtoList,
+        //   })
+        // );
       })
       .catch((err) => {
         console.log(err);
@@ -222,7 +264,6 @@ export default handleActions(
       }),
     [EDIT_ANSWER]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload.list);
         draft.editList = action.payload.list;
         draft.asPreview = "";
       }),
@@ -232,7 +273,7 @@ export default handleActions(
       }),
     [LIKE_ANSWER]: (state, action) =>
       produce(state, (draft) => {
-        // draft.list;
+        draft.status = action.payload.list;
       }),
     [AS_IMG_POST]: (state, action) =>
       produce(state, (draft) => {

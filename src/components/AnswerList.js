@@ -12,9 +12,11 @@ const AnswerList = () => {
   const pid = useParams().pid;
   const dispatch = useDispatch();
   const list = useSelector((state) => state.answer.list);
+  const choose_status = useSelector((state) => state.answer.status.status);
   const user_info = sessionStorage.getItem("uid");
   const [isEdit, setIsEdit] = React.useState(null);
-
+  const [thisAnswer, setThisAnswer] = React.useState(null);
+  console.log(typeof choose_status);
   React.useEffect(() => {
     if (list.length <= 1) {
       return;
@@ -22,13 +24,20 @@ const AnswerList = () => {
     dispatch(answerActions.getAnswerDB(pid));
   }, []);
 
-  const chooseAnswer = (uid, answrId) => {
+  const chooseAnswer = (list) => {
+    setThisAnswer(list.answerId);
+
+    if (choose_status) {
+      alert("답변이 채택되었습니다 :)");
+    } else {
+      alert("이미 채택된 답변이 존재합니다 :)");
+    }
+
     dispatch(
       answerActions.chooseAnswerDB({
+        ...list,
         uid: user_info,
-        pid,
-        answrId: answrId,
-        answerUid: uid,
+        answerUid: list.uid,
       })
     );
   };
@@ -57,7 +66,7 @@ const AnswerList = () => {
                   </div>
 
                   <div className='btn_wrap'>
-                    {Number(user_info) && v.uid ? (
+                    {Number(user_info) === Number(v.uid) && (
                       <>
                         <button
                           onClick={() => {
@@ -72,10 +81,16 @@ const AnswerList = () => {
                           수정
                         </button>
                       </>
-                    ) : (
+                    )}
+                    {Number(user_info) === Number(v.uid) && (
                       <button
+                        className={`${
+                          thisAnswer === v.answerId && choose_status === "true"
+                            ? "choose"
+                            : "none"
+                        }`}
                         onClick={() => {
-                          chooseAnswer(v.uid, v.answerId);
+                          chooseAnswer(v);
                         }}>
                         채택
                       </button>
@@ -89,22 +104,16 @@ const AnswerList = () => {
                     <Comment list={v} />
                   </SC_Commentbox>
                   <SC_CommentList className='comment_wrap'>
-                    <p>답변 감사합니다!!!!!</p>
-                    <div>
-                      <Profile size={24} />
-                      <strong>jjy</strong>
-                      <em>2020-02-02</em>
-                    </div>
                     {v.commnetResponseDtoList.map((list, idx) => {
+                      console.log(list);
                       return (
                         <div key={idx}>
-                          <dl>
-                            <dt>
-                              <Profile size={24} imgUrl={list.userImage} />
-                            </dt>
-                            <dd>{list.nickname}</dd>
-                          </dl>
-                          <em></em>
+                          <p>{list.comment}</p>
+                          <div>
+                            <Profile size={24} />
+                            <strong>{list.nickname}</strong>
+                            <em>{list.createdAt}</em>
+                          </div>
                         </div>
                       );
                     })}
@@ -127,7 +136,7 @@ const SC_List = styled.div`
   }
 
   .answer_wrap {
-    border-bottom: solid 1px #ebebeb;
+    border-bottom: solid 8px #ebebeb;
   }
 
   .header {
@@ -161,6 +170,10 @@ const SC_List = styled.div`
       padding: 10px 20px;
       color: #7966ff;
       font-size: 16px;
+
+      &.choose {
+        color: red;
+      }
     }
   }
 `;
@@ -171,10 +184,12 @@ const SC_Commentbox = styled.div`
 
 const SC_CommentList = styled.div`
   --gray-color: #c4c4c4;
-  display: flex;
-  align-items: flex-end;
-  padding: 18px 24px;
-  border-bottom: solid 1px #dadada;
+  > div {
+    display: flex;
+    align-items: flex-end;
+    padding: 18px 24px;
+    border-bottom: solid 1px #dadada;
+  }
 
   &:last-child {
     border-bottom: none;
