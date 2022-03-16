@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as rankingActions } from "../redux/modules/ranking";
 import TabMenu from "../components/TabMenu";
@@ -47,12 +48,21 @@ const Ranking = () => {
   }, []);
 
   return (
-    <div>
+    <SC_Detail>
+      <h2>랭킹</h2>
       <TabMenu tab_list={tab_list} tab={setTabList} />
       <RankingTop list={cur_list().slice(0, 3)} />
       <RankingOther list={cur_list().slice(3, 10)} />
-    </div>
+    </SC_Detail>
   );
 };
+const SC_Detail = styled.div`
+  h2 {
+    font-size: 24px;
+    padding-bottom: 40px;
+  }
 
+  max-width: 1440px;
+  margin: 0 auto;
+`;
 export default Ranking;
