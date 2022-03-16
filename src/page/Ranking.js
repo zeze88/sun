@@ -22,60 +22,35 @@ const Ranking = () => {
     },
   ];
   const dispatch = useDispatch();
-  let total_list = useSelector((state) => state.ranking.total_list);
-  const month_list = useSelector((state) => state.ranking.month_list);
-  const week_list = useSelector((state) => state.ranking.week_list);
+  const ranking_list = useSelector((state) => state.ranking.list);
+  const user_ranking = useSelector((state) => state.ranking.user_list);
   const [tabList, setTabList] = React.useState();
 
-  const cur_list = () => {
+  React.useEffect(() => {
     switch (tabList) {
       case "month":
-        return month_list.concat([{ total: "month" }]);
-        break;
+        dispatch(rankingActions.monthRankingDB());
+        dispatch(rankingActions.myMonthRankingDB());
+        return;
       case "week":
-        return week_list.concat([{ total: "week" }]);
-        break;
+        dispatch(rankingActions.weekRankingDB());
+        dispatch(rankingActions.myWeekRankingDB());
+        return;
       default:
-        return total_list.concat([{ total: "total" }]);
-        break;
+        dispatch(rankingActions.myTotalRankingDB());
+        dispatch(rankingActions.totalRankingDB());
+        return;
     }
-  };
-  console.log(cur_list());
-  React.useEffect(() => {
-    dispatch(rankingActions.totalRankingDB());
-    dispatch(rankingActions.monthRankingDB());
-    dispatch(rankingActions.weekRankingDB());
-    dispatch(rankingActions.myTotalRankingDB());
-
-    dispatch(rankingActions.myMonthRankingDB());
-    dispatch(rankingActions.myWeekRankingDB());
-  }, []);
+  }, [tabList]);
 
   return (
     <SC_Detail>
-      <h2>랭킹</h2>
-      <div
-        onClick={() => {
-          dispatch(rankingActions.myWeekRankingDB());
-        }}>
-        week
-      </div>
-      <div
-        onClick={() => {
-          dispatch(rankingActions.myTotalRankingDB());
-        }}>
-        total
-      </div>
-      <div
-        onClick={() => {
-          dispatch(rankingActions.myMonthRankingDB());
-        }}>
-        month
-      </div>
-
       <TabMenu tab_list={tab_list} tab={setTabList} />
-      <RankingTop list={cur_list().slice(0, 3)} />
-      <RankingOther list={cur_list().slice(3, 10)} />
+      <RankingTop list={ranking_list?.slice(0, 3)} />
+      <RankingOther
+        list={ranking_list?.slice(3, 10)}
+        user_ranking={user_ranking}
+      />
     </SC_Detail>
   );
 };

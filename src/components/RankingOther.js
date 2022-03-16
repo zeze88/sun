@@ -2,19 +2,18 @@ import React from "react";
 import styled from "styled-components";
 import Profile from "../elements/Profile";
 
-const RankingOther = ({ list }) => {
-  console.log(list);
+const RankingOther = ({ list, user_ranking }) => {
   const user_info = sessionStorage.getItem("uid");
   return (
     <SC_OtherRanking>
       <ul>
-        {user_info && (
+        {user_info && user_ranking.rank >= 10 && (
           <li className='my_ranking'>
-            <i>나의 랭킹</i>
+            <i>{user_ranking.rank}</i>
             <Profile size={70} />
-            <strong>나의 닉네임</strong>
-            <em>나의 포인트 점</em>
-            <button>SNS</button>
+            <strong>{user_ranking.nickname}</strong>
+            <em>{user_ranking.point}</em>
+            {user_ranking.blogUrl && <button>SNS</button>}
           </li>
         )}
         {list.map((v, idx) => (
