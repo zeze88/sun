@@ -126,17 +126,13 @@ const AnswerList = ({ isWriter }) => {
             const comment_count = Object.keys(v.commnetResponseDtoList).length;
 
             return (
-              <>
-                <div key={idx}>
+              <React.Fragment key={idx}>
+                <div>
                   <div className='answer_wrap'>
                     <div className='answer_box'>
                       <div className='header'>
                         <Profile size='48' imgUrl={v.userImage} />
                         <span>{v.nickname}</span>
-                        {/* 추후 아이콘으로 변경하겠습니다! */}
-                        {v.status === "true" && (
-                          <i style={{ color: "red", fontSize: "30px" }}>채택</i>
-                        )}
                       </div>
                       <div className='content'>
                         <div>{v.answerTitle}</div>
@@ -177,6 +173,16 @@ const AnswerList = ({ isWriter }) => {
                               }}
                             />
                           )}
+                        {v.status === "true" && (
+                          <RoundBtn
+                            title='
+                           채택
+                           '
+                            onClick={() => {
+                              chooseAnswer(v);
+                            }}
+                          />
+                        )}
                       </div>
                     </div>
                     <div className='comment_box'>
@@ -273,7 +279,7 @@ const AnswerList = ({ isWriter }) => {
 
                   {isEdit === v.answerId && <Answer isEdit={true} list={v} />}
                 </div>
-              </>
+              </React.Fragment>
             );
           })}
     </SC_List>
