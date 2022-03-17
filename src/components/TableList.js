@@ -15,8 +15,7 @@ const TableList = ({ currTab }) => {
 
   return (
     <TableListUl>
-      <li>
-        {list}
+      <li className='no_list'>
         <strong>{list} 알림이 없습니다 :)</strong>
       </li>
       <li>
@@ -30,13 +29,16 @@ const TableList = ({ currTab }) => {
 };
 
 const TableListUl = styled.ul`
-  border-top: solid 1px #ebebeb;
-
+  min-height: 600px;
+  .no_list {
+    line-height: 400px;
+  }
   li {
     padding: 20px;
     display: flex;
     align-items: center;
     text-align: center;
+    color: #676767;
     border-bottom: solid 1px #ebebeb;
   }
   strong {
@@ -55,8 +57,19 @@ const TableListUl = styled.ul`
     width: 20%;
   }
 
+  em {
+    font-size: 12px;
+    font-style: normal;
+    color: #c4c4c4;
+  }
+
   button {
-    width: 10%;
+    width: 94px;
+    height: 30px;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 40px;
+    background-color: #ddd;
   }
 `;
 

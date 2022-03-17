@@ -74,4 +74,8 @@ export const apis = {
   totalRanking: () => instance.get(`/user/ranking/total`),
   monthRanking: () => instance.get(`/user/ranking/month`),
   weekRanking: () => instance.get(`/user/ranking/weekend`),
+
+  mytotalRanking: () => instance.get(`/islogin/ranking/total`),
+  mymonthRanking: () => instance.get(`/islogin/ranking/month`),
+  myweekRanking: () => instance.get(`/islogin/ranking/weekend`),
 };

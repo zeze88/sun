@@ -57,7 +57,7 @@ const SC_NoticeDiv = styled.div`
     font-weight: 700;
   }
   > ul {
-    margin-left: 20px;
+    margin: 0 24px;
   }
 `;
 
