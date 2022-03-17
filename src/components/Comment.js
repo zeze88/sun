@@ -31,7 +31,7 @@ const Comment = ({ list }) => {
 
   return (
     <Container>
-      <CommentCount>댓글 {C}</CommentCount>
+      {/* <CommentCount>댓글 {C}</CommentCount> */}
       <CommentInput>
         <CommentWrite onChange={onChange} />
         <RoundBtn onClick={addComment} title='등록' />
@@ -53,11 +53,11 @@ const CommentCount = styled.div`
 const CommentInput = styled.div`
   flex: auto;
   display: flex;
-  align-items: flex-end;
+  gap: 24px;
+  align-items: center;
+  justify-content: space-between;
   height: 80px;
-  padding: 14px;
-  border: 1px solid #c5c5c5;
-  border-radius: 10px;
+  /* border: 1px solid #c5c5c5; */
   overflow: hidden;
 `;
 
@@ -65,6 +65,8 @@ const CommentWrite = styled.textarea`
   flex: auto;
   height: 100%;
   padding: 14px;
+  border-radius: 8px;
+  background-color: #fbfbfd;
 `;
 
 const Buttom = styled.button`
