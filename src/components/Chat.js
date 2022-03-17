@@ -3,6 +3,7 @@ import Stomp, { over } from "stompjs";
 import SockJs from "sockjs-client";
 import Profile from "../elements/Profile";
 import styled from "styled-components";
+import { apiUrl } from "../elements/testApiUrl";
 
 let stompClient = null;
 const Chat = () => {
@@ -30,7 +31,9 @@ const Chat = () => {
 
   const stompDisConnect = () => {
     try {
-      stompClient.debug = null;
+      const user_join = { status: "OUT" };
+      stompClient.send("/app/message", {}, JSON.stringify(user_join));
+
       stompClient.disconnect(() => {
         stompClient.unsubscribe("/topic/greetings");
       }, token);
@@ -43,7 +46,7 @@ const Chat = () => {
   };
 
   const stompConnect = () => {
-    let socket = new SockJs("http://175.118.48.164:7050/ws");
+    let socket = new SockJs(`${apiUrl}/ws`);
     stompClient = Stomp.over(socket);
 
     stompClient.connect({}, onConnected, onError);
@@ -52,10 +55,18 @@ const Chat = () => {
   const onConnected = () => {
     try {
       const username = sessionStorage.getItem("nickname");
+      const crareer = sessionStorage.getItem("career");
+      const userImage = sessionStorage.getItem("userImage");
       const user_join = { status: "JOIN" };
 
       setConnected(true);
-      setUserData({ ...userData, username: username, status: "JOIN" });
+      setUserData({
+        ...userData,
+        crareer,
+        userImage,
+        username,
+        status: "JOIN",
+      });
 
       stompClient.send("/app/hello", {}, JSON.stringify({ username }));
       stompClient.send("/app/message", token, JSON.stringify(user_join));
@@ -90,6 +101,13 @@ const Chat = () => {
 
     switch (payloadData.status) {
       case "JOIN":
+        if (!welcome.get(payloadData.senderName)) {
+          console.log(payloadData);
+          welcome.set(payloadData.message, []);
+          setWelcome(new Map(welcome));
+        }
+        break;
+      case "OUT":
         if (!welcome.get(payloadData.senderName)) {
           console.log(payloadData);
           welcome.set(payloadData.message, []);
@@ -137,7 +155,7 @@ const Chat = () => {
               {chat.senderName !== userData.username && (
                 <div>
                   <strong>{chat.senderName}</strong>
-                  <span>경력 1년 이내</span>
+                  <span>{userData.crareer}</span>
                 </div>
               )}
               <p className='message-data'>{chat.message}</p>
