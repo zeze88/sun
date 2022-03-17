@@ -51,7 +51,7 @@ const Create = () => {
       return;
     } else if (!img_list) {
       alert("이미지를 추가 해주세요 :)");
-    } else {
+    } else if (addPost.tags) {
       const tags = addPost.tags?.split("#").splice(1);
 
       let text_tag = tags
@@ -62,6 +62,13 @@ const Create = () => {
         postActions.addPostDB({
           ...addPost,
           tags: text_tag,
+          category: oneCategory,
+        })
+      );
+    } else {
+      dispatch(
+        postActions.addPostDB({
+          ...addPost,
           category: oneCategory,
         })
       );

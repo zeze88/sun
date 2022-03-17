@@ -154,24 +154,6 @@ const editAnswerDB = (props) => {
             headers: { Authorization: token_res },
           }).then((res) => {
             window.location.replace(`/detail/${pid}`);
-
-            // dispatch(
-            //   editAnswer({
-            //     answsrId,
-            //     answerTitle,
-            //     answerComment,
-            //     answerImg: imgUrl,
-            //     answerLike: false,
-            //     blogUrl: null,
-            //     career: null,
-            //     commnetResponseDtoList: [],
-            //     createdAt: "",
-            //     nickname,
-            //     pid,
-            //     uid,
-            //     userImage: null,
-            //   })
-            // );
           });
         })
         .catch((err) => {
@@ -225,24 +207,6 @@ const chooseAnswerDB = (props) => {
           })
         );
         window.location.replace(`/detail/${pid}`);
-
-        // dispatch(
-        //   likeAnswer({
-        //     uid,
-        //     pid,
-        //     answerId,
-        //     userImage,
-        //     answerComment,
-        //     answerImg,
-        //     answerTitle,
-        //     blogUrl,
-        //     nickname,
-        //     createdAt,
-        //     career,
-        //     status,
-        //     commnetResponseDtoList,
-        //   })
-        // );
       })
       .catch((err) => {
         console.log(err);
