@@ -3,12 +3,18 @@ import Stomp, { over } from "stompjs";
 import SockJs from "sockjs-client";
 import Profile from "../elements/Profile";
 import styled from "styled-components";
+import { apiUrl } from "../elements/testApiUrl";
 
 let stompClient = null;
-const Chat = (pid) => {
+const Postchat = ({ pid }) => {
   const token = {
     Authorization: sessionStorage.getItem("token"),
   };
+
+  const username = sessionStorage.getItem("nickname");
+  const crareer = sessionStorage.getItem("career");
+  const userImage = sessionStorage.getItem("userImage");
+  const uid = sessionStorage.getItem("uid");
 
   const [welcome, setWelcome] = React.useState(new Map());
   const [publicChats, setPublicChats] = React.useState([]);
@@ -30,9 +36,11 @@ const Chat = (pid) => {
 
   const stompDisConnect = () => {
     try {
-      stompClient.debug = null;
+      const user_join = { status: "OUT" };
+      stompClient.send("/app/message1", {}, JSON.stringify(user_join));
+
       stompClient.disconnect(() => {
-        stompClient.unsubscribe(`/topic/greetings${pid}`);
+        stompClient.unsubscribe(`/topic/greetings/${pid}`);
       }, token);
     } catch (err) {}
   };
@@ -43,7 +51,7 @@ const Chat = (pid) => {
   };
 
   const stompConnect = () => {
-    let socket = new SockJs("http://175.118.48.164:7050/ws");
+    let socket = new SockJs(`${apiUrl}/ws`);
     stompClient = Stomp.over(socket);
 
     stompClient.connect({}, onConnected, onError);
@@ -52,15 +60,21 @@ const Chat = (pid) => {
   const onConnected = () => {
     try {
       const username = sessionStorage.getItem("nickname");
-      const user_join = { status: "JOIN" };
-
+      const crareer = sessionStorage.getItem("career");
+      const userImage = sessionStorage.getItem("userImage");
+      const user_join = { status: "JOIN", pid, uid };
       setConnected(true);
-      setUserData({ ...userData, username: username, status: "JOIN" });
+      setUserData({
+        ...userData,
+        crareer,
+        senderName: username,
+        status: "JOIN",
+        pid: pid,
+      });
 
-      stompClient.send("/app/hello", {}, JSON.stringify({ username }));
-      stompClient.send("/app/message", token, JSON.stringify(user_join));
+      stompClient.send("/app/message1", token, JSON.stringify(user_join));
       stompClient.subscribe(
-        `/topic/greetings${pid}`,
+        `/topic/greetings/${pid}`,
         onPublicMessageReceived,
         token
       );
@@ -70,6 +84,8 @@ const Chat = (pid) => {
   };
 
   const sendPublicMessage = () => {
+    console.log(userData);
+    console.log(publicChats);
     const username = sessionStorage.getItem("nickname");
 
     if (stompClient) {
@@ -77,12 +93,15 @@ const Chat = (pid) => {
         alert("내용을 입력해주세요!");
       } else {
         let chatMessage = {
+          ...userData,
           senderName: username,
           message: userData.message,
           status: "MESSAGE",
+          pid: pid,
+          uid: uid,
         };
 
-        stompClient.send("/app/message", token, JSON.stringify(chatMessage));
+        stompClient.send("/app/message1", token, JSON.stringify(chatMessage));
         setUserData({ ...userData, message: "" });
       }
     }
@@ -94,6 +113,13 @@ const Chat = (pid) => {
 
     switch (payloadData.status) {
       case "JOIN":
+        if (!welcome.get(payloadData.senderName)) {
+          console.log(payloadData);
+          welcome.set(payloadData.message, []);
+          setWelcome(new Map(welcome));
+        }
+        break;
+      case "OUT":
         if (!welcome.get(payloadData.senderName)) {
           console.log(payloadData);
           welcome.set(payloadData.message, []);
@@ -121,6 +147,7 @@ const Chat = (pid) => {
           }}>
           채팅
         </li>
+        <li>채팅 인원수 {userData.userCount}</li>
       </ChatTab>
       <ChatList>
         <ul>
@@ -134,15 +161,16 @@ const Chat = (pid) => {
 
           {publicChats.map((chat, index) => (
             <li
-              className={` ${
-                chat.senderName === userData.username ? "self" : "user"
-              }`}
+              className={` ${chat.senderName === username ? "self" : "user"}`}
               key={index}>
-              {chat.senderName !== userData.username && (
-                <div>
-                  <strong>{chat.senderName}</strong>
-                  <span>경력 1년 이내</span>
-                </div>
+              {chat.senderName !== username && (
+                <>
+                  <Profile size='32' imgUrl={userData.userImage} />
+                  <div>
+                    <strong>{chat.senderName}</strong>
+                    {userData.crareer && <i>{userData.crareer}</i>}
+                  </div>
+                </>
               )}
               <p className='message-data'>{chat.message}</p>
               <em>오후 1:00</em>
@@ -308,4 +336,4 @@ const ChatInput = styled.div`
   }
 `;
 
-export default Chat;
+export default Postchat;

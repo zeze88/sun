@@ -10,7 +10,9 @@ const Chat = () => {
   const token = {
     Authorization: sessionStorage.getItem("token"),
   };
+  const username = sessionStorage.getItem("nickname");
 
+  const uid = sessionStorage.getItem("uid");
   const [welcome, setWelcome] = React.useState(new Map());
   const [publicChats, setPublicChats] = React.useState([]);
   const [connected, setConnected] = React.useState(false);
@@ -44,7 +46,6 @@ const Chat = () => {
     const { value, name } = e.target;
     setUserData({ ...userData, [name]: value });
   };
-
   const stompConnect = () => {
     let socket = new SockJs(`${apiUrl}/ws`);
     stompClient = Stomp.over(socket);
@@ -57,14 +58,12 @@ const Chat = () => {
       const username = sessionStorage.getItem("nickname");
       const crareer = sessionStorage.getItem("career");
       const userImage = sessionStorage.getItem("userImage");
-      const user_join = { status: "JOIN" };
+      const user_join = { status: "JOIN", uid, pid: 0 };
 
       setConnected(true);
       setUserData({
         ...userData,
         crareer,
-        userImage,
-        username,
         status: "JOIN",
       });
 
@@ -87,6 +86,8 @@ const Chat = () => {
           senderName: username,
           message: userData.message,
           status: "MESSAGE",
+          uid,
+          pid: 0,
         };
 
         stompClient.send("/app/message", token, JSON.stringify(chatMessage));
@@ -102,7 +103,6 @@ const Chat = () => {
     switch (payloadData.status) {
       case "JOIN":
         if (!welcome.get(payloadData.senderName)) {
-          console.log(payloadData);
           welcome.set(payloadData.message, []);
           setWelcome(new Map(welcome));
         }
@@ -135,6 +135,7 @@ const Chat = () => {
           }}>
           채팅
         </li>
+        <li>채팅 인원수 {userData.userCount}</li>
       </ChatTab>
       <ChatList>
         <ul>
@@ -148,15 +149,16 @@ const Chat = () => {
 
           {publicChats.map((chat, index) => (
             <li
-              className={` ${
-                chat.senderName === userData.username ? "self" : "user"
-              }`}
+              className={` ${chat.senderName === username ? "self" : "user"}`}
               key={index}>
-              {chat.senderName !== userData.username && (
-                <div>
-                  <strong>{chat.senderName}</strong>
-                  <span>{userData.crareer}</span>
-                </div>
+              {chat.senderName !== username && (
+                <>
+                  <Profile size='32' imgUrl={userData.userImage} />
+                  <div>
+                    <strong>{chat.senderName}</strong>
+                    <i>{userData.crareer}</i>
+                  </div>
+                </>
               )}
               <p className='message-data'>{chat.message}</p>
               <em>오후 1:00</em>
