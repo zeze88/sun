@@ -57,106 +57,99 @@ const Detail = () => {
 
   return (
     <Container>
-      <Question>
-        <Top>
-          <div className='header'>
-            <h3>{post_one.postTitle}</h3>
-            <span
-              className='category'
-              onClick={() => {
-                history.push(`/search/category_${post_one.category}`);
-              }}>
-              {post_one.category}
-            </span>
-          </div>
-          <div className='post_info'>
-            <dl className='user_info'>
-              <dt>
-                <Profile size='24' migUrl={post_one.userImage} />
-              </dt>
-              <dd>{post_one.nickname}</dd>
-            </dl>
-            <em>{date}</em>
-            <i>관심 {post_one.postLikeCount}</i>
-          </div>
-        </Top>
-        <ContextWrap>
-          <div className='text-wrap'>
-            <p>{post_one.postComment}</p>
-            <img src={post_one.postImg} />
-          </div>
+      <div className='post_wrap'>
+        <Question>
+          <Top>
+            <div className='header'>
+              <h2>{post_one.postTitle}</h2>
+              <span
+                className='category'
+                onClick={() => {
+                  history.push(`/search/category_${post_one.category}`);
+                }}>
+                {post_one.category}
+              </span>
+            </div>
+            <div className='post_info'>
+              <dl className='user_info'>
+                <dt>
+                  <Profile size='24' migUrl={post_one.userImage} />
+                </dt>
+                <dd>{post_one.nickname}</dd>
+              </dl>
+              <em>{date}</em>
+              <i>관심 {post_one.postLikeCount}</i>
+            </div>
+          </Top>
+          <ContextWrap>
+            <div className='text-wrap'>
+              <p>{post_one.postComment}</p>
+              <img src={post_one.postImg} />
+            </div>
 
-          <div className='btn_wrap'>
-            <TagUl>
-              {post_one.tag?.map((v, idx) => (
-                <li
-                  key={idx}
-                  onClick={() => {
-                    history.push(`/search/tag_${v}`);
-                  }}>
-                  #{v}
-                </li>
-              ))}
-            </TagUl>
-            <button onClick={likebtn}>관심 {post_one.postLikeCount}</button>
+            <div className='btn_wrap'>
+              <TagUl>
+                {post_one.tag?.map((v, idx) => (
+                  <li
+                    key={idx}
+                    onClick={() => {
+                      history.push(`/search/tag_${v}`);
+                    }}>
+                    #{v}
+                  </li>
+                ))}
+              </TagUl>
+              {Number(user_info) === post_one.uid ? (
+                <>
+                  <button styled={{ fontSize: "40px" }} onClick={delPost}>
+                    삭제
+                  </button>
+                  <button
+                    styled={{ fontSize: "40px" }}
+                    onClick={() => {
+                      history.push(`/edit/${pid}`);
+                    }}>
+                    수정
+                  </button>
+                </>
+              ) : (
+                <button onClick={likebtn}>관심 {post_one.postLikeCount}</button>
+              )}
+            </div>
+          </ContextWrap>
+        </Question>
+        <Answer />
+        <AnswerList isWriter={post_one.uid} />
+      </div>
 
-            {Number(user_info) === post_one.uid ? (
-              <>
-                <button styled={{ fontSize: "40px" }} onClick={delPost}>
-                  삭제
-                </button>
-                <button
-                  styled={{ fontSize: "40px" }}
-                  onClick={() => {
-                    history.push(`/edit/${pid}`);
-                  }}>
-                  수정
-                </button>
-              </>
-            ) : (
-              <button onClick={likebtn}>관심 {post_one.postLikeCount}</button>
-            )}
-            {user_info === post_one.uid && (
-              <>
-                <button styled={{ fontSize: "40px" }} onClick={delPost}>
-                  삭제
-                </button>
-                <button
-                  styled={{ fontSize: "40px" }}
-                  onClick={() => {
-                    history.push(`/edit/${pid}`);
-                  }}>
-                  수정
-                </button>
-              </>
-            )}
-          </div>
-        </ContextWrap>
-      </Question>
-      <Answer />
-      <AnswerList isWriter={post_one.uid} />
       <Postchat pid={pid} />
     </Container>
   );
 };
 
 const Container = styled.div`
+  display: flex;
+  gap: 22px;
   max-width: 1440px;
   margin: 0 auto;
+
+  .post_wrap {
+    width: calc(100% - 342px - 22px);
+  }
 `;
 
 const Question = styled.div`
   background-color: #fff;
   border-radius: 8px;
-  margin-bottom: 8px;
-  /* border-bottom: solid 8px #f7f7f7; */
+  margin-bottom: 24px;
+  box-shadow: 0 4px 20px 0 rgba(228, 226, 242, 0.45);
 `;
 
 const Top = styled.div`
   padding: 30px 24px;
   border-bottom: solid 1px #dadada;
 
-  h3 {
+  h2 {
     font-size: 20px;
   }
 
@@ -167,7 +160,7 @@ const Top = styled.div`
   }
 
   .header {
-    padding-bottom: 30px;
+    padding-bottom: 26px;
   }
 
   .category {
@@ -208,7 +201,6 @@ const Top = styled.div`
 
 const ContextWrap = styled.div`
   padding: 24px;
-  padding-bottom: 17px;
 
   .text-wrap {
     min-height: 250px;
@@ -247,24 +239,6 @@ const TagUl = styled.ul`
     border-radius: 30px;
     border: solid 1px var(--main-color);
     cursor: pointer;
-  }
-`;
-
-const ContentBox = styled.div`
-  width: 100%;
-  height: 21rem;
-`;
-const Content = styled.div`
-  width: 95%;
-  height: 95%;
-  margin: auto;
-`;
-
-const Commentbox = styled.div`
-  @media screen and (min-width: 1050px) {
-    .comment {
-      width: 50%;
-    }
   }
 `;
 

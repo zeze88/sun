@@ -49,12 +49,6 @@ const NoticeListDiv = styled.div`
   border-bottom: solid 1px #dadada;
   margin: 0 24px;
 
-  > div {
-    flex: auto;
-    display: flex;
-    align-items: center;
-  }
-
   .category {
     display: inline-block;
     padding: 8px 14px;
@@ -67,6 +61,8 @@ const NoticeListDiv = styled.div`
   }
 
   .title {
+    display: flex;
+    align-items: center;
     gap: 10px;
     margin-bottom: 24px;
 
@@ -82,6 +78,7 @@ const NoticeListDiv = styled.div`
   }
 
   h3 {
+    font-size: 16px;
     font-weight: 700;
     color: #333;
     overflow: hidden;
@@ -105,6 +102,8 @@ const NoticeListDiv = styled.div`
   }
 
   .info {
+    display: flex;
+    align-items: center;
     text-align: right;
     color: #333;
 
