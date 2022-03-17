@@ -64,9 +64,9 @@ const Answer = ({ isEdit = null, list = null }) => {
             value={answerComment}
             // placeholder={list.answerComment}
           ></textarea>
-          <RoundBtn onClick={editAnswer} title='수정' />
         </SC_InputWrap>
         <ImgUpload isEdit={isEdit} editImg={list.answerImg} />
+        <RoundBtn onClick={editAnswer} title='수정' />
       </SC_Answer>
     );
   }
@@ -117,11 +117,11 @@ const SC_InputWrap = styled.div`
 const SC_Answer = styled.div`
   display: flex;
   flex-direction: column;
+  margin-bottom: 24px;
   padding: 0 24px;
-  /* margin-bottom: 8px; */
   background-color: #fff;
   border-radius: 8px;
-  border-bottom: solid 8px #f7f7f7;
+  box-shadow: 0 4px 20px 0 rgba(228, 226, 242, 0.45);
 
   h5 {
     font-size: 20px;

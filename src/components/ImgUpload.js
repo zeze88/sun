@@ -38,7 +38,7 @@ const ImgUpload = ({ isEdit = null, editImg = null, cleanImg = null }) => {
 
   if (isEdit) {
     return (
-      <ImgWrap>
+      <ImgWrap className='img_load'>
         <label htmlFor='editImg'>
           <i className='icon'></i>
           <span>첨부하기</span>
@@ -52,7 +52,7 @@ const ImgUpload = ({ isEdit = null, editImg = null, cleanImg = null }) => {
   }
 
   return (
-    <ImgWrap>
+    <ImgWrap className='img_load'>
       <label htmlFor='img'>
         <i className='icon'></i>
         <span>이미지 첨부하기</span>

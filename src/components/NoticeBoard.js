@@ -48,7 +48,7 @@ const NoticeBoard = () => {
 };
 
 const SC_NoticeDiv = styled.div`
-  width: 100%;
+  width: calc(100% - 342px - 24px);
   background-color: #fff;
   border-radius: 8px;
 

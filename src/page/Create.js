@@ -98,94 +98,20 @@ const Create = () => {
   if (!isCreate) {
     return (
       <PostWrap>
-        <div className='left'>
-          <h1>수정페이지</h1>
-          <input
-            id='postTitle'
-            onChange={onChange}
-            type='text'
-            value={addPost.postTitle}
-          />
-          <textarea
-            id='postComment'
-            onChange={onChange}
-            type='text'
-            value={addPost.postComment}></textarea>
-
-          <ImgUpload isEdit={true} editImg={addPost.postImg} />
-        </div>
-        <div className='right'>
-          {post_one && (
-            <>
-              <h4>카테고리 선택</h4>
-              <CategoryDiv length={category.length}>
-                <span
-                  onClick={() => {
-                    setIsSelect(!isSelect);
-                  }}>
-                  {oneCategory
-                    ? oneCategory
-                    : addPost.category
-                    ? addPost.category
-                    : " 카테고리를 선택"}
-                </span>
-                <ul className={isSelect ? "" : "close"}>
-                  {category.map((v, idx) => (
-                    <li
-                      key={idx}
-                      onClick={() => {
-                        setOneCategory(v.name);
-                        setIsSelect(false);
-                      }}>
-                      {v.name}
-                    </li>
-                  ))}
-                </ul>
-              </CategoryDiv>
-              <h4>
-                태그입력<em></em>
-              </h4>
-
-              <input
-                id='tags'
-                onChange={onChange}
-                type='text'
-                placeholder={`#${post_one.tag?.join(" #")}`}
-              />
-              <button onClick={revise}>수정 click</button>
-              <button
-                onClick={() => {
-                  history.replace(`/detail/${params}`);
-                }}>
-                취소
-              </button>
-            </>
-          )}
-        </div>
-      </PostWrap>
-    );
-  }
-
-  return (
-    <PostWrap>
-      <div className='left'>
         <h1>글쓰기 페이지</h1>
-        <input id='title' onChange={onChange} type='text' placeholder='제목' />
-        <textarea
-          id='comment'
-          onChange={onChange}
-          type='text'
-          placeholder='내용'></textarea>
-        <ImgUpload />
-      </div>
-      <div className='right'>
-        <h4>카테고리 선택</h4>
+
+        <h2>카테고리 선택</h2>
         <CategoryDiv length={category.length}>
           <span
+            className={oneCategory === "" ? "" : "choose"}
             onClick={() => {
               setIsSelect(!isSelect);
             }}>
-            {oneCategory === "" ? " 카테고리를 선택" : oneCategory}
+            {oneCategory
+              ? oneCategory
+              : addPost.category
+              ? addPost.category
+              : " 카테고리를 선택"}
           </span>
           <ul className={isSelect ? "" : "close"}>
             {category.map((v, idx) => (
@@ -200,33 +126,114 @@ const Create = () => {
             ))}
           </ul>
         </CategoryDiv>
-        <h4>
+
+        <h2>내용</h2>
+        <input
+          id='postTitle'
+          onChange={onChange}
+          type='text'
+          value={addPost.postTitle}
+        />
+
+        <h2>
           태그입력<em>(선택사항)</em>
-        </h4>
+        </h2>
+        <TextareaImg>
+          <textarea
+            id='postComment'
+            onChange={onChange}
+            type='text'
+            value={addPost.postComment}></textarea>
+          <ImgUpload isEdit={true} editImg={addPost.postImg} />
+        </TextareaImg>
+
+        <h2>
+          태그입력<em></em>
+        </h2>
+
         <input
           id='tags'
           onChange={onChange}
           type='text'
-          placeholder='특수문자는 # 만 입력 가능합니다.'
+          placeholder={`#${post_one.tag?.join(" #")}`}
         />
-        <button onClick={submit}>올리기</button>
-      </div>
+        <button onClick={revise}>수정 click</button>
+        <button
+          onClick={() => {
+            history.replace(`/detail/${params}`);
+          }}>
+          취소
+        </button>
+      </PostWrap>
+    );
+  }
+
+  return (
+    <PostWrap>
+      <h1>글쓰기 페이지</h1>
+
+      <h2>카테고리 선택</h2>
+      <CategoryDiv length={category.length}>
+        <span
+          className={oneCategory === "" ? "" : "choose"}
+          onClick={() => {
+            setIsSelect(!isSelect);
+          }}>
+          {oneCategory === "" ? " 카테고리를 선택" : oneCategory}
+        </span>
+        <ul className={isSelect ? "" : "close"}>
+          {category.map((v, idx) => (
+            <li
+              key={idx}
+              onClick={() => {
+                setOneCategory(v.name);
+                setIsSelect(false);
+              }}>
+              {v.name}
+            </li>
+          ))}
+        </ul>
+      </CategoryDiv>
+      <h2>제목</h2>
+      <input id='title' onChange={onChange} type='text' placeholder='제목' />
+
+      <h2>내용</h2>
+      <TextareaImg>
+        <textarea
+          id='comment'
+          onChange={onChange}
+          type='text'
+          placeholder='내용'></textarea>
+        <ImgUpload />
+      </TextareaImg>
+
+      <h2>
+        태그입력<em>(선택사항)</em>
+      </h2>
+      <input
+        id='tags'
+        onChange={onChange}
+        type='text'
+        placeholder='특수문자는 # 만 입력 가능합니다.'
+      />
+      <button onClick={submit}>올리기</button>
     </PostWrap>
   );
 };
 
 const PostWrap = styled.div`
-  max-width: 1440px;
+  max-width: 1073px;
   margin: 0 auto;
-  display: flex;
-  align-items: flex-start;
-  gap: 24px;
+  padding: 50px 26px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px 0 rgba(228, 226, 242, 0.45);
 
-  label > input#file-upload-button {
+  h1 {
     display: none;
   }
 
-  h4 {
+  h2 {
+    font-size: 16px;
     margin-bottom: 8px;
 
     em {
@@ -238,73 +245,85 @@ const PostWrap = styled.div`
     }
   }
 
+  label > input#file-upload-button {
+    display: none;
+  }
+
   input {
     display: block;
     width: 100%;
+    height: 52px;
+    padding: 16px;
+    margin-bottom: 24px;
     border: none;
-    border-bottom: solid 1px #ebebeb;
+    border-radius: 8px;
+    background-color: #fbfbfd;
+
+    &::placeholder {
+      color: #797979;
+    }
   }
+
+  button {
+    display: block;
+    width: 200px;
+    line-height: 50px;
+    margin-top: 48px;
+    margin-left: auto;
+    background-color: #7966ff;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #fff;
+  }
+`;
+
+const TextareaImg = styled.div`
+  margin-bottom: 40px;
+  border-radius: 8px;
+  background-color: #fbfbfd;
 
   textarea {
     display: block;
     width: 100%;
+    padding: 16px;
     min-height: 400px;
-    resize: none;
     border: none;
-    padding: 24px;
-  }
+    background-color: transparent;
+    resize: none;
 
-  .left {
-    flex: auto;
-
-    input {
-      font-size: 20px;
-      padding: 24px;
+    &::placeholder {
+      color: #797979;
     }
   }
 
-  .right {
-    flex: none;
-    width: 342px;
-    padding: 63px 20px;
-    background-color: #f9f8ff;
-
-    input {
-      padding: 0 14px;
-      color: #7966ff;
-      background-color: #fff;
-      border-radius: 8px;
-      line-height: 46px;
-      &::placeholder {
-        color: #7966ff;
-      }
-    }
-
-    button {
-      width: 100%;
-      line-height: 50px;
-      margin-top: 48px;
-      background-color: #7966ff;
-      border-radius: 8px;
-      font-size: 16px;
-    }
+  .img_load {
+    padding: 16px 14px;
+    border-radius: 8px;
+    border-bottom: none;
+    background-color: #f4f4fb;
   }
 `;
 
 const CategoryDiv = styled.div`
   display: inline-block;
-  width: 100%;
-  margin-bottom: 30px;
+  width: 300px;
+  margin-bottom: 24px;
   position: relative;
 
   > span {
-    display: block;
+    display: inline-block;
     width: 100%;
-    padding: 0 14px;
+    height: 52px;
+    line-height: 52px;
+    padding: 0 16px;
     line-height: 46px;
+    color: #797979;
     border-radius: 8px;
-    color: #7966ff;
-    background-color: #fff;
+    background-color: #fbfbfd;
+
+    &.choose {
+      color: #7966ff;
+    }
   }
 
   ul {
@@ -318,7 +337,7 @@ const CategoryDiv = styled.div`
     transition: height 0.5s ease-out;
     background-color: #fff;
     border-radius: 0 0 8px 8px;
-    box-shadow: 5px 5px 15px 9px rgba(157, 157, 157, 0.1);
+    box-shadow: 0 4px 14px 0 rgba(65, 0, 131, 0.06);
 
     &.close {
       height: 0;
