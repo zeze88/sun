@@ -6,6 +6,7 @@ import { actionCreators as userActions } from "../redux/modules/user";
 function Signup(props) {
   const dispatch = useDispatch();
   const [username, setUsername] = React.useState("");
+  const [idRuleCheck, setIdRuleCheck] = React.useState(false);
   const [nickname, setNickname] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [checkPassword, setCheckPassword] = React.useState("");
@@ -20,6 +21,25 @@ function Signup(props) {
     { value: "3~5년차", name: "3~5년차이상" },
     { value: "10년차 이상", name: "10년차이상" },
   ];
+
+  /////////////////////////////////경고 문구
+
+  // /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,10}$/
+
+  const idRule = (e) => {
+    const rule = /^[A-Za-z0-9]{4,10}$/;
+    const id = e.target.value;
+    setUsername(id);
+    !rule.test(username) ? setIdRuleCheck(false) : setIdRuleCheck(true);
+  };
+
+  const nicknameRule = (e) => {
+    const nick = e.target.value;
+    setNickname(nick);
+    console.log(nickname);
+  };
+
+  /////////////////////////////////////
 
   const checkUsername = () => {
     if (username === "") {
@@ -74,27 +94,26 @@ function Signup(props) {
   };
   return (
     <Container>
-      <div>
-        <input
-          className='input1'
-          type='text'
-          placeholder='ID'
-          onChange={(e) => {
-            setUsername(e.target.value);
-          }}
-        />
-        <button className='CheckButton' onClick={checkUsername}>
-          중복체크
-        </button>
+      <div style={{ displat: "flex" }}>
+        <div>
+          <input
+            className='input1'
+            type='text'
+            placeholder='ID'
+            onChange={idRule}
+          />
+          <button className='CheckButton' onClick={checkUsername}>
+            중복체크
+          </button>
+        </div>
+        {username.length < 4 && !idRuleCheck && <span> 테스트입니다. </span>}
       </div>
       <div>
         <input
           className='input1'
           type='text'
           placeholder='Nickname'
-          onChange={(e) => {
-            setNickname(e.target.value);
-          }}
+          onChange={nicknameRule}
         />
         <button className='CheckButton' onClick={checkNickname}>
           중복체크
@@ -134,7 +153,6 @@ function Signup(props) {
           회원가입
         </button>
       </div>
-      {/* <Indicator /> */}
     </Container>
   );
 }
@@ -189,14 +207,4 @@ const Container = styled.div`
   }
 `;
 
-// const Indicator = styled.div`
-//   width: 1rem;
-//   height: 1rem;
-//   position: absolute;
-//   background: white;
-//   transition: transform 600ms cubic-bezier(0.02, 0.94, 0.09, 0.97);
-//   transform: rotate(45deg);
-//   top: 20.8rem;
-//   left: 57rem;
-// `;
 export default Signup;

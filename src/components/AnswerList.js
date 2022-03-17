@@ -22,7 +22,7 @@ const AnswerList = ({ isWriter }) => {
   const [commentId, setCommentId] = React.useState(0);
   const isChoose = list?.find((v) => v.status === "true");
 
-  console.log(comment);
+  console.log(list);
 
   React.useEffect(() => {
     if (list.length <= 1) {
@@ -195,7 +195,10 @@ const AnswerList = ({ isWriter }) => {
                                 <div>
                                   <div className='mycomment'>
                                     <div>
-                                      <Profile size={24} imgUrl={userImage} />
+                                      <Profile
+                                        size={24}
+                                        imgUrl={list.userImage}
+                                      />
                                       <strong>{list.nickname}</strong>
                                     </div>
                                     <div className='button'>
@@ -219,7 +222,10 @@ const AnswerList = ({ isWriter }) => {
                                 <div>
                                   <div className='mycomment'>
                                     <div>
-                                      <Profile size={24} imgUrl={userImage} />
+                                      <Profile
+                                        size={24}
+                                        imgUrl={list.userImage}
+                                      />
                                       <strong>{list.nickname}</strong>
                                     </div>
                                     <div className='button'>
@@ -248,7 +254,7 @@ const AnswerList = ({ isWriter }) => {
                             <div>
                               <div>
                                 <div className='comment'>
-                                  <Profile size={24} imgUrl={userImage} />
+                                  <Profile size={24} imgUrl={list.userImage} />
                                   <strong>{list.nickname}</strong>
                                 </div>
                                 <p>{list.comment}</p>
