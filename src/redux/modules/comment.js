@@ -39,6 +39,7 @@ const addCommentDB = (uid, pid, answerId, comment) => {
       .then((res) => {
         console.log(res);
         dispatch(addComment(res));
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
@@ -47,13 +48,13 @@ const addCommentDB = (uid, pid, answerId, comment) => {
   };
 };
 
-const editCommentDB = (commentId, title, comment) => {
+const editCommentDB = (commentId, comment) => {
+  console.log(commentId, comment);
   return function (dispatch, getState, { history }) {
     axios
       .put(
-        `${apiUrl}1/islogin/comment/revice/${commentId}`,
+        `${apiUrl}/islogin/comment/revice/${commentId}`,
         {
-          commentTitle: title,
           comment: comment,
         },
         {
@@ -63,7 +64,7 @@ const editCommentDB = (commentId, title, comment) => {
         }
       )
       .then((res) => {
-        dispatch(editComment(title, comment));
+        dispatch(editComment(comment));
       })
       .catch((err) => {
         console.log(err);
@@ -74,8 +75,9 @@ const editCommentDB = (commentId, title, comment) => {
 
 const deleteCommentDB = (commentId) => {
   return function (dispatch, getState, { history }) {
+    console.log(commentId);
     axios
-      .delete(`${apiUrl}/islogin//islogin/comment/delete/${commentId}`, {
+      .delete(`${apiUrl}/islogin/comment/delete/${commentId}`, {
         headers: {
           Authorization: token,
         },
@@ -83,6 +85,7 @@ const deleteCommentDB = (commentId) => {
       .then((res) => {
         console.log(res);
         dispatch(deleteComment(commentId));
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
