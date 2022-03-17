@@ -16,7 +16,6 @@ const setToken = (token) => {
 };
 
 const delToken = () => {
-  const c = console.log("되어라");
   sessionStorage.removeItem("token");
   sessionStorage.removeItem("uid");
   sessionStorage.removeItem("username");

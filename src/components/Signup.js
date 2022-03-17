@@ -6,13 +6,23 @@ import { actionCreators as userActions } from "../redux/modules/user";
 function Signup(props) {
   const dispatch = useDispatch();
   const [username, setUsername] = React.useState("");
-  const [idRuleCheck, setIdRuleCheck] = React.useState(false);
   const [nickname, setNickname] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [checkPassword, setCheckPassword] = React.useState("");
+  const [career, setCareer] = React.useState("");
+
+  ////유효성 검사
+  const [idRuleCheck, setIdRuleCheck] = React.useState(false);
+  const [passwordRuleCheck, setPasswordRuleCheck] = React.useState(false);
+  const [nicknameRuleCheck, setnicknameRuleCheck] = React.useState(false);
+  const [passwordCheckRuleCheck, setPasswordCheckIdRuleCheck] =
+    React.useState(false);
+
+  //////중복 체크
   const [isCheckUsername, setIsCheckUsername] = React.useState(false);
   const [isCheckNickname, setIsCheckNickname] = React.useState(false);
-  const [career, setCareer] = React.useState("");
+
+  ///경력 리스트
   const options = [
     { value: "", name: "==경력을 선택해 주세요==" },
     { value: "코린이", name: "코린이" },
@@ -30,13 +40,22 @@ function Signup(props) {
     const rule = /^[A-Za-z0-9]{4,10}$/;
     const id = e.target.value;
     setUsername(id);
-    !rule.test(username) ? setIdRuleCheck(false) : setIdRuleCheck(true);
+    rule.test(id) ? setIdRuleCheck(true) : setIdRuleCheck(false);
   };
 
   const nicknameRule = (e) => {
     const nick = e.target.value;
     setNickname(nick);
     console.log(nickname);
+  };
+
+  const passwordRule = (e) => {
+    const rule = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{4,10}$/;
+    const password = e.target.value;
+    setPassword(password);
+    rule.test(password)
+      ? setPasswordRuleCheck(true)
+      : setPasswordRuleCheck(false);
   };
 
   /////////////////////////////////////
@@ -106,7 +125,7 @@ function Signup(props) {
             중복체크
           </button>
         </div>
-        {username.length < 0 && !idRuleCheck && <span> 테스트입니다. </span>}
+        {username.length > 0 && !idRuleCheck && <span> 테스트입니다. </span>}
       </div>
       <div>
         <input
@@ -124,10 +143,11 @@ function Signup(props) {
           className='input2'
           type='password'
           placeholder='password'
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
+          onChange={passwordRule}
         />
+        {password.length > 0 && !passwordRuleCheck && (
+          <span> 테스트입니다. </span>
+        )}
       </div>
       <div>
         <input
