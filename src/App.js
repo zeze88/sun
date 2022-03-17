@@ -32,7 +32,7 @@ function App() {
       <Route path='/edit/:pid' exact component={Create} />
       <Route path='/ranking' exact component={Ranking} />
       <Route path='/login' exact component={Login} />
-      <Route path='/chatchat1' exact component={_Test} />
+      {/* <Route path='/chatchat1' exact component={_Test} /> */}
       <Route path='/detail/:pid' exact component={Detail} />
       <Route path='/search/:keyword' exact component={SearchResult} />
       <Route path='/useredit' exact component={Edituser} />

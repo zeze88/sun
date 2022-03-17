@@ -30,28 +30,28 @@ const Header = () => {
     delToken();
   };
 
-  React.useEffect(() => {
-    if (nickname) {
-      let socket = new SockJs("http://175.118.48.164:7050/ws");
-      stompClient = Stomp.over(socket);
-
-      stompClient.connect({}, () => {
-        stompClient.subscribe(
-          `/queue/user/${nickname}`,
-          (payload) => {
-            let payloadData = JSON.parse(payload.body);
-            console.log(payloadData);
-            setGoPost(payloadData);
-          },
-          token
-        );
-      });
-    } else {
-      // stompClient.disconnect(() => {
-      //   stompClient.unsubscribe(`/queue/user/${nickname}`);
-      // });
-    }
-  }, []);
+  // React.useEffect(() => {
+  //   if (nickname) {
+  //     // let socket = new SockJs("http://175.118.48.164:7050/ws");
+  //     // let socket = new SockJs("http://15.164.231.31/ws");
+  //     stompClient = Stomp.over(socket);
+  //     stompClient.connect({}, () => {
+  //       stompClient.subscribe(
+  //         `/queue/user/${nickname}`,
+  //         (payload) => {
+  //           let payloadData = JSON.parse(payload.body);
+  //           console.log(payloadData);
+  //           setGoPost(payloadData);
+  //         },
+  //         token
+  //       );
+  //     });
+  //   } else {
+  //     // stompClient.disconnect(() => {
+  //     //   stompClient.unsubscribe(`/queue/user/${nickname}`);
+  //     // });
+  //   }
+  // }, []);
 
   return (
     <Container>
