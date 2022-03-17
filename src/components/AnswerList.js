@@ -32,14 +32,6 @@ const AnswerList = ({ isWriter }) => {
   }, []);
 
   const chooseAnswer = (choose_list) => {
-    //답변이 채택되었습니다 :) =>
-    //답변이 채택이 취소되었습니다 :)
-    //이미 채택된 답변이 존재합니다 :)
-
-    // list.filter((v) => v.status == "true" && setThisAnswer(true));
-    // console.log(thisAnswer);
-    // console.log(list);
-
     if (!isChoose) {
       Swal.fire({
         title: "답변을 채택하시겠습니까?",
@@ -49,8 +41,6 @@ const AnswerList = ({ isWriter }) => {
         confirmButtonText: "네 채택하겠습니다.",
         confirmButtonColor: "#7966FF",
         cancelButtonText: "아니오",
-        cancelTextColor: "#7966FF",
-        reverseButtons: true,
       }).then((result) => {
         if (result.isConfirmed) {
           Swal.fire("", "답변이 채택 되었습니다.", "success");
@@ -333,6 +323,7 @@ const SC_Commentbox = styled.div`
 
 const SC_CommentList = styled.div`
   --gray-color: #c4c4c4;
+
   > div {
     display: flex;
     padding: 18px 24px;

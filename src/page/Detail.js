@@ -29,8 +29,6 @@ const Detail = () => {
       confirmButtonColor: "#7966FF",
       cancelButtonText: "아니오",
       cancelTextColor: "#7966FF",
-
-      reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire("", "게시글이 삭제 되었습니다.", "success");
