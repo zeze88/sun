@@ -14,9 +14,7 @@ function Signup(props) {
   ////유효성 검사
   const [idRuleCheck, setIdRuleCheck] = React.useState(false);
   const [passwordRuleCheck, setPasswordRuleCheck] = React.useState(false);
-  const [nicknameRuleCheck, setnicknameRuleCheck] = React.useState(false);
-  const [passwordCheckRuleCheck, setPasswordCheckIdRuleCheck] =
-    React.useState(false);
+  const [nicknameRuleCheck, setNicknameRuleCheck] = React.useState(false);
 
   //////중복 체크
   const [isCheckUsername, setIsCheckUsername] = React.useState(false);
@@ -44,9 +42,10 @@ function Signup(props) {
   };
 
   const nicknameRule = (e) => {
+    const rule = /^[A-Za-z0-9]{4,10}$/;
     const nick = e.target.value;
     setNickname(nick);
-    console.log(nickname);
+    rule.test(nick) ? setNicknameRuleCheck(true) : setNicknameRuleCheck(false);
   };
 
   const passwordRule = (e) => {
@@ -125,7 +124,9 @@ function Signup(props) {
             중복체크
           </button>
         </div>
-        {username.length > 0 && !idRuleCheck && <span> 테스트입니다. </span>}
+        {username.length > 0 && !idRuleCheck && (
+          <span> 아이디 테스트입니다. </span>
+        )}
       </div>
       <div>
         <input
@@ -138,6 +139,9 @@ function Signup(props) {
           중복체크
         </button>
       </div>
+      {nickname.length > 0 && !nicknameRuleCheck && (
+        <span> 닉네임 테스트입니다. </span>
+      )}
       <div>
         <input
           className='input2'
@@ -146,7 +150,7 @@ function Signup(props) {
           onChange={passwordRule}
         />
         {password.length > 0 && !passwordRuleCheck && (
-          <span> 테스트입니다. </span>
+          <span> 패스워드 테스트입니다. </span>
         )}
       </div>
       <div>
@@ -158,6 +162,9 @@ function Signup(props) {
             setCheckPassword(e.target.value);
           }}
         />
+        {checkPassword !== password && (
+          <span> 패스워드 체크 테스트입니다. </span>
+        )}
       </div>
       <div>
         <select onChange={Career}>
@@ -167,6 +174,7 @@ function Signup(props) {
             </option>
           ))}
         </select>
+        {career === "" && <span> 패스워드 체크 테스트입니다. </span>}
       </div>
       <div>
         <button className='SignupButtom' onClick={signup}>
