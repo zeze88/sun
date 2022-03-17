@@ -7,12 +7,14 @@ const RankingOther = ({ list, user_ranking }) => {
   return (
     <SC_OtherRanking>
       <ul>
-        {user_info && user_ranking.rank >= 10 && (
+        {user_info && (
           <li className='my_ranking'>
             <i>{user_ranking.rank}</i>
-            <Profile size={70} />
+            <Profile size={70} imgUrl={user_ranking.userImage} />
             <strong>{user_ranking.nickname}</strong>
-            <em>{user_ranking.point}</em>
+            {user_ranking.point && <em>{user_ranking.point} 점</em>}
+            {user_ranking.weekPoint && <em>{user_ranking.weekPoint} 점</em>}
+            {user_ranking.monthPoint && <em>{user_ranking.monthPoint} 점</em>}
             {user_ranking.blogUrl && <button>SNS</button>}
           </li>
         )}
