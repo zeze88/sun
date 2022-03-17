@@ -106,7 +106,7 @@ function Signup(props) {
             중복체크
           </button>
         </div>
-        {username.length < 4 && !idRuleCheck && <span> 테스트입니다. </span>}
+        {username.length < 0 && !idRuleCheck && <span> 테스트입니다. </span>}
       </div>
       <div>
         <input

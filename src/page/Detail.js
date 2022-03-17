@@ -13,6 +13,7 @@ import Answer from "../components/Answer";
 import AnswerList from "../components/AnswerList";
 import Profile from "../elements/Profile";
 import user from "../redux/modules/user";
+import Postchat from "../components/Postchat";
 
 const Detail = () => {
   const dispatch = useDispatch();
@@ -136,10 +137,7 @@ const Detail = () => {
       </Question>
       <Answer />
       <AnswerList isWriter={post_one.uid} />
-
-      {/* <Commentbox className="comment">
-        <Comment />
-      </Commentbox> */}
+      <Postchat pid={pid} />
     </Container>
   );
 };
