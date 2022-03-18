@@ -160,7 +160,7 @@ const Postchat = ({ pid }) => {
           onClick={() => {
             setTab("CHATROOM");
           }}>
-          채팅
+          채팅 {user}
         </li>
         <li>채팅 인원수 {userData.userCount}</li>
       </ChatTab>

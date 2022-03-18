@@ -18,6 +18,7 @@ const Chat = () => {
   const [connected, setConnected] = React.useState(false);
   const [tab, setTab] = React.useState("CHATROOM");
   const [user, setUser] = React.useState(0);
+  const [time, setTime] = React.useState("");
   const [userData, setUserData] = React.useState({
     username: "",
     message: "",
@@ -118,6 +119,10 @@ const Chat = () => {
         }
         break;
       case "MESSAGE":
+        const time1 = payloadData.createdAt.split("T")[1]; //년월 제거
+        const time2 = time1.split(".")[0]; // 소수점 제거
+        const time3 = time2.split(":")[0] + ":" + time2.split(":")[1]; // 시간, 분
+        setTime(time3);
         publicChats.push(payloadData);
         setPublicChats([...publicChats]);
         setUser(payloadData.userCount);
@@ -165,7 +170,11 @@ const Chat = () => {
                 </>
               )}
               <p className='message-data'>{chat.message}</p>
-              <em>오후 1:00</em>
+              {time.split[0] > 12 ? (
+                <em> 오후 {time}</em>
+              ) : (
+                <em> 오전 {time} </em>
+              )}
             </li>
           ))}
         </ul>
