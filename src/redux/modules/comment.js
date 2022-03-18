@@ -7,11 +7,9 @@ import { apiUrl } from "../../elements/testApiUrl";
 const token = sessionStorage.getItem("token");
 
 const COMMENT_ADD = "COMMENT_ADD";
-const COMMENT_EDIT = "COMMENT_EDIT";
 const COMMENT_DELETE = "COMMENT_DELETE";
 
 const addComment = createAction(COMMENT_ADD, (comment) => ({ comment }));
-const editComment = createAction(COMMENT_EDIT, (comment) => ({ comment }));
 const deleteComment = createAction(COMMENT_DELETE, (comment) => ({ comment }));
 
 const initialState = {
@@ -48,7 +46,7 @@ const addCommentDB = (uid, pid, answerId, comment) => {
   };
 };
 
-const editCommentDB = (commentId, comment) => {
+const editCommentDB = (commentId, comment, pid) => {
   console.log(commentId, comment);
   return function (dispatch, getState, { history }) {
     axios
@@ -64,7 +62,8 @@ const editCommentDB = (commentId, comment) => {
         }
       )
       .then((res) => {
-        dispatch(editComment(comment));
+        console.log(res);
+        window.location.replace(`/detail/${pid}`);
       })
       .catch((err) => {
         console.log(err);
@@ -100,27 +99,13 @@ export default handleActions(
       produce(state, (draft) => {
         draft.list.push(action.payload);
       }),
-    [COMMENT_EDIT]: (state, action) =>
-      produce(state, (draft) => {
-        const newComments = draft.list.find(
-          (c) => c.commentId === action.payload.commentId
-        );
-        newComments.comment = action.payload.newComment;
-      }),
-    [COMMENT_DELETE]: (state, action) =>
-      produce(state, (draft) => {
-        const filter_comment = draft.list.filter(
-          (c) => c.commentId !== action.payload.commentId
-        );
-        draft.list = filter_comment;
-      }),
+    [COMMENT_DELETE]: (state, action) => produce(state, (draft) => {}),
   },
   initialState
 );
 
 const actionCreators = {
   addComment,
-  editComment,
   deleteComment,
   addCommentDB,
   editCommentDB,

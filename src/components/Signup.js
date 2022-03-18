@@ -23,26 +23,22 @@ function Signup(props) {
   ///경력 리스트
   const options = [
     { value: "", name: "==경력을 선택해 주세요==" },
-    { value: "코린이", name: "코린이" },
-    { value: "1년차", name: "1년차" },
-    { value: "2년차", name: "2년차" },
-    { value: "3~5년차", name: "3~5년차이상" },
-    { value: "10년차 이상", name: "10년차이상" },
+    { value: "1년차 이내", name: "1년차 이내" },
+    { value: "1~2년차", name: "1~2년차" },
+    { value: "3~4년차", name: "3~4년차" },
+    { value: "5년차 이상", name: "5년차 이상" },
   ];
 
   /////////////////////////////////경고 문구
-
-  // /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,10}$/
-
   const idRule = (e) => {
-    const rule = /^[A-Za-z0-9]{4,10}$/;
+    const rule = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]|[A-Za-z]{4,10}$/;
     const id = e.target.value;
     setUsername(id);
     rule.test(id) ? setIdRuleCheck(true) : setIdRuleCheck(false);
   };
 
   const nicknameRule = (e) => {
-    const rule = /^[A-Za-z0-9]{4,10}$/;
+    const rule = /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣A-Za-z0-9]{2,8}$/;
     const nick = e.target.value;
     setNickname(nick);
     rule.test(nick) ? setNicknameRuleCheck(true) : setNicknameRuleCheck(false);
@@ -57,7 +53,12 @@ function Signup(props) {
       : setPasswordRuleCheck(false);
   };
 
-  /////////////////////////////////////
+  /////////////////////Career 값 적용
+  const Career = (e) => {
+    console.log(e.target.value);
+    setCareer(e.target.value);
+  };
+  ///////////////////////////////////// 중복체크
 
   const checkUsername = () => {
     if (username === "") {
@@ -80,6 +81,7 @@ function Signup(props) {
     setIsCheckNickname(true);
   };
 
+  ///////////////////////회원가입
   const signup = (e) => {
     e.preventDefault();
 
@@ -104,11 +106,6 @@ function Signup(props) {
     );
     setIsCheckUsername(false);
     setIsCheckNickname(false);
-  };
-
-  const Career = (e) => {
-    console.log(e.target.value);
-    setCareer(e.target.value);
   };
   return (
     <Container>

@@ -20,11 +20,10 @@ const Edituser = (props) => {
   const imgInput = React.useRef();
   const options = [
     { value: "", name: "==경력을 선택해 주세요==" },
-    { value: "코린이", name: "코린이" },
-    { value: "1년차", name: "1년차" },
-    { value: "2년차", name: "2년차" },
-    { value: "3~5년차", name: "3~5년차이상" },
-    { value: "10년차 이상", name: "10년차이상" },
+    { value: "1년차 이내", name: "1년차 이내" },
+    { value: "1~2년차", name: "1~2년차" },
+    { value: "3~4년차", name: "3~4년차" },
+    { value: "5년차 이상", name: "5년차 이상" },
   ];
 
   const Career = (e) => {
