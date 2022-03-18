@@ -16,6 +16,7 @@ const Postchat = ({ pid }) => {
   const [connected, setConnected] = React.useState(false);
   const [tab, setTab] = React.useState("CHATROOM");
   const [time, setTime] = React.useState("");
+  const [user, setUser] = React.useState(0);
   const [userData, setUserData] = React.useState({
     username: "",
     message: "",
@@ -108,6 +109,7 @@ const Postchat = ({ pid }) => {
           console.log(payloadData);
           welcome.set(payloadData.message, []);
           setWelcome(new Map(welcome));
+          setUser(payloadData.userCount);
         }
         break;
       case "OUT":
@@ -115,6 +117,7 @@ const Postchat = ({ pid }) => {
           console.log(payloadData);
           welcome.set(payloadData.message, []);
           setWelcome(new Map(welcome));
+          setUser(payloadData.userCount);
         }
         break;
       case "MESSAGE":
@@ -124,6 +127,7 @@ const Postchat = ({ pid }) => {
         setTime(time3);
         publicChats.push(payloadData);
         setPublicChats([...publicChats]);
+        setUser(payloadData.userCount);
         break;
     }
   };

@@ -15,6 +15,7 @@ const Chat = () => {
   const [publicChats, setPublicChats] = React.useState([]);
   const [connected, setConnected] = React.useState(false);
   const [tab, setTab] = React.useState("CHATROOM");
+  const [user, setUser] = React.useState(0);
   const [userData, setUserData] = React.useState({
     username: "",
     message: "",
@@ -105,6 +106,7 @@ const Chat = () => {
           console.log(payloadData);
           welcome.set(payloadData.message, []);
           setWelcome(new Map(welcome));
+          setUser(payloadData.userCount);
         }
         break;
       case "OUT":
@@ -112,11 +114,13 @@ const Chat = () => {
           console.log(payloadData);
           welcome.set(payloadData.message, []);
           setWelcome(new Map(welcome));
+          setUser(payloadData.userCount);
         }
         break;
       case "MESSAGE":
         publicChats.push(payloadData);
         setPublicChats([...publicChats]);
+        setUser(payloadData.userCount);
         break;
     }
   };
@@ -133,7 +137,7 @@ const Chat = () => {
           onClick={() => {
             setTab("CHATROOM");
           }}>
-          채팅
+          채팅 {user}
         </li>
       </ChatTab>
       <ChatList>
