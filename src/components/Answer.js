@@ -31,6 +31,7 @@ const Answer = ({ isEdit = null, list = null }) => {
     );
     setAddAnswer({ answerTitle: "", answerComment: "" });
   };
+
   const editAnswer = () => {
     dispatch(
       answerActions.editAnswerDB({
@@ -55,15 +56,12 @@ const Answer = ({ isEdit = null, list = null }) => {
             onChange={onChange}
             type='text'
             value={answerTitle}
-            // placeholder={list.answerTitle}
           />
           <textarea
             id='answerComment'
             onChange={onChange}
             type='text'
-            value={answerComment}
-            // placeholder={list.answerComment}
-          ></textarea>
+            value={answerComment}></textarea>
         </SC_InputWrap>
         <ImgUpload isEdit={isEdit} editImg={list.answerImg} />
         <RoundBtn onClick={editAnswer} title='수정' />

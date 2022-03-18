@@ -45,54 +45,87 @@ const addAnswerDB = ({ pid, uid, answerTitle, answerComment }) => {
     const formData = new FormData();
     formData.append("images", img_list);
 
-    axios
-      .post(`${apiUrl}/images/upload`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `${token_res}`,
+    if (!img_list) {
+      axios({
+        method: "post",
+        url: `${apiUrl}/islogin/answer/${pid}`,
+        data: {
+          pid: pid,
+          uid: uid,
+          answerTitle: answerTitle,
+          answerComment: answerComment,
+          answerImg: null,
         },
-      })
-      .then((res) => {
-        console.log("img업로드 성공");
-        const imgUrl = res.data.url;
-        return imgUrl;
-      })
-      .then((imgUrl) => {
-        console.log("img업로드 성공");
-        axios({
-          method: "post",
-          url: `${apiUrl}/islogin/answer/${pid}`,
-          data: {
-            pid: pid,
-            uid: uid,
+        headers: { Authorization: token_res },
+      }).then((res) => {
+        dispatch(
+          addAnswer({
+            pid,
+            uid,
             answerTitle: answerTitle,
             answerComment: answerComment,
-            answerImg: imgUrl,
+            answerImg: null,
+            answerId: res.data,
+            answerLike: false,
+            blogUrl: null,
+            career: null,
+            commnetResponseDtoList: [],
+            createdAt: "",
+            nickname: "",
+            userImage: null,
+          })
+        );
+      });
+    } else {
+      axios
+        .post(`${apiUrl}/images/upload`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `${token_res}`,
           },
-          headers: { Authorization: token_res },
-        }).then((res) => {
-          dispatch(
-            addAnswer({
-              pid,
-              uid,
+        })
+        .then((res) => {
+          console.log("img업로드 성공");
+          const imgUrl = res.data.url;
+          return imgUrl;
+        })
+        .then((imgUrl) => {
+          console.log("img업로드 성공");
+          axios({
+            method: "post",
+            url: `${apiUrl}/islogin/answer/${pid}`,
+            data: {
+              pid: pid,
+              uid: uid,
               answerTitle: answerTitle,
               answerComment: answerComment,
               answerImg: imgUrl,
-              answerId: res.data,
-              answerLike: false,
-              blogUrl: null,
-              career: null,
-              commnetResponseDtoList: [],
-              createdAt: "",
-              nickname: "",
-              userImage: null,
-            })
-          );
+            },
+            headers: { Authorization: token_res },
+          }).then((res) => {
+            dispatch(
+              addAnswer({
+                pid,
+                uid,
+                answerTitle: answerTitle,
+                answerComment: answerComment,
+                answerImg: imgUrl,
+                answerId: res.data,
+                answerLike: false,
+                blogUrl: null,
+                career: null,
+                commnetResponseDtoList: [],
+                createdAt: "",
+                nickname: "",
+                userImage: null,
+              })
+            );
+          });
+        })
+        .catch((err) => {
+          console.log(err);
         });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    }
   };
 };
 
@@ -115,7 +148,7 @@ const editAnswerDB = (props) => {
     formData.append("images", img_list);
     console.log(answerId, answerTitle, answerComment, answerImg);
 
-    if (img_list === "") {
+    if (!img_list) {
       axios({
         method: "put",
         url: `${apiUrl}/islogin/answer/revice/${answerId}`,
