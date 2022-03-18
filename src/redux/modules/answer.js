@@ -131,22 +131,26 @@ const addAnswerDB = ({ pid, uid, answerTitle, answerComment }) => {
 
 const editAnswerDB = (props) => {
   return function (dispatch, getState, { history }) {
-    console.log(props);
     const {
-      pid,
       uid,
-      nickname,
+      pid,
       answerId,
-      answerTitle,
+      answerUid,
+      userImage,
       answerComment,
       answerImg,
+      answerTitle,
+      blogUrl,
+      nickname,
+      createdAt,
+      career,
+      commnetResponseDtoList,
     } = props;
 
     const token_res = sessionStorage.getItem("token");
     const img_list = getState().answer.asPreview;
     const formData = new FormData();
     formData.append("images", img_list);
-    console.log(answerId, answerTitle, answerComment, answerImg);
 
     if (!img_list) {
       axios({
@@ -159,7 +163,28 @@ const editAnswerDB = (props) => {
         },
         headers: { Authorization: token_res },
       }).then((res) => {
-        window.location.replace(`/detail/${pid}`);
+        const list = {
+          uid,
+          pid,
+          answerId,
+          answerUid,
+          userImage,
+          answerComment,
+          answerImg,
+          answerTitle,
+          blogUrl,
+          nickname,
+          createdAt,
+          career,
+          commnetResponseDtoList,
+        };
+        const _answer_list = getState().answer.list;
+        const answer_list = _answer_list.map((v) =>
+          v.answerId === answerId ? list : v
+        );
+
+        dispatch(editAnswer(answer_list));
+        // window.location.replace(`/detail/${pid}`);
       });
     } else {
       axios
@@ -186,7 +211,28 @@ const editAnswerDB = (props) => {
             },
             headers: { Authorization: token_res },
           }).then((res) => {
-            window.location.replace(`/detail/${pid}`);
+            const list = {
+              uid,
+              pid,
+              answerId,
+              answerUid,
+              userImage,
+              answerComment,
+              answerImg: imgUrl,
+              answerTitle,
+              blogUrl,
+              nickname,
+              createdAt,
+              career,
+              commnetResponseDtoList,
+            };
+            const _answer_list = getState().answer.list;
+            const answer_list = _answer_list.map((v) =>
+              v.answerId === answerId ? list : v
+            );
+
+            dispatch(editAnswer(answer_list));
+            // window.location.replace(`/detail/${pid}`);
           });
         })
         .catch((err) => {
@@ -260,7 +306,7 @@ export default handleActions(
       }),
     [EDIT_ANSWER]: (state, action) =>
       produce(state, (draft) => {
-        draft.editList = action.payload.list;
+        draft.list = action.payload.list;
         draft.asPreview = "";
       }),
     [DEL_ANSWER]: (state, action) =>
