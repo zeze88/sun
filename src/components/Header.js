@@ -30,33 +30,33 @@ const Header = () => {
     delToken();
   };
 
-  // React.useEffect(() => {
-  //   if (nickname) {
-  //     // let socket = new SockJs("http://175.118.48.164:7050/ws");
-  //     // let socket = new SockJs("http://15.164.231.31/ws");
-  //     stompClient = Stomp.over(socket);
-  //     stompClient.connect({}, () => {
-  //       stompClient.subscribe(
-  //         `/queue/user/${nickname}`,
-  //         (payload) => {
-  //           let payloadData = JSON.parse(payload.body);
-  //           console.log(payloadData);
-  //           setGoPost(payloadData);
-  //         },
-  //         token
-  //       );
-  //     });
-  //   } else {
-  //     // stompClient.disconnect(() => {
-  //     //   stompClient.unsubscribe(`/queue/user/${nickname}`);
-  //     // });
-  //   }
-  // }, []);
+  React.useEffect(() => {
+    if (nickname) {
+      let socket = new SockJs("http://175.118.48.164:7050/ws");
+      // let socket = new SockJs("http://15.164.231.31/ws");
+      stompClient = Stomp.over(socket);
+      stompClient.connect({}, () => {
+        stompClient.subscribe(
+          `/queue/user/${nickname}`,
+          (payload) => {
+            let payloadData = JSON.parse(payload.body);
+            console.log(payloadData);
+            setGoPost(payloadData);
+          },
+          token
+        );
+      });
+    } else {
+      // stompClient.disconnect(() => {
+      //   stompClient.unsubscribe(`/queue/user/${nickname}`);
+      // });
+    }
+  }, []);
 
   return (
     <Container>
       <div className='Logo' onClick={() => history.push("/")}>
-        아아
+        Logo
       </div>
       <Serch />
       {!isLogin ? (
@@ -76,7 +76,8 @@ const Header = () => {
             <div className='view'>
               <ul onClick={() => history.push("/useredit")}>Mypage</ul>
               <ul onClick={() => history.push("/passedit")}>비밀번호변경</ul>
-              <ul onClick={() => console.log("history.push('동해')")}>2</ul>
+              <ul onClick={() => history.push("/arams")}>알람</ul>
+              <ul onClick={() => history.push("/passedit")}>과심</ul>
               <ul onClick={Logout}>로그아웃</ul>
             </div>
           ) : null}

@@ -1,8 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import Profile from "../elements/Profile";
+import { Link } from "react-router-dom";
+
+const url = sessionStorage.getItem("url");
 
 const RankingTop = ({ list }) => {
+  console.log(url);
   return (
     <SC_TopRanking>
       <ul>
@@ -22,7 +26,9 @@ const RankingTop = ({ list }) => {
               <Profile size={idx === 0 ? 140 : 104} imgUrl={v.userImage} />
               <strong>{v.nickname}</strong>
               <em>{!v.point ? 0 : v.point} 점</em>
-              <button>SNS</button>
+              <Link to='{url}'>
+                <button> SNS</button>
+              </Link>
               <i>{index(idx)}</i>
             </li>
           );
