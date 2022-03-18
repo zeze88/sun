@@ -78,38 +78,57 @@ const addPostDB = ({ title, comment, tags, category }) => {
     console.log(img_list);
     const formData = new FormData();
     formData.append("images", img_list);
-
-    axios
-      .post(`${apiUrl}/images/upload`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `${token_res}`,
+    if (!img_list) {
+      axios({
+        method: "post",
+        url: `${apiUrl}/islogin/post/write`,
+        data: {
+          postTitle: title,
+          postComment: comment,
+          postImg: null,
+          tags: tags,
+          category: category,
         },
-      })
-      .then((res) => {
-        const imgUrl = res.data.url;
-        return imgUrl;
-      })
-      .then((imgUrl) => {
-        axios({
-          method: "post",
-          url: `${apiUrl}/islogin/post/write`,
-          data: {
-            postTitle: title,
-            postComment: comment,
-            postImg: imgUrl,
-            tags: tags,
-            category: category,
-          },
-          headers: { Authorization: `${token_res}` },
-        }).then((res) => {
-          dispatch(addPost({ title, comment, imgUrl, tags, pid: res.data }));
-          history.replace("/");
-        });
-      })
-      .catch((err) => {
-        console.log(err);
+        headers: { Authorization: `${token_res}` },
+      }).then((res) => {
+        dispatch(
+          addPost({ title, comment, imgUrl: null, tags, pid: res.data })
+        );
+        history.replace("/");
       });
+    } else {
+      axios
+        .post(`${apiUrl}/images/upload`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `${token_res}`,
+          },
+        })
+        .then((res) => {
+          const imgUrl = res.data.url;
+          return imgUrl;
+        })
+        .then((imgUrl) => {
+          axios({
+            method: "post",
+            url: `${apiUrl}/islogin/post/write`,
+            data: {
+              postTitle: title,
+              postComment: comment,
+              postImg: imgUrl,
+              tags: tags,
+              category: category,
+            },
+            headers: { Authorization: `${token_res}` },
+          }).then((res) => {
+            dispatch(addPost({ title, comment, imgUrl, tags, pid: res.data }));
+            history.replace("/");
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 };
 
@@ -140,7 +159,7 @@ const editPostDB = (props) => {
     const formData = new FormData();
     formData.append("images", img_list);
 
-    if (postImg) {
+    if (!img_list) {
       axios({
         method: "PUT",
         url: `${apiUrl}/islogin/post/revice/${pid}`,
@@ -156,6 +175,7 @@ const editPostDB = (props) => {
       }).then(() => {
         dispatch(editPost({ postTitle, postComment, tag, category, pid }));
         history.replace(`/detail/${pid}`);
+        window.scrollTo(0, 0);
       });
     } else {
       axios
@@ -185,6 +205,7 @@ const editPostDB = (props) => {
           }).then(() => {
             dispatch(editPost({ postTitle, postComment, tag, category, pid }));
             history.replace(`/detail/${pid}`);
+            window.scrollTo(0, 0);
           });
         })
         .catch((err) => {
@@ -246,10 +267,12 @@ export default handleActions(
     [ADD_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.list.push(action.payload.post);
+        draft.preview = "";
       }),
     [EDIT_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.list = action.payload.post;
+        draft.preview = "";
       }),
     [DEL_POST]: (state, action) =>
       produce(state, (draft) => {

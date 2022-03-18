@@ -32,6 +32,7 @@ const Create = () => {
     if (!isCreate) {
       dispatch(postActions.getOnePostDB(params));
       setAddPost(post_one);
+      setOneCategory(addPost.category);
     }
   }, []);
 
@@ -49,8 +50,6 @@ const Create = () => {
     } else if (!oneCategory) {
       alert("카테고리를 선택해 주세요 :)");
       return;
-    } else if (!img_list) {
-      alert("이미지를 추가 해주세요 :)");
     } else if (addPost.tags) {
       const tags = addPost.tags?.split("#").splice(1);
 
@@ -101,11 +100,12 @@ const Create = () => {
       );
     }
   };
+
   console.log(addPost);
   if (!isCreate) {
     return (
       <PostWrap>
-        <h1>글쓰기 페이지</h1>
+        <h1>수정 페이지</h1>
 
         <h2>카테고리 선택</h2>
         <CategoryDiv length={category.length}>
@@ -134,7 +134,7 @@ const Create = () => {
           </ul>
         </CategoryDiv>
 
-        <h2>내용</h2>
+        <h2>제목</h2>
         <input
           id='postTitle'
           onChange={onChange}
@@ -142,9 +142,7 @@ const Create = () => {
           value={addPost.postTitle}
         />
 
-        <h2>
-          태그입력<em>(선택사항)</em>
-        </h2>
+        <h2>내용</h2>
         <TextareaImg>
           <textarea
             id='postComment'
@@ -157,12 +155,11 @@ const Create = () => {
         <h2>
           태그입력<em></em>
         </h2>
-
         <input
           id='tags'
           onChange={onChange}
           type='text'
-          placeholder={`#${post_one.tag?.join(" #")}`}
+          placeholder={`#${addPost.tag?.join(" #")}`}
         />
         <button onClick={revise}>수정 click</button>
         <button
