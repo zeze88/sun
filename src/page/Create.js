@@ -50,8 +50,6 @@ const Create = () => {
     } else if (!oneCategory) {
       alert("카테고리를 선택해 주세요 :)");
       return;
-    } else if (!img_list) {
-      alert("이미지를 추가 해주세요 :)");
     } else if (addPost.tags) {
       const tags = addPost.tags?.split("#").splice(1);
 

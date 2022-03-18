@@ -10,9 +10,9 @@ const ImgUpload = ({ isEdit = null, editImg = null, cleanImg = null }) => {
   const fileInput = React.useRef();
   const [preImg, setPreImg] = React.useState("");
   const location = useLocation();
-  const pathName = location.pathname.indexOf("/detail") > 0;
+  const pathName = location.pathname.indexOf("/detail") >= 0;
   const prev_img = useSelector((state) => state.answer.asPreview);
-
+  console.log(pathName);
   React.useEffect(() => {
     if (cleanImg === "") {
       fileInput.current.value = "";
