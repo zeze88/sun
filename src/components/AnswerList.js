@@ -45,7 +45,6 @@ const AnswerList = ({ isWriter }) => {
           dispatch(
             answerActions.chooseAnswerDB({
               ...choose_list,
-              uid: user_info,
               answerUid: choose_list.uid,
             })
           );

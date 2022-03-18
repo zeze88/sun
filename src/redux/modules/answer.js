@@ -259,6 +259,8 @@ const delAnswerDB = (answsrId) => {
 
 const chooseAnswerDB = (props) => {
   return function (dispatch, getState) {
+    console.log(props);
+
     const {
       uid,
       pid,
@@ -273,19 +275,37 @@ const chooseAnswerDB = (props) => {
       createdAt,
       career,
       commnetResponseDtoList,
+      status,
     } = props;
 
     apis
       .chooseAnswer(uid, pid, answerId, answerUid)
       .then((res) => {
         const status = res.data.status;
-        console.log(status);
-        dispatch(
-          likeAnswer({
-            status,
-          })
+        const list = {
+          uid,
+          pid,
+          answerId,
+          answerUid,
+          userImage,
+          answerComment,
+          answerImg,
+          answerTitle,
+          blogUrl,
+          nickname,
+          createdAt,
+          career,
+          commnetResponseDtoList,
+          status: status,
+        };
+
+        const _answer_list = getState().answer.list;
+        const answer_list = _answer_list.map((v) =>
+          v.answerId === answerId ? list : v
         );
-        window.location.replace(`/detail/${pid}`);
+
+        dispatch(likeAnswer(answer_list));
+        // window.location.replace(`/detail/${pid}`);
       })
       .catch((err) => {
         console.log(err);
@@ -315,7 +335,7 @@ export default handleActions(
       }),
     [LIKE_ANSWER]: (state, action) =>
       produce(state, (draft) => {
-        draft.status = action.payload.list;
+        draft.list = action.payload.list;
       }),
     [AS_IMG_POST]: (state, action) =>
       produce(state, (draft) => {
