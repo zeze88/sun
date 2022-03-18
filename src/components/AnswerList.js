@@ -23,8 +23,6 @@ const AnswerList = ({ isWriter }) => {
   const [commentId, setCommentId] = React.useState(0);
   const isChoose = list?.find((v) => v.status === "true");
 
-  console.log(list);
-
   React.useEffect(() => {
     if (list.length <= 1) {
       return;
@@ -92,7 +90,7 @@ const AnswerList = ({ isWriter }) => {
       Buttons: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(commentActions.editCommentDB(commentEditId, comment));
+        dispatch(commentActions.editCommentDB(commentEditId, comment, pid));
       } else {
         return;
       }
@@ -390,7 +388,7 @@ const SC_CommentList = styled.div`
     flex: auto;
     margin: 3px;
     height: 2rem;
-    width: 20%;
+    width: 100%;
     height: 100%;
     color: #797979;
 
