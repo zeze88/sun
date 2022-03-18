@@ -64,6 +64,9 @@ function Signup(props) {
     if (username === "") {
       window.alert("아이디를 입력해주세요.");
       return;
+    } else if (idRuleCheck === false) {
+      window.alert("아이디 형식이 맞지않습니다.");
+      return;
     }
     console.log(username, "중복요청");
     dispatch(userActions.checkUsernameDB(username, false));
@@ -74,8 +77,10 @@ function Signup(props) {
     if (nickname === "") {
       window.alert("닉네임이 공란입니다.");
       return;
+    } else if (nicknameRuleCheck === false) {
+      window.alert("닉네임 형식이 맞지않습니다.");
+      return;
     }
-
     console.log(nickname, "의 중복확인 요청을 dispatch 했습니다.");
     dispatch(userActions.checkNicknameDB(nickname, false));
     setIsCheckNickname(true);
@@ -121,10 +126,10 @@ function Signup(props) {
             중복체크
           </button>
         </div>
-        {username.length > 0 && !idRuleCheck && (
-          <span> 아이디 테스트입니다. </span>
-        )}
-      </div>
+      </div>{" "}
+      {username.length > 0 && !idRuleCheck && (
+        <span> 아이디 테스트입니다. </span>
+      )}
       <div>
         <input
           className='input1'
@@ -146,10 +151,10 @@ function Signup(props) {
           placeholder='password'
           onChange={passwordRule}
         />
-        {password.length > 0 && !passwordRuleCheck && (
-          <span> 패스워드 테스트입니다. </span>
-        )}
       </div>
+      {password.length > 0 && !passwordRuleCheck && (
+        <span> 패스워드 테스트입니다. </span>
+      )}
       <div>
         <input
           className='input2'
@@ -159,10 +164,8 @@ function Signup(props) {
             setCheckPassword(e.target.value);
           }}
         />
-        {checkPassword !== password && (
-          <span> 패스워드 체크 테스트입니다. </span>
-        )}
-      </div>
+      </div>{" "}
+      {checkPassword !== password && <span> 패스워드 체크 테스트입니다. </span>}
       <div>
         <select onChange={Career}>
           {options.map((option, index) => (
@@ -171,8 +174,8 @@ function Signup(props) {
             </option>
           ))}
         </select>
-        {career === "" && <span> 패스워드 체크 테스트입니다. </span>}
       </div>
+      {career === "" && <span> 경력 빈값 테스트입니다. </span>}
       <div>
         <button className='SignupButtom' onClick={signup}>
           회원가입
