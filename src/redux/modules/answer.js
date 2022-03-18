@@ -131,22 +131,26 @@ const addAnswerDB = ({ pid, uid, answerTitle, answerComment }) => {
 
 const editAnswerDB = (props) => {
   return function (dispatch, getState, { history }) {
-    console.log(props);
     const {
-      pid,
       uid,
-      nickname,
+      pid,
       answerId,
-      answerTitle,
+      answerUid,
+      userImage,
       answerComment,
       answerImg,
+      answerTitle,
+      blogUrl,
+      nickname,
+      createdAt,
+      career,
+      commnetResponseDtoList,
     } = props;
 
     const token_res = sessionStorage.getItem("token");
     const img_list = getState().answer.asPreview;
     const formData = new FormData();
     formData.append("images", img_list);
-    console.log(answerId, answerTitle, answerComment, answerImg);
 
     if (!img_list) {
       axios({
@@ -159,7 +163,28 @@ const editAnswerDB = (props) => {
         },
         headers: { Authorization: token_res },
       }).then((res) => {
-        window.location.replace(`/detail/${pid}`);
+        const list = {
+          uid,
+          pid,
+          answerId,
+          answerUid,
+          userImage,
+          answerComment,
+          answerImg,
+          answerTitle,
+          blogUrl,
+          nickname,
+          createdAt,
+          career,
+          commnetResponseDtoList,
+        };
+        const _answer_list = getState().answer.list;
+        const answer_list = _answer_list.map((v) =>
+          v.answerId === answerId ? list : v
+        );
+
+        dispatch(editAnswer(answer_list));
+        // window.location.replace(`/detail/${pid}`);
       });
     } else {
       axios
@@ -186,7 +211,28 @@ const editAnswerDB = (props) => {
             },
             headers: { Authorization: token_res },
           }).then((res) => {
-            window.location.replace(`/detail/${pid}`);
+            const list = {
+              uid,
+              pid,
+              answerId,
+              answerUid,
+              userImage,
+              answerComment,
+              answerImg: imgUrl,
+              answerTitle,
+              blogUrl,
+              nickname,
+              createdAt,
+              career,
+              commnetResponseDtoList,
+            };
+            const _answer_list = getState().answer.list;
+            const answer_list = _answer_list.map((v) =>
+              v.answerId === answerId ? list : v
+            );
+
+            dispatch(editAnswer(answer_list));
+            // window.location.replace(`/detail/${pid}`);
           });
         })
         .catch((err) => {
@@ -213,6 +259,8 @@ const delAnswerDB = (answsrId) => {
 
 const chooseAnswerDB = (props) => {
   return function (dispatch, getState) {
+    console.log(props);
+
     const {
       uid,
       pid,
@@ -227,19 +275,37 @@ const chooseAnswerDB = (props) => {
       createdAt,
       career,
       commnetResponseDtoList,
+      status,
     } = props;
 
     apis
       .chooseAnswer(uid, pid, answerId, answerUid)
       .then((res) => {
         const status = res.data.status;
-        console.log(status);
-        dispatch(
-          likeAnswer({
-            status,
-          })
+        const list = {
+          uid,
+          pid,
+          answerId,
+          answerUid,
+          userImage,
+          answerComment,
+          answerImg,
+          answerTitle,
+          blogUrl,
+          nickname,
+          createdAt,
+          career,
+          commnetResponseDtoList,
+          status: status,
+        };
+
+        const _answer_list = getState().answer.list;
+        const answer_list = _answer_list.map((v) =>
+          v.answerId === answerId ? list : v
         );
-        window.location.replace(`/detail/${pid}`);
+
+        dispatch(likeAnswer(answer_list));
+        // window.location.replace(`/detail/${pid}`);
       })
       .catch((err) => {
         console.log(err);
@@ -260,7 +326,7 @@ export default handleActions(
       }),
     [EDIT_ANSWER]: (state, action) =>
       produce(state, (draft) => {
-        draft.editList = action.payload.list;
+        draft.list = action.payload.list;
         draft.asPreview = "";
       }),
     [DEL_ANSWER]: (state, action) =>
@@ -269,7 +335,7 @@ export default handleActions(
       }),
     [LIKE_ANSWER]: (state, action) =>
       produce(state, (draft) => {
-        draft.status = action.payload.list;
+        draft.list = action.payload.list;
       }),
     [AS_IMG_POST]: (state, action) =>
       produce(state, (draft) => {

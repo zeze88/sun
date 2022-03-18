@@ -11,8 +11,7 @@ const ImgUpload = ({ isEdit = null, editImg = null, cleanImg = null }) => {
   const [preImg, setPreImg] = React.useState("");
   const location = useLocation();
   const pathName = location.pathname.indexOf("/detail") >= 0;
-  const prev_img = useSelector((state) => state.answer.asPreview);
-  console.log(pathName);
+
   React.useEffect(() => {
     if (cleanImg === "") {
       fileInput.current.value = "";
@@ -25,7 +24,6 @@ const ImgUpload = ({ isEdit = null, editImg = null, cleanImg = null }) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      // console.log(reader.result);
       setPreImg(reader.result);
     };
 

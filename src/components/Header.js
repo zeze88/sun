@@ -10,6 +10,7 @@ import { actionCreators as loOutAction } from "../redux/modules/user";
 import Serch from "./Serch";
 import Profile from "../elements/Profile";
 import { delToken } from "../shared/token";
+import { apiUrl } from "../elements/testApiUrl";
 
 let stompClient = null;
 const Header = () => {
@@ -32,8 +33,8 @@ const Header = () => {
 
   React.useEffect(() => {
     if (nickname) {
-      let socket = new SockJs("http://175.118.48.164:7050/ws");
-      // let socket = new SockJs("http://15.164.231.31/ws");
+      let socket = new SockJs(`${apiUrl}/ws`);
+
       stompClient = Stomp.over(socket);
       stompClient.connect({}, () => {
         stompClient.subscribe(

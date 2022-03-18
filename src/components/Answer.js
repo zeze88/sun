@@ -8,7 +8,7 @@ import ImgUpload from "./ImgUpload";
 import { actionCreators as answerActions } from "../redux/modules/answer";
 import RoundBtn from "../elements/RoundBtn";
 
-const Answer = ({ isEdit = null, list = null }) => {
+const Answer = ({ close = null, isEdit = null, list = null }) => {
   const dispatch = useDispatch();
   const params = useParams().pid;
   const user_info = sessionStorage.getItem("uid");
@@ -36,17 +36,12 @@ const Answer = ({ isEdit = null, list = null }) => {
     dispatch(
       answerActions.editAnswerDB({
         ...addAnswer,
-        answerId: list.answerId,
-        pid: params,
-        uid: nickname,
       })
     );
+    close(list.pid);
   };
 
   if (isEdit) {
-    console.log(list);
-    console.log(list.answerId);
-
     return (
       <SC_Answer>
         <SC_InputWrap>
