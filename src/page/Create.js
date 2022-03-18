@@ -103,9 +103,6 @@ const Create = () => {
     }
   };
 
-  console.log(oneCategory);
-  console.log(addPost.category);
-
   if (!isCreate) {
     return (
       <PostWrap>
