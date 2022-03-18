@@ -278,6 +278,8 @@ const NewPassWordDB = (uid, password, newPassword, newPasswordCheck) => {
       .then((res) => {
         console.log(res);
         window.alert("비밀번호 수정 성공");
+        history.push("/");
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
