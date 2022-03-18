@@ -177,7 +177,7 @@ const logEditDB = (uid, nickname, career, url, userImg) => {
         }
       )
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
         dispatch(
           logEdit({
             nickname: nickname,
@@ -189,8 +189,7 @@ const logEditDB = (uid, nickname, career, url, userImg) => {
         sessionStorage.setItem("nickname", nickname);
         sessionStorage.setItem("career", career);
         sessionStorage.setItem("url", url);
-        // history.push("/");
-        // window.location.reload();
+        window.location.replace("/");
       })
       .catch((err) => {
         console.log(err);
