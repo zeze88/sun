@@ -10,7 +10,7 @@ const ImgUpload = ({ isEdit = null, editImg = null, cleanImg = null }) => {
   const fileInput = React.useRef();
   const [preImg, setPreImg] = React.useState("");
   const location = useLocation();
-  const pathName = location.pathname !== "/create";
+  const pathName = location.pathname.indexOf("/detail") > 0;
   const prev_img = useSelector((state) => state.answer.asPreview);
 
   React.useEffect(() => {

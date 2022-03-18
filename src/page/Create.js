@@ -103,10 +103,11 @@ const Create = () => {
     }
   };
 
+  console.log(addPost);
   if (!isCreate) {
     return (
       <PostWrap>
-        <h1>글쓰기 페이지</h1>
+        <h1>수정 페이지</h1>
 
         <h2>카테고리 선택</h2>
         <CategoryDiv length={category.length}>
@@ -160,7 +161,7 @@ const Create = () => {
           id='tags'
           onChange={onChange}
           type='text'
-          value={`#${post_one.tag?.join(" #")}`}
+          placeholder={`#${addPost.tag?.join(" #")}`}
         />
         <button onClick={revise}>수정 click</button>
         <button

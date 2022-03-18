@@ -140,7 +140,7 @@ const editPostDB = (props) => {
     const formData = new FormData();
     formData.append("images", img_list);
 
-    if (postImg) {
+    if (!img_list) {
       axios({
         method: "PUT",
         url: `${apiUrl}/islogin/post/revice/${pid}`,
@@ -246,10 +246,12 @@ export default handleActions(
     [ADD_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.list.push(action.payload.post);
+        draft.preview = "";
       }),
     [EDIT_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.list = action.payload.post;
+        draft.preview = "";
       }),
     [DEL_POST]: (state, action) =>
       produce(state, (draft) => {
