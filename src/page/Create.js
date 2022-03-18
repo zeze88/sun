@@ -32,6 +32,7 @@ const Create = () => {
     if (!isCreate) {
       dispatch(postActions.getOnePostDB(params));
       setAddPost(post_one);
+      setOneCategory(addPost.category);
     }
   }, []);
 
@@ -101,7 +102,10 @@ const Create = () => {
       );
     }
   };
-  console.log(addPost);
+
+  console.log(oneCategory);
+  console.log(addPost.category);
+
   if (!isCreate) {
     return (
       <PostWrap>
@@ -134,7 +138,7 @@ const Create = () => {
           </ul>
         </CategoryDiv>
 
-        <h2>내용</h2>
+        <h2>제목</h2>
         <input
           id='postTitle'
           onChange={onChange}
@@ -142,9 +146,7 @@ const Create = () => {
           value={addPost.postTitle}
         />
 
-        <h2>
-          태그입력<em>(선택사항)</em>
-        </h2>
+        <h2>내용</h2>
         <TextareaImg>
           <textarea
             id='postComment'
@@ -157,12 +159,11 @@ const Create = () => {
         <h2>
           태그입력<em></em>
         </h2>
-
         <input
           id='tags'
           onChange={onChange}
           type='text'
-          placeholder={`#${post_one.tag?.join(" #")}`}
+          value={`#${post_one.tag?.join(" #")}`}
         />
         <button onClick={revise}>수정 click</button>
         <button
