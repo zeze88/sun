@@ -154,7 +154,11 @@ const editPostDB = (props) => {
       userImage,
     } = props;
 
-    const token_res = sessionStorage.getItem("token");
+    const token_res = {
+      Authorization: sessionStorage.getItem("token")
+        ? sessionStorage.getItem("token")
+        : "Authorization",
+    };
     const img_list = getState().post.preview;
     const formData = new FormData();
     formData.append("images", img_list);

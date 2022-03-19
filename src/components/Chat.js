@@ -8,7 +8,9 @@ import { apiUrl } from "../elements/testApiUrl";
 let stompClient = null;
 const Chat = () => {
   const token = {
-    Authorization: sessionStorage.getItem("token"),
+    Authorization: sessionStorage.getItem("token")
+      ? sessionStorage.getItem("token")
+      : "Authorization",
   };
   const username = sessionStorage.getItem("nickname");
 
