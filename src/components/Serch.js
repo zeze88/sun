@@ -22,13 +22,14 @@ const Serch = () => {
   }, []);
 
   return (
-    <Container
-      className={showSearch ? "active" : ""}
-      onClick={() => {
-        setShowSearch(!showSearch);
-      }}>
+    <Container className={showSearch ? "active" : ""}>
       <div className='inputdiv'>
-        <Search className='search_icon' />
+        <Search
+          className='search_icon'
+          onClick={() => {
+            setShowSearch(!showSearch);
+          }}
+        />
         <input
           onKeyPress={onKeyPress}
           onChange={(e) => {
@@ -81,6 +82,7 @@ const Container = styled.div`
     cursor: pointer;
     transform: translateY(-50%);
     background: url("icon/search.svg") no-repeat center/contain;
+    z-index: 10;
   }
 
   input {
