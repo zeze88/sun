@@ -20,12 +20,11 @@ const Category = () => {
 
   return (
     <Container>
-      <div>
-        <div onClick={() => history.push("/")}>전체 게시글</div>
-        <div onClick={CategoryView}>언어</div>
-        <div onClick={() => history.push("/ranking")}>랭킹</div>
-      </div>
-      <div>
+      <ul>
+        <li onClick={CategoryView}>언어</li>
+        <li onClick={() => history.push("/ranking")}>랭킹</li>
+      </ul>
+      <div className='category_list'>
         {categoryView ? (
           <div onChange={CategoryList}>
             {category.map((c, idx) => (
@@ -45,29 +44,49 @@ const Category = () => {
 };
 
 const Container = styled.div`
-  width: 1280px;
-  height: 30px;
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-  > div {
+  position: relative;
+  margin-left: 40px;
+
+  ul {
     display: flex;
-    width: 1280px;
-    margin-top: 1rem;
+    font-size: 20px;
+    font-weight: 700;
+    color: #5e45f2;
+  }
+
+  li {
+    width: 98px;
+    height: 46px;
+    line-height: 46px;
+    text-align: center;
+  }
+
+  .category_list {
+    position: absolute;
+    top: 74px;
+    left: 0;
+    width: 250px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px 0 rgba(36, 13, 177, 0.2);
+    background-color: #fff;
+
     > div {
-      width: 100px;
-      margin-left: 1rem;
+      padding: 5px;
     }
   }
+
   div.C {
-    width: 250px;
-    height: 30px;
-    display: flex;
-    flex-direction: column;
-    margin: 0 0 0 7rem;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 12px;
     cursor: pointer;
-    position: relative;
-    z-index: 5;
+    border-radius: 8px;
+
+    &:hover {
+      color: #fff;
+      background-color: #7966ff;
+    }
   }
 `;
 export default Category;

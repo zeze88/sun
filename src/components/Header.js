@@ -9,8 +9,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as loOutAction } from "../redux/modules/user";
 import Serch from "./Serch";
 import Profile from "../elements/Profile";
+import Category from "./Category";
 import { delToken } from "../shared/token";
 import { apiUrl } from "../elements/testApiUrl";
+import { ReactComponent as LogoSvg } from "../svg/logo_header.svg";
+import { ReactComponent as ArrowDown } from "../svg/arrow_down_b.svg";
+import { ReactComponent as User } from "../svg/user.svg";
 
 let stompClient = null;
 const Header = () => {
@@ -56,61 +60,84 @@ const Header = () => {
 
   return (
     <Container>
-      <div className='Logo' onClick={() => history.push("/")}>
-        Logo
+      <div>
+        <LogoSvg className='Logo' onClick={() => history.push("/")} />
+
+        <Category />
+
+        <Serch />
+        {!isLogin ? (
+          <div className='auth none' onClick={() => history.push("/login")}>
+            <i>
+              <User />
+            </i>
+            <span>회원가입/로그인</span>
+          </div>
+        ) : (
+          <div className='auth my' onClick={View}>
+            <i className={goPost.status ? "active" : ""}>
+              <Profile size={36} imgUrl={userImage} />
+            </i>
+            {nickname}
+            <ArrowDown className='arrow' />
+            {view ? (
+              <ul className='view'>
+                <li onClick={() => history.push("/useredit")}>프로필 편집</li>
+                <li onClick={() => history.push("/passedit")}>
+                  비밀번호 재설정
+                </li>
+                <li onClick={() => history.push("/arams")}>알람 내역</li>
+                <li onClick={() => history.push("/passedit")}>과심글</li>
+                <li className='logout' onClick={Logout}>
+                  로그아웃
+                </li>
+              </ul>
+            ) : null}
+          </div>
+        )}
       </div>
-      <Serch />
-      {!isLogin ? (
-        <div className='none'>
-          <button onClick={() => history.push("/login")}>
-            회원가입/로그인
-          </button>
-        </div>
-      ) : (
-        <div className='my' onClick={View}>
-          <i className={goPost.status ? "active" : ""}>
-            <Profile size={36} imgUrl={userImage} />
-          </i>
-          {nickname}
-          <div>아래꺽쇠</div>
-          {view ? (
-            <div className='view'>
-              <ul onClick={() => history.push("/useredit")}>Mypage</ul>
-              <ul onClick={() => history.push("/passedit")}>비밀번호변경</ul>
-              <ul onClick={() => history.push("/arams")}>알람</ul>
-              <ul onClick={() => history.push("/passedit")}>과심</ul>
-              <ul onClick={Logout}>로그아웃</ul>
-            </div>
-          ) : null}
-        </div>
-      )}
     </Container>
   );
 };
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  height: 72px;
-  width: 1280px;
-  margin: auto;
-  align-items: center;
-  justify-content: space-between;
-  div.Logo {
-    width: 220px;
-    height: 52px;
+  height: 100px;
+  margin-bottom: 24px;
+  box-shadow: -4px 5px 14px 0 rgb(65 0 131 / 6%);
+
+  > div {
     display: flex;
-    justify-content: center;
+    max-width: 1440px;
+    height: 100%;
+    margin: 0 auto;
     align-items: center;
-    background-color: #c4c4c4;
-    border-radius: 2rem;
   }
-  div.my {
-    width: 191px;
-    height: 63px;
-    display: flex;
+
+  .auth {
+    position: relative;
     align-items: center;
-    background-color: #f7f7f7;
+    justify-content: center;
+    width: 280px;
+    height: 52px;
+    padding-left: 20px;
+    padding-right: 17px;
+    border-radius: 8px;
+    box-shadow: 0 0 4px 0 rgba(172, 168, 203, 0.2);
+  }
+
+  div.Logo {
+    flex: none;
+    width: 220px;
+    height: 38px;
+    background: url("logo/logo_header.svg") no-repeat center/contain;
+  }
+
+  div.my {
+    display: flex;
+
+    i {
+      margin-right: 10px;
+    }
 
     i.active {
       span {
@@ -131,49 +158,60 @@ const Container = styled.div`
     }
   }
 
-  div.my > div {
-    margin-left: 1rem;
+  div.my > .arrow {
+    margin-left: auto;
+    width: 24px;
+    height: 24px;
   }
 
   div.none {
     width: 191;
     height: 63px;
     display: flex;
+    color: #7966ff;
     align-items: center;
+    cursor: pointer;
   }
 
-  div.view {
-    width: 191px;
+  ul.view {
     position: absolute;
-    margin-top: 14rem;
-    /* background-color: black; */
-    display: flex;
-    flex-direction: column;
-    background-color: #f7f7f7;
+    top: 100%;
+    right: 0;
+    width: 100%;
+    padding: 30px 24px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px 0 rgba(172, 168, 203, 0.4);
   }
-  div.view > ul {
-    border: 1px solid black;
+
+  ul.view > li {
     height: 2rem;
-    padding: 0.5rem 0 0.5rem 0;
+    padding: 4px 8px;
+    margin-bottom: 6px;
     font-size: 1rem;
     text-align: center;
     cursor: pointer;
-    padding-inline-start: 0px;
-    margin-block-start: 0;
-    margin-block-end: 0;
+    color: #333;
+    font-size: 16px;
+
+    &.logout {
+      color: #797979;
+    }
   }
 
   i {
-    width: 40px;
-    height: 40px;
-    border: 0px solid #d6d6d6;
-    border-radius: 50%;
-    margin: 0 1rem;
+    display: inline-flex;
+    margin-right: 12px;
   }
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+
   button {
     width: 138px;
     height: 52px;
-    background-color: #c4c4c4;
     border-radius: 2rem;
     font-size: 14px;
     color: black;
