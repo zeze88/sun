@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Route, useLocation } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../src/redux/configureStore";
@@ -16,18 +16,13 @@ import Edituser from "./page/Edituser";
 import Password from "./page/Password";
 import Footer from "./components/Footer";
 import Arams from "./page/Arams";
+import serch from "./redux/modules/serch";
 
 function App() {
-  const login = useLocation();
-  const edit = login.pathname.indexOf("edit");
-  const useredit = login.pathname.indexOf("useredit");
+  const location = useLocation();
   return (
     <div className='App'>
-      {login.pathname === "/login" ? null : <Header />}
-      {login.pathname === "/login" ? null : login.pathname ===
-        "/create" ? null : edit === 1 ? null : useredit === 1 ? null : (
-        <Category />
-      )}
+      {location.pathname === "/login" ? null : <Header />}
       <Route path='/' exact component={Main} />
       <Route path='/create' exact component={Create} />
       <Route path='/edit/:pid' exact component={Create} />
