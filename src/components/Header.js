@@ -11,6 +11,7 @@ import Serch from "./Serch";
 import Profile from "../elements/Profile";
 import { delToken } from "../shared/token";
 import { apiUrl } from "../elements/testApiUrl";
+import logo from "../svg/logo.svg";
 
 let stompClient = null;
 const Header = () => {
@@ -57,7 +58,7 @@ const Header = () => {
   return (
     <Container>
       <div className='Logo' onClick={() => history.push("/")}>
-        Logo
+        <img src={logo} />
       </div>
       <Serch />
       {!isLogin ? (
@@ -92,7 +93,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   height: 72px;
-  width: 1280px;
+  width: 1440px;
   margin: auto;
   align-items: center;
   justify-content: space-between;

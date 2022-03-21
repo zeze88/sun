@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Profile from "../elements/Profile";
 import { actionCreators as userActions } from "../redux/modules/user";
+import img_down from "../svg/arrow_down_b.svg";
 
 const userNickname = sessionStorage.getItem("nickname");
 const userCareer = sessionStorage.getItem("career");
@@ -17,18 +18,19 @@ const Edituser = (props) => {
   const [userImg, setUserImg] = useState(userImage);
   const [blogUrl, setBlogUrl] = useState(userURL);
   const [career, setCareer] = useState(userCareer);
+  const [careerSelect, setCareerSelect] = useState(false);
   const imgInput = React.useRef();
   const options = [
-    { value: "", name: "==경력을 선택해 주세요==" },
+    { value: "", name: "경력" },
     { value: "1년차 이내", name: "1년차 이내" },
     { value: "1~2년차", name: "1~2년차" },
     { value: "3~4년차", name: "3~4년차" },
     { value: "5년차 이상", name: "5년차 이상" },
   ];
-
-  const Career = (e) => {
-    console.log(e.target.value);
-    setCareer(e.target.value);
+  console.log(careerSelect);
+  const Career = (value) => {
+    console.log(value);
+    setCareer(value);
   };
 
   const editNickname = (e) => {
@@ -100,7 +102,6 @@ const Edituser = (props) => {
       }
       return;
     } else if (window.confirm("수정?")) {
-      console.log("2번");
       dispatch(userActions.logEditDB2(uid, nickname, career, blogUrl, userImg));
       return;
     }
@@ -124,32 +125,40 @@ const Edituser = (props) => {
           <label htmlFor='profile'>사진 편집</label>
         </div>
         <div className='profile'>
-          <div className='nickname'>
-            <p>닉네임 변경</p>
+          <div>
             <div>
-              <input onChange={editNickname} value={nickname}></input>
+              <input
+                placeholder='닉네임'
+                onChange={editNickname}
+                value={nickname}></input>
               <button className='check' onClick={Check}>
                 중복체크
               </button>
             </div>
           </div>
-          <div className='nickname'>
-            <p>URL</p>
+          <div>
             <div>
               <input
+                placeholder='sns 계정 url 기입'
                 onChange={url}
                 value={userURL === "undefined" ? null : blogUrl}></input>
             </div>
           </div>
-          <div className='career'>
-            <p>나의 경력</p>
-            <select onChange={Career} value={career}>
-              {options.map((option, index) => (
-                <option key={index} value={option.value}>
-                  {option.name}
-                </option>
-              ))}
-            </select>
+          <div
+            className='career'
+            onClick={() => setCareerSelect(!careerSelect)}>
+            {careerSelect
+              ? options.map((v, idx) => (
+                  <li
+                    key={idx}
+                    onClick={() => {
+                      Career(v.name);
+                      setCareerSelect(false);
+                    }}>
+                    {v.name}
+                  </li>
+                ))
+              : null}
           </div>
           <button onClick={Save}>저장하기</button>
         </div>
@@ -159,18 +168,21 @@ const Edituser = (props) => {
 };
 
 const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  margin: 65px auto 0px auto;
+  min-width: 1440px;
+  min-height: 960px;
+  margin: 0 auto;
+  padding-top: 30px;
   > div.title {
-    font-size: 26px;
+    width: 116px;
+    height: 35px;
+    font-size: 24px;
     font-weight: 600;
   }
   > div.user {
     width: 830px;
     height: 400px;
     display: flex;
-    margin: 9rem auto;
+    margin: auto;
     > div.img {
       width: 350px;
       height: 400px;
@@ -192,22 +204,17 @@ const Container = styled.div`
       }
     }
     > div.profile {
-      width: 500px;
-      height: 400px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      width: 800px;
+      height: 312px;
+      margin: auto;
       > div {
         width: 500px;
-        height: 100px;
-        display: flex;
+        height: 72px;
         flex-direction: column;
         justify-content: space-evenly;
-        margin-bottom: 3rem;
         > div {
           width: 500px;
-          height: 100px;
+          height: 72px;
           display: flex;
           flex-direction: row;
           justify-content: space-evenly;
@@ -220,6 +227,7 @@ const Container = styled.div`
             border-radius: 0.5rem;
             border: 0px solid black;
             margin: auto;
+            font-size: 16px;
             outline: 0;
           }
           > button.check {
@@ -231,48 +239,30 @@ const Container = styled.div`
             border-radius: 0.5rem;
           }
         }
-        > p {
-          width: 500px;
-          height: 23px;
-          font-size: 1.2rem;
-          margin-bottom: 1rem;
-        }
-        > select {
-          display: block;
-          width: 100%;
-          height: 55px;
-          font-size: 1rem;
-          font-weight: 400;
-          line-height: 1rem;
-          border: 1px solid black;
+        > button {
+          width: 150px;
+          height: 3rem;
+          text-align: center;
+          background-color: #343434;
           border-radius: 0.5rem;
-          -webkit-appearance: none;
-          -moz-appearance: none;
-          appearance: none;
-          background-color: #f7f7f7;
-          option {
-            text-align: center;
-          }
+          margin-top: -1rem;
         }
       }
-      > button {
-        width: 150px;
-        height: 3rem;
-        text-align: center;
-        background-color: #343434;
+      label {
+        width: 135px;
+        height: 43.5px;
+        border: 1px solid black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         border-radius: 0.5rem;
-        margin-top: -1rem;
+        color: #b0b0b0;
       }
     }
-    label {
-      width: 135px;
-      height: 43.5px;
+    div.career {
+      width: 500px;
+      height: 72px;
       border: 1px solid black;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 0.5rem;
-      color: #b0b0b0;
     }
   }
 `;

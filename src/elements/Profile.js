@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import user from "../svg/user.svg";
 
 const Profile = ({ imgUrl, size = "30" }) => {
   return <ProfileImg imgUrl={imgUrl} size={size}></ProfileImg>;
@@ -14,10 +15,7 @@ const ProfileImg = styled.span`
   height: ${props.size}px;
   border-radius:${props.size}px;
   `}
-  background: url(${(props) =>
-    props.imgUrl
-      ? props.imgUrl
-      : "https://t1.daumcdn.net/cfile/tistory/21340A3650ED95850C"})
+  background: url(${(props) => (props.imgUrl ? props.imgUrl : user)})
     no-repeat center / cover;
 `;
 

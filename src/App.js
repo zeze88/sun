@@ -19,12 +19,13 @@ import Arams from "./page/Arams";
 
 function App() {
   const login = useLocation();
-  const check = login.pathname.indexOf("edit");
+  const edit = login.pathname.indexOf("edit");
+  const useredit = login.pathname.indexOf("useredit");
   return (
     <div className='App'>
       {login.pathname === "/login" ? null : <Header />}
       {login.pathname === "/login" ? null : login.pathname ===
-        "/create" ? null : check === 1 ? null : (
+        "/create" ? null : edit === 1 ? null : useredit === 1 ? null : (
         <Category />
       )}
       <Route path='/' exact component={Main} />
