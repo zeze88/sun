@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { useLocation, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
+import { ReactComponent as ArrowSvg } from "../svg/arrow_down_b.svg";
+import { ReactComponent as ArrowActiveSvg } from "../svg/arrow_up_b.svg";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { history } from "../redux/configureStore";
 import { category } from "../elements/category";
@@ -119,6 +121,8 @@ const Create = () => {
               : addPost.category
               ? addPost.category
               : " 카테고리를 선택"}
+
+            {isSelect ? <ArrowActiveSvg /> : <ArrowSvg />}
           </span>
           <ul className={isSelect ? "" : "close"}>
             {category.map((v, idx) => (
@@ -184,6 +188,7 @@ const Create = () => {
             setIsSelect(!isSelect);
           }}>
           {oneCategory === "" ? " 카테고리를 선택" : oneCategory}
+          {isSelect ? <ArrowActiveSvg /> : <ArrowSvg />}
         </span>
         <ul className={isSelect ? "" : "close"}>
           {category.map((v, idx) => (
@@ -301,10 +306,13 @@ const TextareaImg = styled.div`
   }
 
   .img_load {
-    padding: 16px 14px;
     border-radius: 8px;
     border-bottom: none;
     background-color: #f4f4fb;
+
+    svg {
+      margin-left: 0;
+    }
   }
 `;
 
@@ -315,7 +323,9 @@ const CategoryDiv = styled.div`
   position: relative;
 
   > span {
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
     height: 52px;
     line-height: 52px;

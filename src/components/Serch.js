@@ -75,7 +75,7 @@ const Container = styled.div`
   .search_icon {
     position: absolute;
     top: 50%;
-    left: 5px;
+    left: 12px;
     display: inline-block;
     width: 32px;
     height: 32px;

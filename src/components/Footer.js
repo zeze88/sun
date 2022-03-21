@@ -1,11 +1,14 @@
 import React from "react";
+import { ReactComponent as FooterLogo } from "../svg/logo_footer.svg";
 import styled from "styled-components";
 
 const Footer = () => {
   return (
     <FooterWrap>
       <div>
-        <h2>logo</h2>
+        <h2>
+          <FooterLogo />
+        </h2>
         <ul>
           <li>문의사항</li>
           <li>코알리팀 소개</li>
@@ -27,6 +30,10 @@ const FooterWrap = styled.div`
     height: 150px;
     line-height: 150px;
     color: #fff;
+  }
+
+  svg {
+    vertical-align: middle;
   }
 
   ul {

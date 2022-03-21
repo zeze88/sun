@@ -138,7 +138,10 @@ const AnswerList = ({ isWriter }) => {
 
                   <div className='btn_wrap'>
                     <span>댓글 {comment_count}</span>
-                    {Number(user_info) === Number(v.uid) ? (
+                    {/* 채택 하기 , 수적 삭제, 채택된 상태 */}
+                    {v.status === "true" ? (
+                      <button className='choose'>채택</button>
+                    ) : Number(user_info) === Number(v.uid) ? (
                       <>
                         <button
                           onClick={() => {
@@ -160,23 +163,13 @@ const AnswerList = ({ isWriter }) => {
                         <RoundBtn
                           isLine
                           title='
-                          채택
-                          '
+                            채택
+                            '
                           onClick={() => {
                             chooseAnswer(v);
                           }}
                         />
                       )
-                    )}
-                    {v.status === "true" && (
-                      <RoundBtn
-                        title='
-                           채택
-                           '
-                        onClick={() => {
-                          chooseAnswer(v);
-                        }}
-                      />
                     )}
                   </div>
                 </div>
@@ -336,7 +329,12 @@ const SC_List = styled.div`
       font-size: 16px;
 
       &.choose {
-        color: red;
+        width: 94px;
+        height: 40px;
+        background-color: #ffd703;
+        color: #fff;
+        border-radius: 40px;
+        cursor: default;
       }
     }
 

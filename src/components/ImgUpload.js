@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { useLocation, useParams } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
+import { ReactComponent as ImgSvg } from "../svg/img.svg";
+import { useLocation } from "react-router";
+import { useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as answerActions } from "../redux/modules/answer";
 
@@ -38,7 +39,7 @@ const ImgUpload = ({ isEdit = null, editImg = null, cleanImg = null }) => {
     return (
       <ImgWrap className='img_load'>
         <label htmlFor='editImg'>
-          <i className='icon'></i>
+          <ImgSvg className='icon' />
           <span>첨부하기</span>
         </label>
         <input onChange={onChange} id='editImg' type='file' ref={fileInput} />
@@ -52,7 +53,7 @@ const ImgUpload = ({ isEdit = null, editImg = null, cleanImg = null }) => {
   return (
     <ImgWrap className='img_load'>
       <label htmlFor='img'>
-        <i className='icon'></i>
+        <ImgSvg className='icon' />
         <span>이미지 첨부하기</span>
       </label>
       <input onChange={onChange} id='img' type='file' ref={fileInput} />
@@ -69,7 +70,6 @@ const ImgWrap = styled.div`
   display: flex;
   gap: 24px;
   width: 100%;
-  padding: 24px;
   font-weight: 700;
   border-bottom: solid 1px #ccc;
 
@@ -79,14 +79,20 @@ const ImgWrap = styled.div`
 
   > label {
     flex: none;
+    display: flex;
+    align-items: center;
+    padding: 24px;
   }
 
   input {
     display: none !important;
   }
 
-  i {
+  svg {
     display: inline-block;
+    fill: #797979;
+    width: 24px;
+    height: 24px;
     margin-left: 24px;
     margin-right: 8px;
   }
