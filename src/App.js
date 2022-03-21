@@ -21,7 +21,7 @@ function App() {
   const location = useLocation();
   return (
     <div className='App'>
-      {login.pathname === "/login" ? null : <Header />}
+      {location.pathname === "/login" ? null : <Header />}
 
       <Route path='/' exact component={Main} />
       <Route path='/create' exact component={Create} />
