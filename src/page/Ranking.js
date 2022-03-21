@@ -55,12 +55,13 @@ const Ranking = () => {
   );
 };
 const SC_Detail = styled.div`
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-bottom: 220px;
+
   h2 {
     font-size: 24px;
     padding-bottom: 40px;
   }
-
-  max-width: 1440px;
-  margin: 0 auto;
 `;
 export default Ranking;
