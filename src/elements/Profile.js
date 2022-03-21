@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+
 import { ReactComponent as UserDefault } from "../svg/logo-1.svg";
 
 const Profile = ({ imgUrl, size = "30" }) => {
@@ -23,7 +24,9 @@ const ProfileImg = styled.span`
   height: ${props.size}px;
   border-radius:${props.size}px;
   `}
+
   background: url(${(props) => props.imgUrl && props.imgUrl})
+
     no-repeat center / cover;
 `;
 

@@ -43,23 +43,18 @@ const Password = () => {
 
   return (
     <Container>
-      <div className='title'>비밀번호 수정</div>
+      <div className='title'>비밀번호 재설정</div>
       <div className='user'>
         <div className='inputBox'>
-          <input
-            // type='passWord'
-            placeholder='현재 비밀번호'
-            onChange={Pass}></input>
+          <input placeholder='현재 비밀번호' onChange={Pass}></input>
           <input
             type='passWord'
-            placeholder='새비밀번호'
+            placeholder='새로운 비밀번호'
             onChange={NewPass}></input>
           <input
             type='passWord'
-            placeholder='새비밀번호 재확인'
+            placeholder='새로운 비밀번호 재확인'
             onChange={CheckPass}></input>
-        </div>
-        <div className='check'>
           <button onClick={NewPassWord}>저장하기</button>
         </div>
       </div>
@@ -68,45 +63,43 @@ const Password = () => {
 };
 
 const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  margin: 65px auto 0px auto;
+  width: 1440px;
+  height: 830px;
+  margin: auto;
+  padding-top: 30px;
   > div.title {
-    font-size: 26px;
+    width: 160px;
+    height: 35px;
+    font-size: 24px;
     font-weight: 600;
   }
   > div.user {
-    width: 470px;
-    height: 315px;
+    width: 500px;
+    height: 100%;
     display: flex;
-    margin: 9rem auto;
-    flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
     > div.inputBox {
-      height: 10px;
+      width: 500px;
+      height: 312px;
       display: flex;
       flex-direction: column;
       justify-content: space-evenly;
-      > input {
-        width: 100%;
-        height: 56px;
-        margin-top: 2rem;
-        border: 1px solid black;
-        border-radius: 0.5rem;
-      }
-    }
-    > div.check {
-      height: 10px;
-      display: flex;
-      flex-direction: column;
       align-items: center;
-      > button {
-        width: 135px;
-        height: 40px;
-        margin-top: 2rem;
-        background-color: #343434;
+
+      > input {
+        width: 500px;
+        height: 72px;
         border-radius: 0.5rem;
-        margin-top: 4rem;
+        background-color: #f9f8ff;
+      }
+      > button {
+        width: 500px;
+        height: 72px;
+        color: #f9f8ff;
+        background-color: #7966ff;
+        border-radius: 0.5rem;
       }
     }
   }
