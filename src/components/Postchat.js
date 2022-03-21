@@ -4,6 +4,7 @@ import SockJs from "sockjs-client";
 import Profile from "../elements/Profile";
 import styled from "styled-components";
 import { apiUrl } from "../elements/testApiUrl";
+import { ReactComponent as SendSvg } from "../svg/send.svg";
 
 let stompClient = null;
 const Postchat = ({ pid }) => {
@@ -206,7 +207,9 @@ const Postchat = ({ pid }) => {
             placeholder='댓글을 입력해주세요 :)'
             onChange={handleValue}
           />
-          <button onClick={sendPublicMessage}>send</button>
+          <button onClick={sendPublicMessage}>
+            <SendSvg />
+          </button>
         </div>
       </ChatInput>
     </ChatDiv>
@@ -352,6 +355,10 @@ const ChatInput = styled.div`
 
   button {
     flex: none;
+    margin-left: 10px;
+    svg {
+      vertical-align: middle;
+    }
   }
 `;
 

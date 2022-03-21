@@ -3,6 +3,8 @@ import Stomp, { over } from "stompjs";
 import SockJs from "sockjs-client";
 import Profile from "../elements/Profile";
 import styled from "styled-components";
+import { ReactComponent as SendSvg } from "../svg/send.svg";
+
 import { apiUrl } from "../elements/testApiUrl";
 
 let stompClient = null;
@@ -190,7 +192,9 @@ const Chat = () => {
             placeholder='댓글을 입력해주세요 :)'
             onChange={handleValue}
           />
-          <button onClick={sendPublicMessage}>send</button>
+          <button onClick={sendPublicMessage}>
+            <SendSvg />
+          </button>
         </div>
       </ChatInput>
     </ChatDiv>
@@ -336,6 +340,9 @@ const ChatInput = styled.div`
 
   button {
     flex: none;
+    svg {
+      vertical-align: middle;
+    }
   }
 `;
 
