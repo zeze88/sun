@@ -5,6 +5,7 @@ import styled from "styled-components";
 import NoticeList from "../elements/NoticeList";
 import Pagination from "./Pagination";
 import TabMenu from "./TabMenu";
+import { ReactComponent as WriteSvg } from "../svg/write.svg";
 import { history } from "../redux/configureStore";
 
 const NoticeBoard = () => {
@@ -39,6 +40,7 @@ const NoticeBoard = () => {
           onClick={() => {
             history.push("/create");
           }}>
+          <WriteSvg />
           글쓰기
         </button>
       </SC_BtnWrap>
@@ -70,6 +72,11 @@ const SC_BtnWrap = styled.div`
     padding: 16px 40px;
     border-radius: 5px;
     background-color: #7966ff;
+
+    svg {
+      vertical-align: middle;
+      margin-right: 16px;
+    }
   }
 `;
 
