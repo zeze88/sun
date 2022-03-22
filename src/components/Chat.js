@@ -148,7 +148,6 @@ const Chat = () => {
           }}>
           채팅 {user}
         </li>
-        <li>채팅 인원수 {userData.userCount}</li>
       </ChatTab>
       <ChatList>
         <ul>

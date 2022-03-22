@@ -22,7 +22,7 @@ function Signup(props) {
 
   ///경력 리스트
   const options = [
-    { value: "", name: "==경력을 선택해 주세요==" },
+    { value: "", name: "경력" },
     { value: "1년차 이내", name: "1년차 이내" },
     { value: "1~2년차", name: "1~2년차" },
     { value: "3~4년차", name: "3~4년차" },
