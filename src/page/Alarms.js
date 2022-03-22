@@ -3,17 +3,19 @@ import styled from "styled-components";
 import RoundTab from "../components/RoundTab";
 import TableList from "../components/TableList";
 
-const Arams = () => {
+const Alarms = () => {
   const [curTab, setCurTab] = React.useState("total");
+
   return (
-    <SC_AramsWrap>
+    <SC_AlarmsWrap>
       <h2>알림</h2>
       <RoundTab currTab={setCurTab} />
       <TableList currTab={curTab} />
-    </SC_AramsWrap>
+    </SC_AlarmsWrap>
   );
 };
-const SC_AramsWrap = styled.div`
+
+const SC_AlarmsWrap = styled.div`
   max-width: 1440px;
   margin: 0 auto;
 
@@ -23,4 +25,4 @@ const SC_AramsWrap = styled.div`
     margin-bottom: 115px;
   }
 `;
-export default Arams;
+export default Alarms;

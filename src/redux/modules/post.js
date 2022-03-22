@@ -5,35 +5,62 @@ import { apis } from "../../shared/api";
 import { apiUrl } from "../../elements/testApiUrl";
 
 const GET_POST = "GET_POST";
+const GET_ONE_POST = "GET_ONE_POST";
 const GET_POSTCHK = "GET_POSTCHK";
-const ONE_POST = "ONE_POST";
 const ADD_POST = "ADD_POST";
 const EDIT_POST = "EDIT_POST";
 const DEL_POST = "DEL_POST";
 const IMG_POST = "IMG_POST";
+const LOADING = "LOADING";
 
-const getPost = createAction(GET_POST, (post) => ({ post }));
-const getPostNoChk = createAction(GET_POSTCHK, (post) => ({ post }));
+const getPost = createAction(GET_POST, (post, paging) => ({ post, paging }));
+const getPostNoChk = createAction(GET_POSTCHK, (post, paging) => ({
+  post,
+  paging,
+}));
+const getOnePost = createAction(GET_ONE_POST, (post) => ({ post }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
 const editPost = createAction(EDIT_POST, (post) => ({ post }));
 const delPost = createAction(DEL_POST, (pid) => ({ pid }));
 const imgPost = createAction(IMG_POST, (preview) => ({ preview }));
+const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 
 const initialState = {
   list: [],
+  one_list: [],
   nockeckList: [],
   preview: "",
+  paging: { start: null, next: null, size: 3 },
+  is_loading: false,
 };
 
 // ===================================================================
 // ======================== 게시글 리스트 가지고오기========================
 
-const getPostDB = () => {
+const getPostDB = (length = 0, start = null, size = 2) => {
   return function (dispatch, getState, { history }) {
     apis
       .getpost()
       .then((res) => {
-        dispatch(getPost(res.data));
+        const query = res.data;
+        let paging = {
+          start: query[0],
+          next: res.data === size + 1 ? res.data[res.data.length - 1] : null,
+          size: size,
+        };
+
+        if (start) {
+          query = query.slice[0];
+        }
+
+        dispatch(loading(true));
+        if (query.length === length) {
+          dispatch(loading(false));
+          return;
+        } else {
+          dispatch(getPost(query.slice(length, length + size), paging));
+          return;
+        }
       })
       .catch((err) => {
         console.log("error get post");
@@ -41,12 +68,54 @@ const getPostDB = () => {
   };
 };
 
-const getPostNocheckDB = () => {
+const getPostNocheckDB = (length = 0, start = null, size = 2) => {
   return function (dispatch, getState, { history }) {
     apis
       .getpostnocheck()
       .then((res) => {
-        dispatch(getPostNoChk(res.data));
+        const query = res.data;
+        let paging = {
+          start: query[0],
+          next: res.data === size + 1 ? res.data[res.data.length - 1] : null,
+          size: size,
+        };
+
+        if (start) {
+          query = query.slice[0];
+        }
+
+        dispatch(loading(true));
+
+        if (query.length === length) {
+          dispatch(loading(false));
+          return;
+        } else {
+          let post_list = [];
+          console.log(query);
+          // let post = query.reduce((acc, cur) => {
+          //   console.log(acc.pid, cur.pid);
+
+          //   return acc.pid !== cur.pid && cur;
+          //   // if (cur.indexOf("user_") !== -1) {
+          //   //   // console.log([cur], _post[cur]);
+          //   //   return {
+          //   //     ...acc,
+          //   //     user_info: { ...acc.user_info, [cur]: _post[cur] },
+          //   //   };
+          //   // } else if (cur.indexOf("post_") !== -1) {
+          //   //   return {
+          //   //     ...acc,
+          //   //     magazine: { ...acc.magazine, [cur]: _post[cur] },
+          //   //   };
+          //   // }
+          // }, []);
+          // post_list.push(post);
+          // console.log(post_list);
+          // return;
+          dispatch(getPostNoChk(query.slice(length, length + size), paging));
+          // dispatch(getPostNoChk(post_list, paging));
+          return;
+        }
       })
       .catch((err) => {
         console.log("error get post");
@@ -61,7 +130,7 @@ const getOnePostDB = (pid) => {
     apis
       .onepost(pid)
       .then((res) => {
-        dispatch(getPost(res.data));
+        dispatch(getOnePost(res.data));
       })
       .catch((err) => {
         console.log(err);
@@ -71,13 +140,14 @@ const getOnePostDB = (pid) => {
 
 // =====================================================================
 // ================================ 추가 ================================
-const addPostDB = ({ title, comment, tags, category }) => {
+const addPostDB = (props) => {
   return function (dispatch, getState, { history }) {
+    const { title, comment, tags, category } = props;
     const token_res = sessionStorage.getItem("token");
     const img_list = getState().post.preview;
-    console.log(img_list);
     const formData = new FormData();
     formData.append("images", img_list);
+
     if (!img_list) {
       axios({
         method: "post",
@@ -86,13 +156,19 @@ const addPostDB = ({ title, comment, tags, category }) => {
           postTitle: title,
           postComment: comment,
           postImg: null,
-          tags: tags,
+          tags: tags ? tags : null,
           category: category,
         },
         headers: { Authorization: `${token_res}` },
       }).then((res) => {
         dispatch(
-          addPost({ title, comment, imgUrl: null, tags, pid: res.data })
+          addPost({
+            title,
+            comment,
+            imgUrl: null,
+            tags: tags ? tags : null,
+            pid: res.data,
+          })
         );
         history.replace("/");
       });
@@ -116,12 +192,21 @@ const addPostDB = ({ title, comment, tags, category }) => {
               postTitle: title,
               postComment: comment,
               postImg: imgUrl,
-              tags: tags,
+              tags: tags ? tags : null,
+
               category: category,
             },
             headers: { Authorization: `${token_res}` },
           }).then((res) => {
-            dispatch(addPost({ title, comment, imgUrl, tags, pid: res.data }));
+            dispatch(
+              addPost({
+                title,
+                comment,
+                imgUrl,
+                tags: tags ? tags : null,
+                pid: res.data,
+              })
+            );
             history.replace("/");
           });
         })
@@ -136,29 +221,8 @@ const addPostDB = ({ title, comment, tags, category }) => {
 // ================================ 수정 ================================
 const editPostDB = (props) => {
   return function (dispatch, getState, { history }) {
-    console.log(props);
-    const {
-      blogUrl,
-      career,
-      category,
-      createdAt,
-      nickname,
-      pid,
-      postComment,
-      postImg,
-      postLikeCount,
-      postTitle,
-      status,
-      tag,
-      uid,
-      userImage,
-    } = props;
-
-    const token_res = {
-      Authorization: sessionStorage.getItem("token")
-        ? sessionStorage.getItem("token")
-        : "Authorization",
-    };
+    const { category, pid, postComment, postImg, postTitle, tag } = props;
+    const token_res = sessionStorage.getItem("token");
     const img_list = getState().post.preview;
     const formData = new FormData();
     formData.append("images", img_list);
@@ -234,6 +298,7 @@ const delPostDB = (pid) => {
       });
   };
 };
+
 const postLikeDB = (uid, pid) => {
   return function (dispatch, getState, { history }) {
     apis
@@ -262,11 +327,19 @@ export default handleActions(
   {
     [GET_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.list = action.payload.post;
+        draft.list.push(...action.payload.post);
+        draft.paging = action.payload.paging;
+        draft.is_loading = false;
       }),
     [GET_POSTCHK]: (state, action) =>
       produce(state, (draft) => {
-        draft.nockeckList = action.payload.post;
+        draft.nockeckList.push(...action.payload.post);
+        draft.paging = action.payload.paging;
+        draft.is_loading = false;
+      }),
+    [GET_ONE_POST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.one_list = action.payload.post;
       }),
     [ADD_POST]: (state, action) =>
       produce(state, (draft) => {
@@ -275,7 +348,7 @@ export default handleActions(
       }),
     [EDIT_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.list = action.payload.post;
+        draft.one_list = action.payload.post;
         draft.preview = "";
       }),
     [DEL_POST]: (state, action) =>
@@ -285,6 +358,10 @@ export default handleActions(
     [IMG_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.preview = action.payload.preview;
+      }),
+    [LOADING]: (state, action) =>
+      produce(state, (draft) => {
+        draft.is_loading = action.payload.is_loading;
       }),
   },
   initialState
