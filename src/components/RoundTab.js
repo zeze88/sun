@@ -12,8 +12,8 @@ const RoundTab = ({ currTab }) => {
       value: "답변",
     },
     {
-      title: "post",
-      value: "작성글",
+      title: "choose",
+      value: "채택",
     },
   ];
   const [tab, setTab] = React.useState("total");

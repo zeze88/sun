@@ -1,7 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { Route, useLocation } from "react-router-dom";
-import { ConnectedRouter } from "connected-react-router";
-import { history } from "../src/redux/configureStore";
 
 import Main from "./page/Main";
 import Login from "./page/Login";
@@ -14,8 +12,7 @@ import Header from "./components/Header";
 import Edituser from "./page/Edituser";
 import Password from "./page/Password";
 import Footer from "./components/Footer";
-import Arams from "./page/Arams";
-import serch from "./redux/modules/serch";
+import Alarms from "./page/Alarms";
 
 function App() {
   const location = useLocation();
@@ -32,8 +29,8 @@ function App() {
       <Route path='/search/:keyword' exact component={SearchResult} />
       <Route path='/useredit' exact component={Edituser} />
       <Route path='/passedit' exact component={Password} />
-      <Route path='/arams' exact component={Arams} />
-      {location.pathname === "/login" ? null : <Footer />}
+      <Route path='/alarms' exact component={Alarms} />
+      <Footer />
     </div>
   );
 }
