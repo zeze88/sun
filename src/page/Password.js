@@ -66,7 +66,6 @@ const Container = styled.div`
   width: 1440px;
   height: 830px;
   margin: auto;
-  padding-top: 30px;
   > div.title {
     width: 160px;
     height: 35px;

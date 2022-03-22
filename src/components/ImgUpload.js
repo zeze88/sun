@@ -82,7 +82,6 @@ const ImgWrap = styled.div`
     display: flex;
     align-items: center;
     padding: 24px;
-    cursor: pointer;
   }
 
   input {
@@ -94,6 +93,7 @@ const ImgWrap = styled.div`
     fill: #797979;
     width: 24px;
     height: 24px;
+    margin-left: 24px;
     margin-right: 8px;
   }
 

@@ -64,22 +64,7 @@ const AnswerList = ({ isWriter }) => {
   };
 
   const deleAnswer = (answerId) => {
-    Swal.fire({
-      title: "답변을 삭제하시겠습니까?",
-      text: "삭제 된 답변은 복구 할 수 없습니다",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "네 삭제하겠습니다.",
-      confirmButtonColor: "#7966FF",
-      cancelButtonText: "아니오",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire("", "답변이 삭제 되었습니다.", "success");
-        dispatch(answerActions.delAnswerDB(answerId));
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire("", "취소 되었습니다 :)", "error");
-      }
-    });
+    dispatch(answerActions.delAnswerDB(answerId));
   };
 
   const setCommentEdit = (commentId) => {

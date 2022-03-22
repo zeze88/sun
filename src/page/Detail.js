@@ -18,7 +18,7 @@ import Postchat from "../components/Postchat";
 const Detail = () => {
   const dispatch = useDispatch();
   const pid = useParams().pid;
-  const post_one = useSelector((state) => state.post.one_list);
+  const post_one = useSelector((state) => state.post.list);
   const user_info = sessionStorage.getItem("uid");
   const delPost = () => {
     Swal.fire({
@@ -84,7 +84,7 @@ const Detail = () => {
           <ContextWrap>
             <div className='text-wrap'>
               <p>{post_one.postComment}</p>
-              {post_one.postImg && <img src={post_one.postImg} />}
+              <img src={post_one.postImg} />
             </div>
 
             <div className='btn_wrap'>
@@ -151,7 +151,6 @@ const Top = styled.div`
 
   h2 {
     font-size: 20px;
-    word-break: break-all;
   }
 
   > div {
@@ -209,10 +208,6 @@ const ContextWrap = styled.div`
     > *:not(style) {
       margin-bottom: 10px;
     }
-  }
-
-  p {
-    word-break: break-all;
   }
 
   .btn_wrap {

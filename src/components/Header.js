@@ -86,8 +86,8 @@ const Header = () => {
                 <li onClick={() => history.push("/passedit")}>
                   비밀번호 재설정
                 </li>
-                <li onClick={() => history.push("/alarms")}>알람 내역</li>
-                <li onClick={() => history.push("/passedit")}>과심글</li>
+                <li onClick={() => history.push("/arams")}>알람 내역</li>
+                <li onClick={() => history.push("/passedit")}>관심글</li>
                 <li className='logout' onClick={Logout}>
                   로그아웃
                 </li>
@@ -129,7 +129,6 @@ const Container = styled.div`
     flex: none;
     width: 220px;
     height: 38px;
-    background: url("logo/logo_header.svg") no-repeat center/contain;
   }
 
   div.my {

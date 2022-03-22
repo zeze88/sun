@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
+import img_down from "../svg/arrow_down_b.svg";
 import { actionCreators as userActions } from "../redux/modules/user";
 
 function Signup(props) {
@@ -9,7 +10,8 @@ function Signup(props) {
   const [nickname, setNickname] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [checkPassword, setCheckPassword] = React.useState("");
-  const [career, setCareer] = React.useState("");
+  const [career, setCareer] = React.useState("경력");
+  const [careerSelect, setCareerSelect] = React.useState("");
 
   ////유효성 검사
   const [idRuleCheck, setIdRuleCheck] = React.useState(false);
@@ -22,7 +24,6 @@ function Signup(props) {
 
   ///경력 리스트
   const options = [
-    { value: "", name: "경력" },
     { value: "1년차 이내", name: "1년차 이내" },
     { value: "1~2년차", name: "1~2년차" },
     { value: "3~4년차", name: "3~4년차" },
@@ -31,7 +32,8 @@ function Signup(props) {
 
   /////////////////////////////////경고 문구
   const idRule = (e) => {
-    const rule = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]|[A-Za-z]{4,10}$/;
+    const rule =
+      /^(((?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{4,10})|([A-Za-z]{4,10}))$/;
     const id = e.target.value;
     setUsername(id);
     rule.test(id) ? setIdRuleCheck(true) : setIdRuleCheck(false);
@@ -53,11 +55,6 @@ function Signup(props) {
       : setPasswordRuleCheck(false);
   };
 
-  /////////////////////Career 값 적용
-  const Career = (e) => {
-    console.log(e.target.value);
-    setCareer(e.target.value);
-  };
   ///////////////////////////////////// 중복체크
 
   const checkUsername = () => {
@@ -102,7 +99,7 @@ function Signup(props) {
     } else if (isCheckUsername === false || isCheckNickname === false) {
       window.alert("중복확인을 해주세요.");
       return;
-    } else if (career === "") {
+    } else if (career === "경력") {
       window.alert("경력을 선택해 주세요");
       return;
     }
@@ -114,68 +111,103 @@ function Signup(props) {
   };
   return (
     <Container>
-      <div style={{ displat: "flex" }}>
+      <div>
         <div>
+          <span className='inputSpan'>아이디</span>
           <input
             className='input1'
             type='text'
-            placeholder='ID'
+            placeholder='영문과 숫자를 4자 이상 10글자 이내 입력하세요.'
             onChange={idRule}
           />
           <button className='CheckButton' onClick={checkUsername}>
             중복체크
           </button>
         </div>
-      </div>{" "}
-      {username.length > 0 && !idRuleCheck && (
-        <span> 아이디 테스트입니다. </span>
-      )}
-      <div>
-        <input
-          className='input1'
-          type='text'
-          placeholder='Nickname'
-          onChange={nicknameRule}
-        />
-        <button className='CheckButton' onClick={checkNickname}>
-          중복체크
-        </button>
+        {username.length > 0 && !idRuleCheck && (
+          <span className='rule'> *아이디 형식이 맞지 않습니다. </span>
+        )}
       </div>
-      {nickname.length > 0 && !nicknameRuleCheck && (
-        <span> 닉네임 테스트입니다. </span>
-      )}
+
       <div>
-        <input
-          className='input2'
-          type='password'
-          placeholder='password'
-          onChange={passwordRule}
-        />
+        <div>
+          <span style={{ width: "58px" }} className='inputSpan'>
+            {" "}
+            비밀번호{" "}
+          </span>
+          <input
+            className='input2'
+            type='password'
+            placeholder='password'
+            onChange={passwordRule}
+          />
+        </div>
+        {password.length > 0 && !passwordRuleCheck && (
+          <span className='rule'> *영문 4자 이상 입력해주세요. </span>
+        )}
       </div>
-      {password.length > 0 && !passwordRuleCheck && (
-        <span> 패스워드 테스트입니다. </span>
-      )}
+
       <div>
-        <input
-          className='input2'
-          type='password'
-          placeholder='passwordCheck'
-          onChange={(e) => {
-            setCheckPassword(e.target.value);
-          }}
-        />
-      </div>{" "}
-      {checkPassword !== password && <span> 패스워드 체크 테스트입니다. </span>}
-      <div>
-        <select onChange={Career}>
-          {options.map((option, index) => (
-            <option key={index} value={option.value}>
-              {option.name}
-            </option>
-          ))}
-        </select>
+        <div>
+          <span style={{ width: "100px" }} className='inputSpan'>
+            비밀번호 확인
+          </span>
+          <input
+            className='input2'
+            type='password'
+            onChange={(e) => {
+              setCheckPassword(e.target.value);
+            }}
+          />
+        </div>{" "}
+        {checkPassword !== password && (
+          <span className='rule'> *일치하지않는 비밀번호입니다. </span>
+        )}
       </div>
-      {career === "" && <span> 경력 빈값 테스트입니다. </span>}
+
+      <div>
+        <div>
+          <span className='inputSpan'>닉네임</span>
+          <input
+            className='input1'
+            type='text'
+            placeholder='Nickname'
+            onChange={nicknameRule}
+          />
+          <button className='CheckButton' onClick={checkNickname}>
+            중복체크
+          </button>
+        </div>
+        {nickname.length > 0 && !nicknameRuleCheck && (
+          <span className='rule'> *닉네임 형식이 맞지 않습니다. </span>
+        )}
+      </div>
+
+      <Career>
+        <div>
+          <span onClick={() => setCareerSelect(!careerSelect)}>{career}</span>
+          {careerSelect === true ? (
+            <ul>
+              {options.map((v, idx) => (
+                <li
+                  key={idx}
+                  onClick={() => {
+                    setCareer(v.name);
+                    setCareerSelect(false);
+                  }}>
+                  {v.name}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </div>
+        <img
+          onClick={() => setCareerSelect(!careerSelect)}
+          src={img_down}></img>
+        {career === "경력" && (
+          <span className='rule'> *경력을 선택해주세요 </span>
+        )}
+      </Career>
       <div>
         <button className='SignupButtom' onClick={signup}>
           회원가입
@@ -186,53 +218,122 @@ function Signup(props) {
 }
 
 const Container = styled.div`
-  width: 400px;
-  height: 406px;
+  width: 500px;
+  height: 472px;
   margin: 0 auto;
   text-align: center;
-
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
   div {
     width: 100%;
-    height: 40px;
+    height: 72px;
     display: flex;
-    margin-bottom: 1rem;
-  }
+    flex-direction: column-reverse;
+    > span.rule {
+      color: red;
+      font-size: 12px;
+      position: absolute;
+      justify-content: start;
+      padding-left: 15px;
+    }
+    > div {
+      width: 100%;
+      height: 72px;
+      display: flex;
+      flex-direction: row;
+      position: relative;
+      justify-content: end;
+      align-items: center;
+      background-color: #f9f8ff;
+      border-radius: 0.5rem;
 
-  input.input1 {
-    width: 70%;
-    border-top-left-radius: 0.5rem;
-    border-bottom-left-radius: 0.5rem;
+      padding: 15px;
+      > span.inputSpan {
+        color: #7966ff;
+        font-size: 16px;
+        font-weight: 800;
+      }
+    }
+  }
+  input {
+    width: 90%;
+    height: 32px;
     border: 0px solid black;
+    font-size: 16px;
   }
   button.CheckButton {
-    width: 30%;
-    border-top-right-radius: 1rem;
-    border-bottom-right-radius: 1rem;
-    margin-left: -1px;
-    background-color: #343434;
+    width: 76px;
+    height: 32px;
+    background-color: #7966ff;
+    color: white;
+    border-radius: 32px;
+    position: absolute;
   }
   button.SignupButtom {
     width: 100%;
-    border-radius: 1rem;
-    border: 0px solid black;
-    background-color: #343434;
-  }
-  select {
-    display: block;
-    width: 100%;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1rem;
-    border: 0px solid;
-    border-radius: 1rem;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-color: #f7f7f7;
-    option {
-      text-align: center;
-    }
+    height: 72px;
+    background-color: #5e45f2;
+    color: white;
+    border-radius: 0.5rem;
   }
 `;
+const Career = styled.div`
+  width: 500px;
+  display: flex;
+  position: relative;
+  justify-content: end;
 
+  div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    > span {
+      width: 100%;
+      height: 72px;
+      line-height: 72px;
+      padding-left: 5px;
+      border-radius: 8px;
+      background-color: #f9f8ff;
+      cursor: pointer;
+      color: #7966ff;
+      font-size: 16px;
+      font-weight: 800;
+      text-align: start;
+    }
+    > ul {
+      width: 100%;
+      height: 72px;
+      border-radius: 0.5rem;
+      border: 0px;
+      position: absolute;
+      margin-top: 150px;
+      > li {
+        display: flex;
+        width: 100%;
+        height: 72px;
+        margin-left: 15px;
+        font-size: 16px;
+        font-weight: 600;
+        padding-left: 10px;
+        background-color: #f9f8ff;
+        align-items: center;
+        justify-content: start;
+        cursor: pointer;
+        &:hover {
+          background-color: #5e45f2;
+          color: #f9f8ff;
+        }
+      }
+    }
+  }
+  > img {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    position: absolute;
+    margin: 0 0 20px 450px;
+    cursor: pointer;
+  }
+`;
 export default Signup;

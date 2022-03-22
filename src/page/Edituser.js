@@ -5,6 +5,8 @@ import Profile from "../elements/Profile";
 import { actionCreators as userActions } from "../redux/modules/user";
 import img_down from "../svg/arrow_down_b.svg";
 import camera from "../svg/camera_fill.svg";
+// import { ReactComponent as img_down } from "../svg/arrow_down_b.svg";
+// import { ReactComponent as camera } from "../svg/camera_fill.svg";
 
 const userNickname = sessionStorage.getItem("nickname");
 const userCareer = sessionStorage.getItem("career");
@@ -20,6 +22,7 @@ const Edituser = (props) => {
   const [blogUrl, setBlogUrl] = useState(userURL);
   const [career, setCareer] = useState(userCareer);
   const [careerSelect, setCareerSelect] = useState(userCareer);
+  const [nicknameRuleCheck, setNicknameRuleCheck] = React.useState(false);
   const imgInput = React.useRef();
   const options = [
     { value: "1년차 이내", name: "1년차 이내" },
@@ -27,10 +30,12 @@ const Edituser = (props) => {
     { value: "3~4년차", name: "3~4년차" },
     { value: "5년차 이상", name: "5년차 이상" },
   ];
-  console.log(career);
 
-  const editNickname = (e) => {
-    setNickname(e.target.value);
+  const nicknameRule = (e) => {
+    const rule = /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣A-Za-z0-9]{2,8}$/;
+    const nick = e.target.value;
+    setNickname(nick);
+    rule.test(nick) ? setNicknameRuleCheck(true) : setNicknameRuleCheck(false);
   };
 
   const Check = () => {
@@ -127,7 +132,7 @@ const Edituser = (props) => {
           <EditNickname>
             <input
               placeholder='닉네임'
-              onChange={editNickname}
+              onChange={nicknameRule}
               value={nickname}></input>
             <button className='check' onClick={Check}>
               중복체크
@@ -157,10 +162,13 @@ const Edituser = (props) => {
                       {v.name}
                     </li>
                   ))}
+                  {career}
                 </ul>
               ) : null}
             </div>
-            <img src={img_down}></img>
+            <img
+              onClick={() => setCareerSelect(!careerSelect)}
+              src={img_down}></img>
           </EditCareer>
           <button className='save' onClick={Save}>
             저장
@@ -175,7 +183,6 @@ const Container = styled.div`
   width: 1440px;
   height: 830px;
   margin: auto;
-  padding-top: 30px;
   > div.title {
     width: 116px;
     height: 35px;
@@ -305,6 +312,7 @@ const EditCareer = styled.div`
       border-radius: 0.5rem;
       border: 0px;
       position: absolute;
+      margin-top: 80px;
       > li {
         display: flex;
         width: 100%;

@@ -1,8 +1,8 @@
 import React from "react";
+import styled from "styled-components";
 import { useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import NoticeList from "../elements/NoticeList";
-import Serch from "../components/Serch";
 import { history } from "../redux/configureStore";
 import { actionsCreators as searchActions } from "../redux/modules/serch";
 
@@ -34,7 +34,7 @@ const SearchResult = () => {
   }, [search_type]);
 
   return (
-    <div>
+    <Container>
       {search_type === "tag" ? (
         <NoticeList list={tag_list} />
       ) : search_type === "serch" ? (
@@ -52,8 +52,13 @@ const SearchResult = () => {
           </button>
         </>
       )}
-    </div>
+    </Container>
   );
 };
 
+const Container = styled.div`
+  width: 1440px;
+  height: 830px;
+  margin: auto;
+`;
 export default SearchResult;

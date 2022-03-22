@@ -92,7 +92,7 @@ const signupDB = (username, nickname, password, passwordCheck, career) => {
       })
       .then((res) => {
         window.alert("회원가입을 축하드립니다.");
-        history.push("/");
+        history.push("/login");
       })
       .catch((err) => {
         console.log("회원가입 실패", err);

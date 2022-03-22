@@ -8,7 +8,6 @@ import Ranking from "./modules/ranking";
 import user from "./modules/user";
 import comment from "./modules/comment";
 import search from "./modules/serch";
-import Mypage from "./modules/mypage";
 
 export const history = createBrowserHistory();
 
@@ -20,7 +19,6 @@ const rootReducer = combineReducers({
   user: user,
   comment: comment,
   search: search,
-  mypage: Mypage,
 });
 
 const middlewares = [thunk.withExtraArgument({ history: history })];

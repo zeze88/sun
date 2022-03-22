@@ -92,9 +92,7 @@ const SC_OtherRanking = styled.div`
     font-style: normal;
     width: 20%;
   }
-  a {
-    margin-left: auto;
-  }
+
   button {
     width: 103px;
     height: 36px;

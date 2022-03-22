@@ -21,18 +21,21 @@ const Category = () => {
   return (
     <Container>
       <ul>
-        <li onClick={CategoryView}>언어</li>
+        <li onClick={() => setcategortView(!categoryView)}>언어</li>
         <li onClick={() => history.push("/ranking")}>랭킹</li>
       </ul>
       <div className='category_list'>
         {categoryView ? (
-          <div onChange={CategoryList}>
+          <div className='C' onChange={CategoryList}>
             {category.map((c, idx) => (
               <div
-                className='C'
+                className={categoryView ? "" : "close"}
                 key={idx}
                 value={c.value}
-                onClick={() => CategoryList(c.value)}>
+                onClick={() => {
+                  CategoryList(c.value);
+                  setcategortView(!categoryView);
+                }}>
                 {c.name}
               </div>
             ))}
@@ -62,30 +65,33 @@ const Container = styled.div`
   }
 
   .category_list {
-    position: absolute;
     top: 74px;
     left: 0;
     width: 250px;
     border-radius: 8px;
     box-shadow: 0 4px 15px 0 rgba(36, 13, 177, 0.2);
-    background-color: #fff;
 
-    > div {
+    > div.C {
+      position: absolute;
       padding: 5px;
-    }
-  }
-
-  div.C {
-    width: 100%;
-    height: 50px;
-    line-height: 50px;
-    padding: 0 12px;
-    cursor: pointer;
-    border-radius: 8px;
-
-    &:hover {
-      color: #fff;
-      background-color: #7966ff;
+      transition: max-height 0.5s ease-out;
+      background-color: #fff;
+      > div {
+        width: 250px;
+        height: 50px;
+        line-height: 50px;
+        padding: 0 12px;
+        cursor: pointer;
+        border-radius: 8px;
+        &:hover {
+          color: #fff;
+          background-color: #7966ff;
+        }
+        &.close {
+          height: 0;
+          padding: 0;
+        }
+      }
     }
   }
 `;

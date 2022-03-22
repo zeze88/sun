@@ -26,7 +26,7 @@ const NoticeList = ({ list }) => {
             </div>
             <div className='info'>
               <TagUl>
-                {data.tag?.map((v, idx) => (
+                {data.tag.map((v, idx) => (
                   <li key={idx}>#{v} </li>
                 ))}
               </TagUl>

@@ -1,5 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { ReactComponent as LoginSvg } from "../svg/login_logo.svg";
+import LoginBackSvg from "../svg/login_background.svg";
 import { actionCreators as userActions } from "../redux/modules/user";
 import styled from "styled-components";
 import Signup from "../components/Signup";
@@ -20,140 +22,182 @@ const Login = (props) => {
     dispatch(userActions.loginDB(username, password));
   };
   return (
-    <Container>
-      <div className='Logo'>Logo</div>
-      <div className='Middle'>공백</div>
-      <div className='Switch'>
-        <div>
-          <label>
-            <input
-              style={{}}
-              onChange={(e) => {
-                setCheck(e.target.value);
-              }}
-              type='radio'
-              name='select'
-              value='login'
-            />
-            로그인
-          </label>
-        </div>
-        <div>
-          <label>
-            <input
-              style={{}}
-              onChange={(e) => {
-                setCheck(e.target.value);
-              }}
-              type='radio'
-              name='select'
-              value='signup'
-            />
-            회원가입
-          </label>
-        </div>
-      </div>
-      {check === "login" ? (
-        <div className='Sign'>
-          <div>
-            <input
-              type='text'
-              placeholder='ID입력'
-              onChange={(e) => {
-                setUsername(e.target.value);
-              }}
-            />
+    <Container1>
+      <img src={LoginBackSvg}></img>
+      <Container2>
+        <div className={check === "login" ? "box" : "signup"}>
+          <div className='logo'>
+            <LoginSvg />
           </div>
-          <div>
-            <input
-              type='password'
-              placeholder='Password입력'
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            />
-          </div>
-          <div>
-            <button className='Login' onClick={login}>
+          <div className='switch'>
+            <label className={check === "login" ? "login" : ""}>
+              <input
+                onChange={(e) => {
+                  setCheck(e.target.value);
+                }}
+                type='radio'
+                name='select'
+                value='login'
+              />
               로그인
-            </button>
+            </label>
+            <label className={check === "signup" ? "signup" : ""}>
+              <input
+                onChange={(e) => {
+                  setCheck(e.target.value);
+                }}
+                type='radio'
+                name='select'
+                value='signup'
+              />
+              회원가입
+            </label>
           </div>
+          {check === "login" ? (
+            <div className='inputbox'>
+              <div>
+                <span className='inputSpan'>아이디</span>
+                <input
+                  type='text'
+                  placeholder='ID입력'
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                  }}
+                />
+              </div>
+              <div>
+                <span className='inputSpan'>아이디</span>
+                <input
+                  type='password'
+                  placeholder='Password입력'
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                />
+              </div>
+              <button onClick={login}>로그인</button>
+            </div>
+          ) : (
+            <div className='signup'>
+              <Signup />
+            </div>
+          )}
         </div>
-      ) : (
-        <Signup />
-      )}
-    </Container>
+      </Container2>
+    </Container1>
   );
 };
 
-const Container = styled.div`
+const Container1 = styled.div`
   width: 100%;
-  height: 1024px;
+  min-width: 1440px;
+  height: 100vh;
+  min-height: 930px;
   display: flex;
-  flex-direction: column;
+  position: relative;
+  align-items: center;
   justify-content: center;
+  overflow: hidden;
+`;
 
-  div.Logo {
-    width: 100%;
-    height: 4rem;
-    margin: 0 auto;
-    text-align: center;
-    padding-top: 2rem;
-    font-size: 1.5rem;
-    font-weight: 600;
-  }
-
-  div.Middle {
-    width: 20rem;
-    height: 8rem;
-    margin: 1rem auto 0 auto;
-    text-align: center;
-    padding-top: 2rem;
-    font-size: 1.5rem;
-    font-weight: 600;
-  }
-
-  div.Switch {
-    width: 400px;
-    margin: 0 auto;
+const Container2 = styled.div`
+  width: 1440px;
+  height: 930px;
+  margin: 0 auto;
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 200px;
+  div.box {
+    width: 500px;
+    height: 472px;
+    margin: auto;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    &.signup {
+      width: 500px;
+      height: 472px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
   }
-
-  div.Switch > div {
-    width: 60px;
-    height: 30px;
+  div.logo {
+    width: 500px;
+    height: 196px;
     display: flex;
-    text-align: "left";
+    align-items: center;
+    justify-content: center;
   }
-
-  div.Sign {
-    width: 400px;
-    margin: 0 auto;
-    text-align: center;
-  }
-
-  div.Sign > div {
-    width: 100%;
+  div.switch {
+    width: 500px;
     display: flex;
-    margin-bottom: 1rem;
+    justify-content: start;
+    align-items: center;
+    margin-bottom: 30px;
+    > label {
+      font-size: 18px;
+      margin-right: 41px;
+      &.login {
+        color: white;
+      }
+      &.signup {
+        color: white;
+      }
+      > input {
+        display: none;
+      }
+    }
   }
-
-  label > input {
-    display: none;
+  div.inputbox {
+    width: 500px;
+    height: 232px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    > div {
+      width: 100%;
+      height: 72px;
+      display: flex;
+      flex-direction: row;
+      position: relative;
+      justify-content: end;
+      align-items: center;
+      background-color: #f9f8ff;
+      border-radius: 0.5rem;
+      padding: 15px;
+      > span.inputSpan {
+        color: #7966ff;
+        font-size: 16px;
+        font-weight: 800;
+      }
+    }
   }
-
+  div.signup {
+    width: 500px;
+    height: 471px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
   input {
-    width: 100%;
+    width: 90%;
+    height: 72px;
+    border: 0px solid black;
+    background-color: #f9f8ff;
+    font-size: 16px;
+    outline: none;
     border-radius: 0.5rem;
-    border: 0px solid black;
-    background-color: #f7f7f7;
   }
-
-  button.Login {
+  button {
     width: 100%;
-    border-radius: 1rem;
-    border: 0px solid black;
-    background-color: #343434;
+    height: 72px;
+    background-color: #5e45f2;
+    color: white;
+    border-radius: 0.5rem;
   }
 `;
 export default Login;

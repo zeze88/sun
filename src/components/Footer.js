@@ -10,8 +10,12 @@ const Footer = () => {
           <FooterLogo />
         </h2>
         <ul>
-          <li>문의사항</li>
-          <li>코알리팀 소개</li>
+          <a href='https://github.com/zeze88/sun'>
+            <li>문의사항</li>
+          </a>
+          <a href='https://oasis-cyclamen-45f.notion.site/5-8-_1-28217e32bae849a5bc95389ed1d5dd73'>
+            <li>코알리팀 소개</li>
+          </a>
           <li>버그 제보</li>
         </ul>
       </div>
@@ -43,6 +47,9 @@ const FooterWrap = styled.div`
 
   li {
     color: #fff;
+  }
+  a {
+    text-decoration: none;
   }
 `;
 export default Footer;

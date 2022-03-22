@@ -69,14 +69,13 @@ export const apis = {
       answerUid: answerUid,
     }),
 
+  // ==================== tag api ====================//
   tagsearch: (tag) => instance.get(`${apiUrl}/tag/search/${tag}`),
   totalRanking: () => instance.get(`/user/ranking/total`),
   monthRanking: () => instance.get(`/user/ranking/month`),
   weekRanking: () => instance.get(`/user/ranking/weekend`),
+
   mytotalRanking: () => instance.get(`/islogin/ranking/total`),
   mymonthRanking: () => instance.get(`/islogin/ranking/month`),
   myweekRanking: () => instance.get(`/islogin/ranking/weekend`),
-  myalarm: () => instance.get(`/islogin/alarm`),
-  myalarmdel: (alarmId) => instance.delete(`/islogin/alarm/${alarmId}`),
-  mylikepost: () => instance.get(`/islogin/get/like `),
 };
