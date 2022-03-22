@@ -309,10 +309,6 @@ const TextareaImg = styled.div`
     border-radius: 8px;
     border-bottom: none;
     background-color: #f4f4fb;
-
-    svg {
-      margin-left: 0;
-    }
   }
 `;
 
