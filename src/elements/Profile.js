@@ -13,10 +13,12 @@ const Profile = ({ imgUrl, size = "30" }) => {
 
 const ProfileImg = styled.span`
   display: inline-block;
+
   svg {
     width: 100%;
     height: 100%;
   }
+
   ${(props) =>
     props.size &&
     `
