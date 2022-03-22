@@ -151,6 +151,7 @@ const Top = styled.div`
 
   h2 {
     font-size: 20px;
+    word-break: break-all;
   }
 
   > div {
@@ -208,6 +209,10 @@ const ContextWrap = styled.div`
     > *:not(style) {
       margin-bottom: 10px;
     }
+  }
+
+  p {
+    word-break: break-all;
   }
 
   .btn_wrap {
