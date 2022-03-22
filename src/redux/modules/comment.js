@@ -1,4 +1,3 @@
-import React from "react";
 import axios from "axios";
 import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
