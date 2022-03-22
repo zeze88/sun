@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import styled from "styled-components";
 import NoticeList from "../elements/NoticeList";
-import Pagination from "./Pagination";
 import TabMenu from "./TabMenu";
 import { ReactComponent as WriteSvg } from "../svg/write.svg";
 import { history } from "../redux/configureStore";
@@ -44,7 +43,6 @@ const NoticeBoard = () => {
           글쓰기
         </button>
       </SC_BtnWrap>
-      <Pagination />
     </SC_NoticeDiv>
   );
 };
