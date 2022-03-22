@@ -201,11 +201,8 @@ const Chat = () => {
 };
 
 const ChatDiv = styled.div`
-  flex: none;
   display: flex;
   flex-direction: column;
-  flex: none;
-  width: 342px;
   height: calc(100vh - 102px);
   background-color: #f9f8ff;
   border-radius: 8px;

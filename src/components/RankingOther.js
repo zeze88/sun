@@ -15,7 +15,18 @@ const RankingOther = ({ list, user_ranking }) => {
             {user_ranking.point && <em>{user_ranking.point} 점</em>}
             {user_ranking.weekPoint && <em>{user_ranking.weekPoint} 점</em>}
             {user_ranking.monthPoint && <em>{user_ranking.monthPoint} 점</em>}
-            {user_ranking.blogUrl && <button>SNS</button>}
+            {!user_ranking.blogUrl || user_ranking.blogUrl === "undefined" ? (
+              <button
+                onClick={() => {
+                  alert("연결 된 sns가 없습니다 :)");
+                }}>
+                SNS
+              </button>
+            ) : (
+              <a href={user_ranking.blogUrl} target='_blank'>
+                <button> SNS</button>
+              </a>
+            )}
           </li>
         )}
         {list.map((v, idx) => (
@@ -24,7 +35,18 @@ const RankingOther = ({ list, user_ranking }) => {
             <Profile size={70} imgUrl={v.userImage} />
             <strong>{v.nickname}</strong>
             <em>{!v.point ? 0 : v.point} 점</em>
-            <button>SNS</button>
+            {!v.blogUrl || v.blogUrl === "undefined" ? (
+              <button
+                onClick={() => {
+                  alert("연결 된 sns가 없습니다 :)");
+                }}>
+                SNS
+              </button>
+            ) : (
+              <a href={v.blogUrl} target='_blank'>
+                <button> SNS</button>
+              </a>
+            )}
           </li>
         ))}
       </ul>

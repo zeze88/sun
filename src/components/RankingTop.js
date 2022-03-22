@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Profile from "../elements/Profile";
+import { ReactComponent as RankingTopSvg } from "../svg/ranking_top.svg";
 
 const RankingTop = ({ list }) => {
   return (
@@ -19,6 +20,7 @@ const RankingTop = ({ list }) => {
           };
           return (
             <li key={idx} className={`ranking_${idx + 1}`}>
+              {idx === 0 && <RankingTopSvg />}
               <Profile size={idx === 0 ? 140 : 104} imgUrl={v.userImage} />
               <strong>{v.nickname}</strong>
               <em>{!v.point ? 0 : v.point} 점</em>
