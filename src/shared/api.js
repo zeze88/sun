@@ -23,9 +23,15 @@ instance.interceptors.request.use(function (config) {
 // 데이터 요청 to 서버
 export const apis = {
   // ==================== post api ====================//
-  getpost: () => instance.get(`/post/get/check`),
+  getpost: (page) =>
+    instance.get(
+      `/post/get/check?page=${page}&size=10&sortBy=createdAt&isAsc=false`
+    ),
 
-  getpostnocheck: () => instance.get(`/post/get/nocheck`),
+  getpostnocheck: (page) =>
+    instance.get(
+      `/post/get/nocheck?page=${page}&size=10&sortBy=createdAt&isAsc=false`
+    ),
 
   onepost: (pid) => instance.get(`/post/detailget/${pid}`),
 

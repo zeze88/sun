@@ -13,11 +13,8 @@ const DEL_POST = "DEL_POST";
 const IMG_POST = "IMG_POST";
 const LOADING = "LOADING";
 
-const getPost = createAction(GET_POST, (post, paging) => ({ post, paging }));
-const getPostNoChk = createAction(GET_POSTCHK, (post, paging) => ({
-  post,
-  paging,
-}));
+const getPost = createAction(GET_POST, (post) => ({ post }));
+const getPostNoChk = createAction(GET_POSTCHK, (post) => ({ post }));
 const getOnePost = createAction(GET_ONE_POST, (post) => ({ post }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
 const editPost = createAction(EDIT_POST, (post) => ({ post }));
@@ -37,30 +34,28 @@ const initialState = {
 // ===================================================================
 // ======================== 게시글 리스트 가지고오기========================
 
-const getPostDB = (length = 0, start = null, size = 2) => {
+const getPostDB = (page) => {
   return function (dispatch, getState, { history }) {
     apis
-      .getpost()
+      .getpost(page)
       .then((res) => {
         const query = res.data;
-        let paging = {
-          start: query[0],
-          next: res.data === size + 1 ? res.data[res.data.length - 1] : null,
-          size: size,
-        };
+        const list = [];
+        const _list = getState().post.list;
 
-        if (start) {
-          query = query.slice[0];
-        }
+        let post = query.reduce((acc, cur) => {
+          const key = cur["pid"];
+          if (acc[key]) {
+            return acc;
+          } else {
+            return [...acc, cur];
+          }
+        }, []);
+        list.push(post);
 
-        dispatch(loading(true));
-        if (query.length === length) {
-          dispatch(loading(false));
-          return;
-        } else {
-          dispatch(getPost(query.slice(length, length + size), paging));
-          return;
-        }
+        console.log(list);
+
+        // dispatch(getPost(list));
       })
       .catch((err) => {
         console.log("error get post");
@@ -68,54 +63,12 @@ const getPostDB = (length = 0, start = null, size = 2) => {
   };
 };
 
-const getPostNocheckDB = (length = 0, start = null, size = 2) => {
+const getPostNocheckDB = (page) => {
   return function (dispatch, getState, { history }) {
     apis
-      .getpostnocheck()
+      .getpostnocheck(page)
       .then((res) => {
-        const query = res.data;
-        let paging = {
-          start: query[0],
-          next: res.data === size + 1 ? res.data[res.data.length - 1] : null,
-          size: size,
-        };
-
-        if (start) {
-          query = query.slice[0];
-        }
-
-        dispatch(loading(true));
-
-        if (query.length === length) {
-          dispatch(loading(false));
-          return;
-        } else {
-          let post_list = [];
-          console.log(query);
-          // let post = query.reduce((acc, cur) => {
-          //   console.log(acc.pid, cur.pid);
-
-          //   return acc.pid !== cur.pid && cur;
-          //   // if (cur.indexOf("user_") !== -1) {
-          //   //   // console.log([cur], _post[cur]);
-          //   //   return {
-          //   //     ...acc,
-          //   //     user_info: { ...acc.user_info, [cur]: _post[cur] },
-          //   //   };
-          //   // } else if (cur.indexOf("post_") !== -1) {
-          //   //   return {
-          //   //     ...acc,
-          //   //     magazine: { ...acc.magazine, [cur]: _post[cur] },
-          //   //   };
-          //   // }
-          // }, []);
-          // post_list.push(post);
-          // console.log(post_list);
-          // return;
-          dispatch(getPostNoChk(query.slice(length, length + size), paging));
-          // dispatch(getPostNoChk(post_list, paging));
-          return;
-        }
+        dispatch(getPostNoChk(res.data));
       })
       .catch((err) => {
         console.log("error get post");
@@ -327,15 +280,11 @@ export default handleActions(
   {
     [GET_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.list.push(...action.payload.post);
-        draft.paging = action.payload.paging;
-        draft.is_loading = false;
+        draft.list = action.payload.post;
       }),
     [GET_POSTCHK]: (state, action) =>
       produce(state, (draft) => {
-        draft.nockeckList.push(...action.payload.post);
-        draft.paging = action.payload.paging;
-        draft.is_loading = false;
+        draft.nockeckList = action.payload.post;
       }),
     [GET_ONE_POST]: (state, action) =>
       produce(state, (draft) => {
