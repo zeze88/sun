@@ -39,27 +39,31 @@ const TableList = ({ currTab }) => {
           <strong>{list} 알림이 없습니다 :)</strong>
         </li>
       )}
-      {select_list().map((v, idx) => (
-        <li key={v.alarmId}>
-          <div
-            onClick={() => {
-              history.push(`detail/${v.pid}`);
-            }}>
-            <p>"{v.postTitle}"</p>
-            {v.type === "AnswerCreate" && (
-              <span>누군가 내 게시글에 답글을 남겼습니다.</span>
-            )}
-            {v.type === "AnswerChoose" && <span>답변이 채택되었습니다.</span>}
-            <em>{v.createdAt}</em>
-          </div>
-          <button
-            onClick={() => {
-              dispatch(myActions.myAlarmsDelDB(v.alarmId));
-            }}>
-            삭제
-          </button>
-        </li>
-      ))}
+      {select_list().map((v, idx) => {
+        const date = v.createdAt?.split(".")[0].replace("T", " ");
+
+        return (
+          <li key={v.alarmId}>
+            <div
+              onClick={() => {
+                history.push(`detail/${v.pid}`);
+              }}>
+              <p>"{v.postTitle}"</p>
+              {v.type === "AnswerCreate" && (
+                <span>누군가 내 게시글에 답글을 남겼습니다.</span>
+              )}
+              {v.type === "AnswerChoose" && <span>답변이 채택되었습니다.</span>}
+              <em>{date}</em>
+            </div>
+            <button
+              onClick={() => {
+                dispatch(myActions.myAlarmsDelDB(v.alarmId));
+              }}>
+              삭제
+            </button>
+          </li>
+        );
+      })}
     </TableListUl>
   );
 };
