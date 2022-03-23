@@ -80,6 +80,7 @@ const SC_OtherRanking = styled.div`
   }
 
   i {
+    width: 57px;
     font-style: normal;
     padding: 10px;
   }

@@ -26,30 +26,55 @@ const SearchResult = () => {
         return null;
     }
   }, [search_type]);
-
+  console.log(tag_list.length === 0);
   return (
     <Container>
       {search_type === "tag" ? (
         <NoticeList list={tag_list} />
       ) : search_type === "serch" ? (
         <NoticeList list={serch_list} />
-      ) : search_type === "category" ? (
-        <NoticeList list={category_list} />
       ) : (
-        <>
-          <div>검색 결과가 없습니다 :)</div>
+        <NoticeList list={category_list} />
+      )}
+      {(tag_list.length === 0 ||
+        serch_list.length === 0 ||
+        category_list.length === 0) && (
+        <NoSearch>
+          <h2>검색 결과가 없습니다 :)</h2>
           <button
             onClick={() => {
               history.replace("/");
             }}>
             되돌아가기
           </button>
-        </>
+        </NoSearch>
       )}
     </Container>
   );
 };
+const NoSearch = styled.div`
+  padding: 200px;
+  min-height: calc(100vh - 250px);
+  text-align: center;
 
+  h2 {
+    font-size: 30px;
+    font-weight: 700;
+  }
+
+  button {
+    margin-top: 40px;
+    padding: 16px 40px;
+    background-color: #ddd;
+    border-radius: 8px;
+    color: #fff;
+    transition: all 0.4s;
+
+    &:hover {
+      background-color: #7966ff;
+    }
+  }
+`;
 const Container = styled.div`
   width: 1440px;
   margin: auto;
