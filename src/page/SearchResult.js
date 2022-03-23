@@ -58,7 +58,6 @@ const SearchResult = () => {
 
 const Container = styled.div`
   width: 1440px;
-  height: 830px;
   margin: auto;
 `;
 export default SearchResult;
