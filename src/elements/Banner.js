@@ -18,7 +18,7 @@ const Banner = () => {
   return (
     <BannerSlide {...settings}>
       <div className='banner_wrap'>
-        <img src='https://cdn.pixabay.com/photo/2014/09/21/14/39/surface-455124__480.jpg' />
+        <img src='https://hanghae8-final-project.s3.ap-northeast-2.amazonaws.com/static/12a46e48-93b8-4d64-be55-c516fc387031ogimage_1.png' />
       </div>
       <div className='banner_wrap'>
         <img src='https://cdn.pixabay.com/photo/2014/09/21/14/39/surface-455124__480.jpg' />

@@ -3,43 +3,39 @@ import styled from "styled-components";
 import Profile from "./Profile";
 import { history } from "../redux/configureStore";
 
-const NoticeList = ({ list }) => {
-  return (
-    <React.Fragment>
-      {list.map((data, idx) => {
-        const date = data.createdAt?.split("T")[0];
+const NoticeList = ({ list, target, lastEl }) => {
+  const [isLast, setIsLast] = React.useState(1);
+  const [pagingNum, setPagingNum] = React.useState();
+  const date = list.createdAt?.split("T")[0];
 
-        return (
-          <NoticeListDiv
-            key={idx}
-            onClick={() => {
-              history.push(`/detail/${data.pid}`);
-            }}>
-            {data.category && <div className='category'>{data.category}</div>}
-            <div className='title'>
-              <h3>{data.postTitle}</h3>
-              {data.status === "selection" && <em>답변완료</em>}
-            </div>
-            <div className='content'>
-              <div>{data.postComment}</div>
-            </div>
-            <div className='info'>
-              <TagUl>
-                {data.tag?.map((v, idx) => (
-                  <li key={idx}>#{v} </li>
-                ))}
-              </TagUl>
-              <span>
-                <Profile imgUrl={data.userImage} size='24' />
-                {data.nickname}
-              </span>
-              <em>{date}</em>
-              <i>관심 {data.postLikeCount}</i>
-            </div>
-          </NoticeListDiv>
-        );
-      })}
-    </React.Fragment>
+  return (
+    <NoticeListDiv
+      ref={lastEl ? target : null}
+      onClick={() => {
+        history.push(`/detail/${list.pid}`);
+      }}>
+      {list.category && <div className='category'>{list.category}</div>}
+      <div className='title'>
+        <h3>{list.postTitle}</h3>
+        {list.status === "selection" && <em>답변완료</em>}
+      </div>
+      <div className='content'>
+        <div>{list.postComment}</div>
+      </div>
+      <div className='info'>
+        <TagUl>
+          {list.tag?.map((v, idx) => (
+            <li key={idx}>#{v} </li>
+          ))}
+        </TagUl>
+        <span>
+          <Profile imgUrl={list.userImage} size='24' />
+          {list.nickname}
+        </span>
+        <em>{date}</em>
+        <i>관심 {list.postLikeCount}</i>
+      </div>
+    </NoticeListDiv>
   );
 };
 
