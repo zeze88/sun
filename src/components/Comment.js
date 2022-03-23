@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { actionCreators as commentActions } from "../redux/modules/comment";
-import answer from "../redux/modules/answer";
 import RoundBtn from "../elements/RoundBtn";
 import { useParams } from "react-router-dom";
 
@@ -12,14 +11,6 @@ const Comment = ({ list }) => {
   const uid = sessionStorage.getItem("uid");
   const answerId = list.answerId;
   const [comment, setComment] = React.useState("");
-  const C = Object.keys(list.commnetResponseDtoList).length;
-  // console.log(uid);
-  // console.log(state.answer);
-  // console.log(pid);
-
-  // React.useEffect(() => {
-  //     dispatch()
-  // })
 
   const addComment = () => {
     dispatch(commentActions.addCommentDB(uid, pid, answerId, comment));
@@ -31,7 +22,6 @@ const Comment = ({ list }) => {
 
   return (
     <Container>
-      {/* <CommentCount>댓글 {C}</CommentCount> */}
       <CommentInput>
         <CommentWrite onChange={onChange} />
         <RoundBtn onClick={addComment} title='등록' />
@@ -44,12 +34,6 @@ const Container = styled.div`
   display: flex;
 `;
 
-const CommentCount = styled.div`
-  flex: none;
-  font-weight: 700;
-  margin-right: 22px;
-`;
-
 const CommentInput = styled.div`
   flex: auto;
   display: flex;
@@ -57,7 +41,6 @@ const CommentInput = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 80px;
-  /* border: 1px solid #c5c5c5; */
   overflow: hidden;
 `;
 
@@ -67,16 +50,6 @@ const CommentWrite = styled.textarea`
   padding: 14px;
   border-radius: 8px;
   background-color: #fbfbfd;
-`;
-
-const Buttom = styled.button`
-  flex: none;
-  padding: 10px 32px;
-  margin-left: 10px;
-  color: #fff;
-  font-size: 16px;
-  border-radius: 30px;
-  background-color: #7966ff;
 `;
 
 export default Comment;

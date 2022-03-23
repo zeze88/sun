@@ -19,6 +19,8 @@ const AnswerList = ({ isWriter }) => {
   const [isEdit, setIsEdit] = React.useState(null);
   const [isCommentEdit, setIsCommentEdit] = React.useState(false);
   const [comment, setComment] = React.useState("");
+  const [commentView, setCommentView] = React.useState();
+  const [commentViewSelect, setCommentViewSelect] = React.useState(false);
   const [commentId, setCommentId] = React.useState(0);
   const isChoose = list?.find((v) => v.status === "true");
 
@@ -80,6 +82,12 @@ const AnswerList = ({ isWriter }) => {
         Swal.fire("", "취소 되었습니다 :)", "error");
       }
     });
+  };
+
+  const commentViewList = (list) => {
+    setCommentView(list.commnetResponseDtoList);
+    setCommentViewSelect(!commentViewSelect);
+    console.log(commentView);
   };
 
   const setCommentEdit = (commentId) => {
@@ -152,7 +160,10 @@ const AnswerList = ({ isWriter }) => {
                   </div>
 
                   <div className='btn_wrap'>
-                    <span>댓글 {comment_count}</span>
+                    <span
+                      onClick={() => commentViewList(v.commnetResponseDtoList)}>
+                      댓글 {comment_count}
+                    </span>
                     {/* 채택 하기 , 수적 삭제, 채택된 상태 */}
                     {v.status === "true" ? (
                       <button className='choose'>채택</button>
@@ -192,87 +203,6 @@ const AnswerList = ({ isWriter }) => {
                   <SC_Commentbox className='comment'>
                     <Comment list={v} />
                   </SC_Commentbox>
-                  <SC_CommentList className='comment_wrap'>
-                    {v.commnetResponseDtoList.map((list, idx) => {
-                      return (
-                        <div key={idx}>
-                          {list.uid == user_info ? (
-                            <>
-                              {isCommentEdit && list.commentId === commentId ? (
-                                <div>
-                                  <div className='mycomment'>
-                                    <div>
-                                      <Profile
-                                        size={24}
-                                        imgUrl={list.userImage}
-                                      />
-                                      <strong>{list.nickname}</strong>
-                                    </div>
-                                    <div className='button'>
-                                      <button
-                                        className='comment'
-                                        onClick={commentEdit}
-                                        value={list.commentId}>
-                                        수정완료
-                                      </button>
-                                    </div>
-                                  </div>
-                                  <p>
-                                    <textarea
-                                      defaultValue={list.comment}
-                                      type='text'
-                                      onChange={commentChange}></textarea>
-                                  </p>
-                                  <p> {list.createdAt?.split("T")[0]}</p>
-                                </div>
-                              ) : (
-                                <div>
-                                  <div className='mycomment'>
-                                    <div>
-                                      <Profile
-                                        size={24}
-                                        imgUrl={list.userImage}
-                                      />
-                                      <strong>{list.nickname}</strong>
-                                    </div>
-                                    <div className='button'>
-                                      <button
-                                        className='comment'
-                                        onClick={() => {
-                                          setCommentEdit(list.commentId);
-                                          setIsCommentEdit(!isCommentEdit);
-                                        }}>
-                                        수정
-                                      </button>
-                                      <button
-                                        className='comment'
-                                        onClick={commentDelete}
-                                        value={list.commentId}>
-                                        삭제
-                                      </button>
-                                    </div>
-                                  </div>
-                                  <p className='comment'>{list.comment}</p>
-                                  <p> {list.createdAt?.split("T")[0]}</p>
-                                </div>
-                              )}
-                            </>
-                          ) : (
-                            <div>
-                              <div>
-                                <div className='comment'>
-                                  <Profile size={24} imgUrl={list.userImage} />
-                                  <strong>{list.nickname}</strong>
-                                </div>
-                                <p className='comment'>{list.comment}</p>
-                                <p> {list.createdAt?.split("T")[0]}</p>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      );
-                    })}
-                  </SC_CommentList>
                 </div>
               </div>
 
@@ -283,6 +213,83 @@ const AnswerList = ({ isWriter }) => {
           </React.Fragment>
         );
       })}
+      {commentViewSelect ? (
+        <SC_CommentList className='comment_wrap'>
+          {commentView.map((list, idx) => {
+            return (
+              <div key={idx}>
+                {list.uid == user_info ? (
+                  <>
+                    {isCommentEdit && list.commentId === commentId ? (
+                      <div>
+                        <div className='mycomment'>
+                          <div>
+                            <Profile size={24} imgUrl={list.userImage} />
+                            <strong>{list.nickname}</strong>
+                          </div>
+                          <div className='button'>
+                            <button
+                              className='comment'
+                              onClick={commentEdit}
+                              value={list.commentId}>
+                              수정완료
+                            </button>
+                          </div>
+                        </div>
+                        <p>
+                          <textarea
+                            defaultValue={list.comment}
+                            type='text'
+                            onChange={commentChange}></textarea>
+                        </p>
+                        <p> {list.createdAt?.split("T")[0]}</p>
+                      </div>
+                    ) : (
+                      <div>
+                        <div className='mycomment'>
+                          <div>
+                            <Profile size={24} imgUrl={list.userImage} />
+                            <strong>{list.nickname}</strong>
+                          </div>
+                          <div className='button'>
+                            <button
+                              className='comment'
+                              onClick={() => {
+                                setCommentEdit(list.commentId);
+                                setIsCommentEdit(!isCommentEdit);
+                              }}>
+                              수정
+                            </button>
+                            <button
+                              className='comment'
+                              onClick={commentDelete}
+                              value={list.commentId}>
+                              삭제
+                            </button>
+                          </div>
+                        </div>
+                        <p className='comment'>{list.comment}</p>
+                        <p> {list.createdAt?.split("T")[0]}</p>
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <div>
+                    <div>
+                      <div className='comment'>
+                        <Profile size={24} imgUrl={list.userImage} />
+                        <strong>{list.nickname}</strong>
+                      </div>
+                      <p className='comment'>{list.comment}</p>
+                      <p> {list.createdAt?.split("T")[0]}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </SC_CommentList>
+      ) : null}
     </SC_List>
   );
 };
