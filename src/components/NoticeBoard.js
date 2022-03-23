@@ -6,8 +6,9 @@ import _NoticeList from "../elements/_NoticeList";
 import TabMenu from "./TabMenu";
 import { ReactComponent as WriteSvg } from "../svg/write.svg";
 import { history } from "../redux/configureStore";
+import InfinityScroll from "../shared/InfinityScroll";
 
-const NoticeBoard = ({ target, viewport }) => {
+const NoticeBoard = () => {
   const tab_list = [
     {
       title: "nockeck",
@@ -26,6 +27,12 @@ const NoticeBoard = ({ target, viewport }) => {
 
   // 무한 스크롤
   const [pageNum, setPageNum] = React.useState(1);
+  const viewport = React.useRef(null);
+  const target = React.useRef(null);
+
+  const loadItems = () => {
+    console.log("next");
+  };
 
   React.useEffect(() => {
     if (TabList === "check") {
@@ -33,7 +40,31 @@ const NoticeBoard = ({ target, viewport }) => {
     } else {
       dispatch(postActions.getPostNocheckDB(1));
     }
-  }, [TabList]);
+
+    const options = {
+      root: viewport.current,
+      threshold: 0,
+    };
+
+    const handleIntersection = (entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+        loadItems();
+        observer.unobserve(entry.target);
+        observer.observe(target.current);
+      });
+    };
+
+    const io = new IntersectionObserver(handleIntersection, options);
+
+    if (target.current) {
+      io.observe(target.current);
+    }
+
+    return () => io && io.disconnect();
+  }, [TabList, viewport, target]);
 
   return (
     <React.Fragment>
@@ -44,7 +75,8 @@ const NoticeBoard = ({ target, viewport }) => {
           {postList.map((v, idx) => {
             const lastEl = idx === v.length - 1;
             return (
-              <_NoticeList key={idx} list={v} target={target} lastEl={lastEl} />
+              <TestBox key={idx} ref={lastEl ? target : null}></TestBox>
+              // <_NoticeList key={idx} list={v} target={target} lastEl={lastEl} />
             );
           })}
         </div>
@@ -84,6 +116,10 @@ const SC_NoticeDiv = styled.div`
   > ul {
     margin: 0 24px;
   }
+
+  .list_wrap {
+    margin: 30px;
+  }
 `;
 
 const SC_BtnWrap = styled.div`
@@ -101,5 +137,11 @@ const SC_BtnWrap = styled.div`
       margin-right: 16px;
     }
   }
+`;
+const TestBox = styled.div`
+  width: 300px;
+  background-color: #eee;
+  height: 400px;
+  margin: 40px;
 `;
 export default NoticeBoard;
