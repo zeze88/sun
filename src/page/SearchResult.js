@@ -14,12 +14,6 @@ const SearchResult = () => {
   const serch_list = useSelector((state) => state.search.serch_list);
   const category_list = useSelector((state) => state.search.category_list);
 
-  console.log(tag_list);
-  console.log(serch_list);
-  console.log(category_list);
-  console.log(search_type);
-  console.log(search_keyword);
-
   React.useEffect(() => {
     switch (search_type) {
       case "tag":
@@ -58,7 +52,6 @@ const SearchResult = () => {
 
 const Container = styled.div`
   width: 1440px;
-  height: 830px;
   margin: auto;
 `;
 export default SearchResult;
