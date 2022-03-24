@@ -10,6 +10,7 @@ const NoticeList = ({ list, target, lastEl }) => {
 
   return (
     <NoticeListDiv
+      className={lastEl ? "last" : ""}
       ref={lastEl ? target : null}
       onClick={() => {
         history.push(`/detail/${list.pid}`);
