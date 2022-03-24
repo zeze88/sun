@@ -110,7 +110,7 @@ const addPostDB = (props) => {
             pid: res.data,
           })
         );
-        // history.replace("/");
+        history.replace("/");
       });
     } else {
       axios
