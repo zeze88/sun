@@ -49,6 +49,7 @@ const Detail = () => {
   };
 
   React.useEffect(() => {
+    window.scrollTo(0, 0);
     dispatch(answerActions.getAnswerDB(pid));
     dispatch(postActions.getOnePostDB(pid));
   }, []);
