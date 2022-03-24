@@ -24,13 +24,6 @@ const Create = () => {
   const reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
 
   React.useEffect(() => {
-    if (!token) {
-      window.alert("로그인 후 사용해주세요 :)");
-      history.replace("/login");
-    }
-  }, []);
-
-  React.useEffect(() => {
     if (!isCreate) {
       dispatch(postActions.getOnePostDB(params));
       setAddPost(post_one);

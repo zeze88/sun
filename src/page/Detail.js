@@ -119,7 +119,7 @@ const Detail = () => {
             </div>
           </ContextWrap>
         </Question>
-        <Answer />
+        {user_info && <Answer />}
         <AnswerList isWriter={post_one.uid} />
       </div>
 
@@ -163,6 +163,10 @@ const Top = styled.div`
 
   .header {
     padding-bottom: 26px;
+
+    span {
+      cursor: pointer;
+    }
   }
 
   .category {
