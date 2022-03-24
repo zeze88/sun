@@ -19,11 +19,11 @@ const AnswerList = ({ isWriter }) => {
   const [isEdit, setIsEdit] = React.useState(null);
   const [isCommentEdit, setIsCommentEdit] = React.useState(false);
   const [comment, setComment] = React.useState("");
-  const [commentView, setCommentView] = React.useState();
+  const [commentView, setCommentView] = React.useState("");
   const [commentViewSelect, setCommentViewSelect] = React.useState(false);
   const [commentId, setCommentId] = React.useState(0);
   const isChoose = list?.find((v) => v.status === "true");
-  console.log(user_info);
+
   React.useEffect(() => {
     if (list.length <= 1) {
       return;
@@ -86,8 +86,16 @@ const AnswerList = ({ isWriter }) => {
 
   const commentViewList = (pid) => {
     setCommentView(pid);
-    setCommentViewSelect(!commentViewSelect);
-    console.log(pid);
+    if (commentView === "") {
+      console.log("첫동작");
+      setCommentViewSelect(!commentViewSelect);
+    } else if (commentView === pid) {
+      setCommentViewSelect(!commentViewSelect);
+      console.log("같을때" + commentViewSelect);
+    } else if (commentView !== pid) {
+      setCommentViewSelect("true");
+      console.log("다를떄" + commentViewSelect);
+    }
   };
 
   const setCommentEdit = (commentId) => {
@@ -213,7 +221,7 @@ const AnswerList = ({ isWriter }) => {
                 {v.commnetResponseDtoList.map((list, idx) => {
                   return (
                     <div key={idx}>
-                      {commentView === list.answerId && (
+                      {commentViewSelect && commentView === list.answerId && (
                         <>
                           {user_info == list.uid && (
                             <>
