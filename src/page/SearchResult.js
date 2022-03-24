@@ -39,7 +39,7 @@ const SearchResult = () => {
       default:
         return null;
     }
-  }, [search_type]);
+  }, [search_keyword]);
 
   const getMoreItem = () => {
     switch (search_type) {
