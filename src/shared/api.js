@@ -84,5 +84,8 @@ export const apis = {
   myweekRanking: () => instance.get(`/islogin/ranking/weekend`),
   myalarm: () => instance.get(`/islogin/alarm`),
   myalarmdel: (alarmId) => instance.delete(`/islogin/alarm/${alarmId}`),
-  mylikepost: () => instance.get(`/islogin/get/like `),
+  mylikepost: (page) =>
+    instance.get(
+      `/islogin/get/like?page=${page}&size=10&sortBy=createdAt&isAsc=false`
+    ),
 };

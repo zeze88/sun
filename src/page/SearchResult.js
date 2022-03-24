@@ -114,6 +114,7 @@ const NoSearch = styled.div`
 `;
 const Container = styled.div`
   width: 1440px;
+  min-height: calc(100vh - 100px - 150px);
   margin: auto;
 `;
 export default SearchResult;

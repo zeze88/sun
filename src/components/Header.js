@@ -87,7 +87,7 @@ const Header = () => {
                   비밀번호 재설정
                 </li>
                 <li onClick={() => history.push("/alarms")}>알람 내역</li>
-                <li onClick={() => history.push("/passedit")}>관심글</li>
+                <li onClick={() => history.push("/scrap")}>관심글</li>
                 <li className='logout' onClick={Logout}>
                   로그아웃
                 </li>
@@ -176,12 +176,13 @@ const Container = styled.div`
 
   ul.view {
     position: absolute;
-    top: 100%;
+    top: calc(100% + 8px);
     right: 0;
     width: 100%;
     padding: 30px 24px;
     background-color: #fff;
     border-radius: 8px;
+    z-index: 10;
     box-shadow: 0 0 10px 0 rgba(172, 168, 203, 0.4);
   }
 
@@ -194,9 +195,18 @@ const Container = styled.div`
     cursor: pointer;
     color: #333;
     font-size: 16px;
+    border-radius: 2px;
 
     &.logout {
       color: #797979;
+      &:hover {
+        background-color: #998bff;
+      }
+    }
+
+    &:hover {
+      color: #fff;
+      background-color: #7966ff;
     }
   }
 

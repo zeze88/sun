@@ -244,7 +244,7 @@ const postLikeDB = (uid, pid) => {
     apis
       .likepost(uid, pid)
       .then((res) => {
-        const post_list = getState().post.list;
+        const post_list = getState().post.one_list;
         let like_count = "";
         if (res.data.postLike === "true") {
           like_count = post_list.postLikeCount + 1;
@@ -253,7 +253,7 @@ const postLikeDB = (uid, pid) => {
         }
 
         dispatch(
-          getPost({ ...post_list, post_list, postLikeCount: like_count })
+          getOnePost({ ...post_list, post_list, postLikeCount: like_count })
         );
       })
       .catch((err) => {

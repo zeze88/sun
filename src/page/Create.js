@@ -24,6 +24,7 @@ const Create = () => {
   const reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
 
   React.useEffect(() => {
+    window.scrollTo(0, 0);
     if (!isCreate) {
       dispatch(postActions.getOnePostDB(params));
       setAddPost(post_one);
@@ -225,6 +226,7 @@ const Create = () => {
 const PostWrap = styled.div`
   max-width: 1073px;
   margin: 0 auto;
+  margin-bottom: 24px;
   padding: 50px 26px;
   border-radius: 8px;
   box-shadow: 0 4px 20px 0 rgba(228, 226, 242, 0.45);

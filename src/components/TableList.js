@@ -68,14 +68,14 @@ const TableList = ({ currTab }) => {
   );
 };
 
-const TableListUl = styled.ul`
+export const TableListUl = styled.ul`
   min-height: 600px;
   .no_list {
     line-height: 400px;
   }
 
   li {
-    padding: 20px;
+    padding: 20px 64px;
     display: flex;
     align-items: center;
     text-align: center;

@@ -24,7 +24,7 @@ const myAlarmsDB = () => {
 
 const myAlarmsDelDB = (alarmId) => {
   return function (dispatch, getState, { history }) {
-    apis.myalarmdel(alarmId).then((res) => {
+    apis.myalarmdel(alarmId).then(() => {
       const _aram_list = getState().mypage.list;
       const aram_list = _aram_list.filter((v) => v.alarmId !== alarmId);
       dispatch(myAlarmsDel(aram_list));
@@ -32,11 +32,17 @@ const myAlarmsDelDB = (alarmId) => {
   };
 };
 
-const myLikePostDB = () => {
+const myLikePostDB = (page) => {
   return function (dispatch, getState, { history }) {
-    apis.mylikepost().then((res) => {
-      dispatch(myAlarms(res.data));
-    });
+    console.log(page);
+    apis
+      .mylikepost(page)
+      .then((res) => {
+        dispatch(myAlarms(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 };
 
