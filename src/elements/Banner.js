@@ -1,7 +1,9 @@
 import React from "react";
 import Slider from "react-slick";
 import styled from "styled-components";
-
+import { ReactComponent as Banner1Svg } from "../svg/banner/banner1.svg";
+import { ReactComponent as Banner2Svg } from "../svg/banner/banner2.svg";
+import { ReactComponent as Banner3Svg } from "../svg/banner/banner3.svg";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -18,13 +20,13 @@ const Banner = () => {
   return (
     <BannerSlide {...settings}>
       <div className='banner_wrap'>
-        <img src='https://hanghae8-final-project.s3.ap-northeast-2.amazonaws.com/static/12a46e48-93b8-4d64-be55-c516fc387031ogimage_1.png' />
+        <Banner1Svg />
       </div>
       <div className='banner_wrap'>
-        <img src='https://cdn.pixabay.com/photo/2014/09/21/14/39/surface-455124__480.jpg' />
+        <Banner2Svg />
       </div>
       <div className='banner_wrap'>
-        <img src='https://cdn.pixabay.com/photo/2014/09/21/14/39/surface-455124__480.jpg' />
+        <Banner3Svg />
       </div>
     </BannerSlide>
   );
@@ -32,13 +34,15 @@ const Banner = () => {
 
 const BannerSlide = styled(Slider)`
   margin: 18px 0;
-  border-radius: 8px;
-  overflow: hidden;
 
-  .slick-slide > div {
-    display: flex;
+  .slick-slide {
+    border-radius: 8px;
+    overflow: hidden;
+
+    & > div {
+      display: flex;
+    }
   }
-
   /* slide button */
   &:hover {
     .slick-next,
