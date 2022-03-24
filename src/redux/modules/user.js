@@ -92,7 +92,7 @@ const signupDB = (username, nickname, password, passwordCheck, career) => {
       })
       .then((res) => {
         window.alert("회원가입을 축하드립니다.");
-        window.location.replace();
+        window.location.reload();
       })
       .catch((err) => {
         console.log("회원가입 실패", err);
@@ -276,10 +276,15 @@ const NewPassWordDB = (uid, password, newPassword, newPasswordCheck) => {
         }
       )
       .then((res) => {
-        console.log(res);
-        window.alert("비밀번호 수정 성공");
-        history.push("/");
-        window.location.reload();
+        console.log(res.data);
+        if (res.data.result !== true) {
+          window.alert("비밀번호 수정 실패");
+          window.location.reload();
+        } else {
+          window.alert("비밀번호 수정 성공");
+          history.push("/");
+          window.location.replace("/");
+        }
       })
       .catch((err) => {
         console.log(err);

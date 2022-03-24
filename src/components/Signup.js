@@ -131,8 +131,7 @@ function Signup(props) {
       <div>
         <div>
           <span style={{ width: "58px" }} className='inputSpan'>
-            {" "}
-            비밀번호{" "}
+            비밀번호
           </span>
           <input
             type='password'
@@ -141,7 +140,7 @@ function Signup(props) {
           />
         </div>
         {password.length > 0 && !passwordRuleCheck && (
-          <span className='rule'> *영문 4자 이상 입력해주세요. </span>
+          <span className='rule'> *영문 숫자 조합 4자 이상 입력해주세요. </span>
         )}
       </div>
 
@@ -239,7 +238,6 @@ const Container = styled.div`
       align-items: center;
       background-color: #f9f8ff;
       border-radius: 0.5rem;
-
       padding: 15px;
       > span.inputSpan {
         color: #7966ff;
