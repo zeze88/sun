@@ -43,19 +43,12 @@ const getPostDB = (page) => {
         const list = [];
         const _list = getState().post.list;
 
-        let post = query.reduce((acc, cur) => {
-          const key = cur["pid"];
-          if (acc[key]) {
-            return acc;
-          } else {
-            return [...acc, cur];
-          }
-        }, []);
-        list.push(post);
-
-        console.log(list);
-
-        // dispatch(getPost(list));
+        if (page === 1) {
+          dispatch(getPost(query));
+        } else {
+          const _list = getState().post.list;
+          dispatch(getPost(_list.concat(query)));
+        }
       })
       .catch((err) => {
         console.log("error get post");
@@ -68,7 +61,38 @@ const getPostNocheckDB = (page) => {
     apis
       .getpostnocheck(page)
       .then((res) => {
-        dispatch(getPostNoChk(res.data));
+        const query = res.data;
+        console.log(query);
+        if (page === 1) {
+          // let post = query.reduce(
+          //   (acc, cur) => {
+          //     const key = cur["pid"];
+          //     if (!acc[key]) {
+          //       return [...acc, cur];
+          //     } else {
+          //       return acc;
+          //     }
+          //   },
+          //   [""]
+          // );
+
+          dispatch(getPostNoChk(query));
+        } else {
+          const _list = getState().post.nockeckList;
+          dispatch(getPostNoChk(_list.concat(query)));
+
+          let post = _list.concat(query).reduce(
+            (acc, cur) => {
+              const key = cur["pid"];
+              if (!acc[key]) {
+                return [...acc, cur];
+              } else {
+                return acc;
+              }
+            },
+            [""]
+          );
+        }
       })
       .catch((err) => {
         console.log("error get post");
@@ -123,7 +147,7 @@ const addPostDB = (props) => {
             pid: res.data,
           })
         );
-        history.replace("/");
+        // history.replace("/");
       });
     } else {
       axios
