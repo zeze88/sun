@@ -23,7 +23,7 @@ const initialState = {
 
 const serchDB = (title, page) => {
   return async function (dispatch, getState, { history }) {
-    console.log(title);
+    console.log(title, page);
     await axios
       .get(
         `${apiUrl}/post/search/${title}?page=${page}&size=10&sortBy=createdAt&isAsc=false`,
@@ -34,8 +34,27 @@ const serchDB = (title, page) => {
         }
       )
       .then((res) => {
-        console.log(res);
-        dispatch(serch(res.data));
+        if (res.data.length === 0) {
+          console.log(res.data);
+          const beforePage = page - 1;
+          console.log(beforePage);
+          axios
+            .get(
+              `${apiUrl}/post/search/${title}?page=${beforePage}&size=10&sortBy=createdAt&isAsc=false`,
+              {
+                headers: {
+                  Authorization: token,
+                },
+              }
+            )
+            .then((res) => {
+              console.log(res);
+              dispatch(serch(res.data));
+            });
+        } else {
+          console.log(res);
+          dispatch(serch(res.data));
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -90,15 +109,15 @@ export default handleActions(
   {
     [SERCH]: (state, action) =>
       produce(state, (draft) => {
-        draft.serch_list.push(...action.payload.list);
-        draft.serch_list = draft.serch_list.reduce((acc, cur) => {
-          if (acc.findIndex((a) => a.pid === cur.pid) === -1) {
-            return [...acc, cur];
-          } else {
-            acc[acc.findIndex((a) => a.pid === cur.pid)] = cur;
-            return acc;
-          }
-        }, []);
+        draft.serch_list = action.payload.list;
+        // draft.serch_list = draft.serch_list.reduce((acc, cur) => {
+        //   if (acc.findIndex((a) => a.pid === cur.pid) === -1) {
+        //     return [...acc, cur];
+        //   } else {
+        //     acc[acc.findIndex((a) => a.pid === cur.pid)] = cur;
+        //     return acc;
+        //   }
+        // }, []);
       }),
     [CATEGORY]: (state, action) =>
       produce(state, (draft) => {
