@@ -30,7 +30,7 @@ function App() {
       <Route path='/useredit' exact component={Edituser} />
       <Route path='/passedit' exact component={Password} />
       <Route path='/alarms' exact component={Alarms} />
-      <Footer />
+      {location.pathname === "/login" ? null : <Footer />}
     </div>
   );
 }
