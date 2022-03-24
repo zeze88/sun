@@ -115,7 +115,6 @@ function Signup(props) {
         <div>
           <span className='inputSpan'>아이디</span>
           <input
-            className='input1'
             type='text'
             placeholder='영문과 숫자를 4자 이상 10글자 이내 입력하세요.'
             onChange={idRule}
@@ -136,7 +135,6 @@ function Signup(props) {
             비밀번호{" "}
           </span>
           <input
-            className='input2'
             type='password'
             placeholder='password'
             onChange={passwordRule}
@@ -153,7 +151,6 @@ function Signup(props) {
             비밀번호 확인
           </span>
           <input
-            className='input2'
             type='password'
             onChange={(e) => {
               setCheckPassword(e.target.value);
@@ -168,12 +165,7 @@ function Signup(props) {
       <div>
         <div>
           <span className='inputSpan'>닉네임</span>
-          <input
-            className='input1'
-            type='text'
-            placeholder='Nickname'
-            onChange={nicknameRule}
-          />
+          <input type='text' placeholder='Nickname' onChange={nicknameRule} />
           <button className='CheckButton' onClick={checkNickname}>
             중복체크
           </button>
