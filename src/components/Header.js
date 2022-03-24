@@ -123,12 +123,14 @@ const Container = styled.div`
     padding-right: 17px;
     border-radius: 8px;
     box-shadow: 0 0 4px 0 rgba(172, 168, 203, 0.2);
+    cursor: pointer;
   }
 
-  div.Logo {
+  .Logo {
     flex: none;
     width: 220px;
     height: 38px;
+    cursor: pointer;
   }
 
   div.my {

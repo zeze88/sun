@@ -2,12 +2,12 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { ReactComponent as LoginSvg } from "../svg/login_logo.svg";
 import LoginBackSvg from "../svg/login_background.svg";
-import { actionCreators as userActions } from "../redux/modules/user";
-import styled from "styled-components";
 import Signup from "../components/Signup";
+import { actionCreators as userActions } from "../redux/modules/user";
+import { history } from "../redux/configureStore";
+import styled from "styled-components";
 
-const Login = (props) => {
-  const { history } = props;
+const Login = () => {
   const dispatch = useDispatch();
 
   const [check, setCheck] = React.useState("login");
@@ -27,7 +27,11 @@ const Login = (props) => {
       <Container2>
         <div className={check === "login" ? "box" : "signup"}>
           <div className='logo'>
-            <LoginSvg />
+            <LoginSvg
+              onClick={() => {
+                history.push("/");
+              }}
+            />
           </div>
           <div className='switch'>
             <label className={check === "login" ? "login" : ""}>
@@ -131,6 +135,10 @@ const Container2 = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+
+    svg {
+      cursor: pointer;
+    }
   }
   div.switch {
     width: 500px;
@@ -141,6 +149,8 @@ const Container2 = styled.div`
     > label {
       font-size: 18px;
       margin-right: 41px;
+      cursor: pointer;
+
       &.login {
         color: white;
       }

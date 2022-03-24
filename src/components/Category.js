@@ -62,6 +62,7 @@ const Container = styled.div`
     height: 46px;
     line-height: 46px;
     text-align: center;
+    cursor: pointer;
   }
 
   .category_list {
