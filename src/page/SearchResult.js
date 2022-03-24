@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
+import { useInView } from "react-intersection-observer";
 import NoticeList from "../elements/NoticeList";
 import { history } from "../redux/configureStore";
 import { actionsCreators as searchActions } from "../redux/modules/serch";
@@ -13,32 +14,71 @@ const SearchResult = () => {
   const tag_list = useSelector((state) => state.search.tag_list);
   const serch_list = useSelector((state) => state.search.serch_list);
   const category_list = useSelector((state) => state.search.category_list);
+  const postList =
+    search_type === "tag"
+      ? tag_list
+      : search_type === "serch"
+      ? serch_list
+      : category_list;
+  const [isLoaded, setIsLoaded] = React.useState(false);
+  const [pageNum, setPageNum] = React.useState(1);
+  const [pageNum1, setPageNum1] = React.useState(1);
+  const [pageNum2, setPageNum2] = React.useState(1);
+  const [ref, inView] = useInView({
+    threshold: 0.4,
+  });
+
+  console.log(search_keyword);
+  console.log(postList);
 
   React.useEffect(() => {
     switch (search_type) {
       case "tag":
-        return dispatch(searchActions.tagDB(search_keyword));
+        return dispatch(searchActions.tagDB(search_keyword, pageNum));
       case "serch":
-        return dispatch(searchActions.serchDB(search_keyword));
+        return dispatch(searchActions.serchDB(search_keyword, pageNum1));
       case "category":
-        return dispatch(searchActions.categoryDB(search_keyword));
+        return dispatch(searchActions.categoryDB(search_keyword, pageNum2));
       default:
         return null;
     }
   }, [search_type]);
-  console.log(tag_list.length === 0);
+
+  const getMoreItem = () => {
+    switch (search_type) {
+      case "tag":
+        setPageNum(pageNum + 1);
+      case "serch":
+        setPageNum1(pageNum1 + 1);
+      case "category":
+        setPageNum1(pageNum2 + 1);
+      default:
+        return null;
+    }
+  };
+
+  React.useEffect(() => {
+    if (inView) {
+      getMoreItem();
+    }
+  }, [inView]);
+
   return (
     <Container>
-      {search_type === "tag" ? (
+      {/* {search_type === "tag" ? (
         <NoticeList list={tag_list} />
       ) : search_type === "serch" ? (
         <NoticeList list={serch_list} />
       ) : (
         <NoticeList list={category_list} />
-      )}
-      {(tag_list.length === 0 ||
-        serch_list.length === 0 ||
-        category_list.length === 0) && (
+      )} */}
+
+      {postList.map((v, idx) => {
+        const lastEl = idx === postList.length - 1;
+        return <NoticeList key={idx} list={v} lastEl={lastEl} viewRef={ref} />;
+      })}
+
+      {postList.length === 0 && (
         <NoSearch>
           <h2>검색 결과가 없습니다 :)</h2>
           <button
