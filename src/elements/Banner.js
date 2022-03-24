@@ -34,12 +34,17 @@ const Banner = () => {
 
 const BannerSlide = styled(Slider)`
   margin: 18px 0;
+  border-radius: 8px;
+  overflow: hidden;
 
   .slick-slide {
-    border-radius: 8px;
-    overflow: hidden;
-
     & > div {
+      display: flex;
+    }
+  }
+
+  .banner_wrap {
+    svg {
       display: flex;
     }
   }
@@ -56,17 +61,17 @@ const BannerSlide = styled(Slider)`
     opacity: 0;
 
     &:before {
-      color: #7966ff;
+      color: #fff;
     }
   }
 
   .slick-next {
-    right: 0;
+    right: 4px;
     z-index: 10;
   }
 
   .slick-prev {
-    left: 0;
+    left: 4px;
     z-index: 10;
   }
 
