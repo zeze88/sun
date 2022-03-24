@@ -13,13 +13,13 @@ import Edituser from "./page/Edituser";
 import Password from "./page/Password";
 import Footer from "./components/Footer";
 import Alarms from "./page/Alarms";
+import Scrap from "./page/Scrap";
 
 function App() {
   const location = useLocation();
   return (
     <div className='App'>
       {location.pathname === "/login" ? null : <Header />}
-
       <Route path='/' exact component={Main} />
       <Route path='/create' exact component={Create} />
       <Route path='/edit/:pid' exact component={Create} />
@@ -30,6 +30,7 @@ function App() {
       <Route path='/useredit' exact component={Edituser} />
       <Route path='/passedit' exact component={Password} />
       <Route path='/alarms' exact component={Alarms} />
+      <Route path='/scrap' exact component={Scrap} />
       {location.pathname === "/login" ? null : <Footer />}
     </div>
   );
