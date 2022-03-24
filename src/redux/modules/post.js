@@ -40,15 +40,7 @@ const getPostDB = (page) => {
       .getpost(page)
       .then((res) => {
         const query = res.data;
-        const list = [];
-        const _list = getState().post.list;
-
-        if (page === 1) {
-          dispatch(getPost(query));
-        } else {
-          const _list = getState().post.list;
-          dispatch(getPost(_list.concat(query)));
-        }
+        dispatch(getPost(query));
       })
       .catch((err) => {
         console.log("error get post");
@@ -58,41 +50,12 @@ const getPostDB = (page) => {
 
 const getPostNocheckDB = (page) => {
   return function (dispatch, getState, { history }) {
+    console.log(page);
     apis
       .getpostnocheck(page)
       .then((res) => {
         const query = res.data;
-        console.log(query);
-        if (page === 1) {
-          // let post = query.reduce(
-          //   (acc, cur) => {
-          //     const key = cur["pid"];
-          //     if (!acc[key]) {
-          //       return [...acc, cur];
-          //     } else {
-          //       return acc;
-          //     }
-          //   },
-          //   [""]
-          // );
-
-          dispatch(getPostNoChk(query));
-        } else {
-          const _list = getState().post.nockeckList;
-          dispatch(getPostNoChk(_list.concat(query)));
-
-          let post = _list.concat(query).reduce(
-            (acc, cur) => {
-              const key = cur["pid"];
-              if (!acc[key]) {
-                return [...acc, cur];
-              } else {
-                return acc;
-              }
-            },
-            [""]
-          );
-        }
+        dispatch(getPostNoChk(query));
       })
       .catch((err) => {
         console.log("error get post");
@@ -304,11 +267,27 @@ export default handleActions(
   {
     [GET_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.list = action.payload.post;
+        draft.list.push(...action.payload.post);
+        draft.list = draft.list.reduce((acc, cur) => {
+          if (acc.findIndex((a) => a.pid === cur.pid) === -1) {
+            return [...acc, cur];
+          } else {
+            acc[acc.findIndex((a) => a.pid === cur.pid)] = cur;
+            return acc;
+          }
+        }, []);
       }),
     [GET_POSTCHK]: (state, action) =>
       produce(state, (draft) => {
-        draft.nockeckList = action.payload.post;
+        draft.nockeckList.push(...action.payload.post);
+        draft.nockeckList = draft.nockeckList.reduce((acc, cur) => {
+          if (acc.findIndex((a) => a.pid === cur.pid) === -1) {
+            return [...acc, cur];
+          } else {
+            acc[acc.findIndex((a) => a.pid === cur.pid)] = cur;
+            return acc;
+          }
+        }, []);
       }),
     [GET_ONE_POST]: (state, action) =>
       produce(state, (draft) => {
