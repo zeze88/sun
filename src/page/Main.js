@@ -9,8 +9,10 @@ const Main = () => {
     <Container>
       <NoticeBoard />
       <div className='right'>
-        <Chat />
-        <Banner />
+        <div>
+          <Chat />
+          <Banner />
+        </div>
       </div>
     </Container>
   );
@@ -25,6 +27,10 @@ const Container = styled.div`
   .right {
     flex: none;
     width: 342px;
+    > div {
+      position: sticky;
+      top: 0;
+    }
   }
 `;
 
