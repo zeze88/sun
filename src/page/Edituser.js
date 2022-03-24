@@ -22,7 +22,7 @@ const Edituser = (props) => {
   const [blogUrl, setBlogUrl] = useState(userURL);
   const [career, setCareer] = useState(userCareer);
   const [careerSelect, setCareerSelect] = useState(userCareer);
-  const [nicknameRuleCheck, setNicknameRuleCheck] = React.useState(false);
+  const [nicknameRuleCheck, setNicknameRuleCheck] = React.useState(true);
   const imgInput = React.useRef();
   const options = [
     { value: "1년차 이내", name: "1년차 이내" },
@@ -130,20 +130,30 @@ const Edituser = (props) => {
         </ProfileImg>
         <div className='container'>
           <EditNickname>
-            <input
-              placeholder='닉네임'
-              onChange={nicknameRule}
-              value={nickname}></input>
-            <button className='check' onClick={Check}>
-              중복체크
-            </button>
+            <div>
+              <div>
+                <input
+                  placeholder='닉네임'
+                  onChange={nicknameRule}
+                  value={nickname}></input>
+                <button className='check' onClick={Check}>
+                  중복체크
+                </button>
+              </div>
+              {nickname.length > 0 && !nicknameRuleCheck && (
+                <span className='rule'> *닉네임 형식이 맞지 않습니다. </span>
+              )}
+            </div>
           </EditNickname>
+
           <EditBlog>
-            <input
-              className='blog'
-              placeholder='sns 계정 url 기입'
-              onChange={url}
-              value={userURL === "undefined" ? "" : blogUrl}></input>
+            <div>
+              <input
+                className='blog'
+                placeholder='sns 계정 url 기입'
+                onChange={url}
+                value={userURL === "undefined" ? null : blogUrl}></input>
+            </div>
           </EditBlog>
           <EditCareer>
             <div>
@@ -162,7 +172,6 @@ const Edituser = (props) => {
                       {v.name}
                     </li>
                   ))}
-                  {career}
                 </ul>
               ) : null}
             </div>
@@ -242,45 +251,73 @@ const ProfileImg = styled.div`
 
 const EditNickname = styled.div`
   width: 500px;
+  height: 72px;
   display: flex;
-  align-items: center;
-  position: relative;
-  justify-content: end;
-
-  > input {
+  text-align: center;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  div {
     width: 100%;
     height: 72px;
-    border-radius: 0.5rem;
-    margin: auto;
-    font-size: 16px;
-    font-weight: 600;
-    outline: 0;
-    background-color: #f9f8ff;
-  }
-  > button {
-    width: 76px;
-    height: 32px;
-    background-color: #7966ff;
-    color: white;
-    border-radius: 32px;
-    position: absolute;
-    margin-right: 20px;
+    display: flex;
+    flex-direction: column-reverse;
+    > span.rule {
+      color: red;
+      font-size: 12px;
+      position: absolute;
+      justify-content: start;
+      padding-left: 15px;
+    }
+    > div {
+      width: 100%;
+      height: 72px;
+      display: flex;
+      flex-direction: row;
+      position: relative;
+      justify-content: end;
+      align-items: center;
+      background-color: #f9f8ff;
+      border-radius: 0.5rem;
+      padding: 15px;
+      > input {
+        width: 100%;
+        height: 72px;
+        border-radius: 0.5rem;
+        font-size: 16px;
+        font-weight: 600;
+        outline: 0;
+        background-color: #f9f8ff;
+      }
+      > button {
+        width: 76px;
+        height: 32px;
+        background-color: #7966ff;
+        color: white;
+        border-radius: 32px;
+        position: absolute;
+        margin-right: 20px;
+      }
+    }
   }
 `;
 
 const EditBlog = styled.div`
   width: 500px;
-  > input {
+  > div {
     width: 100%;
     height: 72px;
-    border-radius: 0.5rem;
-    border: 0px solid black;
-    margin: auto;
-    font-size: 16px;
-    outline: 0;
+    padding: 0 15px;
     background-color: #f9f8ff;
-    font-size: 16px;
-    font-weight: 600;
+    border-radius: 0.5rem;
+    > input {
+      width: 100%;
+      height: 72px;
+      font-size: 16px;
+      font-weight: 600;
+      outline: 0;
+      background-color: #f9f8ff;
+    }
   }
 `;
 
