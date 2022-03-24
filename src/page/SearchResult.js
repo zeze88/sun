@@ -28,9 +28,6 @@ const SearchResult = () => {
     threshold: 0.4,
   });
 
-  console.log(search_keyword);
-  console.log(postList);
-
   React.useEffect(() => {
     switch (search_type) {
       case "tag":
