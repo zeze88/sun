@@ -277,12 +277,14 @@ const NewPassWordDB = (uid, password, newPassword, newPasswordCheck) => {
       )
       .then((res) => {
         console.log(res.data);
-        if (res.data.result === true) {
+        if (res.data.result !== true) {
+          window.alert("비밀번호 수정 실패");
+          window.location.reload();
+        } else {
           window.alert("비밀번호 수정 성공");
+          history.push("/");
+          window.location.replace("/");
         }
-        console.log(res.data);
-        // history.push("/");
-        // window.location.reload();
       })
       .catch((err) => {
         console.log(err);
