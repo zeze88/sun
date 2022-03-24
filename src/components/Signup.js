@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import img_down from "../svg/arrow_down_b.svg";
 import { actionCreators as userActions } from "../redux/modules/user";
+import Swal from "sweetalert2";
 
 function Signup(props) {
   const dispatch = useDispatch();
@@ -59,10 +60,10 @@ function Signup(props) {
 
   const checkUsername = () => {
     if (username === "") {
-      window.alert("아이디를 입력해주세요.");
+      Swal.fire("", "아이디를 입력해 주세요.", "error");
       return;
     } else if (idRuleCheck === false) {
-      window.alert("아이디 형식이 맞지않습니다.");
+      Swal.fire("", "아이디 형식이 맞지않습니다.", "error");
       return;
     }
     console.log(username, "중복요청");
@@ -72,10 +73,10 @@ function Signup(props) {
 
   const checkNickname = () => {
     if (nickname === "") {
-      window.alert("닉네임이 공란입니다.");
+      Swal.fire("", "닉네임이 공란입니다.", "error");
       return;
     } else if (nicknameRuleCheck === false) {
-      window.alert("닉네임 형식이 맞지않습니다.");
+      Swal.fire("", "닉네임 형식이 맞지않습니다.", "error");
       return;
     }
     console.log(nickname, "의 중복확인 요청을 dispatch 했습니다.");
@@ -91,16 +92,16 @@ function Signup(props) {
     setIsCheckUsername(true);
     console.log(isCheckUsername, isCheckNickname);
     if (username === "" || nickname === "" || password === "") {
-      window.alert("빈칸을 채워주세요");
+      Swal.fire("", "빈칸을 채워주세요.", "error");
       return;
     } else if (password !== checkPassword) {
-      window.alert("패스워드가 다릅니다.");
+      Swal.fire("", "패스워드가 다릅니다.", "error");
       return;
     } else if (isCheckUsername === false || isCheckNickname === false) {
-      window.alert("중복확인을 해주세요.");
+      Swal.fire("", "중복확인을 해주세요.", "error");
       return;
     } else if (career === "경력") {
-      window.alert("경력을 선택해 주세요");
+      Swal.fire("", "경력을 선택해 주세요.", "error");
       return;
     }
     dispatch(
