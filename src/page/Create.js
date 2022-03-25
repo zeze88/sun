@@ -244,7 +244,7 @@ const Create = () => {
 };
 const CreateWrap = styled.div`
   display: flex;
-  max-width: 1440px;
+  min-width: 1440px;
   margin: 0 auto;
   margin-bottom: 24px;
   gap: 24px;

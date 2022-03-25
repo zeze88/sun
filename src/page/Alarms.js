@@ -16,7 +16,7 @@ const Alarms = () => {
 };
 
 const SC_AlarmsWrap = styled.div`
-  max-width: 1440px;
+  min-width: 1440px;
   min-height: calc(100vh - 100px - 150px);
   margin: 0 auto;
 

@@ -55,7 +55,7 @@ const Ranking = () => {
   );
 };
 const SC_Detail = styled.div`
-  max-width: 1440px;
+  min-width: 1440px;
   margin: 0 auto;
   padding-bottom: 220px;
 
