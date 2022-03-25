@@ -77,6 +77,8 @@ const Container = styled.div`
       padding: 5px;
       transition: max-height 0.5s ease-out;
       background-color: #fff;
+      z-index: 10;
+
       > div {
         width: 250px;
         height: 50px;
