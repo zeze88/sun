@@ -10,10 +10,17 @@ import Swal from "sweetalert2";
 
 const Login = () => {
   const dispatch = useDispatch();
-
   const [check, setCheck] = React.useState("login");
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
+
+  const onKeyPress = (e) => {
+    if (e.key == "Enter") {
+      if (username !== "" && password !== "") {
+        login();
+      }
+    }
+  };
 
   const login = () => {
     if (username === "" || password === "") {
@@ -68,16 +75,18 @@ const Login = () => {
                   onChange={(e) => {
                     setUsername(e.target.value);
                   }}
+                  onKeyPress={onKeyPress}
                 />
               </div>
               <div>
-                <span className='inputSpan'>아이디</span>
+                <span className='inputSpan'>비밀번호</span>
                 <input
                   type='password'
                   placeholder='Password입력'
                   onChange={(e) => {
                     setPassword(e.target.value);
                   }}
+                  onKeyPress={onKeyPress}
                 />
               </div>
               <button onClick={login}>로그인</button>
@@ -181,9 +190,11 @@ const Container2 = styled.div`
       border-radius: 0.5rem;
       padding: 15px;
       > span.inputSpan {
+        width: 57px;
         color: #7966ff;
         font-size: 16px;
         font-weight: 800;
+        vertical-align: middle;
       }
     }
   }
@@ -195,7 +206,7 @@ const Container2 = styled.div`
     justify-content: space-between;
   }
   input {
-    width: 90%;
+    width: 85%;
     height: 72px;
     border: 0px solid black;
     background-color: #f9f8ff;
