@@ -101,6 +101,7 @@ const Header = () => {
 };
 
 const Container = styled.div`
+  min-width: 1440px;
   height: 100px;
   margin-bottom: 24px;
   box-shadow: -4px 5px 14px 0 rgb(65 0 131 / 6%);
