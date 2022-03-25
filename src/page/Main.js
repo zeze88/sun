@@ -20,7 +20,7 @@ const Main = () => {
 
 const Container = styled.div`
   display: flex;
-  max-width: 1440px;
+  width: 1440px;
   margin: 0 auto;
   gap: 24px;
 

@@ -107,7 +107,7 @@ const Container = styled.div`
 
   > div {
     display: flex;
-    max-width: 1440px;
+    width: 1440px;
     height: 100%;
     margin: 0 auto;
     align-items: center;
