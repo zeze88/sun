@@ -87,14 +87,11 @@ const AnswerList = ({ isWriter }) => {
   const commentViewList = (pid) => {
     setCommentView(pid);
     if (commentView === "") {
-      console.log("첫동작");
       setCommentViewSelect(!commentViewSelect);
     } else if (commentView === pid) {
       setCommentViewSelect(!commentViewSelect);
-      console.log("같을때" + commentViewSelect);
     } else if (commentView !== pid) {
       setCommentViewSelect("true");
-      console.log("다를떄" + commentViewSelect);
     }
   };
 
@@ -141,10 +138,6 @@ const AnswerList = ({ isWriter }) => {
         return;
       }
     });
-  };
-
-  const A = (B) => {
-    console.log(B);
   };
 
   return (
@@ -244,9 +237,10 @@ const AnswerList = ({ isWriter }) => {
                                   </div>
                                   <p>
                                     <textarea
-                                      defaultValue={list.comment}
                                       type='text'
-                                      onChange={commentChange}></textarea>
+                                      onChange={commentChange}>
+                                      {list.comment}
+                                    </textarea>
                                   </p>
                                   <p> {list.createdAt?.split("T")[0]}</p>
                                 </div>
