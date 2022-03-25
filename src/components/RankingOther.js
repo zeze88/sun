@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 import Profile from "../elements/Profile";
 
 const RankingOther = ({ list, user_ranking }) => {
@@ -18,7 +19,7 @@ const RankingOther = ({ list, user_ranking }) => {
             {!user_ranking.blogUrl || user_ranking.blogUrl === "undefined" ? (
               <button
                 onClick={() => {
-                  alert("연결 된 sns가 없습니다 :)");
+                  Swal.fire("", "연결 된 sns가 없습니다 :)", "error");
                 }}>
                 SNS
               </button>
@@ -38,7 +39,7 @@ const RankingOther = ({ list, user_ranking }) => {
             {!v.blogUrl || v.blogUrl === "undefined" ? (
               <button
                 onClick={() => {
-                  alert("연결 된 sns가 없습니다 :)");
+                  Swal.fire("", "연결 된 sns가 없습니다 :)", "error");
                 }}>
                 SNS
               </button>
