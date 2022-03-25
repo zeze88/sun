@@ -27,6 +27,8 @@ const Container = styled.div`
   .right {
     flex: none;
     width: 342px;
+    margin-bottom: 24px;
+
     > div {
       position: sticky;
       top: 0;

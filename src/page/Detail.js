@@ -14,6 +14,7 @@ import AnswerList from "../components/AnswerList";
 import Profile from "../elements/Profile";
 import user from "../redux/modules/user";
 import Postchat from "../components/Postchat";
+import Banner from "../elements/Banner";
 
 const Detail = () => {
   const dispatch = useDispatch();
@@ -121,8 +122,12 @@ const Detail = () => {
         {user_info && <Answer />}
         <AnswerList isWriter={post_one.uid} />
       </div>
-
-      <Postchat pid={pid} />
+      <div className='right'>
+        <div>
+          <Postchat pid={pid} />
+          <Banner />
+        </div>
+      </div>
     </Container>
   );
 };
@@ -135,6 +140,17 @@ const Container = styled.div`
 
   .post_wrap {
     width: calc(100% - 342px - 22px);
+  }
+
+  .right {
+    flex: none;
+    width: 342px;
+    margin-bottom: 24px;
+
+    > div {
+      position: sticky;
+      top: 0;
+    }
   }
 `;
 
