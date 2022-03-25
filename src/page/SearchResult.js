@@ -39,7 +39,7 @@ const SearchResult = () => {
       default:
         return null;
     }
-  }, [search_keyword]);
+  }, [search_keyword, pageNum, pageNum1, pageNum2]);
 
   const getMoreItem = () => {
     switch (search_type) {
@@ -48,7 +48,7 @@ const SearchResult = () => {
       case "serch":
         setPageNum1(pageNum1 + 1);
       case "category":
-        setPageNum1(pageNum2 + 1);
+        setPageNum2(pageNum2 + 1);
       default:
         return null;
     }
@@ -62,14 +62,6 @@ const SearchResult = () => {
 
   return (
     <Container>
-      {/* {search_type === "tag" ? (
-        <NoticeList list={tag_list} />
-      ) : search_type === "serch" ? (
-        <NoticeList list={serch_list} />
-      ) : (
-        <NoticeList list={category_list} />
-      )} */}
-
       {postList.map((v, idx) => {
         const lastEl = idx === postList.length - 1;
         return <NoticeList key={idx} list={v} lastEl={lastEl} viewRef={ref} />;

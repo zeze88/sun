@@ -15,7 +15,7 @@ const Category = () => {
   };
 
   const CategoryList = (v) => {
-    history.push(`/search/category_${v}`);
+    window.location.replace(`/search/category_${v}`);
   };
 
   return (
@@ -31,9 +31,9 @@ const Category = () => {
               <div
                 className={categoryView ? "" : "close"}
                 key={idx}
-                value={c.value}
+                value={c.name}
                 onClick={() => {
-                  CategoryList(c.value);
+                  CategoryList(c.name);
                   setcategortView(!categoryView);
                 }}>
                 {c.name}

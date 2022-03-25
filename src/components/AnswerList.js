@@ -115,7 +115,6 @@ const AnswerList = ({ isWriter }) => {
       confirmButtonText: "네",
       confirmButtonColor: "#7966FF",
       cancelButtonText: "아니오",
-      cancelTextColor: "#7966FF",
       Buttons: true,
     }).then((result) => {
       if (result.isConfirmed) {
@@ -134,7 +133,6 @@ const AnswerList = ({ isWriter }) => {
       confirmButtonText: "네",
       confirmButtonColor: "#7966FF",
       cancelButtonText: "아니오",
-      cancelTextColor: "#7966FF",
       Buttons: true,
     }).then((result) => {
       if (result.isConfirmed) {
