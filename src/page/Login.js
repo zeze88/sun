@@ -95,7 +95,7 @@ const Login = () => {
 
 const Container1 = styled.div`
   width: 100%;
-  min-width: 1440px;
+  width: 1440px;
   height: 100vh;
   min-height: 930px;
   display: flex;

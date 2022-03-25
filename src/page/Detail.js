@@ -135,7 +135,7 @@ const Detail = () => {
 const Container = styled.div`
   display: flex;
   gap: 22px;
-  min-width: 1440px;
+  width: 1440px;
   margin: 0 auto;
 
   .post_wrap {
