@@ -94,6 +94,9 @@ function Signup(props) {
     if (username === "" || nickname === "" || password === "") {
       Swal.fire("", "빈칸을 채워주세요.", "error");
       return;
+    } else if (passwordRuleCheck !== true) {
+      Swal.fire("", "패스워드 형식이 맞지 않습니다.", "error");
+      return;
     } else if (password !== checkPassword) {
       Swal.fire("", "패스워드가 다릅니다.", "error");
       return;

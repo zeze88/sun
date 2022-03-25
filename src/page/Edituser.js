@@ -5,6 +5,7 @@ import Profile from "../elements/Profile";
 import { actionCreators as userActions } from "../redux/modules/user";
 import img_down from "../svg/arrow_down_b.svg";
 import camera from "../svg/camera_fill.svg";
+import Swal from "sweetalert2";
 // import { ReactComponent as img_down } from "../svg/arrow_down_b.svg";
 // import { ReactComponent as camera } from "../svg/camera_fill.svg";
 
@@ -41,15 +42,16 @@ const Edituser = (props) => {
   const Check = () => {
     if (userNickname === nickname) {
       setIsCheckNickname(true);
-      window.alert("사용가능합니다.");
-      return;
+      Swal.fire("", "사용 가능합니다.", "success");
+    } else if (nicknameRuleCheck !== true) {
+      Swal.fire("", "닉네임 형식이 맞지 않습니다.", "error");
     }
     check();
   };
 
   const check = () => {
     if (nickname === "") {
-      window.alert("닉네임이 공란입니다.");
+      Swal.fire("", "닉네임이 공란입니다.", "error");
       return;
     }
     dispatch(userActions.checkNicknameDB(nickname, false));
@@ -80,30 +82,57 @@ const Edituser = (props) => {
       userImage === userImg &&
       userURL === blogUrl
     ) {
-      window.alert("변경 사항이 없습니다.");
+      Swal.fire("", "변경 사항이 없습니다.", "error");
       return;
     } else if (nickname === "") {
-      window.alert("닉네임이 공란입니다.");
+      Swal.fire("", "닉네임이 공란입니다.", "error");
       return;
     } else if (isCheckNickname === false) {
       if (userNickname === nickname) {
         setIsCheckNickname(true);
       } else {
-        window.alert("중복체크를 해주세요.");
-        return;
+        Swal.fire("", "중복체크를 해주세요", "error");
       }
-    } else if (career === "") {
-      window.alert("경력을해 주세요.");
       return;
     } else if (userImg === userImage) {
-      if (window.confirm("수정?")) {
-        dispatch(
-          userActions.logEditDB(uid, nickname, career, blogUrl, userImg)
-        );
-      }
+      Swal.fire({
+        title: "회원정보를 수정하시겠습니까?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "네 수정하겠습니다.",
+        confirmButtonColor: "#7966FF",
+        cancelButtonText: "아니오",
+        cancelTextColor: "#7966FF",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire("", "회원정보가 수정 되었습니다.", "success");
+          dispatch(
+            userActions.logEditDB(uid, nickname, career, blogUrl, userImg)
+          );
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          Swal.fire("", "수정이 취소 되었습니다 :)", "error");
+        }
+      });
       return;
-    } else if (window.confirm("수정?")) {
-      dispatch(userActions.logEditDB2(uid, nickname, career, blogUrl, userImg));
+    } else if (userImg !== userImage) {
+      Swal.fire({
+        title: "회원정보를 수정하시겠습니까?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "네 수정하겠습니다.",
+        confirmButtonColor: "#7966FF",
+        cancelButtonText: "아니오",
+        cancelTextColor: "#7966FF",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire("", "회원정보가 수정 되었습니다.", "success");
+          dispatch(
+            userActions.logEditDB2(uid, nickname, career, blogUrl, userImg)
+          );
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          Swal.fire("", "수정이 취소 되었습니다 :)", "error");
+        }
+      });
       return;
     }
   };

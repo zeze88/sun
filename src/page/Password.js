@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as passWordAction } from "../redux/modules/user";
 import { useParams } from "react-router-dom";
@@ -37,19 +38,38 @@ const Password = () => {
   /////////////////입력한 현재비밀번호가 맞는지 확인해야함
   const NewPassWord = () => {
     if (password === newPassword) {
-      window.alert("새비밀번호가 현재비밀번호와 동일합니다.");
+      Swal.fire("", "새비밀번호가 현재비밀번호와 동일합니다.", "error");
       return;
     } else if (newPasswordRuleCheck === false) {
-      window.alert("새비밀번호 형식이 맞지않습니다.");
+      Swal.fire("", "새비밀번호 형식이 맞지않습니다.", "error");
       return;
     } else if (newPassword !== checkPassWord) {
-      window.alert("입력하신 새비밀번호가 일치하지않습니다.");
+      Swal.fire("", "입력하신 새비밀번호가 일치하지않습니다.", "error");
       return;
     } else {
-      window.confirm("수정하시겠습니까?");
-      dispatch(
-        passWordAction.NewPassWordDB(uid, password, newPassword, checkPassWord)
-      );
+      Swal.fire({
+        title: "수정하시겠습니까?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "네 수정하겠습니다.",
+        confirmButtonColor: "#7966FF",
+        cancelButtonText: "아니오",
+        cancelTextColor: "#7966FF",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch(
+            passWordAction.NewPassWordDB(
+              uid,
+              password,
+              newPassword,
+              checkPassWord
+            )
+          );
+          Swal.fire("", "수정 되었습니다.", "success");
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          Swal.fire("", "수정이 취소 되었습니다 :)", "error");
+        }
+      });
     }
   };
 
