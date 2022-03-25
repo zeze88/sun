@@ -13,7 +13,8 @@ const Serch = () => {
   const onKeyPress = (e) => {
     if (e.key == "Enter") {
       const setFind = e.target.value;
-      history.push(`/search/serch_${setFind}`);
+      // history.push(`/search/serch_${setFind}`);
+      window.location.replace(`/search/serch_${setFind}`);
     }
   };
 

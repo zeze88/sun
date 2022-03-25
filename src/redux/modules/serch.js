@@ -34,6 +34,9 @@ const serchDB = (title, page) => {
         }
       )
       .then((res) => {
+        console.log(res.data);
+        dispatch(serch(res.data));
+        return;
         if (res.data.length === 0) {
           console.log(res.data);
           const beforePage = page - 1;
@@ -74,6 +77,7 @@ const categoryDB = (category, page) => {
         }
       )
       .then((res) => {
+        console.log(page);
         console.log(res.data);
 
         dispatch(categorySerch(res.data));
@@ -109,15 +113,16 @@ export default handleActions(
   {
     [SERCH]: (state, action) =>
       produce(state, (draft) => {
-        draft.serch_list = action.payload.list;
-        // draft.serch_list = draft.serch_list.reduce((acc, cur) => {
-        //   if (acc.findIndex((a) => a.pid === cur.pid) === -1) {
-        //     return [...acc, cur];
-        //   } else {
-        //     acc[acc.findIndex((a) => a.pid === cur.pid)] = cur;
-        //     return acc;
-        //   }
-        // }, []);
+        // draft.serch_list = action.payload.list;
+        draft.serch_list.push(...action.payload.list);
+        draft.serch_list = draft.serch_list.reduce((acc, cur) => {
+          if (acc.findIndex((a) => a.pid === cur.pid) === -1) {
+            return [...acc, cur];
+          } else {
+            acc[acc.findIndex((a) => a.pid === cur.pid)] = cur;
+            return acc;
+          }
+        }, []);
       }),
     [CATEGORY]: (state, action) =>
       produce(state, (draft) => {
