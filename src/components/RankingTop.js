@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 import Profile from "../elements/Profile";
 import { ReactComponent as RankingTopSvg } from "../svg/ranking_top.svg";
 
@@ -27,7 +28,7 @@ const RankingTop = ({ list }) => {
               {!v.blogUrl || v.blogUrl === "undefined" ? (
                 <button
                   onClick={() => {
-                    alert("연결 된 sns가 없습니다 :)");
+                    Swal.fire("", "연결 된 sns가 없습니다 :)", "error");
                   }}>
                   SNS
                 </button>

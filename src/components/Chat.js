@@ -3,6 +3,7 @@ import Stomp, { over } from "stompjs";
 import SockJs from "sockjs-client";
 import Profile from "../elements/Profile";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 import { ReactComponent as SendSvg } from "../svg/send.svg";
 
 import { apiUrl } from "../elements/testApiUrl";
@@ -86,7 +87,7 @@ const Chat = () => {
 
     if (stompClient) {
       if (!userData.message) {
-        alert("내용을 입력해주세요!");
+        Swal.fire("", "내용을 입력해주세요!", "error");
       } else {
         let chatMessage = {
           senderName: username,
