@@ -229,9 +229,8 @@ const delPostDB = (pid) => {
   return function (dispatch, getState, { history }) {
     apis
       .delpost(pid)
-      .then((res) => {
-        dispatch(delPost(pid));
-        history.replace("/");
+      .then(() => {
+        window.location.replace("/");
       })
       .catch((err) => {
         console.log(err);
