@@ -9,6 +9,8 @@ import { actionCreators as postActions } from "../redux/modules/post";
 import { history } from "../redux/configureStore";
 import { category } from "../elements/category";
 import ImgUpload from "../components/ImgUpload";
+import Chat from "../components/Chat";
+import Banner from "../elements/Banner";
 
 const Create = () => {
   const dispatch = useDispatch();
@@ -100,8 +102,88 @@ const Create = () => {
 
   if (!isCreate) {
     return (
+      <CreateWrap>
+        <PostWrap>
+          <h1>수정 페이지</h1>
+
+          <h2>카테고리 선택</h2>
+          <CategoryDiv length={category.length}>
+            <span
+              className={oneCategory === "" ? "" : "choose"}
+              onClick={() => {
+                setIsSelect(!isSelect);
+              }}>
+              {oneCategory
+                ? oneCategory
+                : addPost.category
+                ? addPost.category
+                : " 카테고리를 선택"}
+
+              {isSelect ? <ArrowActiveSvg /> : <ArrowSvg />}
+            </span>
+            <ul className={isSelect ? "" : "close"}>
+              {category.map((v, idx) => (
+                <li
+                  key={idx}
+                  onClick={() => {
+                    setOneCategory(v.name);
+                    setIsSelect(false);
+                  }}>
+                  {v.name}
+                </li>
+              ))}
+            </ul>
+          </CategoryDiv>
+
+          <h2>제목</h2>
+          <input
+            id='postTitle'
+            onChange={onChange}
+            type='text'
+            value={addPost.postTitle}
+          />
+
+          <h2>내용</h2>
+          <TextareaImg>
+            <textarea
+              id='postComment'
+              onChange={onChange}
+              type='text'
+              value={addPost.postComment}></textarea>
+            <ImgUpload isEdit={true} editImg={addPost.postImg} />
+          </TextareaImg>
+
+          <h2>
+            태그입력<em></em>
+          </h2>
+          <input
+            id='tags'
+            onChange={onChange}
+            type='text'
+            placeholder={`#${addPost.tag?.join(" #")}`}
+          />
+          <button onClick={revise}>수정 click</button>
+          <button
+            onClick={() => {
+              history.replace(`/detail/${params}`);
+            }}>
+            취소
+          </button>
+        </PostWrap>
+        <div className='right'>
+          <div>
+            <Chat />
+            <Banner />
+          </div>
+        </div>
+      </CreateWrap>
+    );
+  }
+
+  return (
+    <CreateWrap>
       <PostWrap>
-        <h1>수정 페이지</h1>
+        <h1>글쓰기 페이지</h1>
 
         <h2>카테고리 선택</h2>
         <CategoryDiv length={category.length}>
@@ -110,12 +192,7 @@ const Create = () => {
             onClick={() => {
               setIsSelect(!isSelect);
             }}>
-            {oneCategory
-              ? oneCategory
-              : addPost.category
-              ? addPost.category
-              : " 카테고리를 선택"}
-
+            {oneCategory === "" ? " 카테고리를 선택" : oneCategory}
             {isSelect ? <ArrowActiveSvg /> : <ArrowSvg />}
           </span>
           <ul className={isSelect ? "" : "close"}>
@@ -131,103 +208,60 @@ const Create = () => {
             ))}
           </ul>
         </CategoryDiv>
-
         <h2>제목</h2>
-        <input
-          id='postTitle'
-          onChange={onChange}
-          type='text'
-          value={addPost.postTitle}
-        />
+        <input id='title' onChange={onChange} type='text' placeholder='제목' />
 
         <h2>내용</h2>
         <TextareaImg>
           <textarea
-            id='postComment'
+            id='comment'
             onChange={onChange}
             type='text'
-            value={addPost.postComment}></textarea>
-          <ImgUpload isEdit={true} editImg={addPost.postImg} />
+            placeholder='내용'></textarea>
+          <ImgUpload />
         </TextareaImg>
 
         <h2>
-          태그입력<em></em>
+          태그입력<em>(선택사항)</em>
         </h2>
         <input
           id='tags'
           onChange={onChange}
           type='text'
-          placeholder={`#${addPost.tag?.join(" #")}`}
+          placeholder='특수문자는 # 만 입력 가능합니다.'
         />
-        <button onClick={revise}>수정 click</button>
-        <button
-          onClick={() => {
-            history.replace(`/detail/${params}`);
-          }}>
-          취소
-        </button>
+        <button onClick={submit}>올리기</button>
       </PostWrap>
-    );
-  }
 
-  return (
-    <PostWrap>
-      <h1>글쓰기 페이지</h1>
-
-      <h2>카테고리 선택</h2>
-      <CategoryDiv length={category.length}>
-        <span
-          className={oneCategory === "" ? "" : "choose"}
-          onClick={() => {
-            setIsSelect(!isSelect);
-          }}>
-          {oneCategory === "" ? " 카테고리를 선택" : oneCategory}
-          {isSelect ? <ArrowActiveSvg /> : <ArrowSvg />}
-        </span>
-        <ul className={isSelect ? "" : "close"}>
-          {category.map((v, idx) => (
-            <li
-              key={idx}
-              onClick={() => {
-                setOneCategory(v.name);
-                setIsSelect(false);
-              }}>
-              {v.name}
-            </li>
-          ))}
-        </ul>
-      </CategoryDiv>
-      <h2>제목</h2>
-      <input id='title' onChange={onChange} type='text' placeholder='제목' />
-
-      <h2>내용</h2>
-      <TextareaImg>
-        <textarea
-          id='comment'
-          onChange={onChange}
-          type='text'
-          placeholder='내용'></textarea>
-        <ImgUpload />
-      </TextareaImg>
-
-      <h2>
-        태그입력<em>(선택사항)</em>
-      </h2>
-      <input
-        id='tags'
-        onChange={onChange}
-        type='text'
-        placeholder='특수문자는 # 만 입력 가능합니다.'
-      />
-      <button onClick={submit}>올리기</button>
-    </PostWrap>
+      <div className='right'>
+        <div>
+          <Chat />
+          <Banner />
+        </div>
+      </div>
+    </CreateWrap>
   );
 };
-
-const PostWrap = styled.div`
-  max-width: 1073px;
+const CreateWrap = styled.div`
+  display: flex;
+  max-width: 1440px;
   margin: 0 auto;
   margin-bottom: 24px;
+  gap: 24px;
+
+  .right {
+    flex: none;
+    width: 342px;
+
+    > div {
+      position: sticky;
+      top: 0;
+    }
+  }
+`;
+
+const PostWrap = styled.div`
+  width: 100%;
   padding: 50px 26px;
   border-radius: 8px;
   box-shadow: 0 4px 20px 0 rgba(228, 226, 242, 0.45);
