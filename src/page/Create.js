@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 import { useLocation, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { ReactComponent as ArrowSvg } from "../svg/arrow_down_b.svg";
@@ -41,10 +42,10 @@ const Create = () => {
 
   const submit = () => {
     if (!addPost.title || !addPost.comment) {
-      alert("내용을 모두 입력해주세요 :)");
+      Swal.fire("", "내용을 모두 입력해주세요 :)", "error");
       return;
     } else if (!oneCategory) {
-      alert("카테고리를 선택해 주세요 :)");
+      Swal.fire("", "카테고리를 선택해 주세요 :)", "error");
       return;
     } else if (addPost.tags) {
       const tags = addPost.tags?.split("#").splice(1);

@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
 import { apiUrl } from "../../elements/testApiUrl";
@@ -41,7 +42,7 @@ const addCommentDB = (uid, pid, answerId, comment) => {
       })
       .catch((err) => {
         console.log(err);
-        window.alert("댓글 추가 실패");
+        Swal.fire("", "댓글 추가 실패", "error");
       });
   };
 };
@@ -67,7 +68,7 @@ const editCommentDB = (commentId, comment, pid) => {
       })
       .catch((err) => {
         console.log(err);
-        window.alert("댓글 수정 실패");
+        Swal.fire("", "댓글 수정 실패", "error");
       });
   };
 };
@@ -88,7 +89,7 @@ const deleteCommentDB = (commentId) => {
       })
       .catch((err) => {
         console.log(err);
-        window.alert("댓글 삭제 실패");
+        Swal.fire("", "댓글 삭제 실패", "error");
       });
   };
 };

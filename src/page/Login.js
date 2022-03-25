@@ -6,6 +6,7 @@ import Signup from "../components/Signup";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { history } from "../redux/configureStore";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const Login = () => {
 
   const login = () => {
     if (username === "" || password === "") {
-      window.alert("모두 입력해주세요.");
+      Swal.fire("", "모두 입력해주세요.", "error");
       return;
     }
     dispatch(userActions.loginDB(username, password));

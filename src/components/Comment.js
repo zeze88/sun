@@ -4,16 +4,22 @@ import { useDispatch } from "react-redux";
 import { actionCreators as commentActions } from "../redux/modules/comment";
 import RoundBtn from "../elements/RoundBtn";
 import { useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Comment = ({ list }) => {
   const dispatch = useDispatch();
+  const is_login = sessionStorage.getItem("is_login");
   const pid = useParams().pid;
   const uid = sessionStorage.getItem("uid");
   const answerId = list.answerId;
   const [comment, setComment] = React.useState("");
 
   const addComment = () => {
-    dispatch(commentActions.addCommentDB(uid, pid, answerId, comment));
+    if (is_login) {
+      dispatch(commentActions.addCommentDB(uid, pid, answerId, comment));
+    } else {
+      Swal.fire("", "로그인 후 사용할 수 있습니다:)", "error");
+    }
   };
 
   const onChange = (e) => {

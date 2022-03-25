@@ -41,7 +41,7 @@ const Detail = () => {
 
   const likebtn = () => {
     if (!user_info) {
-      alert("로그인 후 이용해주세요");
+      Swal.fire("", "로그인 후 이용해주세요", "error");
     } else {
       dispatch(postActions.postLikeDB(user_info, pid));
     }

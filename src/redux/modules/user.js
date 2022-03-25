@@ -2,6 +2,7 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import history from "../configureStore";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 import { setToken, delToken } from "../../shared/token";
 import { apiUrl } from "../../elements/testApiUrl";
@@ -52,7 +53,7 @@ const checkUsernameDB = (username, isCheckUsername) => {
       .post(`${apiUrl}/user/signup/username`, { username: username })
       .then((res) => {
         if (res.data === true) {
-          window.alert("이미 존재하는 ID입니다.");
+          Swal.fire("", "이미 존재하는 ID입니다.", "error");
           return;
         }
         dispatch(setCheckUsername(!isCheckUsername));
@@ -70,7 +71,7 @@ const checkNicknameDB = (userNickname, isCheckNickname) => {
       })
       .then((res) => {
         if (res.data === true) {
-          window.alert("이미 존재하는 닉네임입니다.");
+          Swal.fire("", "이미 존재하는 닉네임입ㄴ디ㅏ.", "error");
           return;
         }
         console.log(res);
@@ -91,12 +92,12 @@ const signupDB = (username, nickname, password, passwordCheck, career) => {
         career: career,
       })
       .then((res) => {
-        window.alert("회원가입을 축하드립니다.");
+        Swal.fire("", "회원가입을 축하드립니다.", "success");
         window.location.reload();
       })
       .catch((err) => {
         console.log("회원가입 실패", err);
-        window.alert("회원가입에 실패했어요");
+        Swal.fire("", "회원가입에 실패했어요.", "error");
       });
   };
 };
@@ -153,7 +154,7 @@ const loginDB = (username, password) => {
       })
       .catch((err) => {
         console.log(err);
-        window.alert("이메일이나 패스워드를 다시 확인해주세요!");
+        Swal.fire("", "이메일이나 패스워드를 다시 확인해주세요.", "error");
       });
   };
 };
@@ -193,7 +194,7 @@ const logEditDB = (uid, nickname, career, url, userImg) => {
       })
       .catch((err) => {
         console.log(err);
-        window.alert("회원 정보 수정 실패");
+        Swal.fire("", "회원 정보 수정 실패", "error");
       });
   };
 };
@@ -253,7 +254,7 @@ const logEditDB2 = (uid, nickname, career, url, userImg) => {
       })
       .catch((err) => {
         console.log(err);
-        window.alert("회원 정보 수정 실패");
+        Swal.fire("", "회원 정보 수정 실패", "error");
       });
   };
 };
@@ -278,17 +279,17 @@ const NewPassWordDB = (uid, password, newPassword, newPasswordCheck) => {
       .then((res) => {
         console.log(res.data);
         if (res.data.result !== true) {
-          window.alert("비밀번호 수정 실패");
+          Swal.fire("", "비밀번호 수정 실패", "error");
           window.location.reload();
         } else {
-          window.alert("비밀번호 수정 성공");
+          Swal.fire("", "비밀번호 수정 성공", "success");
           history.push("/");
           window.location.replace("/");
         }
       })
       .catch((err) => {
         console.log(err);
-        window.alert("비밀번호 수정 실패");
+        Swal.fire("", "비밀번호 수정 실패", "error");
       });
   };
 };
@@ -299,13 +300,13 @@ export default handleActions(
       produce(state, (draft) => {
         console.log("CHECK_USERNAME 리듀서로 적용 완료", state, action.payload);
         draft.isCheckUsername = action.payload.isCheckUsername;
-        window.alert("해당 이메일은 사용 가능합니다.");
+        Swal.fire("", "해당 이메일은 사용 가능합니다.", "success");
       }),
     [CHECK_NICKNAME]: (state, action) =>
       produce(state, (draft) => {
         console.log("CHECK_NICKNAME 리듀서 적용", state, action.payload);
         draft.isCheckNickname = action.payload.isCheckNickname;
-        window.alert("사용 가능한 닉네임입니다.");
+        Swal.fire("", "사용 가능한 닉네임입니다.", "success");
       }),
     [LOG_IN]: (state, action) =>
       produce(state, (draft) => {
