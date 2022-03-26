@@ -105,12 +105,13 @@ const SC_NoticeDiv = styled.div`
 
   .list_wrap {
     height: calc(100% - 108px);
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 `;
 
 const SC_BtnWrap = styled.button`
-  --btn-size: 110px;
+  --btn-size: 56px;
   position: absolute;
   bottom: 0;
   right: 0;
@@ -120,14 +121,15 @@ const SC_BtnWrap = styled.button`
   color: #fff;
   background-color: #7966ff;
   opacity: 0.3;
-  trasition: all 0.3s;
+  transition: all 0.3s;
 
   &:hover {
     opacity: 1;
   }
+
   svg {
-    width: 50px;
-    height: 50px;
+    width: 50%;
+    height: 50%;
     vertical-align: middle;
   }
 `;
