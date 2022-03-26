@@ -48,7 +48,7 @@ const addAnswerDB = ({ pid, uid, answerTitle, answerComment }) => {
     if (!img_list) {
       axios({
         method: "post",
-        url: `${apiUrl}/islogin/answer/${pid}`,
+        url: `${apiUrl}/islogin/answer/create/${pid}`,
         data: {
           pid: pid,
           uid: uid,
@@ -93,7 +93,7 @@ const addAnswerDB = ({ pid, uid, answerTitle, answerComment }) => {
           console.log("img업로드 성공");
           axios({
             method: "post",
-            url: `${apiUrl}/islogin/answer/${pid}`,
+            url: `${apiUrl}/islogin/answer/create/${pid}`,
             data: {
               pid: pid,
               uid: uid,
@@ -155,7 +155,7 @@ const editAnswerDB = (props) => {
     if (!img_list) {
       axios({
         method: "put",
-        url: `${apiUrl}/islogin/answer/revice/${answerId}`,
+        url: `${apiUrl}/islogin/answer/edit/${answerId}`,
         data: {
           answerTitle: answerTitle,
           answerComment: answerComment,
@@ -203,7 +203,7 @@ const editAnswerDB = (props) => {
           console.log(imgUrl);
           axios({
             method: "put",
-            url: `${apiUrl}/islogin/answer/revice/${answerId}`,
+            url: `${apiUrl}/islogin/answer/edit/${answerId}`,
             data: {
               answerTitle: answerTitle,
               answerComment: answerComment,

@@ -26,7 +26,7 @@ const serchDB = (title, page) => {
     console.log(title, page);
     await axios
       .get(
-        `${apiUrl}/post/search/${title}?page=${page}&size=10&sortBy=createdAt&isAsc=false`,
+        `${apiUrl}/post/get/title/${title}?page=${page}&size=10&sortBy=createdAt&isAsc=false`,
         {
           headers: {
             Authorization: token,
@@ -69,7 +69,7 @@ const categoryDB = (category, page) => {
   return function (dispatch, getState, { history }) {
     axios
       .get(
-        `${apiUrl}/category/search/${category}?page=${page}&size=10&sortBy=createdAt&isAsc=false`,
+        `${apiUrl}/post/get/category/${category}?page=${page}&size=10&sortBy=createdAt&isAsc=false`,
         {
           headers: {
             Authorization: token,
@@ -92,7 +92,7 @@ const tagDB = (tag, page) => {
   return function (dispatch, getState, { history }) {
     axios
       .get(
-        `${apiUrl}/tag/search/${tag}?page=${page}&size=10&sortBy=createdAt&isAsc=false`,
+        `${apiUrl}/post/get/tag/${tag}?page=${page}&size=10&sortBy=createdAt&isAsc=false`,
         {
           headers: {
             Authorization: token,
