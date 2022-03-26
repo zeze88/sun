@@ -47,10 +47,10 @@ const Postchat = ({ pid }) => {
   const stompDisConnect = () => {
     try {
       const user_join = { status: "OUT" };
-      stompClient.send("/app/message1", {}, JSON.stringify(user_join));
+      stompClient.send("/app/postchat", {}, JSON.stringify(user_join));
 
       stompClient.disconnect(() => {
-        stompClient.unsubscribe(`/topic/greetings/${pid}`);
+        stompClient.unsubscribe(`/topic/postchat/${pid}`);
       }, token);
     } catch (err) {}
   };
@@ -81,9 +81,9 @@ const Postchat = ({ pid }) => {
         pid: pid,
       });
 
-      stompClient.send("/app/message1", token, JSON.stringify(user_join));
+      stompClient.send("/app/postchat", token, JSON.stringify(user_join));
       stompClient.subscribe(
-        `/topic/greetings/${pid}`,
+        `/topic/postchat/${pid}`,
         onPublicMessageReceived,
         token
       );
@@ -109,7 +109,7 @@ const Postchat = ({ pid }) => {
             uid: uid,
           };
 
-          stompClient.send("/app/message1", token, JSON.stringify(chatMessage));
+          stompClient.send("/app/postchat", token, JSON.stringify(chatMessage));
           setUserData({ ...userData, message: "" });
         }
       }

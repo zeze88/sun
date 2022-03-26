@@ -49,10 +49,10 @@ const Chat = () => {
   const stompDisConnect = () => {
     try {
       const user_join = { status: "OUT" };
-      stompClient.send("/app/message", {}, JSON.stringify(user_join));
+      stompClient.send("/app/mainchat", {}, JSON.stringify(user_join));
 
       stompClient.disconnect(() => {
-        stompClient.unsubscribe("/topic/greetings");
+        stompClient.unsubscribe("/topic/mainchat");
       }, token);
     } catch (err) {}
   };
@@ -83,8 +83,8 @@ const Chat = () => {
       });
 
       stompClient.send("/app/hello", {}, JSON.stringify({ username }));
-      stompClient.send("/app/message", token, JSON.stringify(user_join));
-      stompClient.subscribe("/topic/greetings", onPublicMessageReceived, token);
+      stompClient.send("/app/mainchat", token, JSON.stringify(user_join));
+      stompClient.subscribe("/topic/mainchat", onPublicMessageReceived, token);
     } catch (err) {
       console.log(err);
     }
@@ -105,7 +105,7 @@ const Chat = () => {
             pid: 0,
           };
 
-          stompClient.send("/app/message", token, JSON.stringify(chatMessage));
+          stompClient.send("/app/mainchat", token, JSON.stringify(chatMessage));
           setUserData({ ...userData, message: "" });
         }
       }
