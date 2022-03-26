@@ -22,7 +22,7 @@ const addCommentDB = (uid, pid, answerId, comment) => {
     console.log(uid, pid, answerId, comment);
     axios
       .post(
-        `${apiUrl}/islogin/comment/write`,
+        `${apiUrl}/islogin/comment/create`,
         {
           uid: uid,
           pid: pid,
@@ -52,7 +52,7 @@ const editCommentDB = (commentId, comment, pid) => {
   return function (dispatch, getState, { history }) {
     axios
       .put(
-        `${apiUrl}/islogin/comment/revice/${commentId}`,
+        `${apiUrl}/islogin/comment/edit/${commentId}`,
         {
           comment: comment,
         },
