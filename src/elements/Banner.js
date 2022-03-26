@@ -20,13 +20,21 @@ const Banner = () => {
   return (
     <BannerSlide {...settings}>
       <div className='banner_wrap'>
-        <Banner1Svg />
+        <a
+          href='https://docs.google.com/forms/d/e/1FAIpQLSd4iPrHK_DTflM3n-FfJ_MVxg2NuO-05mG5o1wlx1WvVc0NzA/viewform'
+          target='_blank'>
+          <Banner1Svg />
+        </a>
       </div>
       <div className='banner_wrap'>
         <Banner2Svg />
       </div>
       <div className='banner_wrap'>
-        <Banner3Svg />
+        <a
+          href='https://docs.google.com/forms/d/1lBFDtUTkM-LdD2fB7XUTNQnHyN-gK4RmrY1jcilyjyY/edit'
+          target='_blank'>
+          <Banner3Svg />
+        </a>
       </div>
     </BannerSlide>
   );
