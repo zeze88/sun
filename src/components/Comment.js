@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 
 const Comment = ({ list }) => {
   const dispatch = useDispatch();
-  const is_login = sessionStorage.getItem("is_login");
+  const is_login = sessionStorage.getItem("isLogin");
   const pid = useParams().pid;
   const uid = sessionStorage.getItem("uid");
   const answerId = list.answerId;

@@ -18,6 +18,7 @@ const Chat = () => {
   const username = sessionStorage.getItem("nickname");
 
   const uid = sessionStorage.getItem("uid");
+  const is_login = sessionStorage.getItem("isLogin");
   const [welcome, setWelcome] = React.useState(new Map());
   const [publicChats, setPublicChats] = React.useState([]);
   const [connected, setConnected] = React.useState(false);
@@ -30,6 +31,7 @@ const Chat = () => {
     opposingUserName: "",
   });
 
+  console.log(is_login);
   React.useEffect(() => {
     stompConnect();
 
@@ -37,6 +39,12 @@ const Chat = () => {
       stompDisConnect();
     };
   }, []);
+
+  const onKeyPress = (e) => {
+    if (e.key == "Enter") {
+      sendPublicMessage();
+    }
+  };
 
   const stompDisConnect = () => {
     try {
@@ -83,23 +91,28 @@ const Chat = () => {
   };
 
   const sendPublicMessage = () => {
-    const username = sessionStorage.getItem("nickname");
+    if (is_login) {
+      const username = sessionStorage.getItem("nickname");
+      if (stompClient) {
+        if (!userData.message) {
+          Swal.fire("", "내용을 입력해주세요!", "error");
+        } else {
+          let chatMessage = {
+            senderName: username,
+            message: userData.message,
+            status: "MESSAGE",
+            uid,
+            pid: 0,
+          };
 
-    if (stompClient) {
-      if (!userData.message) {
-        Swal.fire("", "내용을 입력해주세요!", "error");
-      } else {
-        let chatMessage = {
-          senderName: username,
-          message: userData.message,
-          status: "MESSAGE",
-          uid,
-          pid: 0,
-        };
-
-        stompClient.send("/app/message", token, JSON.stringify(chatMessage));
-        setUserData({ ...userData, message: "" });
+          stompClient.send("/app/message", token, JSON.stringify(chatMessage));
+          setUserData({ ...userData, message: "" });
+        }
       }
+      return;
+    } else {
+      Swal.fire("", "로그인 후 사용할 수 있습니다:)", "error");
+      return;
     }
   };
 
@@ -174,11 +187,7 @@ const Chat = () => {
                 </>
               )}
               <p className='message-data'>{chat.message}</p>
-              {time.split[0] > 12 ? (
-                <em> 오후 {time}</em>
-              ) : (
-                <em> 오전 {time} </em>
-              )}
+              {time.split[0] > 12 ? <em> {time}</em> : <em> {time} </em>}
             </li>
           ))}
         </ul>
@@ -189,8 +198,9 @@ const Chat = () => {
             type='text'
             name='message'
             value={userData.message}
-            placeholder='댓글을 입력해주세요 :)'
+            placeholder='채팅을 입력해주세요 :)'
             onChange={handleValue}
+            onKeyPress={onKeyPress}
           />
           <button onClick={sendPublicMessage}>
             <SendSvg />

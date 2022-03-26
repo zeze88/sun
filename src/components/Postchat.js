@@ -12,7 +12,7 @@ const Postchat = ({ pid }) => {
   const token = {
     Authorization: sessionStorage.getItem("token"),
   };
-
+  const is_login = sessionStorage.getItem("is_Login");
   const username = sessionStorage.getItem("nickname");
   const crareer = sessionStorage.getItem("career");
   const userImage = sessionStorage.getItem("userImage");
@@ -37,6 +37,12 @@ const Postchat = ({ pid }) => {
       stompDisConnect();
     };
   }, []);
+
+  const onKeyPress = (e) => {
+    if (e.key == "Enter") {
+      sendPublicMessage();
+    }
+  };
 
   const stompDisConnect = () => {
     try {
@@ -87,26 +93,28 @@ const Postchat = ({ pid }) => {
   };
 
   const sendPublicMessage = () => {
-    console.log(userData);
-    console.log(publicChats);
-    const username = sessionStorage.getItem("nickname");
+    if (is_login) {
+      const username = sessionStorage.getItem("nickname");
 
-    if (stompClient) {
-      if (!userData.message) {
-        Swal.fire("", "내용을 입력해주세요!", "error");
-      } else {
-        let chatMessage = {
-          ...userData,
-          senderName: username,
-          message: userData.message,
-          status: "MESSAGE",
-          pid: pid,
-          uid: uid,
-        };
+      if (stompClient) {
+        if (!userData.message) {
+          Swal.fire("", "내용을 입력해주세요!", "error");
+        } else {
+          let chatMessage = {
+            ...userData,
+            senderName: username,
+            message: userData.message,
+            status: "MESSAGE",
+            pid: pid,
+            uid: uid,
+          };
 
-        stompClient.send("/app/message1", token, JSON.stringify(chatMessage));
-        setUserData({ ...userData, message: "" });
+          stompClient.send("/app/message1", token, JSON.stringify(chatMessage));
+          setUserData({ ...userData, message: "" });
+        }
       }
+    } else {
+      Swal.fire("", "로그인 후 사용할 수 있습니다:)", "error");
     }
   };
 
@@ -206,6 +214,7 @@ const Postchat = ({ pid }) => {
             value={userData.message}
             placeholder='댓글을 입력해주세요 :)'
             onChange={handleValue}
+            onKeyPress={onKeyPress}
           />
           <button onClick={sendPublicMessage}>
             <SendSvg />
