@@ -164,7 +164,7 @@ const logEditDB = (uid, nickname, career, url, userImg) => {
     console.log(uid, nickname, career, url);
     axios
       .put(
-        `${apiUrl}/islogin/user/getinfo/${uid}`,
+        `${apiUrl}/islogin/user/edit/${uid}`,
         {
           nickname: nickname,
           career: career,
@@ -221,7 +221,7 @@ const logEditDB2 = (uid, nickname, career, url, userImg) => {
       .then((imgUrl) => {
         axios
           .put(
-            `${apiUrl}/islogin/user/getinfo/${uid}`,
+            `${apiUrl}/islogin/user/edit/${uid}`,
             {
               nickname: nickname,
               career: career,
@@ -264,7 +264,7 @@ const NewPassWordDB = (uid, password, newPassword, newPasswordCheck) => {
   return function (dispatch, getState, { history }) {
     axios
       .put(
-        `${apiUrl}/islogin/user/password/${uid}`,
+        `${apiUrl}/islogin/user/edit/pwd/${uid}`,
         {
           password: password,
           newPassword: newPassword,
