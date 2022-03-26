@@ -22,17 +22,14 @@ const Container = styled.div`
   display: flex;
   width: 1440px;
   margin: 0 auto;
+  margin-bottom: 24px;
   gap: 24px;
+  height: calc(100vh - 124px);
 
   .right {
     flex: none;
     width: 342px;
     margin-bottom: 24px;
-
-    > div {
-      position: sticky;
-      top: 0;
-    }
   }
 `;
 

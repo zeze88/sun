@@ -294,7 +294,7 @@ export default handleActions(
       }),
     [ADD_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.list.push(action.payload.post);
+        draft.list.unshift(action.payload.post);
         draft.preview = "";
       }),
     [EDIT_POST]: (state, action) =>
