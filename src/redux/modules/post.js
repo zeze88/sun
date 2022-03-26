@@ -91,7 +91,7 @@ const addPostDB = (props) => {
     if (!img_list) {
       axios({
         method: "post",
-        url: `${apiUrl}/islogin/post/write`,
+        url: `${apiUrl}/islogin/post/create`,
         data: {
           postTitle: title,
           postComment: comment,
@@ -127,7 +127,7 @@ const addPostDB = (props) => {
         .then((imgUrl) => {
           axios({
             method: "post",
-            url: `${apiUrl}/islogin/post/write`,
+            url: `${apiUrl}/islogin/post/create`,
             data: {
               postTitle: title,
               postComment: comment,
@@ -170,7 +170,7 @@ const editPostDB = (props) => {
     if (!img_list) {
       axios({
         method: "PUT",
-        url: `${apiUrl}/islogin/post/revice/${pid}`,
+        url: `${apiUrl}/islogin/post/edit/${pid}`,
         data: {
           pid: pid,
           postTitle: postTitle,
@@ -200,7 +200,7 @@ const editPostDB = (props) => {
         .then((imgUrl) => {
           axios({
             method: "PUT",
-            url: `${apiUrl}/islogin/post/revice/${pid}`,
+            url: `${apiUrl}/islogin/post/edit/${pid}`,
             data: {
               pid: pid,
               postTitle: postTitle,
