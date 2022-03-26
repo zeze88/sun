@@ -33,59 +33,41 @@ export const apis = {
       `/post/get/nocheck?page=${page}&size=10&sortBy=createdAt&isAsc=false`
     ),
 
-  onepost: (pid) => instance.get(`/post/detailget/${pid}`),
+  onepost: (pid) => instance.get(`/post/get/detail/${pid}`),
 
   delpost: (pid) => instance.delete(`/islogin/post/delete/${pid}`),
 
   likepost: (uid, pid) =>
-    instance.post(`/islogin/post/like`, {
+    instance.post(`/islogin/post/create/like`, {
       uid: uid,
       pid: pid,
     }),
 
   // ==================== answer api ====================//
   getanswer: (pid) => instance.get(`/answer/get/${pid}`),
-
-  addanswer: (pid, uid, title, comment, img) =>
-    instance.post(`/islogin/answer/${pid}`, {
-      uid: uid,
-      pid: pid,
-      answerTitle: title,
-      answerComment: comment,
-      answerImg: img,
-    }),
-
-  editanswer: (answsrId, title, comment, img) =>
-    instance.put(`/islogin/answer/revice/${answsrId}`, {
-      answerTitle: title,
-      answerComment: comment,
-      answerImg: img,
-    }),
-
   delanswer: (answsrId) =>
     instance.delete(`/islogin/answer/delete/${answsrId}`, {
       answsrId: answsrId,
     }),
-
   chooseAnswer: (uid, pid, answerId, answerUid) =>
-    instance.post(`/islogin/answer/like/`, {
+    instance.post(`/islogin/answer/create/like`, {
       uid: uid,
       pid: pid,
       answerId: answerId,
       answerUid: answerUid,
     }),
 
-  tagsearch: (tag) => instance.get(`${apiUrl}/tag/search/${tag}`),
-  totalRanking: () => instance.get(`/user/ranking/total`),
-  monthRanking: () => instance.get(`/user/ranking/month`),
-  weekRanking: () => instance.get(`/user/ranking/weekend`),
-  mytotalRanking: () => instance.get(`/islogin/ranking/total`),
-  mymonthRanking: () => instance.get(`/islogin/ranking/month`),
-  myweekRanking: () => instance.get(`/islogin/ranking/weekend`),
-  myalarm: () => instance.get(`/islogin/alarm`),
-  myalarmdel: (alarmId) => instance.delete(`/islogin/alarm/${alarmId}`),
+  totalRanking: () => instance.get(`/user/get/ranking/total`),
+  monthRanking: () => instance.get(`/user/get/ranking/month`),
+  weekRanking: () => instance.get(`/user/get/ranking/weekend`),
+  mytotalRanking: () => instance.get(`/islogin/get/myranking/total`),
+  mymonthRanking: () => instance.get(`/islogin/get/myranking/month`),
+  myweekRanking: () => instance.get(`/islogin/get/myranking/weekend`),
+
+  myalarm: () => instance.get(`/islogin/get/alarm`),
+  myalarmdel: (alarmId) => instance.delete(`/islogin/delete/alarm/${alarmId}`),
   mylikepost: (page) =>
     instance.get(
-      `/islogin/get/like?page=${page}&size=10&sortBy=createdAt&isAsc=false`
+      `/islogin/post/get/like?page=${page}&size=10&sortBy=createdAt&isAsc=false`
     ),
 };
