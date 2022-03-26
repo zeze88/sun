@@ -18,7 +18,7 @@ const Chat = () => {
   const username = sessionStorage.getItem("nickname");
 
   const uid = sessionStorage.getItem("uid");
-  const is_login = sessionStorage.getItem("is_Login");
+  const is_login = sessionStorage.getItem("isLogin");
   const [welcome, setWelcome] = React.useState(new Map());
   const [publicChats, setPublicChats] = React.useState([]);
   const [connected, setConnected] = React.useState(false);
@@ -31,6 +31,7 @@ const Chat = () => {
     opposingUserName: "",
   });
 
+  console.log(is_login);
   React.useEffect(() => {
     stompConnect();
 
@@ -92,7 +93,6 @@ const Chat = () => {
   const sendPublicMessage = () => {
     if (is_login) {
       const username = sessionStorage.getItem("nickname");
-
       if (stompClient) {
         if (!userData.message) {
           Swal.fire("", "내용을 입력해주세요!", "error");
@@ -109,8 +109,10 @@ const Chat = () => {
           setUserData({ ...userData, message: "" });
         }
       }
+      return;
     } else {
       Swal.fire("", "로그인 후 사용할 수 있습니다:)", "error");
+      return;
     }
   };
 
