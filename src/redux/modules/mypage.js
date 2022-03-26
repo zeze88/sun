@@ -8,7 +8,6 @@ const MY_LIKE_POST = "MY_LIKE_POST";
 
 const myAlarms = createAction(MY_ALAMS, (list) => ({ list }));
 const myAlarmsDel = createAction(MY_ALAMS_DEL, (list) => ({ list }));
-const myMyLikePost = createAction(MY_LIKE_POST, (list) => ({ list }));
 
 const initialState = {
   list: [],
