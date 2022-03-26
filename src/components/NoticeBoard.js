@@ -80,11 +80,8 @@ const NoticeBoard = () => {
           })}
         </div>
         <div className='last'>{isLoaded && <Loader />}</div>
-        <SC_BtnWrap>
-          <button onClick={goWrite}>
-            <WriteSvg />
-            글쓰기
-          </button>
+        <SC_BtnWrap onClick={goWrite}>
+          <WriteSvg />
         </SC_BtnWrap>
       </SC_NoticeDiv>
     </React.Fragment>
@@ -92,7 +89,9 @@ const NoticeBoard = () => {
 };
 
 const SC_NoticeDiv = styled.div`
+  position: relative;
   width: calc(100% - 342px - 24px);
+  height: 100%;
   background-color: #fff;
   border-radius: 8px;
 
@@ -103,22 +102,33 @@ const SC_NoticeDiv = styled.div`
   > ul {
     margin: 0 24px;
   }
+
+  .list_wrap {
+    height: calc(100% - 108px);
+    overflow: auto;
+  }
 `;
 
-const SC_BtnWrap = styled.div`
-  margin: 32px 24px 48px;
-  text-align: right;
+const SC_BtnWrap = styled.button`
+  --btn-size: 110px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: var(--btn-size);
+  height: var(--btn-size);
+  border-radius: var(--btn-size);
+  color: #fff;
+  background-color: #7966ff;
+  opacity: 0.3;
+  trasition: all 0.3s;
 
-  button {
-    color: #fff;
-    padding: 16px 40px;
-    border-radius: 5px;
-    background-color: #7966ff;
-
-    svg {
-      vertical-align: middle;
-      margin-right: 16px;
-    }
+  &:hover {
+    opacity: 1;
+  }
+  svg {
+    width: 50px;
+    height: 50px;
+    vertical-align: middle;
   }
 `;
 export default React.memo(NoticeBoard);
