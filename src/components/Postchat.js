@@ -61,7 +61,7 @@ const Postchat = ({ pid }) => {
   };
 
   const stompConnect = () => {
-    let socket = new SockJs(`${apiUrl}/ws`);
+    let socket = new SockJs(`${apiUrl}/wss`);
     stompClient = Stomp.over(socket);
     stompClient.connect({}, onConnected, onError);
   };
