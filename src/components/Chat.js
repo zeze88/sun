@@ -50,7 +50,6 @@ const Chat = () => {
     try {
       const user_join = { status: "OUT" };
       stompClient.send("/app/mainchat", {}, JSON.stringify(user_join));
-
       stompClient.disconnect(() => {
         stompClient.unsubscribe("/topic/mainchat");
       }, token);
@@ -62,7 +61,7 @@ const Chat = () => {
     setUserData({ ...userData, [name]: value });
   };
   const stompConnect = () => {
-    let socket = new SockJs(`${apiUrl}/wss`);
+    let socket = new SockJs(`${apiUrl}/ws`);
     stompClient = Stomp.over(socket);
 
     stompClient.connect({}, onConnected, onError);
@@ -82,7 +81,6 @@ const Chat = () => {
         status: "JOIN",
       });
 
-      stompClient.send("/app/hello", {}, JSON.stringify({ username }));
       stompClient.send("/app/mainchat", token, JSON.stringify(user_join));
       stompClient.subscribe("/topic/mainchat", onPublicMessageReceived, token);
     } catch (err) {
@@ -119,7 +117,7 @@ const Chat = () => {
   //subscribe의 함수
   const onPublicMessageReceived = (payload) => {
     let payloadData = JSON.parse(payload.body);
-
+    console.log(payload);
     switch (payloadData.status) {
       case "JOIN":
         if (!welcome.get(payloadData.senderName)) {
