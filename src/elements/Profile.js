@@ -7,7 +7,7 @@ const Profile = ({ imgUrl, size = "30" }) => {
   console.log(!imgUrl);
   return (
     <ProfileImg imgUrl={imgUrl} size={size}>
-      {imgUrl === "null" && <UserDefault />}
+      {!imgUrl && <UserDefault />}
     </ProfileImg>
   );
 };
