@@ -14,10 +14,13 @@ const instance = axios.create({
 
 // interceptors의 역할 => then이나 catch로 처리되기 전
 // 요청(request)이나 응답(response)을 가로채 어떠한 작업을 수행할 수 있게 한다. 참고 (https://yamoo9.github.io/axios/guide/interceptors.html)
+
 instance.interceptors.request.use(function (config) {
   const accessToken = sessionStorage.token;
-  config.headers.common["Authorization"] = `${accessToken}`; // header에 토큰값을 넣는다 => header에 토큰값이 있어 앞으로 request를 자유자재로 할 수 있다.
-  return config;
+  if (accessToken) {
+    config.headers.common["Authorization"] = `${accessToken}`; // header에 토큰값을 넣는다 => header에 토큰값이 있어 앞으로 request를 자유자재로 할 수 있다.
+    return config;
+  }
 });
 
 // 데이터 요청 to 서버
@@ -70,4 +73,7 @@ export const apis = {
     instance.get(
       `/islogin/post/get/like?page=${page}&size=10&sortBy=createdAt&isAsc=false`
     ),
+
+  prechat: () => instance.get(`/mainchat/get/main`),
+  prepostchat: (pid) => instance.get(`/postchat/get/${pid}`),
 };
