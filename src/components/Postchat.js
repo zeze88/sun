@@ -12,9 +12,9 @@ import { ReactComponent as SendSvg } from "../svg/send.svg";
 let stompClient = null;
 const Postchat = ({ pid }) => {
   const token = {
-    Authorization: sessionStorage.getItem("token")
-      ? sessionStorage.getItem("token")
-      : "Authorization",
+    Authorization: sessionStorage.getItem("token"),
+    // ? sessionStorage.getItem("token")
+    // : "Authorization",
   };
   const dispatch = useDispatch();
   const post_chat_list = useSelector((state) => state.chat.post_list);
@@ -36,7 +36,7 @@ const Postchat = ({ pid }) => {
 
   React.useEffect(() => {
     dispatch(chatActions.prevPostChatDB(pid));
-    setPublicChats([...post_chat_list]);
+    // setPublicChats([...post_chat_list]);
     stompConnect();
 
     return () => {
@@ -53,7 +53,7 @@ const Postchat = ({ pid }) => {
   const stompDisConnect = () => {
     try {
       const user_join = { status: "OUT" };
-      stompClient.send("/app/postchat", {}, JSON.stringify(user_join));
+      stompClient.send("/app/postchat", token, JSON.stringify(user_join));
 
       stompClient.disconnect(() => {
         stompClient.unsubscribe(`/topic/postchat/${pid}`);

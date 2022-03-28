@@ -42,7 +42,7 @@ const Header = () => {
       let socket = new SockJs(`${apiUrl}/ws`);
 
       stompClient = Stomp.over(socket);
-      stompClient.connect({}, () => {
+      stompClient.connect(token, () => {
         stompClient.subscribe(
           `/queue/user/${nickname}`,
           (payload) => {
