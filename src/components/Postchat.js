@@ -61,7 +61,7 @@ const Postchat = ({ pid }) => {
   };
 
   const stompConnect = () => {
-    let socket = new SockJs(`${apiUrl}/wss`);
+    let socket = new SockJs(`${apiUrl}/ws`);
     stompClient = Stomp.over(socket);
     stompClient.connect({}, onConnected, onError);
   };
@@ -93,29 +93,29 @@ const Postchat = ({ pid }) => {
   };
 
   const sendPublicMessage = () => {
-    if (is_login) {
-      const username = sessionStorage.getItem("nickname");
+    // if (is_login) {
+    //   const username = sessionStorage.getItem("nickname");
 
-      if (stompClient) {
-        if (!userData.message) {
-          Swal.fire("", "내용을 입력해주세요!", "error");
-        } else {
-          let chatMessage = {
-            ...userData,
-            senderName: username,
-            message: userData.message,
-            status: "MESSAGE",
-            pid: pid,
-            uid: uid,
-          };
+    //   if (stompClient) {
+    //     if (!userData.message) {
+    //       Swal.fire("", "내용을 입력해주세요!", "error");
+    //     } else {
+    let chatMessage = {
+      ...userData,
+      senderName: username,
+      message: userData.message,
+      status: "MESSAGE",
+      pid: pid,
+      uid: uid,
+    };
 
-          stompClient.send("/app/postchat", token, JSON.stringify(chatMessage));
-          setUserData({ ...userData, message: "" });
-        }
-      }
-    } else {
-      Swal.fire("", "로그인 후 사용할 수 있습니다:)", "error");
-    }
+    stompClient.send("/app/postchat", token, JSON.stringify(chatMessage));
+    setUserData({ ...userData, message: "" });
+    // }
+    // }
+    // } else {
+    //   Swal.fire("", "로그인 후 사용할 수 있습니다:)", "error");
+    // }
   };
 
   //subscribe의 함수
