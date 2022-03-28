@@ -17,10 +17,9 @@ const instance = axios.create({
 
 instance.interceptors.request.use(function (config) {
   const accessToken = sessionStorage.token;
-  if (accessToken) {
-    config.headers.common["Authorization"] = `${accessToken}`; // header에 토큰값을 넣는다 => header에 토큰값이 있어 앞으로 request를 자유자재로 할 수 있다.
-    return config;
-  }
+
+  config.headers.common["Authorization"] = `${accessToken}`; // header에 토큰값을 넣는다 => header에 토큰값이 있어 앞으로 request를 자유자재로 할 수 있다.
+  return config;
 });
 
 // 데이터 요청 to 서버

@@ -28,7 +28,9 @@ const Header = () => {
 
   const [goPost, setGoPost] = React.useState("");
   const token = {
-    Authorization: sessionStorage.getItem("token"),
+    Authorization: sessionStorage.getItem("token")
+      ? sessionStorage.getItem("token")
+      : "Authorization",
   };
 
   const Logout = () => {

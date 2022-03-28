@@ -12,14 +12,13 @@ import { ReactComponent as SendSvg } from "../svg/send.svg";
 let stompClient = null;
 const Postchat = ({ pid }) => {
   const token = {
-    Authorization: sessionStorage.getItem("token"),
+    Authorization: sessionStorage.getItem("token")
+      ? sessionStorage.getItem("token")
+      : "Authorization",
   };
   const dispatch = useDispatch();
-  const post_chat_list = useSelector((state) => state.chat.list);
-  const is_login = sessionStorage.getItem("is_Login");
+  const post_chat_list = useSelector((state) => state.chat.post_list);
   const username = sessionStorage.getItem("nickname");
-  const crareer = sessionStorage.getItem("career");
-  const userImage = sessionStorage.getItem("userImage");
   const uid = sessionStorage.getItem("uid");
 
   const [welcome, setWelcome] = React.useState(new Map());
@@ -33,10 +32,12 @@ const Postchat = ({ pid }) => {
     message: "",
     opposingUserName: "",
   });
+  console.log(post_chat_list);
 
   React.useEffect(() => {
-    stompConnect();
     dispatch(chatActions.prevPostChatDB(pid));
+    setPublicChats([...post_chat_list]);
+    stompConnect();
 
     return () => {
       stompDisConnect();
@@ -130,7 +131,6 @@ const Postchat = ({ pid }) => {
     switch (payloadData.status) {
       case "JOIN":
         if (!welcome.get(payloadData.senderName)) {
-          console.log(payloadData);
           welcome.set(payloadData.message, []);
           setWelcome(new Map(welcome));
           setUser(payloadData.userCount);
@@ -138,7 +138,6 @@ const Postchat = ({ pid }) => {
         break;
       case "OUT":
         if (!welcome.get(payloadData.senderName)) {
-          console.log(payloadData);
           welcome.set(payloadData.message, []);
           setWelcome(new Map(welcome));
           setUser(payloadData.userCount);
@@ -146,7 +145,6 @@ const Postchat = ({ pid }) => {
         break;
       case "OUT":
         if (!welcome.get(payloadData.senderName)) {
-          console.log(payloadData);
           welcome.set(payloadData.message, []);
           setWelcome(new Map(welcome));
         }
