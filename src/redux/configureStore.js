@@ -9,6 +9,7 @@ import user from "./modules/user";
 import comment from "./modules/comment";
 import search from "./modules/serch";
 import Mypage from "./modules/mypage";
+import Chat from "./modules/chat";
 
 export const history = createBrowserHistory();
 
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   comment: comment,
   search: search,
   mypage: Mypage,
+  chat: Chat,
 });
 
 const middlewares = [thunk.withExtraArgument({ history: history })];

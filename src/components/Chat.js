@@ -4,12 +4,15 @@ import SockJs from "sockjs-client";
 import Profile from "../elements/Profile";
 import styled from "styled-components";
 import Swal from "sweetalert2";
+import { actionCreators as chatActions } from "../redux/modules/chat";
 import { ReactComponent as SendSvg } from "../svg/send.svg";
-
 import { apiUrl } from "../elements/testApiUrl";
+import { useDispatch, useSelector } from "react-redux";
 
 let stompClient = null;
 const Chat = () => {
+  const dispatch = useDispatch();
+  const chat_list = useSelector((state) => state.chat.list);
   const token = {
     Authorization: sessionStorage.getItem("token")
       ? sessionStorage.getItem("token")
@@ -20,7 +23,7 @@ const Chat = () => {
   const uid = sessionStorage.getItem("uid");
   const is_login = sessionStorage.getItem("isLogin");
   const [welcome, setWelcome] = React.useState(new Map());
-  const [publicChats, setPublicChats] = React.useState([]);
+  const [publicChats, setPublicChats] = React.useState([...chat_list]);
   const [connected, setConnected] = React.useState(false);
   const [tab, setTab] = React.useState("CHATROOM");
   const [user, setUser] = React.useState(0);
@@ -31,9 +34,11 @@ const Chat = () => {
     opposingUserName: "",
   });
 
-  console.log(is_login);
+  console.log(chat_list);
+
   React.useEffect(() => {
     stompConnect();
+    dispatch(chatActions.prevChatDB());
 
     return () => {
       stompDisConnect();
@@ -69,9 +74,7 @@ const Chat = () => {
 
   const onConnected = () => {
     try {
-      const username = sessionStorage.getItem("nickname");
       const crareer = sessionStorage.getItem("career");
-      const userImage = sessionStorage.getItem("userImage");
       const user_join = { status: "JOIN", uid, pid: 0 };
 
       setConnected(true);

@@ -4,6 +4,8 @@ import SockJs from "sockjs-client";
 import Profile from "../elements/Profile";
 import styled from "styled-components";
 import Swal from "sweetalert2";
+import { actionCreators as chatActions } from "../redux/modules/chat";
+import { useDispatch, useSelector } from "react-redux";
 import { apiUrl } from "../elements/testApiUrl";
 import { ReactComponent as SendSvg } from "../svg/send.svg";
 
@@ -12,6 +14,8 @@ const Postchat = ({ pid }) => {
   const token = {
     Authorization: sessionStorage.getItem("token"),
   };
+  const dispatch = useDispatch();
+  const post_chat_list = useSelector((state) => state.chat.list);
   const is_login = sessionStorage.getItem("is_Login");
   const username = sessionStorage.getItem("nickname");
   const crareer = sessionStorage.getItem("career");
@@ -19,7 +23,7 @@ const Postchat = ({ pid }) => {
   const uid = sessionStorage.getItem("uid");
 
   const [welcome, setWelcome] = React.useState(new Map());
-  const [publicChats, setPublicChats] = React.useState([]);
+  const [publicChats, setPublicChats] = React.useState([...post_chat_list]);
   const [connected, setConnected] = React.useState(false);
   const [tab, setTab] = React.useState("CHATROOM");
   const [time, setTime] = React.useState("");
@@ -32,6 +36,7 @@ const Postchat = ({ pid }) => {
 
   React.useEffect(() => {
     stompConnect();
+    dispatch(chatActions.prevPostChatDB(pid));
 
     return () => {
       stompDisConnect();
