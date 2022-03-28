@@ -35,10 +35,12 @@ const Chat = () => {
   });
 
   console.log(chat_list);
+  console.log(publicChats);
 
   React.useEffect(() => {
-    stompConnect();
     dispatch(chatActions.prevChatDB());
+    // setPublicChats([...chat_list]);
+    stompConnect();
 
     return () => {
       stompDisConnect();
@@ -54,7 +56,7 @@ const Chat = () => {
   const stompDisConnect = () => {
     try {
       const user_join = { status: "OUT" };
-      stompClient.send("/app/mainchat", {}, JSON.stringify(user_join));
+      stompClient.send("/app/mainchat", token, JSON.stringify(user_join));
       stompClient.disconnect(() => {
         stompClient.unsubscribe("/topic/mainchat");
       }, token);

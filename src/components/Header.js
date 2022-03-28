@@ -28,7 +28,9 @@ const Header = () => {
 
   const [goPost, setGoPost] = React.useState("");
   const token = {
-    Authorization: sessionStorage.getItem("token"),
+    Authorization: sessionStorage.getItem("token")
+      ? sessionStorage.getItem("token")
+      : "Authorization",
   };
 
   const Logout = () => {
@@ -40,7 +42,7 @@ const Header = () => {
       let socket = new SockJs(`${apiUrl}/ws`);
 
       stompClient = Stomp.over(socket);
-      stompClient.connect({}, () => {
+      stompClient.connect(token, () => {
         stompClient.subscribe(
           `/queue/user/${nickname}`,
           (payload) => {
