@@ -29,6 +29,7 @@ const Chat = () => {
   const [tab, setTab] = React.useState("CHATROOM");
   const [user, setUser] = React.useState(0);
   const [time, setTime] = React.useState("");
+  const [chatScroll, setChatScroll] = React.useState(false);
   const [userData, setUserData] = React.useState({
     username: "",
     message: "",
@@ -38,7 +39,6 @@ const Chat = () => {
   React.useEffect(() => {
     dispatch(chatActions.prevChatDB());
     stompConnect();
-
     return () => {
       stompDisConnect();
     };
@@ -76,7 +76,6 @@ const Chat = () => {
     try {
       const crareer = sessionStorage.getItem("career");
       const user_join = { status: "JOIN", uid, pid: 0 };
-
       setConnected(true);
       setUserData({
         ...userData,
@@ -86,6 +85,9 @@ const Chat = () => {
 
       stompClient.send("/app/mainchat", token, JSON.stringify(user_join));
       stompClient.subscribe("/topic/mainchat", onPublicMessageReceived, token);
+      if (chatScroll !== true) {
+        setChatScroll(true);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -125,6 +127,7 @@ const Chat = () => {
         if (!welcome.get(payloadData.senderName)) {
           welcome.set(payloadData.message, []);
           setWelcome(new Map(welcome));
+
           setUser(payloadData.userCount);
         }
         break;
@@ -136,14 +139,11 @@ const Chat = () => {
         }
         break;
       case "MESSAGE":
-        const time1 = payloadData.createdAt; //년월 제거
-        const time2 = time1.split(".")[0]; // 소수점 제거
-        const time3 = time2.split(":")[0] + ":" + time2.split(":")[1]; // 시간, 분
-
-        setTime(time3);
         publicChats.push(payloadData);
+
         setPublicChats([...publicChats]);
         setUser(payloadData.userCount);
+        console.log(publicChats);
         break;
     }
   };
@@ -151,17 +151,15 @@ const Chat = () => {
   const onError = (err) => {
     console.log(err);
   };
+  React.useEffect(() => {
+    scrollToBottom();
+  }, [publicChats, chatScroll]);
 
   const scrollToBottom = () => {
     if (messageRef.current) {
       messageRef.current.scrollTop = messageRef.current.scrollHeight;
     }
   };
-
-  useEffect(() => {
-    scrollToBottom();
-    console.log("scroll");
-  }, [publicChats]);
 
   return (
     <ChatDiv>
@@ -198,7 +196,9 @@ const Chat = () => {
                   </>
                 )}
                 <p className='message-data'>{chat.message}</p>
-                {time.split[0] > 12 ? <em> {time}</em> : <em> {time} </em>}
+                <em className='u'>
+                  {chat.createdAt.split("T")[1].split(".")[0]}{" "}
+                </em>
               </li>
             ))}
 
@@ -216,7 +216,9 @@ const Chat = () => {
                 </>
               )}
               <p className='message-data'>{chat.message}</p>
-              {time.split[0] > 12 ? <em> {time}</em> : <em> {time} </em>}
+              <em className='me'>
+                {chat.createdAt.split("T")[1].split(".")[0]}{" "}
+              </em>
             </li>
           ))}
         </ul>
@@ -292,6 +294,7 @@ const ChatList = styled.div`
       position: relative;
       padding-left: 36px;
       padding-right: 10px;
+      margin: 12px 0;
 
       strong {
         font-size: 14px;
@@ -308,6 +311,7 @@ const ChatList = styled.div`
       em {
         display: block;
         text-align: right;
+        text-align: start;
       }
     }
 
@@ -318,6 +322,11 @@ const ChatList = styled.div`
       p {
         color: #fff;
         background-color: #7966ff;
+      }
+      em {
+        display: block;
+        text-align: right;
+        text-align: end;
       }
     }
   }
@@ -349,6 +358,7 @@ const ChatList = styled.div`
     color: #797979;
     font-size: 12px;
     font-style: normal;
+    text-align: end;
   }
 `;
 

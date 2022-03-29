@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Stomp, { over } from "stompjs";
 import SockJs from "sockjs-client";
 import Profile from "../elements/Profile";
@@ -13,11 +13,13 @@ let stompClient = null;
 const Postchat = ({ pid }) => {
   const token = {
     Authorization: sessionStorage.getItem("token"),
+
     // ? sessionStorage.getItem("token")
     // : "Authorization",
   };
   const dispatch = useDispatch();
   const post_chat_list = useSelector((state) => state.chat.post_list);
+  const messageRef = useRef();
   const username = sessionStorage.getItem("nickname");
   const uid = sessionStorage.getItem("uid");
 
@@ -27,6 +29,7 @@ const Postchat = ({ pid }) => {
   const [tab, setTab] = React.useState("CHATROOM");
   const [time, setTime] = React.useState("");
   const [user, setUser] = React.useState(0);
+  const [chatScroll, setChatScroll] = React.useState(false);
   const [userData, setUserData] = React.useState({
     username: "",
     message: "",
@@ -91,6 +94,9 @@ const Postchat = ({ pid }) => {
         onPublicMessageReceived,
         token
       );
+      if (chatScroll !== true) {
+        setChatScroll(true);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -164,6 +170,16 @@ const Postchat = ({ pid }) => {
     console.log("plz");
   };
 
+  React.useEffect(() => {
+    scrollToBottom();
+  }, [publicChats, chatScroll]);
+
+  const scrollToBottom = () => {
+    if (messageRef.current) {
+      messageRef.current.scrollTop = messageRef.current.scrollHeight;
+    }
+  };
+
   return (
     <ChatDiv>
       <ChatTab>
@@ -174,7 +190,7 @@ const Postchat = ({ pid }) => {
           채팅 {user}
         </li>
       </ChatTab>
-      <ChatList>
+      <ChatList ref={messageRef}>
         <ul>
           {[...welcome.keys()].map((name, index) => {
             return (
