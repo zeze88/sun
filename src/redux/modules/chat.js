@@ -18,7 +18,6 @@ const prevChatDB = (props) => {
     apis
       .prechat()
       .then((res) => {
-        console.log(res);
         const status = res.data;
         dispatch(prevChat(status));
       })
@@ -34,7 +33,6 @@ const prevPostChatDB = (pid) => {
     apis
       .prepostchat(pid)
       .then((res) => {
-        console.log(res);
         const status = res.data;
         dispatch(prevPostChat(status));
       })
@@ -52,7 +50,6 @@ export default handleActions(
       }),
     [PREV_POST_CHAT]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload.post_list);
         draft.post_list = action.payload.list;
       }),
   },
