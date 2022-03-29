@@ -20,7 +20,7 @@ const NoticeList = ({ list, lastEl, viewRef }) => {
       )}
       <NoticeLink
         onClick={() => {
-          window.location.replace(`/detail/${list.pid}`);
+          history.push(`/detail/${list.pid}`);
         }}>
         <div className='title'>
           <h3>{list.postTitle}</h3>
