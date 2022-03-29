@@ -34,8 +34,9 @@ const Chat = () => {
     opposingUserName: "",
   });
 
-  console.log(chat_list);
-  console.log(publicChats);
+  React.useLayoutEffect(() => {
+    setPublicChats([...chat_list]);
+  }, []);
 
   React.useEffect(() => {
     dispatch(chatActions.prevChatDB());
@@ -67,6 +68,7 @@ const Chat = () => {
     const { value, name } = e.target;
     setUserData({ ...userData, [name]: value });
   };
+
   const stompConnect = () => {
     let socket = new SockJs(`${apiUrl}/ws`);
     stompClient = Stomp.over(socket);
@@ -140,9 +142,10 @@ const Chat = () => {
         }
         break;
       case "MESSAGE":
-        const time1 = payloadData.createdAt.split("T")[1]; //년월 제거
+        const time1 = payloadData.createdAt; //년월 제거
         const time2 = time1.split(".")[0]; // 소수점 제거
         const time3 = time2.split(":")[0] + ":" + time2.split(":")[1]; // 시간, 분
+
         setTime(time3);
         publicChats.push(payloadData);
         setPublicChats([...publicChats]);
