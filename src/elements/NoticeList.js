@@ -13,14 +13,14 @@ const NoticeList = ({ list, lastEl, viewRef }) => {
         <div
           className='category'
           onClick={() => {
-            window.location.replace(`/search/category_${list.category}`);
+            history.push(`/search/category_${list.category}`);
           }}>
           {list.category}
         </div>
       )}
       <NoticeLink
         onClick={() => {
-          window.location.replace(`/detail/${list.pid}`);
+          history.push(`/detail/${list.pid}`);
         }}>
         <div className='title'>
           <h3>{list.postTitle}</h3>
@@ -36,7 +36,7 @@ const NoticeList = ({ list, lastEl, viewRef }) => {
             <li
               key={idx}
               onClick={() => {
-                window.location.replace(`/search/tag_${v}`);
+                history.push(`/search/tag_${v}`);
               }}>
               #{v}
             </li>
