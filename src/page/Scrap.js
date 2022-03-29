@@ -23,6 +23,7 @@ const Scrap = () => {
           </li>
         )}
         {scrap_list.map((v, idx) => {
+          const date = v.createdAt?.split(".")[0].replace("T", " ");
           return (
             <li key={v.pid}>
               <div
@@ -36,9 +37,7 @@ const Scrap = () => {
                 {v.type === "AnswerChoose" && (
                   <span>답변이 채택되었습니다.</span>
                 )}
-                <em>
-                  {v.createdAt[0]} - {v.createdAt[1]} - {v.createdAt[2]}
-                </em>
+                <em>{date}</em>
               </div>
               <button
                 onClick={() => {

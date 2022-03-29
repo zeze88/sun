@@ -21,6 +21,7 @@ const Detail = () => {
   const pid = useParams().pid;
   const post_one = useSelector((state) => state.post.one_list);
   const user_info = sessionStorage.getItem("uid");
+  const date = post_one.createdAt?.split("T")[0];
 
   const delPost = () => {
     Swal.fire({
@@ -81,10 +82,7 @@ const Detail = () => {
                 </dt>
                 <dd>{post_one.nickname}</dd>
               </dl>
-              <em>
-                {/* {post_one?.createdAt[0]}-{post_one?.createdAt[1]}-
-                {post_one?.createdAt[2]} */}
-              </em>
+              <em>{date}</em>
               <i>관심 {post_one.postLikeCount}</i>
             </div>
           </Top>
