@@ -24,28 +24,25 @@ const Category = () => {
         <li onClick={() => setcategortView(!categoryView)}>언어</li>
         <li onClick={() => history.push("/ranking")}>랭킹</li>
       </ul>
-      <div className='category_list'>
-        {categoryView ? (
-          <div className='C' onChange={CategoryList}>
-            {category.map((c, idx) => (
-              <div
-                className={categoryView ? "" : "close"}
-                key={idx}
-                value={c.name}
-                onClick={() => {
-                  CategoryList(c.name);
-                  setcategortView(!categoryView);
-                }}>
-                {c.name}
-              </div>
-            ))}
-          </div>
-        ) : null}
-      </div>
+      <CategoryLists isview={categoryView} categoryLength={category.length}>
+        <div className='C' onChange={CategoryList}>
+          {category.map((c, idx) => (
+            <div
+              className={categoryView ? "" : "close"}
+              key={idx}
+              value={c.name}
+              onClick={() => {
+                CategoryList(c.name);
+                setcategortView(!categoryView);
+              }}>
+              {c.name}
+            </div>
+          ))}
+        </div>
+      </CategoryLists>
     </Container>
   );
 };
-
 const Container = styled.div`
   position: relative;
   margin-left: 40px;
@@ -64,38 +61,42 @@ const Container = styled.div`
     text-align: center;
     cursor: pointer;
   }
+`;
 
-  .category_list {
-    top: 74px;
-    left: 0;
-    width: 250px;
+const CategoryLists = styled.div`
+  position: absolute;
+  top: 74px;
+  left: 0;
+  width: 250px;
+  height: ${({ categoryLength }) =>
+    categoryLength && `calc( ${categoryLength} * 50px + 10px)`};
+  ${({ isview }) => !isview && `height: 0`};
+  overflow: hidden;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px 0 rgba(36, 13, 177, 0.2);
+  z-index: 10;
+  transition: height 0.5s ease-out;
 
-    > div.C {
-      position: absolute;
-      padding: 5px;
-      transition: max-height 0.5s ease-out;
-      background-color: #fff;
+  > div.C {
+    position: absolute;
+    width: 100%;
+    padding: 5px;
+
+    > div {
+      width: 100%;
+      height: 50px;
+      line-height: 50px;
+      padding: 0 12px;
+      cursor: pointer;
       border-radius: 8px;
-      box-shadow: 0 4px 15px 0 rgba(36, 13, 177, 0.2);
-      z-index: 10;
 
-      > div {
-        width: 250px;
-        height: 50px;
-        line-height: 50px;
-        padding: 0 12px;
-        cursor: pointer;
-        border-radius: 8px;
-        &:hover {
-          color: #fff;
-          background-color: #7966ff;
-        }
-        &.close {
-          height: 0;
-          padding: 0;
-        }
+      &:hover {
+        color: #fff;
+        background-color: #7966ff;
       }
     }
   }
 `;
+
 export default Category;
