@@ -37,6 +37,11 @@ const Chat = () => {
   });
 
   React.useEffect(() => {
+    scrollToBottom();
+    console.log(chatScroll);
+  }, [publicChats, chatScroll]);
+
+  React.useEffect(() => {
     dispatch(chatActions.prevChatDB());
     stompConnect();
     return () => {
@@ -66,9 +71,8 @@ const Chat = () => {
   };
 
   const stompConnect = () => {
-    let socket = new SockJs(`${apiUrl}/ws`);
+    let socket = new SockJs(`${apiUrl}/ws-coala`);
     stompClient = Stomp.over(socket);
-
     stompClient.connect({}, onConnected, onError);
   };
 
@@ -151,9 +155,6 @@ const Chat = () => {
   const onError = (err) => {
     console.log(err);
   };
-  React.useEffect(() => {
-    scrollToBottom();
-  }, [publicChats, chatScroll]);
 
   const scrollToBottom = () => {
     if (messageRef.current) {

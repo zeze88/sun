@@ -39,7 +39,7 @@ const Header = () => {
 
   React.useEffect(() => {
     if (nickname) {
-      let socket = new SockJs(`${apiUrl}/ws`);
+      let socket = new SockJs(`${apiUrl}/ws-coala`);
 
       stompClient = Stomp.over(socket);
       stompClient.connect(token, () => {

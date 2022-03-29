@@ -45,6 +45,12 @@ const Postchat = ({ pid }) => {
     };
   }, []);
 
+  const stompConnect = () => {
+    let socket = new SockJs(`${apiUrl}/ws-coala`);
+    stompClient = Stomp.over(socket);
+    stompClient.connect({}, onConnected, onError);
+  };
+
   const onKeyPress = (e) => {
     if (e.key == "Enter") {
       sendPublicMessage();
@@ -65,12 +71,6 @@ const Postchat = ({ pid }) => {
   const handleValue = (e) => {
     const { value, name } = e.target;
     setUserData({ ...userData, [name]: value });
-  };
-
-  const stompConnect = () => {
-    let socket = new SockJs(`${apiUrl}/ws`);
-    stompClient = Stomp.over(socket);
-    stompClient.connect({}, onConnected, onError);
   };
 
   const onConnected = () => {
