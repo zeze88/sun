@@ -105,28 +105,36 @@ const Login = () => {
 };
 
 const Container = styled.div`
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
   min-width: 1440px;
-  height: 100%;
   min-height: 1080px;
   display: flex;
   justify-content: center;
 `;
 
 const Container1 = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 100vh;
-  min-height: 930px;
+  min-width: 1440px;
+  min-height: 1080px;
   display: flex;
   position: relative;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  img {
+    width: 100%;
+    min-width: 1440px;
+    min-height: 1080px;
+  }
 `;
 
 const Container2 = styled.div`
-  width: 1440px;
-  height: 930px;
+  width: 100vw;
+  height: 100vh;
+  min-width: 1440px;
+  min-height: 1080px;
   margin: 0 auto;
   display: flex;
   position: absolute;

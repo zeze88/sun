@@ -238,7 +238,7 @@ const Container = styled.div`
       display: flex;
       flex-direction: row;
       position: relative;
-      justify-content: end;
+      justify-content: start;
       align-items: center;
       background-color: #f9f8ff;
       border-radius: 0.5rem;
@@ -263,6 +263,7 @@ const Container = styled.div`
     color: white;
     border-radius: 32px;
     position: absolute;
+    margin-left: 400px;
   }
   button.SignupButtom {
     width: 100%;
