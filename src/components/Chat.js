@@ -24,7 +24,7 @@ const Chat = () => {
   const uid = sessionStorage.getItem("uid");
   const is_login = sessionStorage.getItem("isLogin");
   const [welcome, setWelcome] = React.useState(new Map());
-  const [publicChats, setPublicChats] = React.useState([...chat_list]);
+  const [publicChats, setPublicChats] = React.useState([]);
   const [connected, setConnected] = React.useState(false);
   const [tab, setTab] = React.useState("CHATROOM");
   const [user, setUser] = React.useState(0);
@@ -35,13 +35,8 @@ const Chat = () => {
     opposingUserName: "",
   });
 
-  React.useLayoutEffect(() => {
-    setPublicChats([...chat_list]);
-  }, []);
-
   React.useEffect(() => {
     dispatch(chatActions.prevChatDB());
-    // setPublicChats([...chat_list]);
     stompConnect();
 
     return () => {
@@ -187,6 +182,25 @@ const Chat = () => {
               </li>
             );
           })}
+
+          {chat_list &&
+            chat_list.map((chat, index) => (
+              <li
+                className={` ${chat.senderName === username ? "self" : "user"}`}
+                key={index}>
+                {chat.senderName !== username && (
+                  <>
+                    <Profile size='32' imgUrl={userData.userImage} />
+                    <div>
+                      <strong>{chat.senderName}</strong>
+                      <i>{userData.crareer}</i>
+                    </div>
+                  </>
+                )}
+                <p className='message-data'>{chat.message}</p>
+                {time.split[0] > 12 ? <em> {time}</em> : <em> {time} </em>}
+              </li>
+            ))}
 
           {publicChats.map((chat, index) => (
             <li

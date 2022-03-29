@@ -22,7 +22,7 @@ const Postchat = ({ pid }) => {
   const uid = sessionStorage.getItem("uid");
 
   const [welcome, setWelcome] = React.useState(new Map());
-  const [publicChats, setPublicChats] = React.useState([...post_chat_list]);
+  const [publicChats, setPublicChats] = React.useState([]);
   const [connected, setConnected] = React.useState(false);
   const [tab, setTab] = React.useState("CHATROOM");
   const [time, setTime] = React.useState("");
@@ -32,10 +32,6 @@ const Postchat = ({ pid }) => {
     message: "",
     opposingUserName: "",
   });
-
-  React.useLayoutEffect(() => {
-    setPublicChats([...post_chat_list]);
-  }, []);
 
   React.useEffect(() => {
     dispatch(chatActions.prevPostChatDB(pid));
@@ -187,7 +183,28 @@ const Postchat = ({ pid }) => {
               </li>
             );
           })}
-
+          {post_chat_list &&
+            post_chat_list.map((chat, index) => (
+              <li
+                className={` ${chat.senderName === username ? "self" : "user"}`}
+                key={index}>
+                {chat.senderName !== username && (
+                  <>
+                    <Profile size='32' imgUrl={userData.userImage} />
+                    <div>
+                      <strong>{chat.senderName}</strong>
+                      {userData.crareer && <i>{userData.crareer}</i>}
+                    </div>
+                  </>
+                )}
+                <p className='message-data'>{chat.message}</p>
+                {time.split[0] > 12 ? (
+                  <em> 오후 {time}</em>
+                ) : (
+                  <em> 오전 {time} </em>
+                )}
+              </li>
+            ))}
           {publicChats.map((chat, index) => (
             <li
               className={` ${chat.senderName === username ? "self" : "user"}`}
