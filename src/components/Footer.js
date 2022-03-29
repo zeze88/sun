@@ -10,13 +10,25 @@ const Footer = () => {
           <FooterLogo />
         </h2>
         <ul>
-          <a href='https://github.com/zeze88/sun'>
-            <li>문의사항</li>
-          </a>
-          <a href='https://oasis-cyclamen-45f.notion.site/5-8-_1-28217e32bae849a5bc95389ed1d5dd73'>
-            <li>코알리팀 소개</li>
-          </a>
-          <li>버그 제보</li>
+          <li>
+            <a target='_blank' href='https://github.com/zeze88/sun'>
+              문의사항
+            </a>
+          </li>
+          <li>
+            <a
+              target='_blank'
+              href='https://oasis-cyclamen-45f.notion.site/5-8-_1-28217e32bae849a5bc95389ed1d5dd73'>
+              코알리팀 소개
+            </a>
+          </li>
+          <li>
+            <a
+              target='_blank'
+              href='https://docs.google.com/forms/d/e/1FAIpQLSd4iPrHK_DTflM3n-FfJ_MVxg2NuO-05mG5o1wlx1WvVc0NzA/viewform'>
+              버그 제보
+            </a>
+          </li>
         </ul>
       </div>
     </FooterWrap>
@@ -46,10 +58,8 @@ const FooterWrap = styled.div`
     gap: 64px;
   }
 
-  li {
-    color: #fff;
-  }
   a {
+    color: #fff;
     text-decoration: none;
   }
 `;
