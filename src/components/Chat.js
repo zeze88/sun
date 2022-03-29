@@ -125,7 +125,6 @@ const Chat = () => {
   //subscribe의 함수
   const onPublicMessageReceived = (payload) => {
     let payloadData = JSON.parse(payload.body);
-    console.log(payload);
     switch (payloadData.status) {
       case "JOIN":
         if (!welcome.get(payloadData.senderName)) {
@@ -136,7 +135,6 @@ const Chat = () => {
         break;
       case "OUT":
         if (!welcome.get(payloadData.senderName)) {
-          console.log(payloadData);
           welcome.set(payloadData.message, []);
           setWelcome(new Map(welcome));
           setUser(payloadData.userCount);
@@ -157,7 +155,6 @@ const Chat = () => {
 
   const onError = (err) => {
     console.log(err);
-    console.log("plz");
   };
 
   const scrollToBottom = () => {

@@ -32,7 +32,6 @@ const Login = () => {
   return (
     <Container>
       <Container1>
-        <img src={LoginBackSvg}></img>
         <Container2>
           <div className={check === "login" ? "box" : "signup"}>
             <div className='logo'>
@@ -111,6 +110,7 @@ const Container = styled.div`
   min-height: 1080px;
   display: flex;
   justify-content: center;
+  background: url("/login_bg.png") no-repeat center/cover;
 `;
 
 const Container1 = styled.div`

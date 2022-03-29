@@ -50,7 +50,6 @@ const getPostDB = (page) => {
 
 const getPostNocheckDB = (page) => {
   return function (dispatch, getState, { history }) {
-    console.log(page);
     apis
       .getpostnocheck(page)
       .then((res) => {
