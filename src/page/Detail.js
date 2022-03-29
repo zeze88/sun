@@ -21,6 +21,7 @@ const Detail = () => {
   const pid = useParams().pid;
   const post_one = useSelector((state) => state.post.one_list);
   const user_info = sessionStorage.getItem("uid");
+
   const delPost = () => {
     Swal.fire({
       title: "게시글을 삭제하시겠습니까?",
@@ -52,9 +53,11 @@ const Detail = () => {
     window.scrollTo(0, 0);
     dispatch(answerActions.getAnswerDB(pid));
     dispatch(postActions.getOnePostDB(pid));
+
+    if (!post_one) {
+      dispatch(postActions.getOnePostDB(pid));
+    }
   }, []);
-  // const date = post_one.createdAt?.split(".")[0].split("T").join(" ");
-  const date = post_one.createdAt?.split("T")[0];
 
   return (
     <Container>
@@ -78,7 +81,10 @@ const Detail = () => {
                 </dt>
                 <dd>{post_one.nickname}</dd>
               </dl>
-              <em>{date}</em>
+              <em>
+                {/* {post_one?.createdAt[0]}-{post_one?.createdAt[1]}-
+                {post_one?.createdAt[2]} */}
+              </em>
               <i>관심 {post_one.postLikeCount}</i>
             </div>
           </Top>

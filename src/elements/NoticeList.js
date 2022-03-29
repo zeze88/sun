@@ -4,8 +4,6 @@ import Profile from "./Profile";
 import { history } from "../redux/configureStore";
 
 const NoticeList = ({ list, lastEl, viewRef }) => {
-  const date = list.createdAt?.split("T")[0];
-
   return (
     <NoticeListDiv
       className={lastEl ? "last" : ""}
@@ -31,7 +29,9 @@ const NoticeList = ({ list, lastEl, viewRef }) => {
           <Profile imgUrl={list.userImage} size='24' />
           {list.nickname}
         </span>
-        <em>{date}</em>
+        <em>
+          {list.createdAt[0]}-{list.createdAt[1]}-{list.createdAt[2]}
+        </em>
         <i>관심 {list.postLikeCount}</i>
       </div>
     </NoticeListDiv>

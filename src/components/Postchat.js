@@ -32,11 +32,13 @@ const Postchat = ({ pid }) => {
     message: "",
     opposingUserName: "",
   });
-  console.log(post_chat_list);
+
+  React.useLayoutEffect(() => {
+    setPublicChats([...post_chat_list]);
+  }, []);
 
   React.useEffect(() => {
     dispatch(chatActions.prevPostChatDB(pid));
-    // setPublicChats([...post_chat_list]);
     stompConnect();
 
     return () => {

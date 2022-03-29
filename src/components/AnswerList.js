@@ -240,7 +240,10 @@ const AnswerList = ({ isWriter }) => {
                                         defaultValue={list.comment}
                                         onChange={commentChange}></textarea>
                                     </p>
-                                    <p> {list.createdAt?.split("T")[0]}</p>
+                                    <p>
+                                      {list.createdAt[0]}-{list.createdAt[1]}-
+                                      {list.createdAt[2]}
+                                    </p>
                                   </div>
                                 ) : (
                                   <div>
@@ -271,7 +274,10 @@ const AnswerList = ({ isWriter }) => {
                                       </div>
                                     </div>
                                     <p className='comment'>{list.comment}</p>
-                                    <p> {list.createdAt?.split("T")[0]}</p>
+                                    <p>
+                                      {list.createdAt[0]}-{list.createdAt[1]}-
+                                      {list.createdAt[2]}
+                                    </p>
                                   </div>
                                 )}
                               </>
@@ -287,7 +293,10 @@ const AnswerList = ({ isWriter }) => {
                                     <strong>{list.nickname}</strong>
                                   </div>
                                   <p className='comment'>{list.comment}</p>
-                                  <p> {list.createdAt?.split("T")[0]}</p>
+                                  <p>
+                                    {list.createdAt[0]}-{list.createdAt[1]}-
+                                    {list.createdAt[2]}
+                                  </p>
                                 </div>
                               </div>
                             )}
