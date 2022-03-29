@@ -154,7 +154,7 @@ const loginDB = (username, password) => {
       })
       .catch((err) => {
         console.log(err);
-        Swal.fire("", "이메일이나 패스워드를 다시 확인해주세요.", "error");
+        Swal.fire("", "아이디나 패스워드를 다시 확인해주세요.", "error");
       });
   };
 };
