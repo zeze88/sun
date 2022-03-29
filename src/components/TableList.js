@@ -40,6 +40,7 @@ const TableList = ({ currTab }) => {
         </li>
       )}
       {select_list().map((v, idx) => {
+        const date = v.createdAt?.split(".")[0].replace("T", " ");
         return (
           <li key={v.alarmId}>
             <div
@@ -51,9 +52,7 @@ const TableList = ({ currTab }) => {
                 <span>누군가 내 게시글에 답글을 남겼습니다.</span>
               )}
               {v.type === "AnswerChoose" && <span>답변이 채택되었습니다.</span>}
-              <em>
-                {v.createdAt[0]}-{v.createdAt[1]}-{v.createdAt[2]}
-              </em>
+              <em>{date}</em>
             </div>
             <button
               onClick={() => {
