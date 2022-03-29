@@ -306,14 +306,12 @@ const Career = styled.div`
     top: 100%;
     left: 0;
     width: 100%;
-    padding: 8px;
     margin-top: 8px;
     background-color: #f9f8ff;
     z-index: 1;
-    transition: all 0.3s;
+    transition: height 0.5s ease-out;
     overflow: hidden;
     height: 0;
-    padding: 0;
 
     ${({ careerSelect }) =>
       careerSelect &&
@@ -331,6 +329,15 @@ const Career = styled.div`
       align-items: center;
       justify-content: start;
       cursor: pointer;
+      margin: 0 8px;
+
+      &:nth-child(1) {
+        margin-top: 8px;
+      }
+
+      &:last-child {
+        margin-bottom: 8px;
+      }
 
       &:hover {
         background-color: #5e45f2;
