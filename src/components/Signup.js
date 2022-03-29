@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import img_down from "../svg/arrow_down_b.svg";
+import { ReactComponent as ImgDownSvg } from "../svg/arrow_down_b.svg";
 import { actionCreators as userActions } from "../redux/modules/user";
 import Swal from "sweetalert2";
 
@@ -159,7 +159,7 @@ function Signup(props) {
               setCheckPassword(e.target.value);
             }}
           />
-        </div>{" "}
+        </div>
         {checkPassword !== password && (
           <span className='rule'> *일치하지않는 비밀번호입니다. </span>
         )}
@@ -178,27 +178,25 @@ function Signup(props) {
         )}
       </div>
 
-      <Career>
-        <div>
-          <span onClick={() => setCareerSelect(!careerSelect)}>{career}</span>
-          {careerSelect === true ? (
-            <ul>
-              {options.map((v, idx) => (
-                <li
-                  key={idx}
-                  onClick={() => {
-                    setCareer(v.name);
-                    setCareerSelect(false);
-                  }}>
-                  {v.name}
-                </li>
-              ))}
-            </ul>
-          ) : null}
+      <Career careerSelect={careerSelect}>
+        <div onClick={() => setCareerSelect(!careerSelect)}>
+          <span>{career}</span>
+          <ImgDownSvg />
         </div>
-        <img
-          onClick={() => setCareerSelect(!careerSelect)}
-          src={img_down}></img>
+        {/* {careerSelect === true ? ( */}
+        <ul>
+          {options.map((v, idx) => (
+            <li
+              key={idx}
+              onClick={() => {
+                setCareer(v.name);
+                setCareerSelect(false);
+              }}>
+              {v.name}
+            </li>
+          ))}
+        </ul>
+        {/* ) : null} */}
         {career === "경력" && (
           <span className='rule'> *경력을 선택해주세요 </span>
         )}
@@ -220,6 +218,7 @@ const Container = styled.div`
   justify-content: space-between;
   display: flex;
   flex-direction: column;
+
   div {
     width: 100%;
     height: 72px;
@@ -273,7 +272,9 @@ const Container = styled.div`
     border-radius: 0.5rem;
   }
 `;
+
 const Career = styled.div`
+  position: relative;
   width: 500px;
   display: flex;
   position: relative;
@@ -283,6 +284,8 @@ const Career = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
+    cursor: pointer;
+
     > span {
       width: 100%;
       height: 72px;
@@ -296,39 +299,44 @@ const Career = styled.div`
       font-weight: 800;
       text-align: start;
     }
-    > ul {
+  }
+
+  ul {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    padding: 8px;
+    margin-top: 8px;
+    background-color: #f9f8ff;
+    z-index: 1;
+    transition: all 0.3s;
+    overflow: hidden;
+    height: 0;
+    padding: 0;
+
+    ${({ careerSelect }) =>
+      careerSelect &&
+      `
+      height:calc(72px * 4 + 16px);
+      `};
+
+    > li {
+      display: flex;
       width: 100%;
       height: 72px;
-      border-radius: 0.5rem;
-      border: 0px;
-      position: absolute;
-      margin-top: 150px;
-      > li {
-        display: flex;
-        width: 100%;
-        height: 72px;
-        margin-left: 15px;
-        font-size: 16px;
-        font-weight: 600;
-        padding-left: 10px;
-        background-color: #f9f8ff;
-        align-items: center;
-        justify-content: start;
-        cursor: pointer;
-        &:hover {
-          background-color: #5e45f2;
-          color: #f9f8ff;
-        }
+      font-size: 16px;
+      font-weight: 600;
+      padding-left: 10px;
+      align-items: center;
+      justify-content: start;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #5e45f2;
+        color: #f9f8ff;
       }
     }
-  }
-  > img {
-    width: 30px;
-    height: 30px;
-    display: flex;
-    position: absolute;
-    margin: 0 0 20px 450px;
-    cursor: pointer;
   }
 `;
 export default Signup;
