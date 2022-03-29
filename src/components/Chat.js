@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Stomp, { over } from "stompjs";
 import SockJs from "sockjs-client";
 import Profile from "../elements/Profile";
@@ -13,6 +13,7 @@ let stompClient = null;
 const Chat = () => {
   const dispatch = useDispatch();
   const chat_list = useSelector((state) => state.chat.list);
+  const messageRef = useRef();
   const token = {
     Authorization: sessionStorage.getItem("token")
       ? sessionStorage.getItem("token")
@@ -159,6 +160,17 @@ const Chat = () => {
     console.log("plz");
   };
 
+  const scrollToBottom = () => {
+    if (messageRef.current) {
+      messageRef.current.scrollTop = messageRef.current.scrollHeight;
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+    console.log("scroll");
+  }, [publicChats]);
+
   return (
     <ChatDiv>
       <ChatTab>
@@ -169,7 +181,7 @@ const Chat = () => {
           채팅 {user}
         </li>
       </ChatTab>
-      <ChatList>
+      <ChatList ref={messageRef}>
         <ul>
           {[...welcome.keys()].map((name, index) => {
             return (
