@@ -8,22 +8,38 @@ const NoticeList = ({ list, lastEl, viewRef }) => {
   return (
     <NoticeListDiv
       className={lastEl ? "last" : ""}
-      ref={lastEl ? viewRef : null}
-      onClick={() => {
-        history.push(`/detail/${list.pid}`);
-      }}>
-      {list.category && <div className='category'>{list.category}</div>}
-      <div className='title'>
-        <h3>{list.postTitle}</h3>
-        {list.status === "selection" && <em>답변완료</em>}
-      </div>
-      <div className='content'>
-        <div>{list.postComment}</div>
-      </div>
+      ref={lastEl ? viewRef : null}>
+      {list.category && (
+        <div
+          className='category'
+          onClick={() => {
+            window.location.replace(`/search/category_${list.category}`);
+          }}>
+          {list.category}
+        </div>
+      )}
+      <NoticeLink
+        onClick={() => {
+          window.location.replace(`/detail/${list.pid}`);
+        }}>
+        <div className='title'>
+          <h3>{list.postTitle}</h3>
+          {list.status === "selection" && <em>답변완료</em>}
+        </div>
+        <div className='content'>
+          <div>{list.postComment}</div>
+        </div>
+      </NoticeLink>
       <div className='info'>
         <TagUl>
           {list.tag?.map((v, idx) => (
-            <li key={idx}>#{v} </li>
+            <li
+              key={idx}
+              onClick={() => {
+                window.location.replace(`/search/tag_${v}`);
+              }}>
+              #{v}
+            </li>
           ))}
         </TagUl>
         <span>
@@ -51,7 +67,42 @@ const NoticeListDiv = styled.div`
     color: #5e45f2;
     font-size: 12px;
     border: solid 1px #5e45f2;
+    cursor: pointer;
   }
+
+  .info {
+    display: flex;
+    align-items: center;
+    text-align: right;
+    color: #333;
+
+    span {
+      margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+
+      span {
+        margin-right: 6px;
+      }
+    }
+
+    em {
+      padding: 0 18px;
+      margin: 0 18px;
+      font-style: normal;
+      border: solid 1px #333;
+      border-top: none;
+      border-bottom: none;
+    }
+  }
+
+  i {
+    font-style: normal;
+  }
+`;
+
+const NoticeLink = styled.div`
+  cursor: pointer;
 
   .title {
     display: flex;
@@ -93,38 +144,7 @@ const NoticeListDiv = styled.div`
       text-overflow: ellipsis;
     }
   }
-
-  .info {
-    display: flex;
-    align-items: center;
-    text-align: right;
-    color: #333;
-
-    span {
-      margin-left: auto;
-      display: inline-flex;
-      align-items: center;
-
-      span {
-        margin-right: 6px;
-      }
-    }
-
-    em {
-      padding: 0 18px;
-      margin: 0 18px;
-      font-style: normal;
-      border: solid 1px #333;
-      border-top: none;
-      border-bottom: none;
-    }
-  }
-
-  i {
-    font-style: normal;
-  }
 `;
-
 const TagUl = styled.div`
   display: inline-flex;
 
@@ -132,6 +152,7 @@ const TagUl = styled.div`
     color: #797979;
     font-size: 12px;
     margin-right: 10px;
+    cursor: pointer;
   }
 `;
 export default NoticeList;
