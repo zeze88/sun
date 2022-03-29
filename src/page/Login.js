@@ -1,10 +1,12 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { ReactComponent as LoginSvg } from "../svg/login_logo.svg";
-import LoginBackSvg from "../svg/login_background.svg";
+
 import Signup from "../components/Signup";
+
 import { actionCreators as userActions } from "../redux/modules/user";
 import { history } from "../redux/configureStore";
+import { ReactComponent as PolygonSvg } from "../svg/polygon.svg";
 import styled from "styled-components";
 import Swal from "sweetalert2";
 
@@ -21,6 +23,8 @@ const Login = () => {
       }
     }
   };
+
+  console.log(check);
 
   const login = () => {
     if (username === "" || password === "") {
@@ -41,7 +45,7 @@ const Login = () => {
                 }}
               />
             </div>
-            <div className='switch'>
+            <Switch>
               <label className={check === "login" ? "login" : ""}>
                 <input
                   onChange={(e) => {
@@ -64,7 +68,8 @@ const Login = () => {
                 />
                 회원가입
               </label>
-            </div>
+              <PolygonSvg className={check === "login" ? "login" : "signup"} />
+            </Switch>
             {check === "login" ? (
               <div className='inputbox'>
                 <div>
@@ -168,28 +173,7 @@ const Container2 = styled.div`
       cursor: pointer;
     }
   }
-  div.switch {
-    width: 500px;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    margin-bottom: 30px;
-    > label {
-      font-size: 18px;
-      margin-right: 41px;
-      cursor: pointer;
 
-      &.login {
-        color: white;
-      }
-      &.signup {
-        color: white;
-      }
-      > input {
-        display: none;
-      }
-    }
-  }
   div.inputbox {
     width: 500px;
     height: 232px;
@@ -238,6 +222,42 @@ const Container2 = styled.div`
     background-color: #5e45f2;
     color: white;
     border-radius: 0.5rem;
+  }
+`;
+
+const Switch = styled.div`
+  position: relative;
+  width: 500px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding-bottom: 30px;
+
+  > label {
+    font-size: 18px;
+    margin-right: 41px;
+    cursor: pointer;
+
+    &.login {
+      color: white;
+    }
+    &.signup {
+      color: white;
+    }
+    > input {
+      display: none;
+    }
+  }
+
+  svg {
+    position: absolute;
+    bottom: 0;
+    transition: left 0.3s;
+    left: 12px;
+
+    &.signup {
+      left: 107px;
+    }
   }
 `;
 export default Login;
