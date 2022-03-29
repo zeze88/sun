@@ -69,14 +69,14 @@ const Container = styled.div`
     top: 74px;
     left: 0;
     width: 250px;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px 0 rgba(36, 13, 177, 0.2);
 
     > div.C {
       position: absolute;
       padding: 5px;
       transition: max-height 0.5s ease-out;
       background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px 0 rgba(36, 13, 177, 0.2);
       z-index: 10;
 
       > div {
