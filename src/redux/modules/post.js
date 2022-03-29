@@ -109,7 +109,7 @@ const addPostDB = (props) => {
             pid: res.data,
           })
         );
-        history.replace("/");
+        window.location.replace("/");
       });
     } else {
       axios
@@ -146,7 +146,7 @@ const addPostDB = (props) => {
                 pid: res.data,
               })
             );
-            history.replace("/");
+            window.location.replace("/");
           });
         })
         .catch((err) => {
@@ -181,7 +181,7 @@ const editPostDB = (props) => {
         headers: { Authorization: `${token_res}` },
       }).then(() => {
         dispatch(editPost({ postTitle, postComment, tag, category, pid }));
-        history.replace(`/detail/${pid}`);
+        window.location.replace(`/detail/${pid}`);
         window.scrollTo(0, 0);
       });
     } else {
@@ -211,7 +211,7 @@ const editPostDB = (props) => {
             headers: { Authorization: `${token_res}` },
           }).then(() => {
             dispatch(editPost({ postTitle, postComment, tag, category, pid }));
-            history.replace(`/detail/${pid}`);
+            window.location.replace(`/detail/${pid}`);
             window.scrollTo(0, 0);
           });
         })
