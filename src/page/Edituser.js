@@ -141,7 +141,7 @@ const Edituser = (props) => {
 
   return (
     <Container>
-      <div className='title'>프로필 편집</div>
+      <h2>프로필 편집</h2>
       <div className='user'>
         <ProfileImg>
           <i>
@@ -223,15 +223,14 @@ const Container = styled.div`
   width: 1440px;
   height: 830px;
   margin: auto;
-  > div.title {
-    width: 116px;
-    height: 35px;
+  h2 {
+    padding: 30px 20px;
     font-size: 24px;
-    font-weight: 600;
+    font-weight: 700;
   }
   > div.user {
     width: 830px;
-    height: 100%;
+    height: 725px;
     display: flex;
     justify-content: center;
     align-items: center;

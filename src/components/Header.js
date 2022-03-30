@@ -170,7 +170,7 @@ const Container = styled.div`
 
   div.none {
     width: 191;
-    height: 63px;
+    height: 52px;
     display: flex;
     color: #7966ff;
     align-items: center;

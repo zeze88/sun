@@ -75,7 +75,7 @@ const Password = () => {
 
   return (
     <Container>
-      <div className='title'>비밀번호 재설정</div>
+      <h2>비밀번호 재설정</h2>
       <div className='user'>
         <div className='inputBox'>
           <div>
@@ -121,15 +121,14 @@ const Container = styled.div`
   width: 1440px;
   height: 830px;
   margin: auto;
-  > div.title {
-    width: 160px;
-    height: 35px;
+  h2 {
+    padding: 30px 20px;
     font-size: 24px;
-    font-weight: 600;
+    font-weight: 700;
   }
   > div.user {
     width: 500px;
-    height: 100%;
+    height: 725px;
     display: flex;
     justify-content: center;
     align-items: center;
