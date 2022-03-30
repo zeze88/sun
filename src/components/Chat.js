@@ -221,7 +221,7 @@ const Chat = () => {
               <dl>
                 <dt className='message-data'>{chat.message}</dt>
                 <dd className='me'>
-                  {chat.createdAt.split("T")[1].split(".")[0]}{" "}
+                  {chat.createdAt.split("T")[1].split(".")[0]}
                 </dd>
               </dl>
             </li>
