@@ -9,19 +9,16 @@ const Spinner = () => {
   );
 };
 const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  margin-top: -23px;
+  width: 1440px;
+  height: 930px;
+  margin: -23px auto 0 auto;
   display: flex;
   justify-content: center;
+  align-items: center;
 `;
 const Container1 = styled.div`
-  width: 500px;
-  height: 500px;
-  display: flex;
-  justify-content: center;
-  justify-items: center;
-  align-content: center;
-  background: url("/coalagif.gif") no-repeat center/cover;
+  width: 100px;
+  height: 100px;
+  background: url("/Spinner.gif") no-repeat center/cover;
 `;
 export default Spinner;

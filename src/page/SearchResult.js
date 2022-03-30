@@ -34,7 +34,7 @@ const SearchResult = () => {
     let timer = setTimeout(() => {
       setIsLoaded(false);
       console.log("로딩");
-    }, 1500);
+    }, 1000);
   }, []);
 
   React.useEffect(() => {
