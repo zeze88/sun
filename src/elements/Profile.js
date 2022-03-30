@@ -4,9 +4,11 @@ import styled from "styled-components";
 import { ReactComponent as UserDefault } from "../svg/logo-1.svg";
 
 const Profile = ({ imgUrl, size = "30" }) => {
+  console.log(`imgUrl ${imgUrl}`);
   return (
     <ProfileImg imgUrl={imgUrl} size={size}>
       {!imgUrl && <UserDefault />}
+      {(imgUrl === "undefined" || imgUrl === "null") && <UserDefault />}
     </ProfileImg>
   );
 };
@@ -27,9 +29,8 @@ const ProfileImg = styled.span`
   border-radius:${props.size}px;
   `}
 
-  background: url(${(props) => props.imgUrl && props.imgUrl})
-
-    no-repeat center / cover;
+  background: url(${(props) =>
+    props.imgUrl && props.imgUrl})no-repeat center / cover;
 `;
 
 export default Profile;
