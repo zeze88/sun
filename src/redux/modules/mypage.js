@@ -5,6 +5,7 @@ import { apis } from "../../shared/api";
 const MY_ALAMS = "MY_ALAMS";
 const MY_ALAMS_DEL = "MY_ALAMS_DEL";
 const MY_LIKE_POST = "MY_LIKE_POST";
+const MY_LIKE_DEL = "MY_LIKE_DEL";
 
 const myAlarms = createAction(MY_ALAMS, (list) => ({ list }));
 const myAlarmsDel = createAction(MY_ALAMS_DEL, (list) => ({ list }));
@@ -33,11 +34,26 @@ const myAlarmsDelDB = (alarmId) => {
 
 const myLikePostDB = (page) => {
   return function (dispatch, getState, { history }) {
-    console.log(page);
     apis
       .mylikepost(page)
       .then((res) => {
         dispatch(myAlarms(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
+const myLikeDelDB = (uid, pid) => {
+  return function (dispatch, getState, { history }) {
+    apis
+      .likepost(uid, pid)
+      .then((res) => {
+        console.log(res);
+        const _aram_list = getState().mypage.list;
+        const aram_list = _aram_list.filter((v) => v.pid !== pid);
+        dispatch(myAlarmsDel(aram_list));
       })
       .catch((err) => {
         console.log(err);
@@ -59,6 +75,10 @@ export default handleActions(
       produce(state, (draft) => {
         draft.list = action.payload.list;
       }),
+    [MY_LIKE_DEL]: (state, action) =>
+      produce(state, (draft) => {
+        draft.list = action.payload.list;
+      }),
   },
   initialState
 );
@@ -67,6 +87,7 @@ const actionCreators = {
   myAlarmsDB,
   myAlarmsDelDB,
   myLikePostDB,
+  myLikeDelDB,
 };
 
 export { actionCreators };

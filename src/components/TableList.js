@@ -42,7 +42,7 @@ const TableList = ({ currTab }) => {
       {select_list().map((v, idx) => {
         const date = v.createdAt?.split(".")[0].replace("T", " ");
         return (
-          <li key={v.alarmId}>
+          <li key={idx}>
             <div
               onClick={() => {
                 history.push(`detail/${v.pid}`);
