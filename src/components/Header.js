@@ -82,8 +82,8 @@ const Header = () => {
             </i>
             {nickname}
             <ArrowDown className='arrow' />
-            {view ? (
-              <ul className='view'>
+            <div className='view'>
+              <ul>
                 <li onClick={() => history.push("/useredit")}>프로필 편집</li>
                 <li onClick={() => history.push("/passedit")}>
                   비밀번호 재설정
@@ -94,7 +94,7 @@ const Header = () => {
                   로그아웃
                 </li>
               </ul>
-            ) : null}
+            </div>
           </div>
         )}
       </div>
@@ -105,15 +105,17 @@ const Header = () => {
 const Container = styled.div`
   min-width: 1440px;
   height: 100px;
+  padding-top: 32px;
+  padding-bottom: 16px;
   margin-bottom: 24px;
   box-shadow: -4px 5px 14px 0 rgb(65 0 131 / 6%);
 
   > div {
     display: flex;
-    width: 1440px;
-    height: 100%;
-    margin: 0 auto;
     align-items: center;
+    width: 1440px;
+    height: 52px;
+    margin: 0 auto;
   }
 
   .auth {
@@ -138,6 +140,10 @@ const Container = styled.div`
 
   div.my {
     display: flex;
+
+    &:hover div.view ul {
+      height: 239px;
+    }
 
     i {
       margin-right: 10px;
@@ -177,20 +183,29 @@ const Container = styled.div`
     cursor: pointer;
   }
 
-  ul.view {
+  div.view {
     position: absolute;
-    top: calc(100% + 8px);
+    top: 100%;
     right: 0;
     width: 100%;
-    padding: 30px 24px;
-    background-color: #fff;
-    border-radius: 8px;
+    padding-top: 16px;
     z-index: 10;
-    box-shadow: 0 0 10px 0 rgba(172, 168, 203, 0.4);
+
+    ul {
+      height: 0;
+      transition: height 0.2s ease-out;
+      box-shadow: 0 0 10px 0 rgba(172, 168, 203, 0.4);
+      overflow: hidden;
+      background-color: #fff;
+      border-radius: 8px;
+    }
   }
 
-  ul.view > li {
-    height: 2rem;
+  div.view li {
+    height: 31px;
+    margin: 0 24px;
+    margin-bottom: 6px;
+
     padding: 4px 8px;
     margin-bottom: 6px;
     font-size: 1rem;
@@ -199,6 +214,12 @@ const Container = styled.div`
     color: #333;
     font-size: 16px;
     border-radius: 2px;
+    &:first-child {
+      margin-top: 30px;
+    }
+    &:last-child {
+      margin-bottom: 30px;
+    }
 
     &.logout {
       color: #797979;
