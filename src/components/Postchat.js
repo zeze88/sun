@@ -213,12 +213,12 @@ const Postchat = ({ pid }) => {
                     </div>
                   </>
                 )}
-                <p className='message-data'>{chat.message}</p>
-                {time.split[0] > 12 ? (
-                  <em> 오후 {time}</em>
-                ) : (
-                  <em> 오전 {time} </em>
-                )}
+                <dl>
+                  <dt className='message-data'>{chat.message}</dt>
+                  <dd className='u'>
+                    {chat.createdAt.split("T")[1].split(".")[0]}
+                  </dd>
+                </dl>
               </li>
             ))}
           {publicChats.map((chat, index) => (
@@ -234,12 +234,12 @@ const Postchat = ({ pid }) => {
                   </div>
                 </>
               )}
-              <p className='message-data'>{chat.message}</p>
-              {time.split[0] > 12 ? (
-                <em> 오후 {time}</em>
-              ) : (
-                <em> 오전 {time} </em>
-              )}
+              <dl>
+                <dt className='message-data'>{chat.message}</dt>
+                <dd className='me'>
+                  {chat.createdAt.split("T")[1].split(".")[0]}
+                </dd>
+              </dl>
             </li>
           ))}
         </ul>
