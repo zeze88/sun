@@ -196,10 +196,12 @@ const Chat = () => {
                     </div>
                   </>
                 )}
-                <p className='message-data'>{chat.message}</p>
-                <em className='u'>
-                  {chat.createdAt.split("T")[1].split(".")[0]}{" "}
-                </em>
+                <dl>
+                  <dt className='message-data'>{chat.message}</dt>
+                  <dd className='u'>
+                    {chat.createdAt.split("T")[1].split(".")[0]}
+                  </dd>
+                </dl>
               </li>
             ))}
 
@@ -216,10 +218,12 @@ const Chat = () => {
                   </div>
                 </>
               )}
-              <p className='message-data'>{chat.message}</p>
-              <em className='me'>
-                {chat.createdAt.split("T")[1].split(".")[0]}{" "}
-              </em>
+              <dl>
+                <dt className='message-data'>{chat.message}</dt>
+                <dd className='me'>
+                  {chat.createdAt.split("T")[1].split(".")[0]}{" "}
+                </dd>
+              </dl>
             </li>
           ))}
         </ul>
@@ -281,12 +285,6 @@ const ChatList = styled.div`
   li {
     width: 286px;
 
-    p {
-      padding: 8px;
-      word-break: break-all;
-      border-radius: 8px;
-    }
-
     &.welcome {
       color: #5e45f2;
     }
@@ -302,16 +300,14 @@ const ChatList = styled.div`
         color: #5e45f2;
       }
 
-      p {
+      dt {
         margin-top: 8px;
         color: #333;
         background-color: #fff;
         box-shadow: 0 4px 14px 0 rgba(65, 0, 131, 0.06);
       }
 
-      em {
-        display: block;
-        text-align: right;
+      dd {
         text-align: start;
       }
     }
@@ -320,15 +316,37 @@ const ChatList = styled.div`
       margin: 12px 0;
       margin-left: auto;
 
-      p {
+      dl {
+        flex-direction: row-reverse;
+      }
+
+      dt {
         color: #fff;
         background-color: #7966ff;
       }
-      em {
-        display: block;
-        text-align: right;
+
+      dd {
         text-align: end;
       }
+    }
+  }
+
+  dl {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+
+    dt {
+      width: 80%;
+      padding: 8px;
+      word-break: break-all;
+      border-radius: 8px;
+    }
+
+    dd {
+      display: block;
+      text-align: right;
+      font-size: 10px;
     }
   }
 
@@ -353,7 +371,7 @@ const ChatList = styled.div`
     }
   }
 
-  em {
+  dd {
     display: block;
     margin-top: 10px;
     color: #797979;

@@ -184,7 +184,6 @@ const editAnswerDB = (props) => {
         );
 
         dispatch(editAnswer(answer_list));
-        // window.location.replace(`/detail/${pid}`);
       });
     } else {
       axios
@@ -232,7 +231,6 @@ const editAnswerDB = (props) => {
             );
 
             dispatch(editAnswer(answer_list));
-            // window.location.replace(`/detail/${pid}`);
           });
         })
         .catch((err) => {
