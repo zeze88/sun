@@ -209,7 +209,9 @@ const AnswerList = ({ isWriter }) => {
                 <SC_CommentList className='comment_wrap'>
                   {v.commnetResponseDtoList.map((list, idx) => {
                     return (
-                      <div key={idx}>
+                      <div
+                        key={idx}
+                        className={commentViewSelect ? "view" : "hide"}>
                         {commentViewSelect && commentView === list.answerId && (
                           <>
                             {user_info == list.uid && (
@@ -394,7 +396,7 @@ const SC_Commentbox = styled.div`
 const SC_CommentList = styled.div`
   --gray-color: #c4c4c4;
 
-  > div {
+  > div.view {
     display: flex;
     padding: 18px 24px;
     border-bottom: solid 1px #dadada;
@@ -404,6 +406,9 @@ const SC_CommentList = styled.div`
 
     &:last-child {
       border-bottom: none;
+    }
+    &hide {
+      display: none;
     }
   }
 
