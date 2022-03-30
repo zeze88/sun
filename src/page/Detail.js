@@ -229,6 +229,7 @@ const ContextWrap = styled.div`
 
   .text-wrap {
     min-height: 250px;
+    white-space: pre;
 
     > *:not(style) {
       margin-bottom: 10px;

@@ -134,6 +134,7 @@ const NoticeLink = styled.div`
     align-items: flex-start;
     height: 56px;
     margin-bottom: 28px;
+    white-space: pre;
 
     > div {
       display: -webkit-box;
