@@ -24,7 +24,7 @@ const Container = styled.div`
   margin: 0 auto;
   margin-bottom: 24px;
   gap: 24px;
-  height: calc(100vh - 124px);
+  height: calc(100vh - 124px - 18px);
 
   .right {
     flex: none;

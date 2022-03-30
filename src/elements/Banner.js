@@ -43,7 +43,7 @@ const Banner = () => {
 };
 
 const BannerSlide = styled(Slider)`
-  margin: 18px 0;
+  margin-top: 18px;
   border-radius: 8px;
   overflow: hidden;
 
