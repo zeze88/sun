@@ -360,6 +360,8 @@ const SC_List = styled.div`
 
     span {
       margin-right: auto;
+      cursor: pointer;
+      font-weight: 600;
     }
 
     button {

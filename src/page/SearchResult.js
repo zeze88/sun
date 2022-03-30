@@ -7,6 +7,8 @@ import NoticeList from "../elements/NoticeList";
 import { history } from "../redux/configureStore";
 import { actionsCreators as searchActions } from "../redux/modules/serch";
 
+import Spinner from "../elements/Spinner";
+
 const SearchResult = () => {
   const dispatch = useDispatch();
   const search_type = useParams().keyword.split("_")[0];
@@ -20,13 +22,20 @@ const SearchResult = () => {
       : search_type === "serch"
       ? serch_list
       : category_list;
-  const [isLoaded, setIsLoaded] = React.useState(false);
+  const [isLoaded, setIsLoaded] = React.useState(true);
   const [pageNum, setPageNum] = React.useState(1);
   const [pageNum1, setPageNum1] = React.useState(1);
   const [pageNum2, setPageNum2] = React.useState(1);
   const [ref, inView] = useInView({
     threshold: 0.4,
   });
+
+  React.useEffect(() => {
+    let timer = setTimeout(() => {
+      setIsLoaded(false);
+      console.log("로딩");
+    }, 1500);
+  }, []);
 
   React.useEffect(() => {
     switch (search_type) {
@@ -61,24 +70,32 @@ const SearchResult = () => {
   }, [inView]);
 
   return (
-    <Container>
-      {postList.map((v, idx) => {
-        const lastEl = idx === postList.length - 1;
-        return <NoticeList key={idx} list={v} lastEl={lastEl} viewRef={ref} />;
-      })}
+    <>
+      {isLoaded ? (
+        <Spinner />
+      ) : (
+        <Container>
+          {postList.map((v, idx) => {
+            const lastEl = idx === postList.length - 1;
+            return (
+              <NoticeList key={idx} list={v} lastEl={lastEl} viewRef={ref} />
+            );
+          })}
 
-      {postList.length === 0 && (
-        <NoSearch>
-          <h2>검색 결과가 없습니다 :)</h2>
-          <button
-            onClick={() => {
-              history.replace("/");
-            }}>
-            되돌아가기
-          </button>
-        </NoSearch>
+          {postList.length === 0 && (
+            <NoSearch>
+              <h2>검색 결과가 없습니다 :)</h2>
+              <button
+                onClick={() => {
+                  history.replace("/");
+                }}>
+                되돌아가기
+              </button>
+            </NoSearch>
+          )}
+        </Container>
       )}
-    </Container>
+    </>
   );
 };
 const NoSearch = styled.div`
