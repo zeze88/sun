@@ -13,7 +13,7 @@ const NoticeList = ({ list, lastEl, viewRef }) => {
         <div
           className='category'
           onClick={() => {
-            history.push(`/search/category_${list.category}`);
+            window.location.replace(`/search/category_${list.category}`);
           }}>
           {list.category}
         </div>
