@@ -28,7 +28,6 @@ const Chat = () => {
   const [connected, setConnected] = React.useState(false);
   const [tab, setTab] = React.useState("CHATROOM");
   const [user, setUser] = React.useState(0);
-  const [time, setTime] = React.useState("");
   const [chatScroll, setChatScroll] = React.useState(false);
   const [userData, setUserData] = React.useState({
     username: "",
@@ -79,11 +78,12 @@ const Chat = () => {
   const onConnected = () => {
     try {
       const crareer = sessionStorage.getItem("career");
-      const user_join = { status: "JOIN", uid, pid: 0 };
+      const user_join = { status: "JOIN", uid, pid: 0, senderName: username };
       setConnected(true);
       setUserData({
         ...userData,
         crareer,
+
         status: "JOIN",
       });
 
@@ -131,7 +131,6 @@ const Chat = () => {
         if (!welcome.get(payloadData.senderName)) {
           welcome.set(payloadData.message, []);
           setWelcome(new Map(welcome));
-
           setUser(payloadData.userCount);
         }
         break;
@@ -144,7 +143,6 @@ const Chat = () => {
         break;
       case "MESSAGE":
         publicChats.push(payloadData);
-
         setPublicChats([...publicChats]);
         setUser(payloadData.userCount);
         console.log(publicChats);
