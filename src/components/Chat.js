@@ -56,7 +56,7 @@ const Chat = () => {
 
   const stompDisConnect = () => {
     try {
-      const user_join = { status: "OUT" };
+      const user_join = { status: "OUT", senderName: username };
       stompClient.send("/app/mainchat", token, JSON.stringify(user_join));
       stompClient.disconnect(() => {
         stompClient.unsubscribe("/topic/mainchat");
@@ -83,7 +83,6 @@ const Chat = () => {
       setUserData({
         ...userData,
         crareer,
-
         status: "JOIN",
       });
 
