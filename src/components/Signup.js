@@ -263,6 +263,7 @@ const Container = styled.div`
     border-radius: 32px;
     position: absolute;
     margin-left: 400px;
+    font-size: 14px;
   }
   button.SignupButtom {
     width: 100%;
