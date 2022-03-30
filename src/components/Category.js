@@ -15,7 +15,7 @@ const Category = () => {
   };
 
   const CategoryList = (v) => {
-    history.push(`/search/category_${v}`);
+    window.location.href = `/search/category_${v}`;
   };
 
   return (
