@@ -19,36 +19,41 @@ const Category = () => {
   };
 
   return (
-    <Container>
+    <Container categoryLength={category.length}>
       <ul>
-        <li onClick={() => setcategortView(!categoryView)}>언어</li>
+        <li className='category' onClick={() => setcategortView(!categoryView)}>
+          언어
+          <CategoryLists className='category_list_wrap' isview={categoryView}>
+            <div className='C' onChange={CategoryList}>
+              {category.map((c, idx) => (
+                <div
+                  className={categoryView ? "" : "close"}
+                  key={idx}
+                  value={c.name}
+                  onClick={() => {
+                    CategoryList(c.name);
+                    setcategortView(!categoryView);
+                  }}>
+                  {c.name}
+                </div>
+              ))}
+            </div>
+          </CategoryLists>
+        </li>
         <li onClick={() => history.push("/ranking")}>랭킹</li>
       </ul>
-      <CategoryLists isview={categoryView} categoryLength={category.length}>
-        <div className='C' onChange={CategoryList}>
-          {category.map((c, idx) => (
-            <div
-              className={categoryView ? "" : "close"}
-              key={idx}
-              value={c.name}
-              onClick={() => {
-                CategoryList(c.name);
-                setcategortView(!categoryView);
-              }}>
-              {c.name}
-            </div>
-          ))}
-        </div>
-      </CategoryLists>
     </Container>
   );
 };
 const Container = styled.div`
+  --height: 100px;
+  height: var(--height);
   position: relative;
   margin-left: 40px;
 
   ul {
     display: flex;
+    height: var(--height);
     font-size: 20px;
     font-weight: 700;
     color: #5e45f2;
@@ -56,21 +61,26 @@ const Container = styled.div`
 
   li {
     width: 98px;
-    height: 46px;
-    line-height: 46px;
+    height: var(--height);
+    line-height: var(--height);
     text-align: center;
     cursor: pointer;
+  }
+
+  .category:hover {
+    .category_list_wrap {
+      height: ${({ categoryLength }) =>
+        `calc(${categoryLength} * 50px + 10px)`};
+    }
   }
 `;
 
 const CategoryLists = styled.div`
   position: absolute;
-  top: 74px;
+  top: 100px;
   left: 0;
   width: 250px;
-  height: ${({ categoryLength }) =>
-    categoryLength && `calc( ${categoryLength} * 50px + 10px)`};
-  ${({ isview }) => !isview && `height: 0`};
+  height: 0;
   overflow: hidden;
   background-color: #fff;
   border-radius: 8px;
