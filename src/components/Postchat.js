@@ -59,7 +59,7 @@ const Postchat = ({ pid }) => {
 
   const stompDisConnect = () => {
     try {
-      const user_join = { status: "OUT" };
+      const user_join = { status: "OUT", senderName: username };
       stompClient.send("/app/postchat", token, JSON.stringify(user_join));
 
       stompClient.disconnect(() => {
@@ -78,7 +78,7 @@ const Postchat = ({ pid }) => {
       const username = sessionStorage.getItem("nickname");
       const crareer = sessionStorage.getItem("career");
       const userImage = sessionStorage.getItem("userImage");
-      const user_join = { status: "JOIN", pid, uid };
+      const user_join = { status: "JOIN", pid, uid, senderName: username };
       setConnected(true);
       setUserData({
         ...userData,
