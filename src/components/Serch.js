@@ -44,6 +44,7 @@ const Serch = () => {
 const Container = styled.div`
   flex: auto;
   margin: 0 10px;
+  margin-right: 39px;
 
   &.active {
     div.inputdiv {
