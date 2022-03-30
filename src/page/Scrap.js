@@ -7,6 +7,7 @@ import { TableListUl } from "../components/TableList";
 
 const Scrap = () => {
   const dispatch = useDispatch();
+  const uid = sessionStorage.getItem("uid");
   const scrap_list = useSelector((state) => state.mypage.list);
 
   React.useEffect(() => {
@@ -25,7 +26,7 @@ const Scrap = () => {
         {scrap_list.map((v, idx) => {
           const date = v.createdAt?.split(".")[0].replace("T", " ");
           return (
-            <li key={v.pid}>
+            <li key={idx}>
               <div
                 onClick={() => {
                   history.push(`detail/${v.pid}`);
@@ -41,9 +42,9 @@ const Scrap = () => {
               </div>
               <button
                 onClick={() => {
-                  //   dispatch(myActions.myAlarmsDelDB(v.alarmId));
+                  dispatch(mypageActions.myLikeDelDB(uid, v.pid));
                 }}>
-                삭제
+                관심 취소
               </button>
             </li>
           );
