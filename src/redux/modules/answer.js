@@ -58,6 +58,7 @@ const addAnswerDB = ({ pid, uid, answerTitle, answerComment }) => {
         },
         headers: { Authorization: token_res },
       }).then((res) => {
+        console.log(res);
         dispatch(
           addAnswer({
             pid,
@@ -65,14 +66,14 @@ const addAnswerDB = ({ pid, uid, answerTitle, answerComment }) => {
             answerTitle: answerTitle,
             answerComment: answerComment,
             answerImg: null,
-            answerId: res.data,
+            answerId: res.data.answerId,
             answerLike: false,
             blogUrl: null,
             career: null,
             commnetResponseDtoList: [],
             createdAt: "",
-            nickname: "",
-            userImage: null,
+            nickname: res.data.nickname,
+            userImage: res.data.userImage,
           })
         );
       });

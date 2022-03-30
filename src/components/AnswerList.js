@@ -144,7 +144,7 @@ const AnswerList = ({ isWriter }) => {
     <SC_List>
       {list.map((v, idx) => {
         const comment_count = Object.keys(v.commnetResponseDtoList).length;
-        console.log(v);
+
         return (
           <React.Fragment key={idx}>
             <div>
