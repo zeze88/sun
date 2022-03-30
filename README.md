@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# co-ala 코딩! 알려주라
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+코딩하다가 막혔을때 원하는 정보가 없다?
 
 ## Available Scripts
 

@@ -92,7 +92,7 @@ const signupDB = (username, nickname, password, passwordCheck, career) => {
         career: career,
       })
       .then((res) => {
-        window.location.replace("/");
+        window.location.replace("/login");
       })
       .catch((err) => {
         console.log("회원가입 실패", err);

@@ -19,7 +19,7 @@ const Footer = () => {
             <a
               target='_blank'
               href='https://oasis-cyclamen-45f.notion.site/5-8-_1-28217e32bae849a5bc95389ed1d5dd73'>
-              코알리팀 소개
+              코알라팀 소개
             </a>
           </li>
           <li>
