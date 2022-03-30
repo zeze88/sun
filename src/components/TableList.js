@@ -100,11 +100,13 @@ export const TableListUl = styled.ul`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    cursor: pointer;
   }
 
   span {
     flex: 1;
     text-align: left;
+    cursor: default;
   }
 
   em {
@@ -112,6 +114,7 @@ export const TableListUl = styled.ul`
     font-size: 12px;
     font-style: normal;
     color: #c4c4c4;
+    cursor: default;
   }
 
   button {
