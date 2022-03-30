@@ -34,7 +34,6 @@ const Detail = () => {
       cancelButtonText: "아니오",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("", "게시글이 삭제 되었습니다.", "success");
         dispatch(postActions.delPostDB(pid));
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire("", "삭제가 취소 되었습니다 :)", "error");

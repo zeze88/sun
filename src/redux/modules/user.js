@@ -71,7 +71,7 @@ const checkNicknameDB = (userNickname, isCheckNickname) => {
       })
       .then((res) => {
         if (res.data === true) {
-          Swal.fire("", "이미 존재하는 닉네임입ㄴ디ㅏ.", "error");
+          Swal.fire("", "이미 존재하는 닉네임입니다.", "error");
           return;
         }
         console.log(res);
@@ -92,7 +92,6 @@ const signupDB = (username, nickname, password, passwordCheck, career) => {
         career: career,
       })
       .then((res) => {
-        Swal.fire("", "회원가입을 축하드립니다.", "success");
         window.location.reload();
       })
       .catch((err) => {
@@ -300,7 +299,7 @@ export default handleActions(
       produce(state, (draft) => {
         console.log("CHECK_USERNAME 리듀서로 적용 완료", state, action.payload);
         draft.isCheckUsername = action.payload.isCheckUsername;
-        Swal.fire("", "해당 이메일은 사용 가능합니다.", "success");
+        Swal.fire("", "해당 아이디는 사용 가능합니다.", "success");
       }),
     [CHECK_NICKNAME]: (state, action) =>
       produce(state, (draft) => {
