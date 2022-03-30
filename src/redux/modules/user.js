@@ -92,7 +92,7 @@ const signupDB = (username, nickname, password, passwordCheck, career) => {
         career: career,
       })
       .then((res) => {
-        window.location.reload();
+        window.location.replace("/");
       })
       .catch((err) => {
         console.log("회원가입 실패", err);
@@ -144,8 +144,7 @@ const loginDB = (username, password) => {
                 url: res.data.blogUrl,
               })
             );
-            history.push("/");
-            window.location.reload();
+            window.location.replace("/");
           })
           .catch((err) => {
             console.log("로그인 확인 실패", err);

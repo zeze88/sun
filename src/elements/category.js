@@ -2,7 +2,7 @@ export const category = [
   { value: "1Javascript", name: "Javascript" },
   { value: "2Java", name: "Java" },
   { value: "3Python", name: "Python" },
-  { value: "4C/C++", name: "C/C++" },
+  { value: "4C/C++", name: "C,C++" },
   { value: "5PHP", name: "PHP" },
   { value: "6R", name: "R" },
   { value: "7C#", name: "C#" },
