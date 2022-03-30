@@ -9,10 +9,6 @@ import { useParams } from "react-router";
 const Category = () => {
   const dispatch = useDispatch();
   const category_list = useSelector((state) => state.category_list);
-  const [categoryView, setcategortView] = useState(false);
-  const CategoryView = () => {
-    setcategortView(!categoryView);
-  };
 
   const CategoryList = (v) => {
     window.location.href = `/search/category_${v}`;
@@ -21,18 +17,16 @@ const Category = () => {
   return (
     <Container categoryLength={category.length}>
       <ul>
-        <li className='category' onClick={() => setcategortView(!categoryView)}>
+        <li className='category'>
           언어
-          <CategoryLists className='category_list_wrap' isview={categoryView}>
+          <CategoryLists className='category_list_wrap'>
             <div className='C' onChange={CategoryList}>
               {category.map((c, idx) => (
                 <div
-                  className={categoryView ? "" : "close"}
                   key={idx}
                   value={c.name}
                   onClick={() => {
                     CategoryList(c.name);
-                    setcategortView(!categoryView);
                   }}>
                   {c.name}
                 </div>
@@ -46,14 +40,15 @@ const Category = () => {
   );
 };
 const Container = styled.div`
-  --height: 100px;
-  height: var(--height);
   position: relative;
   margin-left: 40px;
+  height: inherit;
 
   ul {
     display: flex;
-    height: var(--height);
+    gap: 24px;
+    height: inherit;
+    align-items: center;
     font-size: 20px;
     font-weight: 700;
     color: #5e45f2;
@@ -61,37 +56,37 @@ const Container = styled.div`
 
   li {
     width: 98px;
-    height: var(--height);
-    line-height: var(--height);
+    height: inherit;
+    line-height: 52px;
     text-align: center;
     cursor: pointer;
   }
 
   .category:hover {
     .category_list_wrap {
-      height: ${({ categoryLength }) =>
-        `calc(${categoryLength} * 50px + 10px)`};
+      > div.C {
+        height: ${({ categoryLength }) =>
+          `calc(${categoryLength} * 50px + 10px)`};
+      }
     }
   }
 `;
 
 const CategoryLists = styled.div`
   position: absolute;
-  top: 100px;
+  top: 100%;
   left: 0;
   width: 250px;
-  height: 0;
-  overflow: hidden;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 15px 0 rgba(36, 13, 177, 0.2);
   z-index: 10;
-  transition: height 0.5s ease-out;
+  padding-top: 16px;
 
   > div.C {
-    position: absolute;
-    width: 100%;
-    padding: 5px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px 0 rgba(36, 13, 177, 0.2);
+    transition: height 0.5s ease-out;
+    height: 0;
+    overflow: hidden;
 
     > div {
       width: 100%;
