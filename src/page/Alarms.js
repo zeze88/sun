@@ -21,9 +21,9 @@ const SC_AlarmsWrap = styled.div`
   margin: 0 auto;
 
   h2 {
-    padding: 0 24px;
-    margin-top: 64px;
-    margin-bottom: 115px;
+    padding: 30px 20px;
+    font-size: 24px;
+    font-weight: 700;
   }
 `;
 export default Alarms;

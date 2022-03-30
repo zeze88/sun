@@ -222,6 +222,7 @@ const Container2 = styled.div`
     background-color: #5e45f2;
     color: white;
     border-radius: 0.5rem;
+    font-size: 18px;
   }
 `;
 
@@ -237,12 +238,12 @@ const Switch = styled.div`
     font-size: 18px;
     margin-right: 41px;
     cursor: pointer;
-
+    color: #dadada;
     &.login {
-      color: white;
+      color: #ffffff;
     }
     &.signup {
-      color: white;
+      color: #ffffff;
     }
     > input {
       display: none;

@@ -57,5 +57,11 @@ const ScrapDiv = styled.div`
   width: 1440px;
   min-height: calc(100vh - 100px - 150px);
   margin: 0 auto;
+
+  h2 {
+    padding: 30px 20px;
+    font-size: 24px;
+    font-weight: 700;
+  }
 `;
 export default Scrap;

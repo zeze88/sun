@@ -97,6 +97,7 @@ const SC_NoticeDiv = styled.div`
 
   h2 {
     padding: 30px 20px;
+    font-size: 24px;
     font-weight: 700;
   }
   > ul {

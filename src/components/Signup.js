@@ -134,12 +134,12 @@ function Signup(props) {
 
       <div>
         <div>
-          <span style={{ width: "58px" }} className='inputSpan'>
+          <span style={{ width: "59px" }} className='inputSpan'>
             비밀번호
           </span>
           <input
             type='password'
-            placeholder='password'
+            placeholder='영문과 숫자를 조합하여 4자 이상 입력하세요.'
             onChange={passwordRule}
           />
         </div>
@@ -168,7 +168,7 @@ function Signup(props) {
       <div>
         <div>
           <span className='inputSpan'>닉네임</span>
-          <input type='text' placeholder='Nickname' onChange={nicknameRule} />
+          <input type='text' onChange={nicknameRule} />
           <button className='CheckButton' onClick={checkNickname}>
             중복체크
           </button>
