@@ -77,12 +77,12 @@ const Chat = () => {
 
   const onConnected = () => {
     try {
-      const crareer = sessionStorage.getItem("career");
+      const craeer = sessionStorage.getItem("career");
       const user_join = { status: "JOIN", uid, pid: 0, senderName: username };
       setConnected(true);
       setUserData({
         ...userData,
-        crareer,
+        craeer,
         status: "JOIN",
       });
 
@@ -189,7 +189,7 @@ const Chat = () => {
                     <Profile size='32' imgUrl={userData.userImage} />
                     <div>
                       <strong>{chat.senderName}</strong>
-                      <i>{userData.crareer}</i>
+                      <i>{chat.career}</i>
                     </div>
                   </>
                 )}
@@ -211,7 +211,7 @@ const Chat = () => {
                   <Profile size='32' imgUrl={userData.userImage} />
                   <div>
                     <strong>{chat.senderName}</strong>
-                    <i>{userData.crareer}</i>
+                    <i>{chat.career}</i>
                   </div>
                 </>
               )}

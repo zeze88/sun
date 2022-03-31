@@ -168,7 +168,11 @@ function Signup(props) {
       <div>
         <div>
           <span className='inputSpan'>닉네임</span>
-          <input type='text' onChange={nicknameRule} />
+          <input
+            placeholder='2~8 글자로 입력해주세요.'
+            type='text'
+            onChange={nicknameRule}
+          />
           <button className='CheckButton' onClick={checkNickname}>
             중복체크
           </button>

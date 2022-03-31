@@ -42,7 +42,6 @@ const Edituser = (props) => {
   const Check = () => {
     if (userNickname === nickname) {
       setIsCheckNickname(true);
-      console.log("뭐냐고");
       Swal.fire("", "사용 가능한 닉네임합니다.", "success");
     } else if (nicknameRuleCheck !== true) {
       Swal.fire("", "닉네임 형식이 맞지 않습니다.", "error");
@@ -183,7 +182,13 @@ const Edituser = (props) => {
                 className='blog'
                 placeholder='sns 계정 url 기입'
                 onChange={url}
-                value={userURL === "undefined" ? null : blogUrl}></input>
+                value={
+                  userURL === "null"
+                    ? null
+                    : userURL === "undefined"
+                    ? null
+                    : blogUrl
+                }></input>
             </div>
           </EditBlog>
           <EditCareer>
