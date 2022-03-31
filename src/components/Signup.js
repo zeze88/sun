@@ -23,6 +23,8 @@ function Signup(props) {
   const [isCheckUsername, setIsCheckUsername] = React.useState(false);
   const [isCheckNickname, setIsCheckNickname] = React.useState(false);
 
+  console.log(idRuleCheck);
+
   ///경력 리스트
   const options = [
     { value: "1년차 이내", name: "1년차 이내" },
@@ -38,6 +40,7 @@ function Signup(props) {
     const id = e.target.value;
     setUsername(id);
     rule.test(id) ? setIdRuleCheck(true) : setIdRuleCheck(false);
+    console.log(idRuleCheck);
   };
 
   const nicknameRule = (e) => {
@@ -86,11 +89,6 @@ function Signup(props) {
 
   ///////////////////////회원가입
   const signup = (e) => {
-    e.preventDefault();
-
-    setIsCheckNickname(true);
-    setIsCheckUsername(true);
-    console.log(isCheckUsername, isCheckNickname);
     if (username === "" || nickname === "" || password === "") {
       Swal.fire("", "빈칸을 채워주세요.", "error");
       return;
@@ -139,7 +137,7 @@ function Signup(props) {
           </span>
           <input
             type='password'
-            placeholder='영문과 숫자를 조합하여 4자 이상 입력하세요.'
+            placeholder='영문과 숫자를 조합하여 4자 이상 10자 이내 입력하세요.'
             onChange={passwordRule}
           />
         </div>
@@ -169,7 +167,7 @@ function Signup(props) {
         <div>
           <span className='inputSpan'>닉네임</span>
           <input
-            placeholder='2~8 글자로 입력해주세요.'
+            placeholder='2자 이상 8자 이내 입력하세요.'
             type='text'
             onChange={nicknameRule}
           />

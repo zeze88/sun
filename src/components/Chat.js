@@ -19,9 +19,10 @@ const Chat = () => {
       ? sessionStorage.getItem("token")
       : "Authorization",
   };
-  const username = sessionStorage.getItem("nickname");
 
+  const username = sessionStorage.getItem("nickname");
   const uid = sessionStorage.getItem("uid");
+
   const is_login = sessionStorage.getItem("isLogin");
   const [welcome, setWelcome] = React.useState(new Map());
   const [publicChats, setPublicChats] = React.useState([]);
@@ -144,7 +145,6 @@ const Chat = () => {
         publicChats.push(payloadData);
         setPublicChats([...publicChats]);
         setUser(payloadData.userCount);
-        console.log(publicChats);
         break;
     }
   };
@@ -171,14 +171,6 @@ const Chat = () => {
       </ChatTab>
       <ChatList ref={messageRef}>
         <ul>
-          {[...welcome.keys()].map((name, index) => {
-            return (
-              <li className='welcome' key={index}>
-                {name}
-              </li>
-            );
-          })}
-
           {chat_list &&
             chat_list.map((chat, index) => (
               <li

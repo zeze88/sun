@@ -11,18 +11,18 @@ import { ReactComponent as SendSvg } from "../svg/send.svg";
 
 let stompClient = null;
 const Postchat = ({ pid }) => {
-  const token = {
-    Authorization: sessionStorage.getItem("token"),
-
-    // ? sessionStorage.getItem("token")
-    // : "Authorization",
-  };
   const dispatch = useDispatch();
   const post_chat_list = useSelector((state) => state.chat.post_list);
   const messageRef = useRef();
+  const token = {
+    Authorization: sessionStorage.getItem("token")
+      ? sessionStorage.getItem("token")
+      : "Authorization",
+  };
   const username = sessionStorage.getItem("nickname");
   const uid = sessionStorage.getItem("uid");
 
+  const is_login = sessionStorage.getItem("isLogin");
   const [welcome, setWelcome] = React.useState(new Map());
   const [publicChats, setPublicChats] = React.useState([]);
   const [connected, setConnected] = React.useState(false);
@@ -37,19 +37,17 @@ const Postchat = ({ pid }) => {
   });
 
   React.useEffect(() => {
+    scrollToBottom();
+    console.log(chatScroll);
+  }, [publicChats, chatScroll]);
+
+  React.useEffect(() => {
     dispatch(chatActions.prevPostChatDB(pid));
     stompConnect();
-
     return () => {
       stompDisConnect();
     };
   }, []);
-
-  const stompConnect = () => {
-    let socket = new SockJs(`${apiUrl}/ws-coala`);
-    stompClient = Stomp.over(socket);
-    stompClient.connect({}, onConnected, onError);
-  };
 
   const onKeyPress = (e) => {
     if (e.key == "Enter") {
@@ -71,6 +69,12 @@ const Postchat = ({ pid }) => {
   const handleValue = (e) => {
     const { value, name } = e.target;
     setUserData({ ...userData, [name]: value });
+  };
+
+  const stompConnect = () => {
+    let socket = new SockJs(`${apiUrl}/ws-coala`);
+    stompClient = Stomp.over(socket);
+    stompClient.connect({}, onConnected, onError);
   };
 
   const onConnected = () => {
@@ -103,29 +107,30 @@ const Postchat = ({ pid }) => {
   };
 
   const sendPublicMessage = () => {
-    // if (is_login) {
-    //   const username = sessionStorage.getItem("nickname");
+    if (is_login) {
+      const username = sessionStorage.getItem("nickname");
 
-    //   if (stompClient) {
-    //     if (!userData.message) {
-    //       Swal.fire("", "내용을 입력해주세요!", "error");
-    //     } else {
-    let chatMessage = {
-      ...userData,
-      senderName: username,
-      message: userData.message,
-      status: "MESSAGE",
-      pid: pid,
-      uid: uid,
-    };
+      if (stompClient) {
+        if (!userData.message) {
+          Swal.fire("", "내용을 입력해주세요!", "error");
+        } else {
+          let chatMessage = {
+            ...userData,
+            senderName: username,
+            message: userData.message,
+            status: "MESSAGE",
+            pid: pid,
+            uid: uid,
+          };
 
-    stompClient.send("/app/postchat", token, JSON.stringify(chatMessage));
-    setUserData({ ...userData, message: "" });
-    // }
-    // }
-    // } else {
-    //   Swal.fire("", "로그인 후 사용할 수 있습니다:)", "error");
-    // }
+          stompClient.send("/app/postchat", token, JSON.stringify(chatMessage));
+          setUserData({ ...userData, message: "" });
+        }
+      }
+      return;
+    } else {
+      Swal.fire("", "로그인 후 사용할 수 있습니다:)", "error");
+    }
   };
 
   //subscribe의 함수
@@ -147,17 +152,7 @@ const Postchat = ({ pid }) => {
           setUser(payloadData.userCount);
         }
         break;
-      case "OUT":
-        if (!welcome.get(payloadData.senderName)) {
-          welcome.set(payloadData.message, []);
-          setWelcome(new Map(welcome));
-        }
-        break;
       case "MESSAGE":
-        const time1 = payloadData.createdAt.split("T")[1]; //년월 제거
-        const time2 = time1.split(".")[0]; // 소수점 제거
-        const time3 = time2.split(":")[0] + ":" + time2.split(":")[1]; // 시간, 분
-        setTime(time3);
         publicChats.push(payloadData);
         setPublicChats([...publicChats]);
         setUser(payloadData.userCount);
@@ -169,10 +164,6 @@ const Postchat = ({ pid }) => {
     console.log(err);
     console.log("plz");
   };
-
-  React.useEffect(() => {
-    scrollToBottom();
-  }, [publicChats, chatScroll]);
 
   const scrollToBottom = () => {
     if (messageRef.current) {
@@ -192,13 +183,6 @@ const Postchat = ({ pid }) => {
       </ChatTab>
       <ChatList ref={messageRef}>
         <ul>
-          {[...welcome.keys()].map((name, index) => {
-            return (
-              <li className='welcome' key={index}>
-                {name}
-              </li>
-            );
-          })}
           {post_chat_list &&
             post_chat_list.map((chat, index) => (
               <li
