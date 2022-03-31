@@ -153,7 +153,7 @@ const Create = () => {
             <ImgUpload isEdit={true} editImg={addPost.postImg} />
           </TextareaImg>
 
-          <h2>
+          <h2 className='tag'>
             태그입력<em></em>
           </h2>
           <input
@@ -221,7 +221,7 @@ const Create = () => {
           <ImgUpload />
         </TextareaImg>
 
-        <h2>
+        <h2 className='tag'>
           태그입력<em>(선택사항)</em>
         </h2>
         <input
@@ -262,7 +262,7 @@ const CreateWrap = styled.div`
 
 const PostWrap = styled.div`
   width: 100%;
-  padding: 50px 26px;
+  padding: 48px 28px;
   border-radius: 8px;
   box-shadow: 0 4px 20px 0 rgba(228, 226, 242, 0.45);
 
@@ -273,6 +273,11 @@ const PostWrap = styled.div`
   h2 {
     font-size: 16px;
     margin-bottom: 8px;
+  }
+  h2.tag {
+    font-size: 16px;
+    margin-bottom: 8px;
+    margin-top: -10px;
 
     em {
       font-weight: normal;
@@ -324,7 +329,7 @@ const TextareaImg = styled.div`
     display: block;
     width: 100%;
     padding: 16px;
-    min-height: 400px;
+    min-height: 345px;
     border: none;
     background-color: transparent;
     resize: none;

@@ -70,6 +70,7 @@ const ImgWrap = styled.div`
   display: flex;
   gap: 24px;
   width: 100%;
+  height: 52px;
   font-weight: 700;
   border-bottom: solid 1px #ccc;
 

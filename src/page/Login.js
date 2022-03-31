@@ -38,7 +38,7 @@ const Login = () => {
       <Container1>
         <Container2>
           <div className={check === "login" ? "box" : "signup"}>
-            <div className='logo'>
+            <div className={check === "login" ? "loginlogo" : "signuplogo"}>
               <LoginSvg
                 onClick={() => {
                   history.push("/");
@@ -162,13 +162,25 @@ const Container2 = styled.div`
       justify-content: center;
     }
   }
-  div.logo {
+  div.loginlogo {
     width: 500px;
     height: 196px;
     display: flex;
     align-items: center;
     justify-content: center;
 
+    svg {
+      cursor: pointer;
+    }
+  }
+
+  div.signuplogo {
+    width: 500px;
+    height: 196px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 56px;
     svg {
       cursor: pointer;
     }
@@ -195,7 +207,7 @@ const Container2 = styled.div`
         width: 57px;
         color: #7966ff;
         font-size: 16px;
-        font-weight: 800;
+        font-weight: bold;
         vertical-align: middle;
       }
     }
@@ -235,10 +247,11 @@ const Switch = styled.div`
   padding-bottom: 30px;
 
   > label {
-    font-size: 18px;
     margin-right: 41px;
     cursor: pointer;
     color: #dadada;
+    font-size: 18px;
+    font-weight: bold;
     &.login {
       color: #ffffff;
     }

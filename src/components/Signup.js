@@ -86,11 +86,6 @@ function Signup(props) {
 
   ///////////////////////회원가입
   const signup = (e) => {
-    e.preventDefault();
-
-    setIsCheckNickname(true);
-    setIsCheckUsername(true);
-    console.log(isCheckUsername, isCheckNickname);
     if (username === "" || nickname === "" || password === "") {
       Swal.fire("", "빈칸을 채워주세요.", "error");
       return;
@@ -245,11 +240,11 @@ const Container = styled.div`
       align-items: center;
       background-color: #f9f8ff;
       border-radius: 0.5rem;
-      padding: 15px;
+      padding: 24px;
       > span.inputSpan {
         color: #7966ff;
         font-size: 16px;
-        font-weight: 800;
+        font-weight: bold;
       }
     }
   }
@@ -263,10 +258,10 @@ const Container = styled.div`
     width: 76px;
     height: 32px;
     background-color: #7966ff;
-    color: white;
+    color: #ffffff;
     border-radius: 32px;
     position: absolute;
-    margin-left: 400px;
+    margin-left: 376px;
     font-size: 14px;
   }
   button.SignupButtom {
@@ -301,7 +296,7 @@ const Career = styled.div`
       cursor: pointer;
       color: #7966ff;
       font-size: 16px;
-      font-weight: 800;
+      font-weight: bold;
       text-align: start;
     }
   }
@@ -341,7 +336,6 @@ const Career = styled.div`
       }
 
       &:last-child {
-        margin-bottom: 8px;
       }
 
       &:hover {
