@@ -353,6 +353,7 @@ const SC_List = styled.div`
 
     > *:not(style) {
       margin-bottom: 10px;
+      white-space: pre;
     }
   }
 
