@@ -60,6 +60,8 @@ const Container = styled.div`
     line-height: 52px;
     text-align: center;
     cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
   }
 
   .category:hover {
