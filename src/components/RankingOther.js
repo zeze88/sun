@@ -5,6 +5,7 @@ import Profile from "../elements/Profile";
 
 const RankingOther = ({ list, user_ranking }) => {
   const user_info = sessionStorage.getItem("uid");
+  console.log(user_ranking);
   return (
     <SC_OtherRanking>
       <ul>
@@ -16,7 +17,9 @@ const RankingOther = ({ list, user_ranking }) => {
             {user_ranking.point && <em>{user_ranking.point} 점</em>}
             {user_ranking.weekPoint && <em>{user_ranking.weekPoint} 점</em>}
             {user_ranking.monthPoint && <em>{user_ranking.monthPoint} 점</em>}
-            {!user_ranking.blogUrl || user_ranking.blogUrl === "undefined" ? (
+            {!user_ranking.blogUrl ||
+            user_ranking.blogUrl === "undefined" ||
+            user_ranking.blogUrl === "null" ? (
               <button
                 onClick={() => {
                   Swal.fire("", "연결 된 sns가 없습니다 :)", "error");
@@ -36,7 +39,7 @@ const RankingOther = ({ list, user_ranking }) => {
             <Profile size={70} imgUrl={v.userImage} />
             <strong>{v.nickname}</strong>
             <em>{!v.point ? 0 : v.point} 점</em>
-            {!v.blogUrl || v.blogUrl === "undefined" ? (
+            {!v.blogUrl || v.blogUrl === "unll" || v.blogUrl === "undefined" ? (
               <button
                 onClick={() => {
                   Swal.fire("", "연결 된 sns가 없습니다 :)", "error");

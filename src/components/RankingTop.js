@@ -25,7 +25,9 @@ const RankingTop = ({ list }) => {
               <Profile size={idx === 0 ? 140 : 104} imgUrl={v.userImage} />
               <strong>{v.nickname}</strong>
               <em>{!v.point ? 0 : v.point} 점</em>
-              {!v.blogUrl || v.blogUrl === "undefined" ? (
+              {!v.blogUrl ||
+              v.blogUrl === "undefined" ||
+              v.blogUrl === "null" ? (
                 <button
                   onClick={() => {
                     Swal.fire("", "연결 된 sns가 없습니다 :)", "error");
