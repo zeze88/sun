@@ -228,7 +228,7 @@ const Create = () => {
           id='tags'
           onChange={onChange}
           type='text'
-          placeholder='특수문자는 # 만 입력 가능합니다.'
+          placeholder='특수문자는 # 만 입력 가능합니다.  작성 예시) #안녕#도와주세요#알려주세요'
         />
         <button onClick={submit}>올리기</button>
       </PostWrap>
