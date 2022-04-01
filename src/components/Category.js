@@ -1,15 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { history } from "../redux/configureStore";
 import { category } from "../elements/category";
-import { useDispatch, useSelector } from "react-redux";
-import { actionsCreators as categoryActions } from "../redux/modules/serch";
-import { useParams } from "react-router";
 
 const Category = () => {
-  const dispatch = useDispatch();
-  const category_list = useSelector((state) => state.category_list);
-
   const CategoryList = (v) => {
     window.location.href = `/search/category_${v}`;
   };

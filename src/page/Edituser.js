@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import Profile from "../elements/Profile";
 import { actionCreators as userActions } from "../redux/modules/user";
 import img_down from "../svg/arrow_down_b.svg";
 import camera from "../svg/camera_fill.svg";
 import Swal from "sweetalert2";
-// import { ReactComponent as img_down } from "../svg/arrow_down_b.svg";
-// import { ReactComponent as camera } from "../svg/camera_fill.svg";
 
 const userNickname = sessionStorage.getItem("nickname");
 const userCareer = sessionStorage.getItem("career");
@@ -188,7 +186,8 @@ const Edituser = (props) => {
                     : userURL === "undefined"
                     ? null
                     : blogUrl
-                }></input>
+                }
+              />
             </div>
           </EditBlog>
           <EditCareer>
@@ -213,7 +212,8 @@ const Edituser = (props) => {
             </div>
             <img
               onClick={() => setCareerSelect(!careerSelect)}
-              src={img_down}></img>
+              src={img_down}
+            />
           </EditCareer>
           <button className='save' onClick={Save}>
             저장

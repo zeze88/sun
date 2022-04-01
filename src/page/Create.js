@@ -18,12 +18,10 @@ const Create = () => {
   const params = useParams().pid;
 
   const isCreate = location.pathname === "/create";
-  const img_list = useSelector((state) => state.post?.preview);
   const post_one = useSelector((state) => state.post.one_list);
   const [addPost, setAddPost] = React.useState(!isCreate ? post_one : []);
   const [isSelect, setIsSelect] = React.useState(false);
   const [oneCategory, setOneCategory] = React.useState("");
-  const token = sessionStorage.getItem("token");
   const reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
 
   React.useEffect(() => {

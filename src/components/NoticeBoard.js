@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 import styled from "styled-components";
 import NoticeList from "../elements/NoticeList";
 import TabMenu from "./TabMenu";
-import Loader from "./Loader";
 
 import { ReactComponent as WriteSvg } from "../svg/write.svg";
 import { useInView } from "react-intersection-observer";
@@ -25,7 +24,6 @@ const NoticeBoard = () => {
   const dispatch = useDispatch();
   const user_info = sessionStorage.getItem("uid");
   const [TabList, setTabList] = React.useState(tab_list[0].title);
-  const [isLoaded, setIsLoaded] = React.useState(false);
   const [pageNum, setPageNum] = React.useState(1);
   const [pageNum1, setPageNum1] = React.useState(1);
   const post_list = useSelector((state) => state.post.list);
@@ -79,7 +77,6 @@ const NoticeBoard = () => {
             );
           })}
         </div>
-        <div className='last'>{isLoaded && <Loader />}</div>
         <SC_BtnWrap onClick={goWrite}>
           <WriteSvg />
         </SC_BtnWrap>

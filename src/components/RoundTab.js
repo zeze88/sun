@@ -1,4 +1,3 @@
-import { map } from "bluebird";
 import React from "react";
 import styled from "styled-components";
 const RoundTab = ({ currTab }) => {
@@ -17,7 +16,6 @@ const RoundTab = ({ currTab }) => {
     },
   ];
   const [tab, setTab] = React.useState("total");
-  console.log(tab);
 
   return (
     <RoundTabUl>

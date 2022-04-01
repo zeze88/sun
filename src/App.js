@@ -5,7 +5,6 @@ import Main from "./page/Main";
 import Login from "./page/Login";
 import Create from "./page/Create";
 import Detail from "./page/Detail";
-import _Test from "./components/_Test";
 import Ranking from "./page/Ranking";
 import SearchResult from "./page/SearchResult";
 import Header from "./components/Header";

@@ -44,7 +44,7 @@ const ImgUpload = ({ isEdit = null, editImg = null, cleanImg = null }) => {
         </label>
         <input onChange={onChange} id='editImg' type='file' ref={fileInput} />
         <div className='img_box'>
-          <img src={preImg ? preImg : editImg} />
+          <img src={preImg ? preImg : editImg} alt='업로드한 이미지' />
         </div>
       </ImgWrap>
     );
@@ -59,7 +59,7 @@ const ImgUpload = ({ isEdit = null, editImg = null, cleanImg = null }) => {
       <input onChange={onChange} id='img' type='file' ref={fileInput} />
       {preImg && (
         <div className='img_box'>
-          <img src={preImg} />
+          <img src={preImg} alt='업로드한 이미지' />
         </div>
       )}
     </ImgWrap>

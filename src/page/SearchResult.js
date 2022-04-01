@@ -31,13 +31,6 @@ const SearchResult = () => {
   });
 
   React.useEffect(() => {
-    let timer = setTimeout(() => {
-      setIsLoaded(false);
-      console.log("로딩");
-    }, 1000);
-  }, []);
-
-  React.useEffect(() => {
     switch (search_type) {
       case "tag":
         return dispatch(searchActions.tagDB(search_keyword, pageNum));
@@ -70,7 +63,7 @@ const SearchResult = () => {
   }, [inView]);
 
   return (
-    <>
+    <React.Fragment>
       {isLoaded ? (
         <Spinner />
       ) : (
@@ -95,7 +88,7 @@ const SearchResult = () => {
           )}
         </Container>
       )}
-    </>
+    </React.Fragment>
   );
 };
 const NoSearch = styled.div`

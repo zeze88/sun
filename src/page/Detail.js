@@ -1,18 +1,16 @@
 import React from "react";
 import styled from "styled-components";
-import Comment from "../components/Comment";
 import { useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as answerActions } from "../redux/modules/answer";
-import { actionsCreators as searchActions } from "../redux/modules/serch";
+
 import Swal from "sweetalert2";
 
 import { history } from "../redux/configureStore";
 import Answer from "../components/Answer";
 import AnswerList from "../components/AnswerList";
 import Profile from "../elements/Profile";
-import user from "../redux/modules/user";
 import Postchat from "../components/Postchat";
 import Banner from "../elements/Banner";
 

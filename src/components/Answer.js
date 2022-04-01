@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { useParams } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import ImgUpload from "./ImgUpload";
 
 import { actionCreators as answerActions } from "../redux/modules/answer";
@@ -12,7 +12,6 @@ const Answer = ({ close = null, isEdit = null, list = null }) => {
   const dispatch = useDispatch();
   const params = useParams().pid;
   const user_info = sessionStorage.getItem("uid");
-  const nickname = sessionStorage.getItem("nickname");
   const [addAnswer, setAddAnswer] = React.useState(
     isEdit ? list : { answerTitle: "", answerComment: "" }
   );

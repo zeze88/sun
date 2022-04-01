@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import Swal from "sweetalert2";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { actionCreators as passWordAction } from "../redux/modules/user";
-import { useParams } from "react-router-dom";
 
 const uid = sessionStorage.getItem("uid");
 
 const Password = () => {
   const dispatch = useDispatch();
-  const [password, setPassword] = useState("");
-  const [newPassword, setnewPassWord] = useState("");
-  const [checkPassWord, setCheckPassWord] = useState("");
+  const [password, setPassword] = React.useState("");
+  const [newPassword, setnewPassWord] = React.useState("");
+  const [checkPassWord, setCheckPassWord] = React.useState("");
 
   const [newPasswordRuleCheck, setNewPasswordRuleCheck] = React.useState(false);
 

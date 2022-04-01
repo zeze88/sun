@@ -2,10 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { ReactComponent as Search } from "../svg/search.svg";
 
-import { useDispatch } from "react-redux";
-import { actionsCreators as serchActions } from "../redux/modules/serch";
-import { history } from "../redux/configureStore";
-
 const Serch = () => {
   const [find, setFind] = React.useState();
   const [showSearch, setShowSearch] = React.useState(false);
@@ -13,7 +9,6 @@ const Serch = () => {
   const onKeyPress = (e) => {
     if (e.key == "Enter") {
       const setFind = e.target.value;
-      // history.push(`/search/serch_${setFind}`);
       window.location.replace(`/search/serch_${setFind}`);
     }
   };

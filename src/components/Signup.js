@@ -23,8 +23,6 @@ function Signup(props) {
   const [isCheckUsername, setIsCheckUsername] = React.useState(false);
   const [isCheckNickname, setIsCheckNickname] = React.useState(false);
 
-  console.log(idRuleCheck);
-
   ///경력 리스트
   const options = [
     { value: "1년차 이내", name: "1년차 이내" },

@@ -5,7 +5,6 @@ import Profile from "../elements/Profile";
 
 const RankingOther = ({ list, user_ranking }) => {
   const user_info = sessionStorage.getItem("uid");
-  console.log(user_ranking);
   return (
     <SC_OtherRanking>
       <ul>

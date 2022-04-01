@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import Stomp, { over } from "stompjs";
+import Stomp from "stompjs";
 import SockJs from "sockjs-client";
 
 import { history } from "../redux/configureStore";
-import { useDispatch, useSelector } from "react-redux";
-import { actionCreators as loOutAction } from "../redux/modules/user";
 import Serch from "./Serch";
 import Profile from "../elements/Profile";
 import Category from "./Category";
@@ -53,11 +51,12 @@ const Header = () => {
           token
         );
       });
-    } else {
-      // stompClient.disconnect(() => {
-      //   stompClient.unsubscribe(`/queue/user/${nickname}`);
-      // });
     }
+    return () => {
+      stompClient.disconnect(() => {
+        stompClient.unsubscribe(`/queue/user/${nickname}`);
+      });
+    };
   }, []);
 
   return (

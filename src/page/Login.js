@@ -1,14 +1,12 @@
 import React from "react";
+import styled from "styled-components";
+import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { ReactComponent as LoginSvg } from "../svg/login_logo.svg";
-
-import Signup from "../components/Signup";
-
 import { actionCreators as userActions } from "../redux/modules/user";
 import { history } from "../redux/configureStore";
 import { ReactComponent as PolygonSvg } from "../svg/polygon.svg";
-import styled from "styled-components";
-import Swal from "sweetalert2";
+import Signup from "../components/Signup";
 
 const Login = () => {
   const dispatch = useDispatch();

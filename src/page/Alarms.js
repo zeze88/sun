@@ -8,7 +8,7 @@ const Alarms = () => {
 
   return (
     <SC_AlarmsWrap>
-      <h2>알림</h2>
+      <h2>알람 내역</h2>
       <RoundTab currTab={setCurTab} />
       <TableList currTab={curTab} />
     </SC_AlarmsWrap>

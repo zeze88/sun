@@ -21,13 +21,13 @@ const Postchat = ({ pid }) => {
   };
   const username = sessionStorage.getItem("nickname");
   const uid = sessionStorage.getItem("uid");
+  const crareer = sessionStorage.getItem("career");
 
   const is_login = sessionStorage.getItem("isLogin");
   const [welcome, setWelcome] = React.useState(new Map());
   const [publicChats, setPublicChats] = React.useState([]);
   const [connected, setConnected] = React.useState(false);
   const [tab, setTab] = React.useState("CHATROOM");
-  const [time, setTime] = React.useState("");
   const [user, setUser] = React.useState(0);
   const [chatScroll, setChatScroll] = React.useState(false);
   const [userData, setUserData] = React.useState({
@@ -79,9 +79,6 @@ const Postchat = ({ pid }) => {
 
   const onConnected = () => {
     try {
-      const username = sessionStorage.getItem("nickname");
-      const crareer = sessionStorage.getItem("career");
-      const userImage = sessionStorage.getItem("userImage");
       const user_join = { status: "JOIN", pid, uid, senderName: username };
       setConnected(true);
       setUserData({
@@ -108,8 +105,6 @@ const Postchat = ({ pid }) => {
 
   const sendPublicMessage = () => {
     if (is_login) {
-      const username = sessionStorage.getItem("nickname");
-
       if (stompClient) {
         if (!userData.message) {
           Swal.fire("", "내용을 입력해주세요!", "error");

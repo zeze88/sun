@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from "react";
-import Stomp, { over } from "stompjs";
+import React, { useRef } from "react";
+import Stomp from "stompjs";
 import SockJs from "sockjs-client";
 import Profile from "../elements/Profile";
 import styled from "styled-components";
