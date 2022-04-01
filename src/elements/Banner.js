@@ -1,9 +1,6 @@
 import React from "react";
 import Slider from "react-slick";
 import styled from "styled-components";
-import { ReactComponent as Banner1Svg } from "../svg/banner/banner1.svg";
-import { ReactComponent as Banner2Svg } from "../svg/banner/banner2.svg";
-import { ReactComponent as Banner3Svg } from "../svg/banner/banner3.svg";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -22,20 +19,21 @@ const Banner = () => {
   return (
     <BannerSlide {...settings}>
       <div className='banner_wrap'>
-        <a
-          href='https://docs.google.com/forms/d/e/1FAIpQLSd4iPrHK_DTflM3n-FfJ_MVxg2NuO-05mG5o1wlx1WvVc0NzA/viewform'
-          target='_blank'>
-          <Banner1Svg />
+        <img src='/banner/banner1.jpg' alt='코알라출시' />
+      </div>
+      <div className='banner_wrap'>
+        <a href=' https://forms.gle/UgsqAc8g3K39smyc8' target='_blank'>
+          <img src='/banner/banner2.jpg' alt='설문조사' />
         </a>
       </div>
       <div className='banner_wrap'>
-        <Banner2Svg />
+        <a href='https://forms.gle/2jZ1RPbxS5dzjnWZ7' target='_blank'>
+          <img src='/banner/banner3.jpg' alt='버그제보' />
+        </a>
       </div>
       <div className='banner_wrap'>
-        <a
-          href='https://docs.google.com/forms/d/1lBFDtUTkM-LdD2fB7XUTNQnHyN-gK4RmrY1jcilyjyY/edit'
-          target='_blank'>
-          <Banner3Svg />
+        <a href='https://forms.gle/2jZ1RPbxS5dzjnWZ7' target='_blank'>
+          <img src='/banner/banner4.jpg' alt='top3배민쿠폰증정' />
         </a>
       </div>
     </BannerSlide>
@@ -54,7 +52,9 @@ const BannerSlide = styled(Slider)`
   }
 
   .banner_wrap {
-    svg {
+    width: 342px;
+    height: 224px;
+    a {
       display: flex;
     }
   }
