@@ -1,10 +1,9 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import history from "../configureStore";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-import { setToken, delToken } from "../../shared/token";
+import { setToken } from "../../shared/token";
 import { apiUrl } from "../../elements/testApiUrl";
 
 //initialState
@@ -159,101 +158,98 @@ const loginDB = (username, password) => {
 
 const logEditDB = (uid, nickname, career, url, userImg) => {
   return function (dispatch, getState, { history }) {
-    console.log(uid, nickname, career, url);
-    axios
-      .put(
-        `${apiUrl}/islogin/user/edit/${uid}`,
-        {
-          nickname: nickname,
-          career: career,
-          userImage: "",
-          blogUrl: url,
-        },
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      )
-      .then((res) => {
-        console.log(res.data);
-        dispatch(
-          logEdit({
-            nickname: nickname,
-            career: career,
-            userImage: userImg,
-            blogUrl: url,
-          })
-        );
-        sessionStorage.setItem("nickname", nickname);
-        sessionStorage.setItem("career", career);
-        sessionStorage.setItem("url", url);
-        window.location.replace("/");
-      })
-      .catch((err) => {
-        console.log(err);
-        Swal.fire("", "회원 정보 수정 실패", "error");
-      });
-  };
-};
-
-const logEditDB2 = (uid, nickname, career, url, userImg) => {
-  return function (dispatch, getState, { history }) {
     const img_list = getState().user.preview;
     const Data = new FormData();
     Data.append("images", img_list);
     console.log(img_list);
-    axios
-      .post(`${apiUrl}/images/upload`, Data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: token,
-        },
-      })
-      .then((res) => {
-        console.log("img업로드 성공");
-        const imgUrl = res.data.url;
-        return imgUrl;
-      })
-
-      .then((imgUrl) => {
-        axios
-          .put(
-            `${apiUrl}/islogin/user/edit/${uid}`,
-            {
+    if (!img_list) {
+      axios
+        .put(
+          `${apiUrl}/islogin/user/edit/${uid}`,
+          {
+            nickname: nickname,
+            career: career,
+            userImage: "",
+            blogUrl: url,
+          },
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res.data);
+          dispatch(
+            logEdit({
               nickname: nickname,
               career: career,
-              userImage: imgUrl,
+              userImage: userImg,
               blogUrl: url,
-            },
-            {
-              headers: {
-                Authorization: token,
-              },
-            }
-          )
-          .then((res) => {
-            console.log(res);
-            dispatch(
-              logEdit({
+            })
+          );
+          sessionStorage.setItem("nickname", nickname);
+          sessionStorage.setItem("career", career);
+          sessionStorage.setItem("url", url);
+          window.location.replace("/");
+        })
+        .catch((err) => {
+          console.log(err);
+          Swal.fire("", "회원 정보 수정 실패", "error");
+        });
+    } else {
+      axios
+        .post(`${apiUrl}/images/upload`, Data, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: token,
+          },
+        })
+        .then((res) => {
+          console.log("img업로드 성공");
+          const imgUrl = res.data.url;
+          return imgUrl;
+        })
+
+        .then((imgUrl) => {
+          axios
+            .put(
+              `${apiUrl}/islogin/user/edit/${uid}`,
+              {
                 nickname: nickname,
                 career: career,
-                userImage: userImg,
+                userImage: imgUrl,
                 blogUrl: url,
-              })
-            );
-            sessionStorage.setItem("nickname", nickname);
-            sessionStorage.setItem("career", career);
-            sessionStorage.setItem("userImage", userImg);
-            sessionStorage.setItem("url", url);
-            history.push("/");
-            window.location.reload();
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-        Swal.fire("", "회원 정보 수정 실패", "error");
-      });
+              },
+              {
+                headers: {
+                  Authorization: token,
+                },
+              }
+            )
+            .then((res) => {
+              console.log(res);
+              dispatch(
+                logEdit({
+                  nickname: nickname,
+                  career: career,
+                  userImage: userImg,
+                  blogUrl: url,
+                })
+              );
+              sessionStorage.setItem("nickname", nickname);
+              sessionStorage.setItem("career", career);
+              sessionStorage.setItem("userImage", userImg);
+              sessionStorage.setItem("url", url);
+              history.push("/");
+              window.location.reload();
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+          Swal.fire("", "회원 정보 수정 실패", "error");
+        });
+    }
   };
 };
 
@@ -330,7 +326,6 @@ const actionCreators = {
   loginDB,
   logOut,
   logEditDB,
-  logEditDB2,
   NewPassWordDB,
   imgPost,
 };

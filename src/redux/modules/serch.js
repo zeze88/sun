@@ -1,9 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import axios from "axios";
-import { setToken } from "../../shared/token";
 import produce from "immer";
 import { apiUrl } from "../../elements/testApiUrl";
-import { apis } from "../../shared/api";
 
 const SERCH = "SERCH";
 const CATEGORY = "CATEGORY";

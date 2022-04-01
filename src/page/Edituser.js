@@ -93,7 +93,7 @@ const Edituser = (props) => {
         Swal.fire("", "중복체크를 해주세요", "error");
       }
       return;
-    } else if (userImg === userImage) {
+    } else {
       Swal.fire({
         title: "회원정보를 수정하시겠습니까?",
         icon: "warning",
@@ -112,27 +112,6 @@ const Edituser = (props) => {
           Swal.fire("", "수정이 취소 되었습니다 :)", "error");
         }
       });
-      return;
-    } else if (userImg !== userImage) {
-      Swal.fire({
-        title: "회원정보를 수정하시겠습니까?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "네 수정하겠습니다.",
-        confirmButtonColor: "#7966FF",
-        cancelButtonText: "아니오",
-        cancelTextColor: "#7966FF",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire("", "회원정보가 수정 되었습니다.", "success");
-          dispatch(
-            userActions.logEditDB2(uid, nickname, career, blogUrl, userImg)
-          );
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-          Swal.fire("", "수정이 취소 되었습니다 :)", "error");
-        }
-      });
-      return;
     }
   };
 

@@ -1,7 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
-
 import { apis } from "../../shared/api";
+
 const TOTAL_RANKING = "TOTAL_RANKING";
 const MONTH_RANKING = "MONTH_RANKING";
 const WEEK_RANKING = "WEEK_RANKING";
@@ -16,8 +16,7 @@ const totalRanking = createAction(TOTAL_RANKING, (list) => ({ list }));
 const monthRanking = createAction(MONTH_RANKING, (list) => ({ list }));
 const weekRanking = createAction(WEEK_RANKING, (list) => ({ list }));
 const userList = createAction(USER_LIST, (list) => ({ list }));
-// const myweekRanking = createAction(WEEK_RANKING, (list) => ({ list }));
-// const mymonthRanking = createAction(USER_LIST, (list) => ({ list }));
+
 const totalRankingDB = () => {
   return function (dispatch, getState, { history }) {
     apis
