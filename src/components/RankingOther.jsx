@@ -12,7 +12,7 @@ const RankingOther = ({ list, user_ranking }) => {
         {user_info && (
           <li className='my_ranking'>
             <i>{user_ranking.rank}</i>
-            <Profile size={70} imgUrl={user_ranking.userImage} />
+            <Profile size={56} imgUrl={user_ranking.userImage} />
             <strong>{user_ranking.nickname}</strong>
             {user_ranking.point && <em>{user_ranking.point} 점</em>}
             {user_ranking.weekPoint && <em>{user_ranking.weekPoint} 점</em>}
@@ -36,7 +36,7 @@ const RankingOther = ({ list, user_ranking }) => {
         {list.map((v, idx) => (
           <li key={idx}>
             <i>{idx + 4}</i>
-            <Profile size={70} imgUrl={v.userImage} />
+            <Profile size={56} imgUrl={v.userImage} />
             <strong>{v.nickname}</strong>
             <em>{!v.point ? 0 : v.point} 점</em>
             {!v.blogUrl || v.blogUrl === "unll" || v.blogUrl === "undefined" ? (
@@ -60,6 +60,8 @@ const RankingOther = ({ list, user_ranking }) => {
 const SC_OtherRanking = styled.div`
   --main-color: #7966ff;
   .my_ranking {
+    margin: 0 ;
+    padding: 0 30px;
     background-color: #f9f8ff;
     color: var(--main-color);
     border-radius: 8px;
@@ -69,7 +71,7 @@ const SC_OtherRanking = styled.div`
   li {
     display: flex;
     align-items: center;
-    padding: 0 30px;
+    margin: 0 30px;
     height: 96px;
     border-bottom: solid 1px #f0ecfd;
 
@@ -84,13 +86,16 @@ const SC_OtherRanking = styled.div`
   }
 
   i {
-    width: 57px;
+    width: 60px;
     font-style: normal;
-    padding: 10px;
+    padding: 6px;
   }
 
   strong {
-    padding: 0 10px;
+    display: block;
+    width: 177px;
+    margin-left: 17px;
+    margin-right: 72px;
   }
 
   em {

@@ -392,6 +392,7 @@ const CategoryDiv = styled.div`
     text-align: center;
     line-height: 46px;
     cursor: pointer;
+    border-radius:4px;
 
     &:nth-child(1) {
       margin-top: 10px;

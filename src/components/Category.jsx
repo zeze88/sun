@@ -61,6 +61,7 @@ const Container = styled.div`
   .category:hover {
     .category_list_wrap {
       > div.C {
+        padding:5px;
         height: ${({ categoryLength }) =>
           `calc(${categoryLength} * 50px + 10px)`};
       }

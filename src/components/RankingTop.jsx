@@ -52,8 +52,8 @@ const RankingTop = ({ list }) => {
 const SC_TopRanking = styled.div`
   --main-color: #7966ff;
 
-  padding-top: 60px;
-  padding-bottom: 62px;
+  padding-top: 47px;
+  padding-bottom: 63px;
 
   ul {
     display: grid;
@@ -76,13 +76,16 @@ const SC_TopRanking = styled.div`
     }
   }
 
+  svg {
+    margin-bottom: -10px;
+  }
+
   span {
     box-shadow: 0 0 10px 0 rgba(121, 102, 255, 0.2);
   }
 
   strong {
-    margin-top: 10px;
-    margin-bottom: 12px;
+    margin: 4px 0;
     font-size: 18px;
   }
 
@@ -92,19 +95,23 @@ const SC_TopRanking = styled.div`
     font-style: normal;
   }
 
-  button {
-    width: 103px;
-    height: 36px;
-    margin-top: 8px;
-    margin-bottom: 12px;
-    color: #fff;
-    border-radius: 40px;
-    background-color: var(--main-color);
+  em {
+    font-size: 16px;
   }
 
   i {
     color: var(--main-color);
     font-size: 20px;
+  }
+
+  button {
+    width: 103px;
+    height: 36px;
+    margin: 4px 0;
+    color: #fff;
+    border-radius: 40px;
+    font-size: 14px;
+    background-color: var(--main-color);
   }
 `;
 export default RankingTop;
