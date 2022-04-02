@@ -109,10 +109,10 @@ const SC_NoticeDiv = styled.div`
 `;
 
 const SC_BtnWrap = styled.button`
-  --btn-size: 56px;
+  --btn-size: 100px;
   position: absolute;
-  bottom: 0;
-  right: 0;
+  bottom: 30px;
+  right: 57px;
   width: var(--btn-size);
   height: var(--btn-size);
   border-radius: var(--btn-size);
@@ -120,6 +120,7 @@ const SC_BtnWrap = styled.button`
   background-color: #7966ff;
   opacity: 0.3;
   transition: all 0.3s;
+  box-shadow: 0 4px 15px 0 rgba(36,13,177,.2);
 
   &:hover {
     opacity: 1;

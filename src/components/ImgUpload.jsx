@@ -44,7 +44,9 @@ const ImgUpload = ({ isEdit = null, editImg = null, cleanImg = null }) => {
         </label>
         <input onChange={onChange} id='editImg' type='file' ref={fileInput} />
         <div className='img_box'>
+          {preImg &&
           <img src={preImg ? preImg : editImg} alt='업로드한 이미지' />
+          }
         </div>
       </ImgWrap>
     );

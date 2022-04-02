@@ -261,6 +261,7 @@ const Container = styled.div`
     position: absolute;
     margin-left: 376px;
     font-size: 14px;
+    font-weight:400;
   }
   button.SignupButtom {
     width: 100%;
@@ -309,6 +310,7 @@ const Career = styled.div`
     z-index: 1;
     transition: height 0.5s ease-out;
     overflow: hidden;
+    border-radius: 0 0 8px 8px;
     height: 0;
 
     ${({ careerSelect }) =>
@@ -319,7 +321,6 @@ const Career = styled.div`
 
     > li {
       display: flex;
-      width: 100%;
       height: 72px;
       font-size: 16px;
       font-weight: 600;

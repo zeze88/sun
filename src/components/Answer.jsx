@@ -126,5 +126,13 @@ const SC_Answer = styled.div`
     margin: 16px 0;
     margin-left: auto;
   }
+
+  .img_load {
+    height: auto;
+
+    label {
+    padding: 24px 0;
+    }
+  }
 `;
 export default Answer;

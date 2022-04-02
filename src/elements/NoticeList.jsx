@@ -60,7 +60,7 @@ const NoticeListDiv = styled.div`
 
   .category {
     display: inline-block;
-    padding: 8px 14px;
+    padding: 3px 9px;
     margin-bottom: 14px;
     text-align: center;
     border-radius: 30px;
