@@ -217,16 +217,18 @@ const Container = styled.div`
   flex-direction: column;
 
   div {
+    position: relative;
     width: 100%;
     height: 72px;
     display: flex;
     flex-direction: column-reverse;
     > span.rule {
+      position: absolute;
+      bottom:4px;
       color: red;
       font-size: 12px;
-      position: absolute;
       justify-content: start;
-      padding-left: 15px;
+      padding-left: 24px;
     }
     > div {
       width: 100%;
