@@ -5,6 +5,8 @@ import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as answerActions } from "../redux/modules/answer";
 import { actionCreators as commentActions } from "../redux/modules/comment";
+import { ReactComponent as CommentSvg } from "../svg/comment.svg";
+
 import Comment from "./Comment";
 import Answer from "./Answer";
 import Profile from "../elements/Profile";
@@ -163,6 +165,7 @@ const AnswerList = ({ isWriter }) => {
                   </div>
 
                   <div className='btn_wrap'>
+                      <CommentSvg />
                     <span onClick={() => commentViewList(v.answerId)}>
                       댓글 {comment_count}
                     </span>
@@ -266,7 +269,7 @@ const AnswerList = ({ isWriter }) => {
                                           수정
                                         </button>
                                         <button
-                                          className='comment'
+                                          className='comment dele_btn'
                                           onClick={commentDelete}
                                           value={list.commentId}>
                                           삭제
@@ -361,6 +364,10 @@ const SC_List = styled.div`
   .btn_wrap {
     display: flex;
     padding-bottom: 16px;
+    
+    svg {
+      margin-right:7px;
+    }
 
     span {
       margin-right: auto;
@@ -403,12 +410,13 @@ const SC_Commentbox = styled.div`
 `;
 
 const SC_CommentList = styled.div`
-  --gray-color: #c4c4c4;
+  --gray-color: #CCCCCC;
+  padding-top:30px;
 
   > div.view {
     display: flex;
-    padding: 18px 24px;
-    border-bottom: solid 1px #dadada;
+    padding: 8px 0;
+    border-bottom: solid 1px var(--gray-color);
     color: var(--gray-color);
     flex-direction: column;
     justify-content: space-between;
@@ -423,7 +431,7 @@ const SC_CommentList = styled.div`
 
   p {
     flex: auto;
-    margin: 3px;
+    margin-bottom: 7px;
 
     > textarea {
       width: 1000px;
@@ -433,7 +441,7 @@ const SC_CommentList = styled.div`
 
   p.comment {
     flex: auto;
-    margin: 3px;
+    margin: 6px 0 4px;
     height: 2rem;
     width: 100%;
     height: 100%;
@@ -466,8 +474,7 @@ const SC_CommentList = styled.div`
       line-height: 1rem;
     }
     > div.button {
-      width: 60px;
-      justify-content: space-between;
+      align-items: center;
     }
   }
   div.comment {
@@ -475,8 +482,24 @@ const SC_CommentList = styled.div`
     align-items: center;
   }
   button {
-    color: var(--gray-color);
+    width: 50px;
+    height:20px;
+    color:#7966FF;
     font-size: 1rem;
+  }
+
+  .dele_btn {
+    position: relative;
+    &:before {
+      content:'';
+      position: absolute;
+      left:-1px;
+      top:50%;
+      width:1px;
+      height:12px;
+      transform: translateY(-50%);
+      background-color:#7966FF;
+    }
   }
 `;
 
