@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Serch from "./Serch";
 import Profile from "../elements/Profile";
 import Category from "./Category";
-import { delToken } from "../shared/token";
 import { apiUrl } from "../elements/testApiUrl";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { ReactComponent as LogoSvg } from "../svg/logo_header.svg";
@@ -36,7 +35,7 @@ const Header = () => {
   };
 
   const Logout = () => {
-    delToken();
+    dispatch(userActions.logOut());
   };
 
   React.useEffect(() => {

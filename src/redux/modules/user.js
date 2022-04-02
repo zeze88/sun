@@ -2,7 +2,7 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import axios from "axios";
 import Swal from "sweetalert2";
-
+import { delToken } from "../../shared/token";
 import { setToken } from "../../shared/token";
 import { apiUrl } from "../../elements/testApiUrl";
 
@@ -269,6 +269,11 @@ export default handleActions(
       produce(state, (draft) => {
         draft.user = action.payload.user;
         draft.isLogin = true;
+      }),
+    [LOG_OUT]: (state, action) =>
+      produce(state, (draft) => {
+        delToken();
+        window.location.replace("/login");
       }),
     [USER_EDUT]: (state, action) =>
       produce(state, (draft) => {
