@@ -144,7 +144,6 @@ const Container2 = styled.div`
   margin-bottom: 200px;
   div.box {
     width: 500px;
-    height: 472px;
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -152,7 +151,6 @@ const Container2 = styled.div`
     justify-content: center;
     &.signup {
       width: 500px;
-      height: 472px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -210,7 +208,6 @@ const Container2 = styled.div`
   }
   div.signup {
     width: 500px;
-    height: 471px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -227,7 +224,7 @@ const Container2 = styled.div`
   button {
     width: 100%;
     height: 72px;
-    background-color: #5e45f2;
+    background-color: #5E45F2;
     color: white;
     border-radius: 0.5rem;
     font-size: 18px;
