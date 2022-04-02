@@ -27,6 +27,7 @@ const Scrap = () => {
           const date = v.createdAt?.split(".")[0].replace("T", " ");
           return (
             <li key={idx}>
+              <i>{v.category}</i>
               <div
                 onClick={() => {
                   history.push(`detail/${v.pid}`);

@@ -132,8 +132,9 @@ const Container = styled.div`
     margin: auto;
     > div.inputBox {
       width: 500px;
-      height: 312px;
+      /* height: 312px; */
       display: flex;
+      gap:8px;
       flex-direction: column;
       justify-content: space-evenly;
       div {
@@ -144,7 +145,7 @@ const Container = styled.div`
         position: relative;
         justify-content: end;
         background-color: #f9f8ff;
-        border-radius: 0.5rem;
+        border-radius: 8px;
         padding: 15px;
         > span.rule {
           color: red;
@@ -156,25 +157,30 @@ const Container = styled.div`
         > input {
           width: 100%;
           height: 72px;
-          border-radius: 0.5rem;
+          border-radius: 8px;
           font-size: 16px;
           font-weight: 600;
           outline: 0;
           background-color: #f9f8ff;
+
+          &::placeholder {
+            color:#BCBCBC;
+          }
         }
       }
       > input {
         width: 500px;
         height: 72px;
-        border-radius: 0.5rem;
+        border-radius: 8px;
         background-color: #f9f8ff;
       }
       > button {
         width: 500px;
         height: 72px;
         color: #f9f8ff;
-        background-color: #7966ff;
-        border-radius: 0.5rem;
+        background-color: #5E45F2;
+        border-radius: 8px;
+        font-size: 18px;
       }
     }
   }

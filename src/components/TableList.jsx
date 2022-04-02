@@ -102,7 +102,16 @@ export const TableListUl = styled.ul`
     white-space: nowrap;
     cursor: pointer;
   }
-
+  
+i {
+  height: 25px;
+  padding:0 15px;
+  font-style: normal;
+  color:#7966FF;
+  border: solid 1px #7966FF;
+  border-radius:25px;
+  margin-right:48px;
+}
   span {
     flex: 1;
     text-align: left;

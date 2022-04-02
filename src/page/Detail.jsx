@@ -103,11 +103,11 @@ const Detail = () => {
               </TagUl>
               {Number(user_info) === post_one.uid ? (
                 <>
-                  <button styled={{ fontSize: "40px" }} onClick={delPost}>
+                  <button onClick={delPost}>
                     삭제
                   </button>
                   <button
-                    styled={{ fontSize: "40px" }}
+                  className="edit_btn"
                     onClick={() => {
                       history.push(`/edit/${pid}`);
                     }}>
@@ -251,9 +251,22 @@ const ContextWrap = styled.div`
     }
 
     button {
+      width: 94px;
       padding: 10px 16px;
       color: #7966ff;
       font-size: 16px;
+    }
+    
+    .edit_btn{
+      position: relative;
+      &:before {
+        content: "";
+        position: absolute;
+        left:-1px;
+        width:1px;
+        height: 18px;
+        background-color: #7966ff;
+      }
     }
   }
 `;
