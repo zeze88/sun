@@ -7,7 +7,7 @@ import { TableListUl } from "../components/TableList";
 
 const Scrap = () => {
   const dispatch = useDispatch();
-  const uid = sessionStorage.getItem("uid");
+  const uid = useSelector((state) => state.user.user.uid);
   const scrap_list = useSelector((state) => state.mypage.list);
 
   React.useEffect(() => {

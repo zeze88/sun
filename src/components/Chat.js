@@ -20,10 +20,11 @@ const Chat = () => {
       : "Authorization",
   };
 
-  const username = sessionStorage.getItem("nickname");
-  const uid = sessionStorage.getItem("uid");
+  const username = useSelector((state) => state.user.user.nickname);
+  const uid = useSelector((state) => state.user.user.uid);
+  const is_login = useSelector((state) => state.user.user.isLogin);
+  const craeer = useSelector((state) => state.user.user.career);
 
-  const is_login = sessionStorage.getItem("isLogin");
   const [welcome, setWelcome] = React.useState(new Map());
   const [publicChats, setPublicChats] = React.useState([]);
   const [connected, setConnected] = React.useState(false);
@@ -78,7 +79,6 @@ const Chat = () => {
 
   const onConnected = () => {
     try {
-      const craeer = sessionStorage.getItem("career");
       const user_join = { status: "JOIN", uid, pid: 0, senderName: username };
       setConnected(true);
       setUserData({
@@ -99,7 +99,6 @@ const Chat = () => {
 
   const sendPublicMessage = () => {
     if (is_login) {
-      const username = sessionStorage.getItem("nickname");
       if (stompClient) {
         if (!userData.message) {
           Swal.fire("", "내용을 입력해주세요!", "error");

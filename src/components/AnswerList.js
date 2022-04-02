@@ -15,7 +15,7 @@ const AnswerList = ({ isWriter }) => {
   const pid = useParams().pid;
   const dispatch = useDispatch();
   const list = useSelector((state) => state.answer.list);
-  const user_info = sessionStorage.getItem("uid");
+  const user_info = useSelector((state) => state.user.user.uid);
   const [isEdit, setIsEdit] = React.useState(null);
   const [isCommentEdit, setIsCommentEdit] = React.useState(false);
   const [comment, setComment] = React.useState("");

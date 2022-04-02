@@ -5,20 +5,24 @@ import Stomp from "stompjs";
 import SockJs from "sockjs-client";
 
 import { history } from "../redux/configureStore";
+import { useDispatch, useSelector } from "react-redux";
 import Serch from "./Serch";
 import Profile from "../elements/Profile";
 import Category from "./Category";
 import { delToken } from "../shared/token";
 import { apiUrl } from "../elements/testApiUrl";
+import { actionCreators as userActions } from "../redux/modules/user";
 import { ReactComponent as LogoSvg } from "../svg/logo_header.svg";
 import { ReactComponent as ArrowDown } from "../svg/arrow_down_b.svg";
 import { ReactComponent as User } from "../svg/user.svg";
 
 let stompClient = null;
 const Header = () => {
-  const isLogin = sessionStorage.getItem("isLogin");
-  const nickname = sessionStorage.getItem("nickname");
-  const userImage = sessionStorage.getItem("userImage");
+  const dispatch = useDispatch();
+  const [userinfo, setUserinfo] = useState(false);
+  const isLogin = useSelector((state) => state.user.user.isLogin);
+  const nickname = useSelector((state) => state.user.user.nickname);
+  const userImage = useSelector((state) => state.user.user.userImage);
   const [view, setView] = useState(false);
   const View = () => {
     setView(!view);
@@ -34,6 +38,14 @@ const Header = () => {
   const Logout = () => {
     delToken();
   };
+
+  React.useEffect(() => {
+    console.log(userinfo);
+    if (userinfo === false) {
+      dispatch(userActions.loginCheckDB());
+      setUserinfo(true);
+    }
+  }, []);
 
   React.useEffect(() => {
     if (nickname) {

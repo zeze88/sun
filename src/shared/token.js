@@ -17,13 +17,6 @@ const setToken = (token) => {
 
 const delToken = () => {
   sessionStorage.removeItem("token");
-  sessionStorage.removeItem("uid");
-  sessionStorage.removeItem("url");
-  sessionStorage.removeItem("username");
-  sessionStorage.removeItem("nickname");
-  sessionStorage.removeItem("isLogin");
-  sessionStorage.removeItem("career");
-  sessionStorage.removeItem("userImage");
 };
 
 export { getToken, setToken, delToken };

@@ -18,7 +18,7 @@ const Detail = () => {
   const dispatch = useDispatch();
   const pid = useParams().pid;
   const post_one = useSelector((state) => state.post.one_list);
-  const user_info = sessionStorage.getItem("uid");
+  const user_info = useSelector((state) => state.user.user.uid);
   const date = post_one.createdAt?.split("T")[0];
 
   const delPost = () => {

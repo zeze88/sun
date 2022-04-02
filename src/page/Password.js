@@ -1,17 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 import Swal from "sweetalert2";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as passWordAction } from "../redux/modules/user";
-
-const uid = sessionStorage.getItem("uid");
 
 const Password = () => {
   const dispatch = useDispatch();
+
+  const uid = useSelector((state) => state.user.user.uid);
+
   const [password, setPassword] = React.useState("");
   const [newPassword, setnewPassWord] = React.useState("");
   const [checkPassWord, setCheckPassWord] = React.useState("");
-
   const [newPasswordRuleCheck, setNewPasswordRuleCheck] = React.useState(false);
 
   const Pass = (e) => {

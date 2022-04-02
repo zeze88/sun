@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Profile from "../elements/Profile";
 import { actionCreators as userActions } from "../redux/modules/user";
@@ -7,14 +7,15 @@ import img_down from "../svg/arrow_down_b.svg";
 import camera from "../svg/camera_fill.svg";
 import Swal from "sweetalert2";
 
-const userNickname = sessionStorage.getItem("nickname");
-const userCareer = sessionStorage.getItem("career");
-const userImage = sessionStorage.getItem("userImage");
-const userURL = sessionStorage.getItem("url");
-const uid = sessionStorage.getItem("uid");
-
 const Edituser = (props) => {
   const dispatch = useDispatch();
+
+  const userNickname = useSelector((state) => state.user.user.nickname);
+  const userCareer = useSelector((state) => state.user.user.career);
+  const userImage = useSelector((state) => state.user.user.userImage);
+  const userURL = useSelector((state) => state.user.user.url);
+  const uid = useSelector((state) => state.user.user.uid);
+
   const [isCheckNickname, setIsCheckNickname] = React.useState(false);
   const [nickname, setNickname] = useState(userNickname);
   const [userImg, setUserImg] = useState(userImage);

@@ -19,11 +19,11 @@ const Postchat = ({ pid }) => {
       ? sessionStorage.getItem("token")
       : "Authorization",
   };
-  const username = sessionStorage.getItem("nickname");
-  const uid = sessionStorage.getItem("uid");
-  const crareer = sessionStorage.getItem("career");
+  const username = useSelector((state) => state.user.user.nickname);
+  const uid = useSelector((state) => state.user.user.uid);
+  const crareer = useSelector((state) => state.user.user.career);
+  const is_login = useSelector((state) => state.user.user.isLogin);
 
-  const is_login = sessionStorage.getItem("isLogin");
   const [welcome, setWelcome] = React.useState(new Map());
   const [publicChats, setPublicChats] = React.useState([]);
   const [connected, setConnected] = React.useState(false);

@@ -22,7 +22,7 @@ const NoticeBoard = () => {
     },
   ];
   const dispatch = useDispatch();
-  const user_info = sessionStorage.getItem("uid");
+  const user_info = useSelector((state) => state.user.user.uid);
   const [TabList, setTabList] = React.useState(tab_list[0].title);
   const [pageNum, setPageNum] = React.useState(1);
   const [pageNum1, setPageNum1] = React.useState(1);

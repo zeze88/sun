@@ -304,7 +304,6 @@ const chooseAnswerDB = (props) => {
         );
 
         dispatch(likeAnswer(answer_list));
-        // window.location.replace(`/detail/${pid}`);
       })
       .catch((err) => {
         console.log(err);

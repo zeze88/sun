@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as commentActions } from "../redux/modules/comment";
 import RoundBtn from "../elements/RoundBtn";
 import { useParams } from "react-router-dom";
@@ -8,9 +8,9 @@ import Swal from "sweetalert2";
 
 const Comment = ({ list }) => {
   const dispatch = useDispatch();
-  const is_login = sessionStorage.getItem("isLogin");
+  const is_login = useSelector((state) => state.isLogin);
   const pid = useParams().pid;
-  const uid = sessionStorage.getItem("uid");
+  const uid = useSelector((state) => state.user.user.uid);
   const answerId = list.answerId;
   const [comment, setComment] = React.useState("");
 

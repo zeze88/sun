@@ -1,5 +1,6 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
+import history from "../configureStore";
 import axios from "axios";
 import Swal from "sweetalert2";
 
@@ -8,13 +9,7 @@ import { apiUrl } from "../../elements/testApiUrl";
 
 //initialState
 const initialState = {
-  userinfo: {
-    uid: "",
-    username: "",
-    nickname: "",
-    career: "",
-    userImage: "",
-  },
+  user: {},
   isLogin: false,
   isCheckUsername: false,
   isCheckNickname: false,
@@ -25,6 +20,7 @@ const initialState = {
 const CHECK_USERNAME = "CHECK_USERNAME";
 const CHECK_NICKNAME = "CHECK_NICKNAME";
 const LOG_IN = "LOG_IN";
+const LOGIN_CHECK = "LOGIN_CHECK";
 const LOG_OUT = "LOG_OUT";
 const USER_EDUT = "USER_EDUT";
 const IMG_POST = "IMG_POST";
@@ -36,11 +32,10 @@ const setCheckUsername = createAction(CHECK_USERNAME, (isCheckUsername) => ({
 const setCheckNickname = createAction(CHECK_NICKNAME, (isCheckNickname) => ({
   isCheckNickname,
 }));
-const logIn = createAction(LOG_IN, (user) => ({ user }));
 const logOut = createAction(LOG_OUT, () => ({}));
 const logEdit = createAction(USER_EDUT, (user) => ({ user }));
 const imgPost = createAction(IMG_POST, (preview) => ({ preview }));
-
+const loginCheck = createAction(LOGIN_CHECK, (user) => ({ user }));
 // //token
 const token = sessionStorage.getItem("token");
 
@@ -112,46 +107,44 @@ const loginDB = (username, password) => {
         console.log(res);
         const token_res = res.headers.authorization;
         setToken(token_res);
-        return token_res;
-      })
-      .then((token_res) => {
         console.log(token_res);
-        axios({
-          method: "post",
-          url: `${apiUrl}/islogin/user`,
-          headers: {
-            Authorization: `${token_res}`,
-          },
-        })
-          .then((res) => {
-            console.log(res);
-            sessionStorage.setItem("uid", res.data.uid);
-            sessionStorage.setItem("username", res.data.username);
-            sessionStorage.setItem("nickname", res.data.nickname);
-            sessionStorage.setItem("career", res.data.career);
-            sessionStorage.setItem("userImage", res.data.userImage);
-            sessionStorage.setItem("url", res.data.blogUrl);
-            sessionStorage.setItem("isLogin", true);
-            console.log("1번");
-            dispatch(
-              logIn({
-                uid: res.data.uid,
-                username: res.data.username,
-                nickname: res.data.nickname,
-                career: res.data.career,
-                userImage: res.data.userImage,
-                url: res.data.blogUrl,
-              })
-            );
-            window.location.replace("/");
-          })
-          .catch((err) => {
-            console.log("로그인 확인 실패", err);
-          });
+        window.location.replace("/");
       })
       .catch((err) => {
         console.log(err);
-        Swal.fire("", "아이디나 패스워드를 다시 확인해주세요.", "error");
+      });
+  };
+};
+
+const loginCheckDB = () => {
+  return function (dispatch, getState, { history }) {
+    console.log("로그인체크");
+    axios
+      .post(
+        `${apiUrl}/islogin/user`,
+        {},
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        dispatch(
+          loginCheck({
+            uid: res.data.uid,
+            username: res.data.username,
+            nickname: res.data.nickname,
+            career: res.data.career,
+            userImage: res.data.userImage,
+            url: res.data.blogUrl,
+            isLogin: true,
+          })
+        );
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 };
@@ -188,10 +181,7 @@ const logEditDB = (uid, nickname, career, url, userImg) => {
               blogUrl: url,
             })
           );
-          sessionStorage.setItem("nickname", nickname);
-          sessionStorage.setItem("career", career);
-          sessionStorage.setItem("url", url);
-          window.location.replace("/");
+          history.push("/");
         })
         .catch((err) => {
           console.log(err);
@@ -206,7 +196,6 @@ const logEditDB = (uid, nickname, career, url, userImg) => {
           },
         })
         .then((res) => {
-          console.log("img업로드 성공");
           const imgUrl = res.data.url;
           return imgUrl;
         })
@@ -237,12 +226,6 @@ const logEditDB = (uid, nickname, career, url, userImg) => {
                   blogUrl: url,
                 })
               );
-              sessionStorage.setItem("nickname", nickname);
-              sessionStorage.setItem("career", career);
-              sessionStorage.setItem("userImage", userImg);
-              sessionStorage.setItem("url", url);
-              history.push("/");
-              window.location.reload();
             });
         })
         .catch((err) => {
@@ -274,11 +257,9 @@ const NewPassWordDB = (uid, password, newPassword, newPasswordCheck) => {
         console.log(res.data);
         if (res.data.result !== true) {
           Swal.fire("", "비밀번호 수정 실패", "error");
-          window.location.reload();
         } else {
           Swal.fire("", "비밀번호 수정 성공", "success");
           history.push("/");
-          window.location.replace("/");
         }
       })
       .catch((err) => {
@@ -292,24 +273,24 @@ export default handleActions(
   {
     [CHECK_USERNAME]: (state, action) =>
       produce(state, (draft) => {
-        console.log("CHECK_USERNAME 리듀서로 적용 완료", state, action.payload);
         draft.isCheckUsername = action.payload.isCheckUsername;
         Swal.fire("", "해당 아이디는 사용 가능합니다.", "success");
       }),
     [CHECK_NICKNAME]: (state, action) =>
       produce(state, (draft) => {
-        console.log("CHECK_NICKNAME 리듀서 적용", state, action.payload);
         draft.isCheckNickname = action.payload.isCheckNickname;
         Swal.fire("", "사용 가능한 닉네임입니다.", "success");
       }),
-    [LOG_IN]: (state, action) =>
+    [LOGIN_CHECK]: (state, action) =>
       produce(state, (draft) => {
-        draft.userinfo = action.payload.user;
+        draft.user = action.payload.user;
+        console.log(action.payload);
         draft.isLogin = true;
       }),
     [USER_EDUT]: (state, action) =>
       produce(state, (draft) => {
-        draft.userinfo = action.payload.user;
+        draft.user = action.payload.user;
+        window.location.replace("/");
       }),
     [IMG_POST]: (state, action) =>
       produce(state, (draft) => {
@@ -328,6 +309,7 @@ const actionCreators = {
   logEditDB,
   NewPassWordDB,
   imgPost,
+  loginCheckDB,
 };
 
 export { actionCreators };

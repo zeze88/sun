@@ -2,9 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import Swal from "sweetalert2";
 import Profile from "../elements/Profile";
+import { useSelector } from "react-redux";
 
 const RankingOther = ({ list, user_ranking }) => {
-  const user_info = sessionStorage.getItem("uid");
+  const user_info = useSelector((state) => state.user.user.uid);
   return (
     <SC_OtherRanking>
       <ul>
