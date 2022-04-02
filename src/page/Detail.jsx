@@ -163,7 +163,7 @@ const Question = styled.div`
 `;
 
 const Top = styled.div`
-  padding: 30px 24px;
+  padding: 38px 24px 24px;
   border-bottom: solid 1px #dadada;
 
   h2 {
@@ -191,7 +191,8 @@ const Top = styled.div`
     color: var(--cate-color);
     border: solid 1px var(--cate-color);
     margin-left: 10px;
-    padding: 8px 12px;
+    padding: 3px 9px;
+    height: 25px;
     border-radius: 20px;
   }
 
@@ -211,6 +212,10 @@ const Top = styled.div`
       font-style: normal;
       border-left: solid 1px var(--main-color);
       border-right: solid 1px var(--main-color);
+    }
+
+    i {
+      font-style: normal;
     }
   }
 
@@ -258,13 +263,11 @@ const TagUl = styled.ul`
 
   display: inline-flex;
   color: var(--main-color);
-  font-size: 14px;
+  font-size: 12px;
 
   li {
-    padding: 6px 10px;
-    margin-right: 10px;
-    border-radius: 30px;
-    border: solid 1px var(--main-color);
+    height: 17px;
+    padding: 0 10px;
     cursor: pointer;
   }
 `;
