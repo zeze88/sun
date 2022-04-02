@@ -150,163 +150,163 @@ const AnswerList = ({ isWriter }) => {
         return (
           <React.Fragment key={idx}>
             <div>
-              <div className='answer_wrap'>
-                <div className='answer_box'>
-                  <div className='header'>
-                    <Profile size='48' imgUrl={v.userImage} />
-                    <span>{v.nickname}</span>
-                  </div>
-                  <div className='content'>
-                    <div>{v.answerTitle}</div>
-                    <p>{v.answerComment}</p>
-                    <div>
-                      <img src={v.answerImg} />
+            {isEdit === v.answerId ? (
+                <Answer close={setIsEdit} isEdit={true} list={v} />
+              ):(
+                <div className='answer_wrap'>
+                  <div className='answer_box'>
+                    <div className='header'>
+                      <Profile size='48' imgUrl={v.userImage} />
+                      <span>{v.nickname}</span>
+                    </div>
+                    <div className='content'>
+                      <div>{v.answerTitle}</div>
+                      <p>{v.answerComment}</p>
+                      <div>
+                        <img src={v.answerImg} />
+                      </div>
+                    </div>
+
+                    <div className='btn_wrap'>
+                        <CommentSvg />
+                      <span onClick={() => commentViewList(v.answerId)}>
+                        댓글 {comment_count}
+                      </span>
+                      {/* 채택 하기 , 수적 삭제, 채택된 상태 */}
+                    
+                      {v.status === "true" ? (
+                        <button className='choose'>채택</button>
+                      ) : Number(user_info) === Number(v.uid) ? (
+                        <>
+                          <button
+                            onClick={() => {
+                              deleAnswer(v.answerId);
+                            }}>
+                            삭제
+                          </button>
+                          <button
+                            className='edit_btn'
+                            onClick={() => {
+                              setIsEdit(v.answerId);
+                            }}>
+                            수정
+                          </button>
+                        </>
+                      ) : (
+                        Number(user_info) === Number(isWriter) &&
+                        Number(isWriter) !== Number(v.uid) && (
+                          <RoundBtn
+                            isLine
+                            title='
+                              채택
+                              '
+                            onClick={() => {
+                              chooseAnswer(v);
+                            }}
+                          />
+                        )
+                      )}
                     </div>
                   </div>
-
-                  <div className='btn_wrap'>
-                      <CommentSvg />
-                    <span onClick={() => commentViewList(v.answerId)}>
-                      댓글 {comment_count}
-                    </span>
-                    {/* 채택 하기 , 수적 삭제, 채택된 상태 */}
-                  
-                    {v.status === "true" ? (
-                      <button className='choose'>채택</button>
-                    ) : Number(user_info) === Number(v.uid) ? (
-                      <>
-                        <button
-                          onClick={() => {
-                            deleAnswer(v.answerId);
-                          }}>
-                          삭제
-                        </button>
-                        <button
-                          className='edit_btn'
-                          onClick={() => {
-                            setIsEdit(v.answerId);
-                          }}>
-                          수정
-                        </button>
-                      </>
-                    ) : (
-                      Number(user_info) === Number(isWriter) &&
-                      Number(isWriter) !== Number(v.uid) && (
-                        <RoundBtn
-                          isLine
-                          title='
-                            채택
-                            '
-                          onClick={() => {
-                            chooseAnswer(v);
-                          }}
-                        />
-                      )
-                    )}
+                  <div className='comment_box'>
+                    <SC_Commentbox className='comment'>
+                      <Comment list={v} />
+                    </SC_Commentbox>
                   </div>
-                </div>
-                <div className='comment_box'>
-                  <SC_Commentbox className='comment'>
-                    <Comment list={v} />
-                  </SC_Commentbox>
-                </div>
-                <SC_CommentList className='comment_wrap'>
-                  {v.commnetResponseDtoList.map((list, idx) => {
-                    return (
-                      <div
-                        key={idx}
-                        className={commentViewSelect ? "view" : "hide"}>
-                        {commentViewSelect && commentView === list.answerId && (
-                          <>
-                            {user_info == list.uid && (
-                              <>
-                                {isCommentEdit &&
-                                list.commentId === commentId ? (
-                                  <div>
-                                    <div className='mycomment'>
-                                      <div>
-                                        <Profile
-                                          size={24}
-                                          imgUrl={list.userImage}
-                                        />
-                                        <strong>{list.nickname}</strong>
+                  <SC_CommentList className='comment_wrap'>
+                    {v.commnetResponseDtoList.map((list, idx) => {
+                      return (
+                        <div
+                          key={idx}
+                          className={commentViewSelect ? "view" : "hide"}>
+                          {commentViewSelect && commentView === list.answerId && (
+                            <>
+                              {user_info == list.uid && (
+                                <>
+                                  {isCommentEdit &&
+                                  list.commentId === commentId ? (
+                                    <div>
+                                      <div className='mycomment'>
+                                        <div>
+                                          <Profile
+                                            size={24}
+                                            imgUrl={list.userImage}
+                                          />
+                                          <strong>{list.nickname}</strong>
+                                        </div>
+                                        <div className='button'>
+                                          <button
+                                            className='comment'
+                                            onClick={commentEdit}
+                                            value={list.commentId}>
+                                            수정완료
+                                          </button>
+                                        </div>
                                       </div>
-                                      <div className='button'>
-                                        <button
-                                          className='comment'
-                                          onClick={commentEdit}
-                                          value={list.commentId}>
-                                          수정완료
-                                        </button>
-                                      </div>
+                                      <p>
+                                        <textarea
+                                          type='text'
+                                          defaultValue={list.comment}
+                                          onChange={commentChange}></textarea>
+                                      </p>
+                                      <p> {list.createdAt?.split("T")[0]}</p>
                                     </div>
-                                    <p>
-                                      <textarea
-                                        type='text'
-                                        defaultValue={list.comment}
-                                        onChange={commentChange}></textarea>
-                                    </p>
-                                    <p> {list.createdAt?.split("T")[0]}</p>
-                                  </div>
-                                ) : (
+                                  ) : (
+                                    <div>
+                                      <div className='mycomment'>
+                                        <div>
+                                          <Profile
+                                            size={24}
+                                            imgUrl={list.userImage}
+                                          />
+                                          <strong>{list.nickname}</strong>
+                                        </div>
+                                        <div className='button'>
+                                          <button
+                                            className='comment'
+                                            onClick={() => {
+                                              setCommentEdit(list.commentId);
+                                              setIsCommentEdit(!isCommentEdit);
+                                              setComment(list.comment);
+                                            }}>
+                                            수정
+                                          </button>
+                                          <button
+                                            className='comment dele_btn'
+                                            onClick={commentDelete}
+                                            value={list.commentId}>
+                                            삭제
+                                          </button>
+                                        </div>
+                                      </div>
+                                      <p className='comment'>{list.comment}</p>
+                                      <p> {list.createdAt?.split("T")[0]}</p>
+                                    </div>
+                                  )}
+                                </>
+                              )}
+                              {list.uid != user_info && (
+                                <div>
                                   <div>
-                                    <div className='mycomment'>
-                                      <div>
-                                        <Profile
-                                          size={24}
-                                          imgUrl={list.userImage}
-                                        />
-                                        <strong>{list.nickname}</strong>
-                                      </div>
-                                      <div className='button'>
-                                        <button
-                                          className='comment'
-                                          onClick={() => {
-                                            setCommentEdit(list.commentId);
-                                            setIsCommentEdit(!isCommentEdit);
-                                            setComment(list.comment);
-                                          }}>
-                                          수정
-                                        </button>
-                                        <button
-                                          className='comment dele_btn'
-                                          onClick={commentDelete}
-                                          value={list.commentId}>
-                                          삭제
-                                        </button>
-                                      </div>
+                                    <div className='comment'>
+                                      <Profile
+                                        size={24}
+                                        imgUrl={list.userImage}
+                                      />
+                                      <strong>{list.nickname}</strong>
                                     </div>
                                     <p className='comment'>{list.comment}</p>
                                     <p> {list.createdAt?.split("T")[0]}</p>
                                   </div>
-                                )}
-                              </>
-                            )}
-                            {list.uid != user_info && (
-                              <div>
-                                <div>
-                                  <div className='comment'>
-                                    <Profile
-                                      size={24}
-                                      imgUrl={list.userImage}
-                                    />
-                                    <strong>{list.nickname}</strong>
-                                  </div>
-                                  <p className='comment'>{list.comment}</p>
-                                  <p> {list.createdAt?.split("T")[0]}</p>
                                 </div>
-                              </div>
-                            )}
-                          </>
-                        )}
-                      </div>
-                    );
-                  })}
-                </SC_CommentList>
-              </div>
-
-              {isEdit === v.answerId && (
-                <Answer close={setIsEdit} isEdit={true} list={v} />
+                              )}
+                            </>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </SC_CommentList>
+                </div>
               )}
             </div>
           </React.Fragment>
