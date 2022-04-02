@@ -1,6 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import history from "../configureStore";
 import axios from "axios";
 import Swal from "sweetalert2";
 
@@ -19,7 +18,6 @@ const initialState = {
 //action
 const CHECK_USERNAME = "CHECK_USERNAME";
 const CHECK_NICKNAME = "CHECK_NICKNAME";
-const LOG_IN = "LOG_IN";
 const LOGIN_CHECK = "LOGIN_CHECK";
 const LOG_OUT = "LOG_OUT";
 const USER_EDUT = "USER_EDUT";
@@ -36,13 +34,12 @@ const logOut = createAction(LOG_OUT, () => ({}));
 const logEdit = createAction(USER_EDUT, (user) => ({ user }));
 const imgPost = createAction(IMG_POST, (preview) => ({ preview }));
 const loginCheck = createAction(LOGIN_CHECK, (user) => ({ user }));
-// //token
+//token
 const token = sessionStorage.getItem("token");
 
 //middleware actions
 const checkUsernameDB = (username, isCheckUsername) => {
   return async function (dispatch, getState, { history }) {
-    console.log(username, isCheckUsername);
     await axios
       .post(`${apiUrl}/user/signup/username`, { username: username })
       .then((res) => {
@@ -51,14 +48,12 @@ const checkUsernameDB = (username, isCheckUsername) => {
           return;
         }
         dispatch(setCheckUsername(!isCheckUsername));
-        console.log("리듀서로");
       });
   };
 };
 
 const checkNicknameDB = (userNickname, isCheckNickname) => {
   return async function (dispatch, getState, { history }) {
-    console.log(userNickname, isCheckNickname);
     await axios
       .post(`${apiUrl}/user/signup/nickname`, {
         nickname: userNickname,
@@ -68,7 +63,6 @@ const checkNicknameDB = (userNickname, isCheckNickname) => {
           Swal.fire("", "이미 존재하는 닉네임입니다.", "error");
           return;
         }
-        console.log(res);
         dispatch(setCheckNickname(!isCheckNickname));
       });
   };
@@ -76,7 +70,6 @@ const checkNicknameDB = (userNickname, isCheckNickname) => {
 
 const signupDB = (username, nickname, password, passwordCheck, career) => {
   return function (dispatch, getState, { history }) {
-    console.log(username, nickname, password, passwordCheck, career);
     axios
       .post(`${apiUrl}/user/signup`, {
         username: username,
@@ -97,17 +90,14 @@ const signupDB = (username, nickname, password, passwordCheck, career) => {
 
 const loginDB = (username, password) => {
   return function (dispatch, getState, { history }) {
-    console.log(username, password);
     axios
       .post(`${apiUrl}/user/login`, {
         username: username,
         password: password,
       })
       .then((res) => {
-        console.log(res);
         const token_res = res.headers.authorization;
         setToken(token_res);
-        console.log(token_res);
         window.location.replace("/");
       })
       .catch((err) => {
@@ -118,7 +108,6 @@ const loginDB = (username, password) => {
 
 const loginCheckDB = () => {
   return function (dispatch, getState, { history }) {
-    console.log("로그인체크");
     axios
       .post(
         `${apiUrl}/islogin/user`,
@@ -130,7 +119,6 @@ const loginCheckDB = () => {
         }
       )
       .then((res) => {
-        console.log(res);
         dispatch(
           loginCheck({
             uid: res.data.uid,
@@ -154,7 +142,6 @@ const logEditDB = (uid, nickname, career, url, userImg) => {
     const img_list = getState().user.preview;
     const Data = new FormData();
     Data.append("images", img_list);
-    console.log(img_list);
     if (!img_list) {
       axios
         .put(
@@ -172,7 +159,6 @@ const logEditDB = (uid, nickname, career, url, userImg) => {
           }
         )
         .then((res) => {
-          console.log(res.data);
           dispatch(
             logEdit({
               nickname: nickname,
@@ -237,7 +223,6 @@ const logEditDB = (uid, nickname, career, url, userImg) => {
 };
 
 const NewPassWordDB = (uid, password, newPassword, newPasswordCheck) => {
-  console.log("간다");
   return function (dispatch, getState, { history }) {
     axios
       .put(
@@ -254,7 +239,6 @@ const NewPassWordDB = (uid, password, newPassword, newPasswordCheck) => {
         }
       )
       .then((res) => {
-        console.log(res.data);
         if (res.data.result !== true) {
           Swal.fire("", "비밀번호 수정 실패", "error");
         } else {
@@ -284,7 +268,6 @@ export default handleActions(
     [LOGIN_CHECK]: (state, action) =>
       produce(state, (draft) => {
         draft.user = action.payload.user;
-        console.log(action.payload);
         draft.isLogin = true;
       }),
     [USER_EDUT]: (state, action) =>

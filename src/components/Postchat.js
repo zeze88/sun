@@ -38,7 +38,6 @@ const Postchat = ({ pid }) => {
 
   React.useEffect(() => {
     scrollToBottom();
-    console.log(chatScroll);
   }, [publicChats, chatScroll]);
 
   React.useEffect(() => {
@@ -157,7 +156,6 @@ const Postchat = ({ pid }) => {
 
   const onError = (err) => {
     console.log(err);
-    console.log("plz");
   };
 
   const scrollToBottom = () => {

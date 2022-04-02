@@ -33,7 +33,6 @@ const SearchResult = () => {
   React.useEffect(() => {
     let timer = setTimeout(() => {
       setIsLoaded(false);
-      console.log("로딩");
     }, 1000);
   }, []);
 

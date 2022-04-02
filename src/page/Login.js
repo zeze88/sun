@@ -22,8 +22,6 @@ const Login = () => {
     }
   };
 
-  console.log(check);
-
   const login = () => {
     if (username === "" || password === "") {
       Swal.fire("", "모두 입력해주세요.", "error");

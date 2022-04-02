@@ -58,7 +58,6 @@ const addAnswerDB = ({ pid, uid, answerTitle, answerComment }) => {
         },
         headers: { Authorization: token_res },
       }).then((res) => {
-        console.log(res);
         dispatch(
           addAnswer({
             pid,
@@ -86,12 +85,10 @@ const addAnswerDB = ({ pid, uid, answerTitle, answerComment }) => {
           },
         })
         .then((res) => {
-          console.log("img업로드 성공");
           const imgUrl = res.data.url;
           return imgUrl;
         })
         .then((imgUrl) => {
-          console.log("img업로드 성공");
           axios({
             method: "post",
             url: `${apiUrl}/islogin/answer/create/${pid}`,
@@ -199,8 +196,6 @@ const editAnswerDB = (props) => {
           return imgUrl;
         })
         .then((imgUrl) => {
-          console.log("img업로드 성공");
-          console.log(imgUrl);
           axios({
             method: "put",
             url: `${apiUrl}/islogin/answer/edit/${answerId}`,
@@ -258,8 +253,6 @@ const delAnswerDB = (answsrId) => {
 
 const chooseAnswerDB = (props) => {
   return function (dispatch, getState) {
-    console.log(props);
-
     const {
       uid,
       pid,

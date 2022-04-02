@@ -1,4 +1,3 @@
-import React from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { createAction, handleActions } from "redux-actions";
@@ -19,7 +18,6 @@ const initialState = {
 
 const addCommentDB = (uid, pid, answerId, comment) => {
   return function (dispatch, getState, { history }) {
-    console.log(uid, pid, answerId, comment);
     axios
       .post(
         `${apiUrl}/islogin/comment/create`,
@@ -36,7 +34,6 @@ const addCommentDB = (uid, pid, answerId, comment) => {
         }
       )
       .then((res) => {
-        console.log(res);
         dispatch(addComment(res));
         window.location.reload();
       })
@@ -48,7 +45,6 @@ const addCommentDB = (uid, pid, answerId, comment) => {
 };
 
 const editCommentDB = (commentId, comment, pid) => {
-  console.log(commentId, comment);
   return function (dispatch, getState, { history }) {
     axios
       .put(
@@ -63,7 +59,6 @@ const editCommentDB = (commentId, comment, pid) => {
         }
       )
       .then((res) => {
-        console.log(res);
         window.location.replace(`/detail/${pid}`);
       })
       .catch((err) => {
@@ -75,7 +70,6 @@ const editCommentDB = (commentId, comment, pid) => {
 
 const deleteCommentDB = (commentId) => {
   return function (dispatch, getState, { history }) {
-    console.log(commentId);
     axios
       .delete(`${apiUrl}/islogin/comment/delete/${commentId}`, {
         headers: {
@@ -83,7 +77,6 @@ const deleteCommentDB = (commentId) => {
         },
       })
       .then((res) => {
-        console.log(res);
         dispatch(deleteComment(commentId));
         window.location.reload();
       })

@@ -50,7 +50,6 @@ const myLikeDelDB = (uid, pid) => {
     apis
       .likepost(uid, pid)
       .then((res) => {
-        console.log(res);
         const _aram_list = getState().mypage.list;
         const aram_list = _aram_list.filter((v) => v.pid !== pid);
         dispatch(myAlarmsDel(aram_list));

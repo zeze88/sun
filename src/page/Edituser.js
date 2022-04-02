@@ -65,7 +65,6 @@ const Edituser = (props) => {
   ////////////////////////////////////////사진 변경
   const editImg = () => {
     const img = imgInput.current.files[0];
-    console.log(img);
     const imgReader = new FileReader();
     imgReader.readAsDataURL(img);
     imgReader.onloadend = () => {

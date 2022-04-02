@@ -39,7 +39,6 @@ const Chat = () => {
 
   React.useEffect(() => {
     scrollToBottom();
-    console.log(chatScroll);
   }, [publicChats, chatScroll]);
 
   React.useEffect(() => {

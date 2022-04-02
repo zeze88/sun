@@ -38,7 +38,6 @@ function Signup(props) {
     const id = e.target.value;
     setUsername(id);
     rule.test(id) ? setIdRuleCheck(true) : setIdRuleCheck(false);
-    console.log(idRuleCheck);
   };
 
   const nicknameRule = (e) => {
@@ -67,7 +66,6 @@ function Signup(props) {
       Swal.fire("", "아이디 형식이 맞지않습니다.", "error");
       return;
     }
-    console.log(username, "중복요청");
     dispatch(userActions.checkUsernameDB(username, false));
     setIsCheckUsername(true);
   };
@@ -80,7 +78,6 @@ function Signup(props) {
       Swal.fire("", "닉네임 형식이 맞지않습니다.", "error");
       return;
     }
-    console.log(nickname, "의 중복확인 요청을 dispatch 했습니다.");
     dispatch(userActions.checkNicknameDB(nickname, false));
     setIsCheckNickname(true);
   };

@@ -29,7 +29,6 @@ const prevChatDB = (props) => {
 
 const prevPostChatDB = (pid) => {
   return function (dispatch, getState) {
-    console.log(`pid ${pid}`);
     apis
       .prepostchat(pid)
       .then((res) => {

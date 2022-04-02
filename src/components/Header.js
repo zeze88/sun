@@ -40,7 +40,6 @@ const Header = () => {
   };
 
   React.useEffect(() => {
-    console.log(userinfo);
     if (userinfo === false) {
       dispatch(userActions.loginCheckDB());
       setUserinfo(true);
@@ -57,7 +56,6 @@ const Header = () => {
           `/queue/user/${nickname}`,
           (payload) => {
             let payloadData = JSON.parse(payload.body);
-            console.log(payloadData);
             setGoPost(payloadData);
           },
           token

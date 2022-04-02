@@ -26,12 +26,10 @@ const Password = () => {
     rule.test(newPassword)
       ? setNewPasswordRuleCheck(true)
       : setNewPasswordRuleCheck(false);
-    console.log(newPasswordRuleCheck);
   };
 
   const CheckPass = (e) => {
     setCheckPassWord(e.target.value);
-    console.log(checkPassWord);
   };
 
   /////////////////입력한 현재비밀번호가 맞는지 확인해야함

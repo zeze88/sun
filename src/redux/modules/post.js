@@ -9,18 +9,14 @@ const GET_ONE_POST = "GET_ONE_POST";
 const GET_POSTCHK = "GET_POSTCHK";
 const ADD_POST = "ADD_POST";
 const EDIT_POST = "EDIT_POST";
-const DEL_POST = "DEL_POST";
 const IMG_POST = "IMG_POST";
-const LOADING = "LOADING";
 
 const getPost = createAction(GET_POST, (post) => ({ post }));
 const getPostNoChk = createAction(GET_POSTCHK, (post) => ({ post }));
 const getOnePost = createAction(GET_ONE_POST, (post) => ({ post }));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
 const editPost = createAction(EDIT_POST, (post) => ({ post }));
-const delPost = createAction(DEL_POST, (pid) => ({ pid }));
 const imgPost = createAction(IMG_POST, (preview) => ({ preview }));
-const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 
 const initialState = {
   list: [],
@@ -43,7 +39,7 @@ const getPostDB = (page) => {
         dispatch(getPost(query));
       })
       .catch((err) => {
-        console.log("error get post");
+        console.loge(err);
       });
   };
 };
@@ -57,7 +53,7 @@ const getPostNocheckDB = (page) => {
         dispatch(getPostNoChk(query));
       })
       .catch((err) => {
-        console.log("error get post");
+        console.log(err);
       });
   };
 };
@@ -301,17 +297,9 @@ export default handleActions(
         draft.one_list = action.payload.post;
         draft.preview = "";
       }),
-    [DEL_POST]: (state, action) =>
-      produce(state, (draft) => {
-        draft.list = draft.list;
-      }),
     [IMG_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.preview = action.payload.preview;
-      }),
-    [LOADING]: (state, action) =>
-      produce(state, (draft) => {
-        draft.is_loading = action.payload.is_loading;
       }),
   },
   initialState
