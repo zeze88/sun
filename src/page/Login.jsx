@@ -170,7 +170,6 @@ const Container2 = styled.div`
 
   div.signuplogo {
     width: 500px;
-    height: 196px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -220,6 +219,10 @@ const Container2 = styled.div`
     font-size: 16px;
     outline: none;
     border-radius: 0.5rem;
+    
+    &::placeholder{
+      color:#BCBCBC;
+    }
   }
   button {
     width: 100%;
