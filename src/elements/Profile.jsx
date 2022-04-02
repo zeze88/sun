@@ -27,9 +27,9 @@ const ProfileImg = styled.span`
   height: ${props.size}px;
   border-radius:${props.size}px;
   `}
-
-  background: url(${(props) =>
-    props.imgUrl && props.imgUrl})no-repeat center / cover;
+  
+background: url(${(props) => props.imgUrl && props.imgUrl}) no-repeat center / cover;
 `;
+
 
 export default Profile;
