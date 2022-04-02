@@ -156,6 +156,7 @@ const Postchat = ({ pid }) => {
 
   const onError = (err) => {
     console.log(err);
+    console.log("plz");
   };
 
   const scrollToBottom = () => {
