@@ -278,9 +278,15 @@ const ChatList = styled.div`
 
     &.user {
       position: relative;
+      padding-top:6px;
       padding-left: 36px;
       padding-right: 10px;
-      margin: 12px 0;
+      padding-bottom:12px;
+
+      div {
+        display: flex;
+        align-items: center;
+      }
 
       strong {
         font-size: 14px;
@@ -345,16 +351,26 @@ const ChatList = styled.div`
   }
 
   i {
+    position: relative;
+    padding-left:5px;
+    margin-left:6px;
     color: #797979;
     font-size: 12px;
     font-style: normal;
 
     &:before {
-      --dat-size: 2px;
-      content: ".";
-      margin: 0 6px;
-      font-size: 16px;
-      vertical-align: super;
+      --dot-size: 2px;
+
+      content: "";
+      display: block;
+      position: absolute;
+      left:0;
+      top:50%;
+      transform:translateY(-50%);
+      width: var(--dot-size);
+      height: var(--dot-size);
+      border-radius: var(--dot-size);
+      background-color:#797979;
     }
   }
 
