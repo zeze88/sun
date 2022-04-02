@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 
 const Comment = ({ list }) => {
   const dispatch = useDispatch();
-  const is_login = useSelector((state) => state.isLogin);
+  const is_login = useSelector((state) => state.user.isLogin);
   const pid = useParams().pid;
   const uid = useSelector((state) => state.user.user.uid);
   const answerId = list.answerId;
