@@ -102,6 +102,7 @@ const loginDB = (username, password) => {
       })
       .catch((err) => {
         console.log(err);
+        Swal.fire("", "아이디 및 비밀번호를 화인해주세요.", "error");
       });
   };
 };
