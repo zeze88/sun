@@ -167,6 +167,7 @@ const AnswerList = ({ isWriter }) => {
                       댓글 {comment_count}
                     </span>
                     {/* 채택 하기 , 수적 삭제, 채택된 상태 */}
+                  
                     {v.status === "true" ? (
                       <button className='choose'>채택</button>
                     ) : Number(user_info) === Number(v.uid) ? (
@@ -368,6 +369,7 @@ const SC_List = styled.div`
     }
 
     button {
+      width: 94px;
       color: #7966ff;
       font-size: 16px;
 
@@ -381,10 +383,16 @@ const SC_List = styled.div`
       }
     }
 
-    .edit_btn:before {
-      content: "";
-      margin: 0 12px;
-      border-left: solid 1px #7966ff;
+    .edit_btn{
+      position: relative;
+      &:before {
+        content: "";
+        position: absolute;
+        left:-1px;
+        width:1px;
+        height: 18px;
+        background-color: #7966ff;
+      }
     }
   }
 `;
