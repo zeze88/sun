@@ -342,6 +342,7 @@ const Career = styled.div`
       &:hover {
         background-color: #5e45f2;
         color: #f9f8ff;
+        border-radius:4px;
       }
     }
   }
