@@ -256,8 +256,9 @@ const ChatTab = styled.ul`
   overflow: auto;
 
   li {
-    padding: 0 22px;
-    margin: 0 10px;
+    width: 74px;
+    text-align: center;
+    margin: 0 12px;
     font-size: 18px;
     font-weight: 700;
     line-height: 58px;
