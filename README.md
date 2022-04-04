@@ -1,70 +1,86 @@
 # co-ala 코딩! 알려주라
 
-코딩하다가 막혔을때 원하는 정보가 없다?
+</br>
 
-## Available Scripts
+## 🤷 프로젝트 소개
 
-In the project directory, you can run:
+ <p> co-ala 코딩! 알려주라 </p>
+Web Site : https://www.co-ala.com
+</br>
 
-### `yarn start`
+<!-- ## 🎥 시연 영상
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+[![Hnet-image](https://cdn.notefolio.net/img/d6/3f/d63fc54819cd3fb0c319021e2e7cd6bfee951e8ce2db9e948bd828f538272da6_v1.jpg)](https://www.youtube.com/watch?v=FKEtQQn_JbE)<br>
+이미지를 클릭하시면 유튜브 영상으로 이동됩니다. -->
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🧑🏼‍💻 개발기간 및 팀원소개
 
-### `yarn test`
+### 기간: 2022.02.25 ~ 2022.04.08
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+</br>
 
-### `yarn build`
+### Front-end
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<p><a href="https://github.com/zeze88" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=React&message=박현석&color=61dafb&style=for-the-badge&>"/>정재연</a></p>
+<p><a href="https://github.com/cyjin463" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=React&message=김두루&color=61dafb&style=for-the-badge&>"/>최영진</a></p>
+  
+### Back-end
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<p><a href="https://github.com/zeze88" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=React&message=박현석&color=61dafb&style=for-the-badge&>"/>최병재</a></p>
+<p><a href="https://github.com/cyjin463" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=React&message=김두루&color=61dafb&style=for-the-badge&>"/>나경운</a></p>
+<p><a href="https://github.com/cyjin463" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=React&message=김두루&color=61dafb&style=for-the-badge&>"/>박정희</a></p>
+</br>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🏷 API Table
 
-### `yarn eject`
+<details>
+ <summary>자세히 보기</summary>
+https://www.notion.so/b07e51cc05fc474f92c3566b22c3062d?v=c2b170bc7a294ee9bd1a1a438167e0e1
+ </details>
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 🔨사용한 기술 스택
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<code> Front-end </code>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+<img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> 
+<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> 
+<img src="https://img.shields.io/badge/Axios-181717?style=for-the-badge&logo=github&logoColor=white">
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+<code> Back-end </code>
 
-## Learn More
+- [Back-end 개발Page](https://github.com/hyunjikeem/clone_coding)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+<code>Tool</code>
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
+<img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
 
-### Code Splitting
+## ⚒️ 코알리팀 와이어 프레임 ⚒️
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+<details>
+ <summary>자세히 보기</summary>
+https://www.notion.so/e6c80925727742cf9e20dfacd0b8a9e1
+ </details>
 
-### Analyzing the Bundle Size
+## ✌🏻 개인 역할 및 트러블슈팅 해결과정
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+<code>정재연</code> 로그인, 댓글, 알림모달창, 메인페이지
 
-### Making a Progressive Web App
+<code>최영진</code> 회원가입, 메인페이지, 로케이션페이지, 디테일페이지, 지도API
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+<code>Trouble Shooting</code>[트러블 슈팅 해결과정](https://www.notion.so/201f7b41520f4b05959d3e45c519398e)
 
-### Advanced Configuration
+</br>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 📝 후기 및 팀 노션 페이지
 
-### Deployment
+<code>정재연</code> 프론트와 백엔드의 협업 방식을 조금더 배울 수 있었던 시간이였고. 기존에 두루뭉술하게 알고 있읐던, CURD를 조금 더 잘 알게 되었습니다.
+react-slick, react-modal 같은 새로운 패키지를 사용하면서 패키지들의 편의성에 또한번 감탄하며 사용할 수 있었습니다.
+좋은 팀원들과 함께 할 수 있어서 이번 한주는 정말 행복하게 할 수 있었습니다.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+<code>최영진</code> 프론트와 백엔드의 협업 방식을 조금더 배울 수 있었던 시간이였고. 기존에 두루뭉술하게 알고 있읐던, CURD를 조금 더 잘 알게 되었습니다.
+react-slick, react-modal 같은 새로운 패키지를 사용하면서 패키지들의 편의성에 또한번 감탄하며 사용할 수 있었습니다.
+좋은 팀원들과 함께 할 수 있어서 이번 한주는 정말 행복하게 할 수 있었습니다.
 
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<code>팀 노션 페이지</code> [코알라팀 노션](https://www.notion.so/5-8-28217e32bae849a5bc95389ed1d5dd73)
