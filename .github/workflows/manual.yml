@@ -19,6 +19,9 @@ jobs:
       - name: Check Node v # Node v 확인
         run: node -v
 
+      - name: yarn install
+        run: yarn install
+
       - name: Build
         run: yarn build
         env:
