@@ -81,7 +81,7 @@ const Header = () => {
             <i>
               <User />
             </i>
-            <span>회원가입/로그인</span>
+            <span>회원가입/로그인1</span>
           </div>
         ) : (
           <div className='auth my' onClick={View}>

@@ -62,7 +62,7 @@ const Login = () => {
                   name='select'
                   value='signup'
                 />
-                회원가입
+                회원가입1
               </label>
               <PolygonSvg className={check === "login" ? "login" : "signup"} />
             </Switch>
