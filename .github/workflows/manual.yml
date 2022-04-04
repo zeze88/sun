@@ -11,20 +11,26 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_REGION: "ap-northeast-2"
 
-    steps:
-      - name: Checkout source code.
-        uses: actions/checkout@master
+  steps:
+    - name: Checkout source code.
+      uses: actions/checkout@master
 
-      - name: Upload binary to S3 bucket
-        uses: jakejarvis/s3-syne-action@master
-        with:
-          args: --acl public-read --exclude '*' --include 'index.html'
-        env:
-          AWS_S3_BUCKET: ${{ secrets.BUCKET_NAME }}
+    - name: Check Node v # Node v 확인
+      run: node -v
 
-      - name: Invalidate cache CloudFront
-        uses: chetan/invalidate-cloudfront-action@master
-        env:
-          DISTRIBUTION: ${{ secrets.DISTRIBUTION_ID }}
-          PATHS: "/index.html"
-        continue-on-error: true
+    - name: yarn install
+      run: yarn install
+
+    - name: Build
+      run: yarn build
+      env:
+        CI: "" # 경고를 에러로 보지 않게 함
+
+    - name: Deploy S3 # Upload build file to S3
+      run: aws s3 cp --recursive --region ap-northeast-2 build s3://co-ala.com
+    - name: Invalidate cache CloudFront
+      uses: chetan/invalidate-cloudfront-action@master
+      env:
+        DISTRIBUTION: ${{ secrets.DISTRIBUTION_ID }}
+        PATHS: "/index.html"
+      continue-on-error: true
