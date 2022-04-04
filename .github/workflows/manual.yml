@@ -19,6 +19,14 @@ jobs:
       - name: Check Node v # Node v 확인
         run: node -v
 
+      - name: yarn install
+        run: yarn install
+
+      - name: Build
+        run: yarn build
+        env:
+          CI: "" # 경고를 에러로 보지 않게 함
+
       - name: Deploy S3 # Upload build file to S3
         run: aws s3 cp --recursive --region ap-northeast-2 build s3://co-ala.com
       - name: Invalidate cache CloudFront
