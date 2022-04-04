@@ -51,7 +51,7 @@ const Login = () => {
                   name='select'
                   value='login'
                 />
-                로그인
+                로그인1
               </label>
               <label className={check === "signup" ? "signup" : ""}>
                 <input
