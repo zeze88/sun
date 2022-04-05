@@ -21,14 +21,14 @@ Web Site : https://www.co-ala.com
 
 ### Front-end
 
-<p><a href="https://github.com/zeze88" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=React&message=박현석&color=61dafb&style=for-the-badge&>"/>정재연</a></p>
-<p><a href="https://github.com/cyjin463" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=React&message=김두루&color=61dafb&style=for-the-badge&>"/>최영진</a></p>
+<p><a href="https://github.com/zeze88" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=React&message=정재연&color=61dafb&style=for-the-badge&>"/></a></p>
+<p><a href="https://github.com/cyjin463" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=React&message=최영진&color=61dafb&style=for-the-badge&>"/></a></p>
   
 ### Back-end
 
-<p><a href="https://github.com/zeze88" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=React&message=박현석&color=61dafb&style=for-the-badge&>"/>최병재</a></p>
-<p><a href="https://github.com/cyjin463" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=React&message=김두루&color=61dafb&style=for-the-badge&>"/>나경운</a></p>
-<p><a href="https://github.com/cyjin463" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=React&message=김두루&color=61dafb&style=for-the-badge&>"/>박정희</a></p>
+<p><a href="https://github.com/zeze88" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=Spring&message=최병재&color=61dafb&style=for-the-badge&>"/></a></p>
+<p><a href="https://github.com/cyjin463" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=Spring&message=나경운&color=61dafb&style=for-the-badge&>"/></a></p>
+<p><a href="https://github.com/cyjin463" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=Spring&message=박정희&color=61dafb&style=for-the-badge&>"/></a></p>
 </br>
 
 ## 🏷 API Table
