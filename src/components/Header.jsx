@@ -39,7 +39,8 @@ const Header = () => {
   };
 
   React.useEffect(() => {
-    if (userinfo === false && token) {
+    const tokenCheck = sessionStorage.getItem("token")
+    if (userinfo === false && tokenCheck) {
       dispatch(userActions.loginCheckDB());
       setUserinfo(true);
     }
