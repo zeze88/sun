@@ -54,17 +54,11 @@ https://www.notion.so/b07e51cc05fc474f92c3566b22c3062d?v=c2b170bc7a294ee9bd1a1a4
 
 ### Front-end
 
-<img src="https://img.shields.io/badge/javascript-F7DF1E?style=float&logo=javascript&logoColor=white">
-<img src="https://img.shields.io/badge/Redux-764ABC?style=float&logo=Redux&logoColor=white"> 
-<img src="https://img.shields.io/badge/css-1572B6?style=float&logo=css3&logoColor=white"> 
-<img src="https://img.shields.io/badge/react-61DAFB?style=float&logo=react&logoColor=white">
-<img src="https://img.shields.io/badge/aws-232F3E?style=float&logo=Amazon AWS&logoColor=white">
-<img src="https://img.shields.io/badge/Axios-181717?style=float&logo=github&logoColor=white">
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white"> <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=white"> <img src="https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=Redux&logoColor=white"> <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/styled components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white"> <img src="https://img.shields.io/badge/aws-232F3E?style=for-the-badge&logo=Amazon AWS&logoColor=white"> <img src="https://img.shields.io/badge/Axios-181717?style=for-the-badge&logo=github&logoColor=white">
 
 ### Tool
 
-<img src="https://img.shields.io/badge/github-181717?style=float&logo=github&logoColor=white">
-<img src="https://img.shields.io/badge/git-F05032?style=float&logo=git&logoColor=white">
+<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"><img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
 
 ### Back-end
 
