@@ -21,14 +21,14 @@ Web Site : https://www.co-ala.com
 
 ### Front-end
 
-<p><a href="https://github.com/zeze88" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=React&message=정재연&color=61dafb&style=for-the-badge&>"/></a></p>
-<p><a href="https://github.com/cyjin463" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=React&message=최영진&color=61dafb&style=for-the-badge&>"/></a></p>
+<p><a href="https://github.com/zeze88" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=React&message=%ec%a0%95%ec%9e%ac%ec%97%b0&color=61dafb&style=for-the-badge&>"/></a></p>
+<p><a href="https://github.com/cyjin463" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=React&message=%ec%b5%9c%ec%98%81%ec%a7%84&color=61dafb&style=for-the-badge&>"/></a></p>
   
 ### Back-end
 
-<p><a href="https://github.com/zeze88" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=Spring&message=최병재&color=61dafb&style=for-the-badge&>"/></a></p>
-<p><a href="https://github.com/cyjin463" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=Spring&message=나경운&color=61dafb&style=for-the-badge&>"/></a></p>
-<p><a href="https://github.com/cyjin463" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=Spring&message=박정희&color=61dafb&style=for-the-badge&>"/></a></p>
+<p><a href="https://github.com/zeze88" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=Spring&message=%ec%b5%9c%eb%b3%91%ec%9e%ac&color=81ea6f&style=for-the-badge&>"/></a></p>
+<p><a href="https://github.com/cyjin463" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=Spring&message=%eb%82%98%ea%b2%bd%ec%9a%b4&color=81ea6f&style=for-the-badge&>"/></a></p>
+<p><a href="https://github.com/cyjin463" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=Spring&message=%eb%b0%95%ec%a0%95%ed%9d%ac&color=81ea6f&style=for-the-badge&>"/></a></p>
 </br>
 
 ## 🏷 API Table
@@ -42,9 +42,11 @@ https://www.notion.so/b07e51cc05fc474f92c3566b22c3062d?v=c2b170bc7a294ee9bd1a1a4
 
 <code> Front-end </code>
 
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white">
+<img src="https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=Redux&logoColor=white"> 
 <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
-<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> 
-<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> 
+<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=white">
+<img src="https://img.shields.io/badge/aws-232F3E?style=for-the-badge&logo=Amazon AWS&logoColor=white">
 <img src="https://img.shields.io/badge/Axios-181717?style=for-the-badge&logo=github&logoColor=white">
 
 <code> Back-end </code>
@@ -63,13 +65,13 @@ https://www.notion.so/b07e51cc05fc474f92c3566b22c3062d?v=c2b170bc7a294ee9bd1a1a4
 https://www.notion.so/e6c80925727742cf9e20dfacd0b8a9e1
  </details>
 
-## ✌🏻 개인 역할 및 트러블슈팅 해결과정
+## ⭐️ 개인 역할 및 트러블슈팅 해결과정 ⭐️
 
-<code>정재연</code> 로그인, 댓글, 알림모달창, 메인페이지
+<code>정재연</code> 메인, 게시글 상세페이지, 게시글 작성&수정&삭제, 답변 작성&수정&삭제, 태그검색, 랭킹 페이지, 관심글 페이지, 채팅
 
-<code>최영진</code> 회원가입, 메인페이지, 로케이션페이지, 디테일페이지, 지도API
+<code>최영진</code> 로그인, 회원가입, 전체 검색, 카테고리 검색, 댓글 작성&수정&삭제, 프로필 수정,비밀번호 수정, 채팅
 
-<code>Trouble Shooting</code>[트러블 슈팅 해결과정](https://www.notion.so/201f7b41520f4b05959d3e45c519398e)
+<code>Trouble Shooting</code>[트러블 슈팅 해결과정](https://www.notion.so/5-8-28217e32bae849a5bc95389ed1d5dd73)
 
 </br>
 
