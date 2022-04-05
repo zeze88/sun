@@ -39,7 +39,7 @@ const Header = () => {
   };
 
   React.useEffect(() => {
-    if (userinfo === false) {
+    if (userinfo === false && token) {
       dispatch(userActions.loginCheckDB());
       setUserinfo(true);
     }
@@ -47,7 +47,7 @@ const Header = () => {
 
   React.useEffect(() => {
 
-   if (nickname) {
+    if (nickname) {
     let socket = new SockJs(`${apiUrl}/ws-coala`);
     stompClient = Stomp.over(socket);
       stompClient.connect(token, () => {
@@ -79,7 +79,7 @@ const Header = () => {
 
         <Serch />
         {!isLogin ? (
-          <div className='auth none' onClick={() => history.push("/login")}>
+          <div className='auth none' onClick={() => history.replace("/login")}>
             <i>
               <User />
             </i>
