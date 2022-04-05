@@ -1,11 +1,24 @@
 # co-ala 코딩! 알려주라
 
+![logo](/public/og_img.png)
 </br>
 
 ## 🤷 프로젝트 소개
 
- <p> co-ala 코딩! 알려주라 </p>
-Web Site : https://www.co-ala.com
+### co-ala 코딩! 알려주라
+
+안녕하세요! 항해99 5기 8조 "코알라” 팀입니다<br/>
+“코알라”는 코딩 관련하여 질문 사항이 있는 사람이 채팅과 게시글을 통해 질문 하고 응답을 받을 수 있는 사이트입니다.
+
+이런 분에게 좋아요!👍🏻<br/>
+
+“빠르게 해결하고 싶은데 답변이 안달려 답답해요”😮‍💨<br/>
+“에러가 발생했는데 어떻게 해결해야할지 모르겠어요”🥲<br/>
+“자료는 많은데 어떻게 해결 방법을 적용해야할지 복잡해요”😵‍💫<br/>
+당신이 직면한 문제! 당신만의 문제가 아닙니다. 공유하고 함께 해결해요! 코딩! 알려주라~<br/>
+
+#### 👉🏻Web Site : https://www.co-ala.com
+
 </br>
 
 <!-- ## 🎥 시연 영상
@@ -13,11 +26,9 @@ Web Site : https://www.co-ala.com
 [![Hnet-image](https://cdn.notefolio.net/img/d6/3f/d63fc54819cd3fb0c319021e2e7cd6bfee951e8ce2db9e948bd828f538272da6_v1.jpg)](https://www.youtube.com/watch?v=FKEtQQn_JbE)<br>
 이미지를 클릭하시면 유튜브 영상으로 이동됩니다. -->
 
-## 🧑🏼‍💻 개발기간 및 팀원소개
+## 👩🏻‍💻 개발기간 및 팀원소개 🧑🏻‍💻
 
 ### 기간: 2022.02.25 ~ 2022.04.08
-
-</br>
 
 ### Front-end
 
@@ -25,38 +36,41 @@ Web Site : https://www.co-ala.com
 <p><a href="https://github.com/cyjin463" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=React&message=%ec%b5%9c%ec%98%81%ec%a7%84&color=61dafb&style=for-the-badge&>"/></a></p>
   
 ### Back-end
-
 <p><a href="https://github.com/zeze88" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=Spring&message=%ec%b5%9c%eb%b3%91%ec%9e%ac&color=81ea6f&style=for-the-badge&>"/></a></p>
 <p><a href="https://github.com/cyjin463" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=Spring&message=%eb%82%98%ea%b2%bd%ec%9a%b4&color=81ea6f&style=for-the-badge&>"/></a></p>
 <p><a href="https://github.com/cyjin463" target="_blank"><img width="150"  src="https://img.shields.io/static/v1?label=Spring&message=%eb%b0%95%ec%a0%95%ed%9d%ac&color=81ea6f&style=for-the-badge&>"/></a></p>
 </br>
 
-## 🏷 API Table
+## 🏷 API Table 🏷
 
 <details>
  <summary>자세히 보기</summary>
 https://www.notion.so/b07e51cc05fc474f92c3566b22c3062d?v=c2b170bc7a294ee9bd1a1a438167e0e1
  </details>
 
-## 🔨사용한 기술 스택
+<br/>
 
-<code> Front-end </code>
+## 🔨 사용한 기술 스택 🔨
 
-<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white">
-<img src="https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=Redux&logoColor=white"> 
-<img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
-<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=white">
-<img src="https://img.shields.io/badge/aws-232F3E?style=for-the-badge&logo=Amazon AWS&logoColor=white">
-<img src="https://img.shields.io/badge/Axios-181717?style=for-the-badge&logo=github&logoColor=white">
+### Front-end
 
-<code> Back-end </code>
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=float&logo=javascript&logoColor=white">
+<img src="https://img.shields.io/badge/Redux-764ABC?style=float&logo=Redux&logoColor=white"> 
+<img src="https://img.shields.io/badge/css-1572B6?style=float&logo=css3&logoColor=white"> 
+<img src="https://img.shields.io/badge/react-61DAFB?style=float&logo=react&logoColor=white">
+<img src="https://img.shields.io/badge/aws-232F3E?style=float&logo=Amazon AWS&logoColor=white">
+<img src="https://img.shields.io/badge/Axios-181717?style=float&logo=github&logoColor=white">
 
-- [Back-end 개발Page](https://github.com/hyunjikeem/clone_coding)
+### Tool
 
-<code>Tool</code>
+<img src="https://img.shields.io/badge/github-181717?style=float&logo=github&logoColor=white">
+<img src="https://img.shields.io/badge/git-F05032?style=float&logo=git&logoColor=white">
 
-<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
-<img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
+### Back-end
+
+- [Back-end 개발Page]()
+
+<br>
 
 ## ⚒️ 코알리팀 와이어 프레임 ⚒️
 
@@ -64,6 +78,8 @@ https://www.notion.so/b07e51cc05fc474f92c3566b22c3062d?v=c2b170bc7a294ee9bd1a1a4
  <summary>자세히 보기</summary>
 https://www.notion.so/e6c80925727742cf9e20dfacd0b8a9e1
  </details>
+
+<br>
 
 ## ⭐️ 개인 역할 및 트러블슈팅 해결과정 ⭐️
 
@@ -75,7 +91,7 @@ https://www.notion.so/e6c80925727742cf9e20dfacd0b8a9e1
 
 </br>
 
-## 📝 후기 및 팀 노션 페이지
+## 🌟 후기 및 팀 노션 페이지 🌟
 
 <code>정재연</code> 프론트와 백엔드의 협업 방식을 조금더 배울 수 있었던 시간이였고. 기존에 두루뭉술하게 알고 있읐던, CURD를 조금 더 잘 알게 되었습니다.
 react-slick, react-modal 같은 새로운 패키지를 사용하면서 패키지들의 편의성에 또한번 감탄하며 사용할 수 있었습니다.
