@@ -43,7 +43,7 @@ const Header = () => {
       dispatch(userActions.loginCheckDB());
       setUserinfo(true);
     }
-  }, []);
+  }, [isLogin]);
 
   React.useEffect(() => {
 

@@ -274,7 +274,8 @@ export default handleActions(
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
         delToken();
-        window.location.replace("/login");
+        draft.user = {};
+        draft.isLogin = false;
       }),
     [USER_EDUT]: (state, action) =>
       produce(state, (draft) => {
