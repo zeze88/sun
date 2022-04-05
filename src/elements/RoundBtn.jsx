@@ -11,9 +11,9 @@ const RoundBtn = ({ onClick, title, isLine = false }) => {
 
 const Button = styled.button`
   --main-color: #7966ff;
+  width: 94px;
   height: 39px;
   flex: none;
-  padding: 0 32px;
   font-size: 16px;
   border-radius: 32px;
   box-size: border-box;

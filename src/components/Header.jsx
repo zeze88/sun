@@ -26,14 +26,14 @@ const Header = () => {
   const View = () => {
     setView(!view);
   };
-
+  
   const [goPost, setGoPost] = React.useState("");
   const token = {
     Authorization: sessionStorage.getItem("token")
-      ? sessionStorage.getItem("token")
-      : "Authorization",
+    ? sessionStorage.getItem("token")
+    : "Authorization",
   };
-
+  
   const Logout = () => {
     dispatch(userActions.logOut());
   };
@@ -46,10 +46,10 @@ const Header = () => {
   }, []);
 
   React.useEffect(() => {
-    if (nickname) {
-      let socket = new SockJs(`${apiUrl}/ws-coala`);
 
-      stompClient = Stomp.over(socket);
+   if (nickname) {
+    let socket = new SockJs(`${apiUrl}/ws-coala`);
+    stompClient = Stomp.over(socket);
       stompClient.connect(token, () => {
         stompClient.subscribe(
           `/queue/user/${nickname}`,
@@ -60,14 +60,16 @@ const Header = () => {
           token
         );
       });
-    }
-    return () => {
+    } else if (!token) {
+      let socket = new SockJs(`${apiUrl}/ws-coala`);
+      stompClient = Stomp.over(socket);
       stompClient.disconnect(() => {
         stompClient.unsubscribe(`/queue/user/${nickname}`);
-      });
-    };
-  }, []);
-
+      })
+    }
+    
+  }, [nickname,token]);
+  
   return (
     <Container>
       <div>
