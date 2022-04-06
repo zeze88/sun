@@ -32,7 +32,7 @@ const totalRankingDB = () => {
 const monthRankingDB = () => {
   return function (dispatch, getState, { history }) {
     apis
-      .totalRanking()
+      .monthRanking()
       .then((res) => {
         dispatch(monthRanking(res.data));
       })
@@ -44,7 +44,7 @@ const monthRankingDB = () => {
 const weekRankingDB = () => {
   return function (dispatch, getState, { history }) {
     apis
-      .totalRanking()
+      .weekRanking()
       .then((res) => {
         dispatch(weekRanking(res.data));
       })
