@@ -42,7 +42,6 @@ const Ranking = () => {
         return;
     }
   }, [tabList]);
-
   return (
     <SC_Detail>
       <TabMenu tab_list={tab_list} tab={setTabList} />

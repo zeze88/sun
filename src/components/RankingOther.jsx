@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 
 const RankingOther = ({ list, user_ranking }) => {
   const user_info = useSelector((state) => state.user.user.uid);
+
   return (
     <SC_OtherRanking>
       <ul>
@@ -14,9 +15,9 @@ const RankingOther = ({ list, user_ranking }) => {
             <i>{user_ranking.rank}</i>
             <Profile size={56} imgUrl={user_ranking.userImage} />
             <strong>{user_ranking.nickname}</strong>
-            {user_ranking.point && <em>{user_ranking.point} 점</em>}
-            {user_ranking.weekPoint && <em>{user_ranking.weekPoint} 점</em>}
-            {user_ranking.monthPoint && <em>{user_ranking.monthPoint} 점</em>}
+            {user_ranking.point >= 0&& <em>{user_ranking.point} 점</em>}
+            {user_ranking.monthPoint >= 0&& <em>{user_ranking.monthPoint} 점</em>}
+            {user_ranking.weekPoint>= 0 && <em>{user_ranking.weekPoint} 점</em>}
             {!user_ranking.blogUrl ||
             user_ranking.blogUrl === "undefined" ||
             user_ranking.blogUrl === "null" ? (
@@ -38,7 +39,9 @@ const RankingOther = ({ list, user_ranking }) => {
             <i>{idx + 4}</i>
             <Profile size={56} imgUrl={v.userImage} />
             <strong>{v.nickname}</strong>
-            <em>{!v.point ? 0 : v.point} 점</em>
+              {v.point >= 0 && <em>{v.point}점</em>}
+              {v.monthPoint >= 0 && <em>{v.monthPoint}점</em>}
+              {v.weekPoint >= 0 && <em>{v.weekPoint }점</em>}
             {!v.blogUrl || v.blogUrl === "unll" || v.blogUrl === "undefined" ? (
               <button
                 onClick={() => {
