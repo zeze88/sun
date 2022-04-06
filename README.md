@@ -69,7 +69,7 @@ https://www.notion.so/b07e51cc05fc474f92c3566b22c3062d?v=c2b170bc7a294ee9bd1a1a4
 ## ⚒️ 코알리팀 와이어 프레임 ⚒️
 
 <details>
- <summary>자세히 보기</summary>
+ <summary>자세히 보기</summary>s
 https://www.notion.so/e6c80925727742cf9e20dfacd0b8a9e1
  </details>
 
@@ -79,7 +79,7 @@ https://www.notion.so/e6c80925727742cf9e20dfacd0b8a9e1
 
 <code>정재연</code> 메인, 게시글 상세페이지, 게시글 작성&수정&삭제, 답변 작성&수정&삭제, 태그검색, 랭킹 페이지, 관심글 페이지, 채팅
 
-<code>최영진</code> 로그인, 회원가입, 전체 검색, 카테고리 검색, 댓글 작성&수정&삭제, 프로필 수정,비밀번호 수정, 채팅
+<code>최영진</code> 로그인, 회원가입, 전체 검색, 카테고리 검색, 댓글 작성&수정&삭제, 프로필 수정,비밀번호 수정, 채팅, 무중단 배포
 
 <code>Trouble Shooting</code>[트러블 슈팅 해결과정](https://www.notion.so/5-8-28217e32bae849a5bc95389ed1d5dd73)
 
