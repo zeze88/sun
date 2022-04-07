@@ -4,10 +4,10 @@ import styled from "styled-components";
 import { ReactComponent as UserDefault } from "../svg/profile_default.svg";
 
 const Profile = ({ imgUrl, size = "30" }) => {
+  console.log(imgUrl)
   return (
     <ProfileImg imgUrl={imgUrl} size={size}>
-      {!imgUrl && <UserDefault />}
-      {(imgUrl === "undefined" || imgUrl === "null") && <UserDefault />}
+      {imgUrl ?'': <UserDefault />}
     </ProfileImg>
   );
 };

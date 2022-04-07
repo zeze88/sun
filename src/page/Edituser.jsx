@@ -5,6 +5,7 @@ import Profile from "../elements/Profile";
 import { actionCreators as userActions } from "../redux/modules/user";
 import img_down from "../svg/arrow_down_b.svg";
 import camera from "../svg/camera_fill.svg";
+import profile from "../svg/logo.svg";
 import Swal from "sweetalert2";
 
 const Edituser = (props) => {
@@ -114,14 +115,17 @@ const Edituser = (props) => {
       });
     }
   };
-
   return (
     <Container>
       <h2>프로필 편집</h2>
       <div className='user'>
         <ProfileImg>
           <i>
+            {!userImg ?<EditUserDefault>
+              <img src={profile} alt="profile default img"/>
+            </EditUserDefault>:
             <Profile imgUrl={userImg} size={175} />
+            }
           </i>
           <input
             id='profile'
@@ -131,7 +135,7 @@ const Edituser = (props) => {
             ref={imgInput}
           />
           <label htmlFor='profile'>
-            <img src={camera} />
+            <img src={camera} alt="camera" />
             사진 업로드
           </label>
         </ProfileImg>
@@ -170,10 +174,15 @@ const Edituser = (props) => {
             </div>
           </EditBlog>
           <EditCareer>
-            <div>
-              <span onClick={() => setCareerSelect(!careerSelect)}>
+            <div onClick={() => setCareerSelect(!careerSelect)}>
+              <span >
                 {career}
               </span>
+              <img
+              src={img_down}
+              alt="arrow"
+            />
+              </div>
               {careerSelect === true ? (
                 <ul>
                   {options.map((v, idx) => (
@@ -188,11 +197,7 @@ const Edituser = (props) => {
                   ))}
                 </ul>
               ) : null}
-            </div>
-            <img
-              onClick={() => setCareerSelect(!careerSelect)}
-              src={img_down}
-            />
+          
           </EditCareer>
           <button className='save' onClick={Save}>
             저장
@@ -231,7 +236,7 @@ const Container = styled.div`
         height: 72px;
         background-color: #5e45f2;
         color: white;
-        border-radius: 0.5rem;
+        border-radius: 8px;
       }
     }
   }
@@ -254,7 +259,7 @@ const ProfileImg = styled.div`
     height: 40px;
     padding: 0 8px;
     border: 2px solid #7966ff;
-    border-radius: 0.5rem;
+    border-radius: 8px;
     font-size: 16px;
     font-weight: 600;
     justify-content: space-around;
@@ -292,16 +297,21 @@ const EditNickname = styled.div`
       justify-content: end;
       align-items: center;
       background-color: #f9f8ff;
-      border-radius: 0.5rem;
-      padding: 15px;
+      border-radius: 8px;
+      padding: 14px;
+
       > input {
         width: 100%;
         height: 72px;
-        border-radius: 0.5rem;
+        border-radius: 8px;
         font-size: 16px;
         font-weight: 600;
         outline: 0;
         background-color: #f9f8ff;
+
+        &::placeholder {
+          color:#BCBCBC;
+        }
       }
       > button {
         width: 76px;
@@ -311,6 +321,7 @@ const EditNickname = styled.div`
         border-radius: 32px;
         position: absolute;
         margin-right: 20px;
+        font-weight: 400;
       }
     }
   }
@@ -321,9 +332,10 @@ const EditBlog = styled.div`
   > div {
     width: 100%;
     height: 72px;
-    padding: 0 15px;
+    padding: 0 14px;
     background-color: #f9f8ff;
-    border-radius: 0.5rem;
+    border-radius: 8px;
+
     > input {
       width: 100%;
       height: 72px;
@@ -331,6 +343,9 @@ const EditBlog = styled.div`
       font-weight: 600;
       outline: 0;
       background-color: #f9f8ff;
+      &::placeholder {
+        color:#BCBCBC;
+      }
     }
   }
 `;
@@ -341,52 +356,79 @@ const EditCareer = styled.div`
   position: relative;
   justify-content: end;
   align-items: center;
+
   div {
-    width: 100%;
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 24px;
+    height: 72px;
+    line-height: 72px;
+    color: #7966ff;
+    background-color: #f9f8ff;
+    border-radius: 8px;
+    cursor:pointer;
+    
     > span {
-      width: 100%;
-      height: 72px;
-      line-height: 72px;
-      padding: 0 16px;
       border-radius: 8px;
-      background-color: #f9f8ff;
       cursor: pointer;
-      color: #7966ff;
       font-size: 16px;
       font-weight: 600;
     }
-    > ul {
+  }
+
+  ul {
+    position: absolute;
+    top: calc(100% + 7px);
+    width: 100%;
+    height: 288px;
+    padding:7px;
+    border: 0px;
+    background-color: #fff;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 0 12px 0 rgba(172,168,203,0.2);
+    
+    > li {
+      display: flex;
       width: 100%;
       height: 72px;
-      border-radius: 0.5rem;
-      border: 0px;
-      position: absolute;
-      margin-top: 80px;
-      > li {
-        display: flex;
-        width: 100%;
-        height: 72px;
-        font-size: 16px;
-        font-weight: 600;
-        padding-left: 10px;
-        background-color: #f9f8ff;
-        align-items: center;
-        justify-content: start;
-        cursor: pointer;
-        &:hover {
-          background-color: #5e45f2;
-          color: #f9f8ff;
-        }
+      font-size: 16px;
+      font-weight: 600;
+      padding-left: 10px;
+      align-items: center;
+      justify-content: start;
+      cursor: pointer;
+      &:hover {
+        background-color: #7966FF;
+        color: #f9f8ff;
       }
     }
   }
-  > img {
-    width: 50px;
-    height: 50px;
-    position: absolute;
+
+   img {
+    width: 24px;
+    height: 24px;
   }
+`;
+
+const EditUserDefault = styled.span`
+--size:180px;
+--img-size: 124px;
+
+display: flex;
+align-items: center;
+justify-content: center;
+width: var(--size);
+height: var(--size);
+border-radius: var(--size);
+background-color:#F9F8FF;
+
+img {
+  display: block;
+width: var(--img-size);
+height: var(--img-size);
+}
 `;
 
 export default Edituser;
