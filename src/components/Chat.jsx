@@ -38,7 +38,7 @@ const Chat = () => {
   });
 
   React.useEffect(() => {
-    scrollToBottom();
+    scroll();
   }, [publicChats, chatScroll]);
 
   React.useEffect(() => {
@@ -48,6 +48,12 @@ const Chat = () => {
       stompDisConnect();
     };
   }, []);
+
+  const scroll = () => {
+    if (messageRef.current) {
+      messageRef.current.scrollTop = messageRef.current.scrollHeight;
+    }
+  }
 
   const onKeyPress = (e) => {
     if (e.key == "Enter") {
@@ -90,6 +96,7 @@ const Chat = () => {
       stompClient.subscribe("/topic/mainchat", onPublicMessageReceived, token);
       if (chatScroll !== true) {
         setChatScroll(true);
+        scroll();
       }
     } catch (err) {
       console.log(err);
@@ -149,12 +156,6 @@ const Chat = () => {
 
   const onError = (err) => {
     console.log(err);
-  };
-
-  const scrollToBottom = () => {
-    if (messageRef.current) {
-      messageRef.current.scrollTop = messageRef.current.scrollHeight;
-    }
   };
 
   return (
