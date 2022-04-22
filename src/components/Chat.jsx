@@ -95,8 +95,8 @@ const Chat = () => {
       stompClient.send("/app/mainchat", token, JSON.stringify(user_join));
       stompClient.subscribe("/topic/mainchat", onPublicMessageReceived, token);
       if (chatScroll !== true) {
-        setChatScroll(true);
         scroll();
+        setChatScroll(true);
       }
     } catch (err) {
       console.log(err);
